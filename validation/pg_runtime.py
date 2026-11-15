@@ -77,6 +77,8 @@ class TemporaryPostgres:
                      "--no-instructions", "--pwfile=" + str(password_file)]
         try:
             run_binary("initdb", arguments, timeout=60)
+        except subprocess.CalledProcessError as error:
+            raise RuntimeError(f"PostgreSQL initdb failed: {error.stderr.strip()}") from error
         finally:
             password_file.unlink(missing_ok=True)
 

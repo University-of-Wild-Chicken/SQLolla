@@ -45,6 +45,21 @@ jobs:
           distribution: temurin
           java-version: '17.0.21+9'
 
+      - name: Provision and start an isolated PostgreSQL 16 oracle
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          # PostgreSQL drops the Administrators group from its Windows child token.
+          # Preserve its workspace access by granting the runner's own account directly.
+          icacls.exe $env:GITHUB_WORKSPACE /grant "${env:USERNAME}:(OI)(CI)M" /Q | Out-Null
+          python validation/bootstrap_postgres.py
+          @'
+          import sys
+          sys.path.insert(0, "validation")
+          from pg_runtime import TemporaryPostgres
+          with TemporaryPostgres() as oracle:
+              assert oracle.execute("SELECT 1").strip() == "1"
+          '@ | python -
+
       - name: Check frontend and review flow in Chrome
         working-directory: frontend
         run: |
@@ -116,7 +131,6 @@ jobs:
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
           . .\scripts\env.ps1
-          python validation/bootstrap_postgres.py
           python validation/refinement.py
           python validation/industrial.py
           python validation/run.py
