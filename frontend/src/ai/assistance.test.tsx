@@ -98,11 +98,17 @@ describe("explicit fixed-model assistance", () => {
 
   it("requires an explicit click and renders generated HTML as inert plain text", async () => {
     host.mockResolvedValue(response());
-    const view = render(<LiveAssistancePanel bundleId={bundleId} evidence={evidence()} settings={settings} onInspectFact={vi.fn()} />);
+    const inspect = vi.fn();
+    const current = evidence();
+    const view = render(<LiveAssistancePanel bundleId={bundleId} evidence={current} settings={settings} onInspectFact={inspect} />);
     expect(host).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("button", { name: "Explain this case" }));
     await screen.findByText("<img src=x onerror=alert(1)>");
     expect(view.container.querySelector("img")).toBeNull();
+    const citation = screen.getByRole("button", { name: "Input row 1" });
+    expect(citation).toHaveAttribute("title", current.facts[0]!.reference);
+    fireEvent.click(citation);
+    expect(inspect).toHaveBeenCalledWith(current.facts[0]!.reference);
   });
 
   it("discards an in-flight response when the canonical bundle changes", async () => {

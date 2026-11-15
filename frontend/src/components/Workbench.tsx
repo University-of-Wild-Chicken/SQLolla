@@ -118,8 +118,8 @@ function WorkbenchAssistance({ workspace }: Pick<WorkbenchProps, "workspace">): 
         <LiveAssistancePanel bundleId={bundleId} evidence={evidence} settings={dialogs.aiSettings} onInspectFact={dialogs.inspectFact} />
       ) : (
         <>
-          <p>Get a summary of this case with citations to its solver evidence.</p>
-          <button type="button" className="ghost-button" onClick={dialogs.openSettings}>
+          <p>Ask why this result occurred or what to check next.</p>
+          <button type="button" className="primary-button" onClick={dialogs.openSettings}>
             Add an OpenAI key
           </button>
         </>

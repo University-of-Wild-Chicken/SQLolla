@@ -2503,6 +2503,12 @@ pre {
   font-size: 18px;
 }
 
+.ai-result-label {
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 650;
+}
+
 .ai-claims {
   display: flex;
   flex-direction: column;
