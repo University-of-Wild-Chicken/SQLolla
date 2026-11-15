@@ -155,3 +155,37 @@ jobs:
           Expand-Archive -LiteralPath "$stage.zip" -DestinationPath $destination
           $smoke = Join-Path $destination 'sqlolla-iis-win-x64/Test-Package.ps1'
           powershell.exe -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -File $smoke
+
+      - name: Verify refinement in Chrome against the extracted IIS package
+        working-directory: frontend
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $destination = Join-Path $env:RUNNER_TEMP 'sqlolla IIS smoke test'
+          $launcher = Join-Path $destination 'sqlolla-iis-win-x64/Start-SQLolla.ps1'
+          $config = Join-Path $destination 'browser-test.json'
+          @{ port = 18787; public_origin = ''; data_directory = (Join-Path $destination 'browser-data') } |
+            ConvertTo-Json | Set-Content -LiteralPath $config
+          $env:SQLLOLLA_URL = 'http://127.0.0.1:18787'
+          $errors = Join-Path $destination 'host.stderr'
+          $server = Start-Process powershell.exe -PassThru -WindowStyle Hidden -RedirectStandardError $errors -ArgumentList @(
+            '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'RemoteSigned',
+            '-File', ('"{0}"' -f $launcher), '-Configuration', ('"{0}"' -f $config)
+          )
+          try {
+            $deadline = [DateTime]::UtcNow.AddSeconds(30)
+            do {
+              if ($server.HasExited) { throw "Packaged host exited with code $($server.ExitCode)" }
+              try { $status = Invoke-RestMethod "$env:SQLLOLLA_URL/api/status" -NoProxy -TimeoutSec 2 }
+              catch { $status = $null }
+              if ($status.schema -eq 'sqlolla.host.v1') { break }
+              if ([DateTime]::UtcNow -ge $deadline) { throw 'Packaged host did not become ready' }
+              Start-Sleep -Milliseconds 250
+            } while ($true)
+            node e2e/host.mjs
+          } catch {
+            Get-Content -LiteralPath $errors
+            throw
+          } finally {
+            if (-not $server.HasExited) { $server.Kill($true); $server.WaitForExit() }
+            $server.Dispose()
+          }

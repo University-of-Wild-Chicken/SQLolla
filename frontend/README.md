@@ -1,20 +1,14 @@
 # SQLolla evidence review frontend
 
-A local SQLolla review workspace: **Build → Check → Review examples → Refine**.
-The explicit fixture mode works offline. The Rust `sqlolla-host` connects the browser to the
-existing deterministic Pipeline and optional OpenAI assistance using exact `gpt-6.1-sol`.
-Submitted SQL is modeled; it is never executed against an application database.
+The workbench starts with an editable tenant-filter query and its finite rule. Choose
+**Analyze query** for a real case from the same deterministic Rust and Alloy pipeline.
+The SQL editor and typed query builder share this pipeline. Use Graph or Table to inspect
+the result, or open **SQL / IR / Alloy** to see the source triple. Yes, No and Unsure save
+reviews at the bottom of the page for later reopening, relabeling or withdrawal.
 
-The interface is a three-column workspace:
-
-- **Cases & query studio** — scenario library and a typed relation builder. Drafts are local,
-  unvalidated state, separate from canonical IR. Editing a draft sets stored evidence aside.
-- **Evidence card** — Graphviz/table views, exact before/after/output occurrences, typed NULLs,
-  duplicates, statement errors/effects, graph node fact inspection and explicit Next.
-- **Explanation rail** — fixture summaries or requested live explanations with fact citations,
-  memory-only provider settings and the review journal.
-- **Review bins** — Yes, No and Unsure at the bottom of the workspace. Reopen the exact saved case,
-  move it to another bin or withdraw its label. The current analysis cursor is retained.
+When the host opens a case with its complete SQL/IR/Alloy bundle, **Explain this result**
+offers cited OpenAI assistance using `gpt-6.1-sol`. Save a key in **AI settings**, then
+choose **Explain this case**. Saving the key does not test account access or send data.
 
 ## Run
 
@@ -25,7 +19,7 @@ npm ci
 npm run dev
 ```
 
-Build static assets and inspect the offline fixture demo:
+Build static assets and preview the editor without an analysis host:
 
 ```sh
 npm run build
@@ -46,8 +40,8 @@ Set-Location ..
 ```
 
 Open `http://127.0.0.1:8787`. `SQLolla_HOST_PORT` changes the port; `SQLolla_ROOT` selects the
-installation root. The process binds IPv4 loopback only. Vite preview remains a fixture demo;
-it does not proxy provider credentials or the canonical analysis API.
+installation root. The process binds IPv4 loopback only. Vite preview can render the static
+editor. The solver and AI require the same-origin Rust host.
 
 Dependencies are pinned in `package.json` and `package-lock.json`. Fonts, the pixel logo and the
 Graphviz worker are self-hosted; there is no CDN request.
@@ -65,17 +59,14 @@ npm run test:host        # requires the running Rust host; performs real local s
 ```
 
 `test:e2e` uses `playwright-core` with installed Chrome. Set `CHROME_PATH` if Chrome is elsewhere.
-It covers Graphviz, keyboard review, explicit Next, exact case reopening, bin changes, draft and
-compiler states, reduced motion, WCAG A/AA axe checks and 390×844 layout. Screenshots default to
-[`e2e/screenshots/`](e2e/screenshots/). Set `SQLLOLLA_SCREENSHOTS` to capture a new run separately,
-and `SQLLOLLA_URL` to test an already-running deployment.
+The preview test checks the editor, BYOT form and axe at desktop and mobile widths. Set
+`SQLLOLLA_SCREENSHOTS` to save screenshots outside the source tree.
 
-`test:host` checks browser start/open/next, Graphviz and lossless Int64/NULL rendering against the
-running loopback host. It creates synthetic stored instances and makes no AI request. The same
-[`e2e/host.mjs`](e2e/host.mjs) exports `verifyHost({url, chromePath, apiKey})` for an explicitly
-authorized live provider check with a credential supplied only in memory. It checks a cited summary,
-feedback-driven SQL regeneration, draft adoption when checks pass, browser storage and Disconnect.
-Its returned report omits the key and generated prose.
+`test:host` runs real analysis, Graphviz, Next, exact case reopening, the review bins, refinement,
+SQL copying and exact Int64/NULL rendering. Use a fresh test-only instance store. The default AI
+test intercepts the browser's explanation request and supplies a synthetic cited response.
+[`verifyHost({ url, chromePath, apiKey })`](e2e/host.mjs) supports an authorized live explanation
+check with an in-memory key. Test output omits the key and generated prose.
 
 ## Local host boundary
 
@@ -148,6 +139,9 @@ counterexample, a valid example, a mutation with effects, and terminal/error sta
 exhausted, limit, unsupported, missing context, SQL error, replay mismatch, timeout, stale archive,
 and transport gap). They intentionally include duplicate occurrences, typed NULLs, Unicode values
 and malicious-looking label text so the UI's escaping and review behavior can be exercised.
+
+The fixture transport is injected by tests. The published application does not ship the fixture
+scenario library or substitute fixture output for a failed host call.
 
 The original raster logo source is [`sqlolla_logo_assets.jpg`](sqlolla_logo_assets.jpg); the
 transparent app mark is [`src/assets/sqlolla-mark.png`](src/assets/sqlolla-mark.png).

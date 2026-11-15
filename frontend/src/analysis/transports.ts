@@ -4,7 +4,6 @@
  */
 import { DEMO_SCENARIOS, nextPayloadFor } from "./fixtures";
 import type { AnalysisTransport, FixtureScenario, OpenCommand, StartCommand, NextCommand, TransportResult } from "./types";
-import { hostJson, HostError } from "./host";
 
 /** Find the fixture scenario that owns an opaque demo cursor. */
 function scenarioForCursor(cursor: string): FixtureScenario | undefined {
@@ -17,12 +16,13 @@ function transportGap(scenario: FixtureScenario | undefined): TransportResult | 
   return { ok: false, error: scenario.transportFailure };
 }
 
-/** Build the deterministic local transport used by the default demo. */
+/** Supply deterministic stored cases for tests without connecting a solver. */
 export function createFixtureTransport(): AnalysisTransport {
   return {
     id: "sqlolla-fixture-evidence-v1",
     label: "Local fixture archive",
     kind: "fixture",
+    fixtures: DEMO_SCENARIOS,
     async open(command: OpenCommand): Promise<TransportResult> {
       const scenario = DEMO_SCENARIOS.find((candidate) => candidate.bundleId === command.bundle_id);
       const gap = transportGap(scenario);
@@ -80,35 +80,4 @@ function missingCursor(cursor: string): TransportResult {
       retryable: false,
     },
   };
-}
-
-/** Keep fixture navigation explicitly local while native commands use the same-origin Rust host. */
-export function createLocalTransport(): AnalysisTransport {
-  const fixtures = createFixtureTransport();
-  return {
-    id: "sqlolla-local-host-v1",
-    label: "Local SQLolla host and labelled fixture archive",
-    kind: "local-host",
-    open: (command) => (DEMO_SCENARIOS.some((item) => item.bundleId === command.bundle_id) ? fixtures.open(command) : hostCommand(command)),
-    next: (command) => (scenarioForCursor(command.cursor) ? fixtures.next(command) : hostCommand(command)),
-    start: hostCommand,
-    command: hostCommand,
-  };
-}
-
-/** Report transport failure separately from a valid backend rejection or bounded solver result. */
-async function hostCommand(command: unknown): Promise<TransportResult> {
-  try {
-    return { ok: true, payload: await hostJson("/api/command", command) };
-  } catch (error) {
-    return {
-      ok: false,
-      error: {
-        kind: "transport",
-        code: error instanceof HostError ? error.code : "transport.host_unavailable",
-        message: error instanceof HostError ? error.message : "The local SQLolla host is unavailable. Start the host and retry.",
-        retryable: true,
-      },
-    };
-  }
 }

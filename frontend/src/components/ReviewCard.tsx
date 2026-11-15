@@ -35,6 +35,7 @@ export interface ReviewCardProps {
   readonly onInspectFact: (reference: string) => void;
   readonly onOpenLedger: () => void;
   readonly reopened?: boolean;
+  readonly compact?: boolean;
 }
 
 /** Render a concise scope sentence without interpreting the SQL text. */
@@ -184,14 +185,15 @@ interface CardEvidenceViewProps {
   readonly evidence: EvidenceView;
   readonly onOpenJson: () => void;
   readonly onInspectFact: (reference: string) => void;
+  readonly compact?: boolean;
 }
 
 /** Render the selectable evidence visualization. */
-function CardEvidenceView({ view, evidence, onOpenJson, onInspectFact }: CardEvidenceViewProps): JSX.Element {
+function CardEvidenceView({ view, evidence, onOpenJson, onInspectFact, compact }: CardEvidenceViewProps): JSX.Element {
   return (
     <div data-no-swipe>
       {view === "graph" ? (
-        <GraphvizView evidence={evidence} onOpenJson={onOpenJson} onInspectFact={onInspectFact} />
+        <GraphvizView evidence={evidence} onOpenJson={onOpenJson} onInspectFact={onInspectFact} compact={compact} />
       ) : (
         <RelationTables evidence={evidence} onInspectFact={onInspectFact} />
       )}
@@ -334,8 +336,8 @@ type ReviewController = ReturnType<typeof useCardReview>;
 function CardTop({ props, review }: { readonly props: ReviewCardProps; readonly review: ReviewController }): JSX.Element {
   return (
     <>
-      <CardTopline scenario={props.scenario} onOpenDetails={props.onOpenDetails} />
-      <ReviewHeadline scenario={props.scenario} descriptor={review.statusDescriptor} descriptionId={review.statusDescriptionId} />
+      {props.compact ? <ResultHeading props={props} review={review} /> : <CardTopline scenario={props.scenario} onOpenDetails={props.onOpenDetails} />}
+      {!props.compact ? <ReviewHeadline scenario={props.scenario} descriptor={review.statusDescriptor} descriptionId={review.statusDescriptionId} /> : null}
       <CardAlerts status={props.status} staleNotice={props.staleNotice} nextFailure={props.nextFailure} />
       <ReviewFacts evidence={props.evidence} />
       <ObservationStrip evidence={props.evidence} />
@@ -344,13 +346,46 @@ function CardTop({ props, review }: { readonly props: ReviewCardProps; readonly 
   );
 }
 
+/** Lead with the solver result and give direct access to its source triple. */
+function ResultHeading({ props, review }: { readonly props: ReviewCardProps; readonly review: ReviewController }): JSX.Element {
+  const { statusDescriptor } = review;
+  return (
+    <header className="result-heading">
+      <div>
+        <span className={`result-kind result-kind--${statusDescriptor.tone}`}>Solver case</span>
+        <h2>{statusDescriptor.label}</h2>
+        <p id={review.statusDescriptionId}>{statusDescriptor.headline}</p>
+      </div>
+      <button type="button" className="ghost-button" onClick={props.onOpenDetails}>
+        SQL / IR / Alloy
+      </button>
+    </header>
+  );
+}
+
 /** Render the selected evidence view and provenance notes. */
 function CardBody({ props, review }: { readonly props: ReviewCardProps; readonly review: ReviewController }): JSX.Element {
   return (
     <>
-      <CardEvidenceView view={review.view} evidence={props.evidence} onOpenJson={props.onOpenJson} onInspectFact={props.onInspectFact} />
-      <AssuranceNote evidence={props.evidence} />
-      <EvidenceMeta evidence={props.evidence} />
+      <CardEvidenceView
+        view={review.view}
+        evidence={props.evidence}
+        onOpenJson={props.onOpenJson}
+        onInspectFact={props.onInspectFact}
+        compact={props.compact}
+      />
+      {props.compact ? (
+        <details className="result-proof">
+          <summary>Replay and revision details</summary>
+          <AssuranceNote evidence={props.evidence} />
+          <EvidenceMeta evidence={props.evidence} />
+        </details>
+      ) : (
+        <>
+          <AssuranceNote evidence={props.evidence} />
+          <EvidenceMeta evidence={props.evidence} />
+        </>
+      )}
     </>
   );
 }

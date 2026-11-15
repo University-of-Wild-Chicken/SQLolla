@@ -34,6 +34,7 @@ export interface GraphvizViewProps {
   readonly evidence: EvidenceView;
   readonly onOpenJson: () => void;
   readonly onInspectFact: (reference: string) => void;
+  readonly compact?: boolean;
 }
 
 const WORKER_UNAVAILABLE = "Web Workers are unavailable. Use Table view; deterministic evidence is unaffected.";
@@ -346,23 +347,14 @@ interface GraphPanelProps {
   readonly selectedFact: FactModel | undefined;
   readonly onOpenJson: () => void;
   readonly onInspectFact: (reference: string) => void;
+  readonly compact?: boolean;
 }
 
 /** Render the graph panel. */
-function GraphPanel({
-  graph,
-  unavailable,
-  state,
-  evidence,
-  zoom,
-  setZoom,
-  descriptionId,
-  selectedId,
-  setSelectedId,
-  selectedFact,
-  onOpenJson,
-  onInspectFact,
-}: GraphPanelProps): JSX.Element {
+function GraphPanel(props: GraphPanelProps): JSX.Element {
+  const { graph, unavailable, state, evidence, zoom, setZoom, descriptionId, selectedId, setSelectedId, selectedFact, onOpenJson, onInspectFact, compact } =
+    props;
+  const inspector = <GraphInspector graph={graph} selectedId={selectedId} selectedFact={selectedFact} onSelect={setSelectedId} onInspectFact={onInspectFact} />;
   return (
     <div className="graph-panel" data-no-swipe>
       <GraphToolbar zoom={zoom} setZoom={setZoom} />
@@ -371,7 +363,14 @@ function GraphPanel({
       </p>
       <PartialGraphBanner graph={graph} onOpenJson={onOpenJson} />
       <GraphViewport unavailable={unavailable} state={state} evidence={evidence} zoom={zoom} onOpenJson={onOpenJson} />
-      <GraphInspector graph={graph} selectedId={selectedId} selectedFact={selectedFact} onSelect={setSelectedId} onInspectFact={onInspectFact} />
+      {compact ? (
+        <details className="graph-inspector-disclosure">
+          <summary>Inspect {graph.visibleNodeCount} graph nodes</summary>
+          {inspector}
+        </details>
+      ) : (
+        inspector
+      )}
     </div>
   );
 }
@@ -381,7 +380,7 @@ export function GraphvizView(props: GraphvizViewProps): JSX.Element {
   const graph = useMemo(() => buildPresentationGraph(props.evidence), [props.evidence]);
   const { worker, unavailable } = useGraphvizWorker();
   const state = useRenderedSvg(worker, graph.dot);
-  const [zoom, setZoom] = useState(125);
+  const [zoom, setZoom] = useState(props.compact ? 100 : 125);
   const [selectedId, setSelectedId] = useState("query");
   const descriptionId = useId();
   const selectedNode = graph.nodes.find((node) => node.id === selectedId) ?? graph.nodes[0];
@@ -400,6 +399,7 @@ export function GraphvizView(props: GraphvizViewProps): JSX.Element {
       selectedFact={selectedFact}
       onOpenJson={props.onOpenJson}
       onInspectFact={props.onInspectFact}
+      compact={props.compact}
     />
   );
 }

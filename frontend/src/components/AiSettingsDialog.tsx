@@ -12,6 +12,7 @@ interface Props {
   readonly evidence: EvidenceView | null;
   readonly onSave: (settings: AiProviderSettings) => void;
   readonly onDisconnect: () => void;
+  readonly fixedProvider?: boolean;
 }
 interface FieldsProps {
   readonly draft: AiProviderSettings;
@@ -118,19 +119,19 @@ function Actions({
 
 /** The draft credential lives only in this mounted form and the tab's settings state. */
 function Body(props: Omit<Props, "open">): JSX.Element {
-  const [draft, setDraft] = useState(props.settings);
+  const [draft, setDraft] = useState<AiProviderSettings>(() => (props.fixedProvider ? { ...props.settings, mode: "openai_compatible" } : props.settings));
   const patch = (next: Partial<AiProviderSettings>) => setDraft((current) => ({ ...current, ...next }));
   return (
     <div className="settings-body">
-      <ProviderFields draft={draft} patch={patch} />
+      {props.fixedProvider ? <p>OpenAI · {AI_MODEL}</p> : <ProviderFields draft={draft} patch={patch} />}
       {draft.mode === "openai_compatible" ? <CredentialFields draft={draft} patch={patch} /> : null}
       <SharingFields draft={draft} patch={patch} />
-      <section>
-        <span className="mono-label">CONTEXT PREVIEW · NOTHING SENT</span>
+      <details>
+        <summary>Preview explanation context</summary>
         <pre className="code-block preview-block">
           {props.evidence ? buildContextPreview(props.evidence, draft) : "Open a stored case to preview its context."}
         </pre>
-      </section>
+      </details>
       <Actions draft={draft} onClose={props.onClose} onSave={props.onSave} onDisconnect={props.onDisconnect} />
     </div>
   );

@@ -1,5 +1,6 @@
 /** Real browser/host checks; optional provider credentials enter only through an in-memory argument. */
 import assert from "node:assert/strict";
+import { mkdir } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,8 +21,11 @@ function commandResponse(action) {
 
 /** Start actual SAT work and require the subsequent canonical bundle reload before review. */
 async function analyze(page) {
+  const started = page.waitForResponse(commandResponse("instances.start"), { timeout: 120_000 });
   const opened = page.waitForResponse(commandResponse("instances.open"), { timeout: 120_000 });
   await page.getByRole("button", { name: "Analyze query", exact: true }).click();
+  const first = await (await started).json();
+  assert.equal(first.status, "ok", first.message);
   const payload = await (await opened).json();
   assert.equal(payload.status, "ok");
   assert.equal(payload.record.instance.validation, "RUST_REPLAY_CONFIRMED");
@@ -47,8 +51,7 @@ async function nextCase(page) {
 
 /** Configure explicit unredacted synthetic context; saving settings must not send the key. */
 async function configureAi(page, apiKey) {
-  await page.getByRole("button", { name: "Open explanation provider settings" }).click();
-  await page.getByRole("radio", { name: /OpenAI-compatible/ }).check();
+  await page.getByRole("button", { name: "AI settings" }).click();
   assert.equal(await page.getByLabel("Model identifier").inputValue(), "gpt-6.1-sol");
   await page.getByLabel("API key (memory only)", { exact: true }).fill(apiKey);
   await page.getByLabel("Redact SQL and values before sending explanation context").uncheck();
@@ -82,6 +85,57 @@ async function checkAi(page, apiKey, instance) {
     .fill("Explain why this tenant-isolation counterexample violates the retained rule. Cite supplied row facts and mention finite bounds.");
   const summary = await assistance(page, instance);
   return { model: summary.model, explanationClaims: summary.document.claims.length };
+}
+
+/** Return a synthetic model document bound to a real solver case, with no provider traffic. */
+function syntheticExplanation(request, instance) {
+  const context_sha256 = "d".repeat(64);
+  const ids = { instance_id: instance.instance_id, model_revision_sha256: instance.model_revision_sha256, context_sha256 };
+  return {
+    ...ids,
+    schema: "sqlolla.ai.explanation.v1",
+    status: "ok",
+    model: "gpt-6.1-sol",
+    provider: "openai",
+    authority: "untrusted_assistance",
+    bundle_id: request.bundle_id,
+    redact_values: request.redact_values,
+    document: {
+      ...ids,
+      title: "Synthetic cited explanation",
+      claims: [{ text: "The case contains a returned row.", fact_references: [instance.facts[0].reference] }],
+      assumptions: [],
+      sql: null,
+    },
+  };
+}
+
+/** Verify BYOT activation, same-origin transport and citation display without a paid call. */
+async function checkSyntheticAi(page, solved) {
+  let sent = 0;
+  const key = "synthetic-browser-test-key";
+  const pattern = "**/api/ai/explain";
+  const instance = solved.record.instance;
+  await page.route(pattern, (route) => {
+    const request = route.request();
+    const body = request.postDataJSON();
+    assert.equal(request.headers().authorization, "Bearer " + key);
+    assert.equal(body.bundle_id, solved.bundle_id);
+    assert.equal(body.instance_id, instance.instance_id);
+    assert.equal(body.model_revision_sha256, instance.model_revision_sha256);
+    sent++;
+    return route.fulfill({ json: syntheticExplanation(body, instance) });
+  });
+  try {
+    await configureAi(page, key);
+    assert.equal(sent, 0, "Saving a key fired a provider request");
+    const summary = await assistance(page, instance);
+    assert.equal(sent, 1);
+    await checkDisconnect(page, key);
+    return { model: summary.model, browserTransport: "synthetic", explanationClaims: summary.document.claims.length };
+  } finally {
+    await page.unroute(pattern);
+  }
 }
 
 /** Three persisted bins support reconsideration without changing the live enumeration cursor. */
@@ -127,7 +181,6 @@ async function checkRefinement(page) {
 
 /** Check real browser precision for i64::MAX and a structured SQL NULL through stored examples. */
 async function exactNumbers(page) {
-  await page.getByRole("button", { name: "03 / Analyze", exact: true }).click();
   const advanced = page.locator("details").filter({ has: page.getByLabel("Advanced analysis request") });
   if ((await advanced.getAttribute("open")) === null) await advanced.locator("summary").click();
   await page
@@ -147,10 +200,9 @@ async function exactNumbers(page) {
 async function checkDisconnect(page, apiKey) {
   const absent = await page.evaluate((key) => ![...Object.values(localStorage), ...Object.values(sessionStorage)].some((value) => value.includes(key)), apiKey);
   assert.equal(absent, true);
-  await page.getByRole("button", { name: "Open explanation provider settings" }).click();
+  await page.getByRole("button", { name: "AI settings" }).click();
   await page.getByRole("button", { name: "Disconnect & clear", exact: true }).click();
-  await page.getByRole("button", { name: "Open explanation provider settings" }).click();
-  await page.getByRole("radio", { name: /OpenAI-compatible/ }).check();
+  await page.getByRole("button", { name: "AI settings" }).click();
   assert.equal(await page.getByLabel("API key (memory only)", { exact: true }).inputValue(), "");
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
 }
@@ -179,15 +231,28 @@ export async function verifyHost({ url, chromePath, apiKey }) {
 
 /** Exercise the full review and adoption flow against a host with a fresh test-only store. */
 async function verifyFlows(page, apiKey) {
-  await page.getByRole("button", { name: "03 / Analyze", exact: true }).click();
+  await page.getByRole("heading", { name: "Query workbench" }).waitFor();
+  assert.equal(await page.getByTestId("review-card").count(), 0);
   const first = await analyze(page);
+  if (typeof process !== "undefined" && process.env.SQLLOLLA_SCREENSHOTS) await captureEvidence(page, process.env.SQLLOLLA_SCREENSHOTS);
   const next = await nextCase(page);
-  const ai = apiKey ? await checkAi(page, apiKey, next.record.instance) : { skipped: "No in-memory credential supplied" };
+  const ai = apiKey ? await checkAi(page, apiKey, next.record.instance) : await checkSyntheticAi(page, next);
   await reviewBins(page, next.record.instance);
   const refinement = await checkRefinement(page);
   const precision = await exactNumbers(page);
   if (apiKey) await checkDisconnect(page, apiKey);
   return { ...report(first.assurance_kind, precision, ai), refinement };
+}
+
+/** Capture actual solver evidence at desktop and mobile widths without including credentials. */
+async function captureEvidence(page, directory) {
+  await mkdir(directory, { recursive: true });
+  const original = page.viewportSize();
+  await page.screenshot({ path: resolve(directory, "solver-desktop.png") });
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0);
+  await page.getByTestId("review-card").screenshot({ path: resolve(directory, "solver-mobile.png") });
+  if (original) await page.setViewportSize(original);
 }
 
 /** Retain reproducible facts without source contents, provider prose or credentials. */

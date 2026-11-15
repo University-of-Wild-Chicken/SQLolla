@@ -43,6 +43,17 @@ function statusPayload(value: unknown): HostStatus {
 
 /** Read a bounded response without passing JSON numbers through response.json(). */
 async function responseJson(response: Response): Promise<unknown> {
+  if (response.type === "opaqueredirect" || (response.status >= 300 && response.status < 400)) {
+    statusRequest = null;
+    throw new HostError("host.sign_in", "Sign in to SQLolla again, then retry this action.");
+  }
+  if (!response.headers.get("content-type")?.toLowerCase().includes("application/json")) {
+    if (response.status === 401 || response.status === 403) {
+      statusRequest = null;
+      throw new HostError("host.sign_in", "The gateway refused this session. Sign in to SQLolla again.");
+    }
+    throw new HostError("host.invalid_response", "The site did not return a SQLolla API response. Check that the analysis server is connected.");
+  }
   const text = await response.text();
   if (text.length > MAX_RESPONSE) throw new HostError("host.response_limit", "Local response exceeds the browser limit");
   let payload: unknown;
@@ -64,7 +75,7 @@ async function responseJson(response: Response): Promise<unknown> {
 
 /** Read the local nonce once; failures remain retryable and never fall back to another endpoint. */
 export function hostStatus(): Promise<HostStatus> {
-  statusRequest ??= fetch("/api/status", { cache: "no-store", credentials: "same-origin", redirect: "error" })
+  statusRequest ??= fetch("/api/status", { cache: "no-store", credentials: "same-origin", redirect: "manual" })
     .then(responseJson)
     .then(statusPayload)
     .catch((error: unknown) => {
@@ -88,7 +99,7 @@ export async function hostJson(path: string, body: unknown, options: HostOptions
     signal: options.signal,
     credentials: "same-origin",
     cache: "no-store",
-    redirect: "error",
+    redirect: "manual",
   });
   return responseJson(response);
 }

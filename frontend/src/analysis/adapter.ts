@@ -137,7 +137,7 @@ function parseParameters(value: unknown, path: string): Readonly<Record<string, 
 }
 
 /** Parse the explicit catalog that grounds relation names and column types. */
-function parseCatalog(value: unknown, path: string): CatalogModel {
+export function parseCatalog(value: unknown, path: string): CatalogModel {
   const object = asRecord(value, path);
   const tables = asRecord(object["tables"], `${path}.tables`);
   const parsed = Object.fromEntries(Object.entries(tables).map(([key, table]) => [key, parseTable(table, `${path}.tables.${key}`, key)]));

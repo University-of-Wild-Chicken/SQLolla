@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { parseNextPayload, parseOpenPayload } from "../analysis/adapter";
 import { buildEvidenceView } from "../analysis/evidence";
-import { DEMO_SCENARIOS, nextPayloadFor } from "../analysis/fixtures";
 import type { AnalysisTransport, EvidenceView, FixtureScenario, InstanceModel, OpenedAnalysis } from "../analysis/types";
 import { matchesTarget, type FeedbackEvent } from "../feedback/journal";
 
@@ -57,7 +56,7 @@ function findFixtureCase(opened: OpenedAnalysis, event: FeedbackEvent, fixture: 
   let cursor = opened.cursor;
   for (const _key of Object.keys(fixture.nextByCursor)) {
     if (!cursor) break;
-    const raw = nextPayloadFor(fixture, cursor);
+    const raw = fixture.nextByCursor[cursor];
     const parsed = parseNextPayload(raw, opened.bundle, opened.bundleId);
     if (!parsed.ok) break;
     const step = parsed.value;
@@ -78,7 +77,7 @@ async function reopenCase(transport: AnalysisTransport, event: FeedbackEvent): P
   if (!parsed.ok) throw new Error(parsed.error.message);
   const opened = parsed.value;
   if (opened.bundleId !== event.bundle_id) throw new Error("The archived bundle identity changed.");
-  const fixture = DEMO_SCENARIOS.find((scenario) => scenario.bundleId === opened.bundleId);
+  const fixture = transport.fixtures?.find((scenario) => scenario.bundleId === opened.bundleId);
   const record = opened.records.find((record) => record.instance && archivedInstance(event, record.instance, opened.bundleId));
   if (record?.instance) {
     return { bundleId: opened.bundleId, evidence: buildEvidenceView(opened.bundle, record.instance), fixture, openRaw: opened.raw };

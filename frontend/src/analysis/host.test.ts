@@ -30,10 +30,25 @@ describe("same-origin host boundary", () => {
     const sent = request.mock.calls[1]![1] as RequestInit;
     expect(sent.body).toBe('{"value":9223372036854775807}');
     expect(new Headers(sent.headers).get("X-SQLolla-CSRF")).toBe(nonce);
-    expect(sent.redirect).toBe("error");
+    expect(sent.redirect).toBe("manual");
     await hostJson("/api/command", { action: "instances.open" });
     expect(new Headers(request.mock.calls[2]![1].headers).has("Authorization")).toBe(false);
     expect(request.mock.calls.filter(([url]) => url === "/api/status")).toHaveLength(1);
+  });
+
+  it("reports an Access login redirect without resending the provider key", async () => {
+    const request = vi
+      .fn()
+      .mockResolvedValueOnce(response(status))
+      .mockResolvedValueOnce(new Response(null, { status: 302 }));
+    vi.stubGlobal("fetch", request);
+    await expect(hostJson("/api/ai/explain", {}, { headers: { Authorization: "Bearer transient-test" } })).rejects.toMatchObject({ code: "host.sign_in" });
+    expect(request).toHaveBeenCalledTimes(2);
+  });
+
+  it("reports static HTML clearly instead of treating it as an API response", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("<!doctype html>", { headers: { "Content-Type": "text/html" } })));
+    await expect(hostJson("/api/command", {})).rejects.toMatchObject({ code: "host.invalid_response" });
   });
 
   it("never retries a rejected POST and reacquires the nonce only on a later explicit command", async () => {

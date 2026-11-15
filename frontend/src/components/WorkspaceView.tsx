@@ -3,7 +3,6 @@
  * status, progressive evidence review and explicit local analysis actions.
  */
 import type { JSX } from "react";
-import { DEMO_SCENARIOS, scenarioById } from "../analysis/fixtures";
 import type { EnumerationStatus, EvidenceView } from "../analysis/types";
 import { Footer, Header, JourneyBar } from "./AppChrome";
 import { AiSettingsDialog } from "./AiSettingsDialog";
@@ -18,6 +17,7 @@ import { NativeDraftState } from "./NativeAnalysisPanel";
 import { ReviewBins } from "./ReviewBins";
 import { RefinementPanel } from "./RefinementPanel";
 import { archivedScenario } from "../workspace/archivedReview";
+import { Workbench } from "./Workbench";
 
 /** Render the masthead and workflow reminder. */
 function Masthead({ workspace }: { readonly workspace: Workspace }): JSX.Element {
@@ -57,6 +57,7 @@ function EvidenceCenter({ workspace, evidence }: EvidenceCenterProps): JSX.Eleme
     <ReviewCard
       key={`${saved?.bundleId ?? session.state.bundleId}|${evidence.instance.instanceId}|${!!saved}`}
       scenario={saved ? archivedScenario(saved, scenario) : scenario}
+      compact={!workspace.fixtures.length}
       evidence={evidence}
       reopened={!!saved}
       status={saved ? "instance" : (session.state.status ?? "instance")}
@@ -140,6 +141,7 @@ function CenterContent({ workspace }: { readonly workspace: Workspace }): JSX.El
   const state = session.state;
   if (navigation.draft) return <DraftCenter workspace={workspace} />;
   if (navigation.leftTab === "analysis" && workspace.native.dirty && !workspace.native.pending && state.phase !== "failed") return <NativeDraftState />;
+  if (!workspace.fixtures.length && state.phase === "idle") return <NativeDraftState />;
   if (state.scenarioId !== navigation.selectedId || state.phase === "idle" || state.phase === "opening") {
     return <OpeningState scenario={navigation.selectedScenario} />;
   }
@@ -155,7 +157,7 @@ function WorkspaceLeftRail({ workspace }: { readonly workspace: Workspace }): JS
   const { navigation, drawers } = workspace;
   return (
     <LeftRail
-      scenarios={DEMO_SCENARIOS}
+      scenarios={workspace.fixtures}
       selectedId={navigation.selectedId}
       activeTab={navigation.leftTab}
       draft={navigation.draft}
@@ -248,6 +250,7 @@ function SettingsDialogs({ workspace }: { readonly workspace: Workspace }): JSX.
         onClose={dialogs.closeSettings}
         settings={dialogs.aiSettings}
         evidence={currentEvidence}
+        fixedProvider={!workspace.fixtures.length}
         onSave={dialogs.saveAiSettings}
         onDisconnect={dialogs.disconnectAi}
       />
@@ -274,7 +277,7 @@ function ConfirmDraftActions({ workspace }: { readonly workspace: Workspace }): 
 /** Render the explicit confirmation before a draft is discarded. */
 function ConfirmDraftDialog({ workspace }: { readonly workspace: Workspace }): JSX.Element {
   const { navigation } = workspace;
-  const pendingTitle = navigation.pendingScenario ? scenarioById(navigation.pendingScenario)?.title : "another case";
+  const pendingTitle = workspace.fixtures.find(({ id }) => id === navigation.pendingScenario)?.title ?? "another case";
   return (
     <Modal
       open={navigation.pendingScenario !== null}
@@ -307,6 +310,14 @@ function WorkspaceDialogs({ workspace }: { readonly workspace: Workspace }): JSX
 
 /** Render the complete local workspace. */
 export function WorkspaceView({ workspace }: { readonly workspace: Workspace }): JSX.Element {
+  if (!workspace.fixtures.length) {
+    return (
+      <>
+        <Workbench workspace={workspace} results={<CenterContent workspace={workspace} />} reviews={<WorkspaceReviewBins workspace={workspace} />} />
+        <WorkspaceDialogs workspace={workspace} />
+      </>
+    );
+  }
   return (
     <div className="app-shell">
       <Masthead workspace={workspace} />

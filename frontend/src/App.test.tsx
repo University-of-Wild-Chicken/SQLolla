@@ -106,7 +106,7 @@ describe("review workspace workflows", () => {
 
   it("shows duplicate occurrences and typed NULL separately in the table view", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<App transport={createFixtureTransport()} />);
     await screen.findByRole("heading", { name: "Orders without a tenant filter" });
     await user.click(screen.getByRole("button", { name: "Table" }));
     const before = screen.getByRole("region", { name: "BEFORE public.orders" });
@@ -118,7 +118,7 @@ describe("review workspace workflows", () => {
   });
 
   it("keeps deterministic evidence usable when no fixture explanation exists", async () => {
-    render(<App initialScenarioId="state-sql-error" />);
+    render(<App transport={createFixtureTransport()} initialScenarioId="state-sql-error" />);
     await screen.findByRole("heading", { name: "A modeled SQL rejection" });
     expect(await screen.findByText("No fixture explanation is supplied for this case. Deterministic evidence remains fully usable.")).toBeInTheDocument();
     expect(screen.getAllByText(/23514/).length).toBeGreaterThan(0);
@@ -141,7 +141,7 @@ describe("review workspace workflows", () => {
 
   it("sets aside validated evidence on a local draft and refuses to pretend a compiler exists", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<App transport={createFixtureTransport()} />);
     await screen.findByRole("heading", { name: "Orders without a tenant filter" });
     await user.click(screen.getByRole("button", { name: "Start a local draft" }));
     expect(await screen.findByRole("heading", { name: "Draft awaiting deterministic analysis" })).toBeInTheDocument();
@@ -162,7 +162,7 @@ describe("review workspace workflows", () => {
 
   it("keeps provider secrets out of browser storage and journal exports", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<App transport={createFixtureTransport()} />);
     await screen.findByRole("heading", { name: "Orders without a tenant filter" });
     await user.click(screen.getByRole("button", { name: "Open AI provider settings" }));
     await user.click(screen.getByRole("radio", { name: /OpenAI-compatible/ }));
@@ -177,7 +177,7 @@ describe("review workspace workflows", () => {
   });
 
   it("renders a failure state for a transport gap without inventing evidence", async () => {
-    render(<App initialScenarioId="state-transport-gap" />);
+    render(<App transport={createFixtureTransport()} initialScenarioId="state-transport-gap" />);
     expect(await screen.findByText("Analysis host unavailable")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "No host analysis bridge" })).toBeInTheDocument();
     expect(screen.queryByTestId("review-card")).toBeNull();

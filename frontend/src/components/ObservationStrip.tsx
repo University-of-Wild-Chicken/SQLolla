@@ -63,14 +63,16 @@ function SuccessStrip({ statement }: { readonly statement: StatementView }): JSX
 }
 
 /** Render the absence of a statement-level outcome without inference. */
-function ReadStrip(): JSX.Element {
+function ReadStrip({ rows }: { readonly rows: number }): JSX.Element {
   return (
     <section className="observation-strip observation-strip--quiet" aria-label="Read observation">
       <div>
         <span className="mono-label">READ OBSERVATION</span>
-        <strong>No statement-level outcome attached</strong>
+        <strong>
+          {rows} returned {rows === 1 ? "row" : "rows"}
+        </strong>
       </div>
-      <p>This fixture carries the supplied read rows and replay label only. A row result does not imply transaction behavior.</p>
+      <p>This read case contains output rows and replay evidence. It has no statement effects to review.</p>
     </section>
   );
 }
@@ -80,5 +82,5 @@ export function ObservationStrip({ evidence }: { readonly evidence: EvidenceView
   const { statement } = evidence;
   if (statement.error) return <SqlErrorStrip error={statement.error} />;
   if (statement.outcome === "succeeded") return <SuccessStrip statement={statement} />;
-  return <ReadStrip />;
+  return <ReadStrip rows={evidence.output.rows.length} />;
 }

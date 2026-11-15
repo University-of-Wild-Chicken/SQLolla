@@ -3,7 +3,7 @@
  * review intent. Explicit native actions use the injected local host transport.
  */
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
-import { BUILDER_CATALOG, DEFAULT_SCENARIO_ID, DEMO_SCENARIOS, scenarioById } from "../analysis/fixtures";
+import { NATIVE_SCENARIO, STARTER_CATALOG } from "../analysis/starter";
 import { useAnalysisSession, type AnalysisSession } from "../analysis/session";
 import type { AnalysisTransport, EvidenceView, FixtureScenario } from "../analysis/types";
 import { defaultAiSettings, type AiProviderSettings } from "../ai/summary";
@@ -77,6 +77,7 @@ export interface ReviewSelectors {
 /** Complete controller consumed by the presentational workspace. */
 export interface Workspace {
   readonly transport: AnalysisTransport;
+  readonly fixtures: readonly FixtureScenario[];
   readonly session: AnalysisSession;
   readonly native: NativeAnalysis;
   readonly journal: FeedbackJournal;
@@ -111,16 +112,16 @@ function targetFor(evidence: EvidenceView | null, bundleId: string | null) {
 }
 
 /** Initialise scenario selection, rail mode and draft state. */
-function useNavigation(initialScenarioId?: string): WorkspaceNavigation {
-  const initial = scenarioById(initialScenarioId ?? DEFAULT_SCENARIO_ID) ?? DEMO_SCENARIOS[0]!;
+function useNavigation(fixtures: readonly FixtureScenario[], initialScenarioId?: string): WorkspaceNavigation {
+  const initial = fixtures.find(({ id }) => id === initialScenarioId) ?? fixtures[0] ?? NATIVE_SCENARIO;
   const [selectedId, setSelectedId] = useState(initial.id);
-  const [leftTab, setLeftTab] = useState<LeftTab>("library");
+  const [leftTab, setLeftTab] = useState<LeftTab>(fixtures.length ? "library" : "analysis");
   const [draft, dispatchDraft] = useReducer(draftReducer, null);
   const [pendingScenario, setPendingScenario] = useState<string | null>(null);
   return {
     initial,
     selectedId,
-    selectedScenario: scenarioById(selectedId) ?? initial,
+    selectedScenario: fixtures.find(({ id }) => id === selectedId) ?? initial,
     leftTab,
     draft,
     pendingScenario,
@@ -151,9 +152,9 @@ function useBodyLock(locked: boolean): void {
 }
 
 /** Manage responsive rails without retaining inaccessible focus targets. */
-function useDrawers(): WorkspaceDrawers {
-  const leftIsDrawer = useMediaQuery("(max-width: 899px)");
-  const rightIsDrawer = useMediaQuery("(max-width: 1199px)");
+function useDrawers(fixtureMode: boolean): WorkspaceDrawers {
+  const leftIsDrawer = useMediaQuery("(max-width: 899px)") && fixtureMode;
+  const rightIsDrawer = useMediaQuery("(max-width: 1199px)") && fixtureMode;
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
   const close = useCallback(() => {
@@ -214,13 +215,13 @@ function useDialogs(closeDrawers: () => void): WorkspaceDialogs {
 }
 
 /** Open the selected stored revision once per selection. */
-function useAutoOpen(session: AnalysisSession, scenario: FixtureScenario): void {
+function useAutoOpen(session: AnalysisSession, scenario: FixtureScenario, enabled: boolean): void {
   const last = useRef<string | null>(null);
   useEffect(() => {
-    if (last.current === scenario.id) return;
+    if (!enabled || last.current === scenario.id) return;
     last.current = scenario.id;
     void session.openScenario(scenario);
-  }, [scenario, session.openScenario]);
+  }, [enabled, scenario, session.openScenario]);
 }
 
 /** Derive current intent labels and contradiction state. */
@@ -250,7 +251,7 @@ function useChooseScenario(navigation: WorkspaceNavigation, drawers: WorkspaceDr
       return;
     }
     if (id === navigation.selectedId && (session.state.phase === "failed" || session.state.native)) {
-      void session.openScenario(scenarioById(id) ?? navigation.selectedScenario);
+      void session.openScenario(navigation.selectedScenario);
     }
     if (id !== navigation.selectedId) navigation.setSelectedId(id);
     navigation.setLeftTab("library");
@@ -281,14 +282,14 @@ function useDraftActions(
   const startDraft = (): void => {
     navigation.dispatchDraft({
       type: "start",
-      catalog: navigation.selectedScenario.builderCatalog ?? BUILDER_CATALOG,
+      catalog: navigation.selectedScenario.builderCatalog ?? STARTER_CATALOG,
     });
     navigation.setLeftTab("builder");
     dialogs.closeAll();
   };
   const discardDraft = (): void => {
     navigation.dispatchDraft({ type: "reset" });
-    navigation.setLeftTab("library");
+    navigation.setLeftTab(navigation.initial.id === NATIVE_SCENARIO.id ? "analysis" : "library");
   };
   return { startDraft, discardDraft };
 }
@@ -308,27 +309,32 @@ function useFeedbackActions(journal: FeedbackJournal, selectors: ReviewSelectors
 function useOpenLedger(drawers: WorkspaceDrawers): () => void {
   return (): void => {
     if (drawers.rightIsDrawer) drawers.setRightOpen(true);
-    window.setTimeout(() => document.getElementById("review-ledger")?.scrollIntoView?.({ block: "start" }), 0);
+    window.setTimeout(() => {
+      const ledger = document.getElementById("review-ledger");
+      if (ledger instanceof HTMLDetailsElement) ledger.open = true;
+      ledger?.scrollIntoView?.({ block: "start" });
+    }, 0);
   };
 }
 
 /** Compose shared editor, evidence and drawer state before attaching explicit actions. */
 function useWorkspaceFrame(transport: AnalysisTransport, initialScenarioId?: string) {
-  const originalNavigation = useNavigation(initialScenarioId);
-  const drawers = useDrawers();
+  const fixtures = transport.fixtures ?? [];
+  const originalNavigation = useNavigation(fixtures, initialScenarioId);
+  const drawers = useDrawers(fixtures.length > 0);
   const dialogs = useDialogs(drawers.close);
   const session = useAnalysisSession(transport);
   const native = useNativeAnalysis(session);
   const navigation = { ...originalNavigation, selectedScenario: nativeScenario(session, originalNavigation.selectedScenario) };
   const journal = useFeedbackJournal();
-  useAutoOpen(session, navigation.selectedScenario);
+  useAutoOpen(session, navigation.selectedScenario, fixtures.length > 0);
   const scope = useMemo(() => ({}), [navigation.selectedId, session.state.generation, !!navigation.draft]);
   const archive = useArchivedReview(transport, scope);
   const draftActive = !!navigation.draft || (navigation.leftTab === "analysis" && native.dirty);
   const saved = archive.visible?.result;
   const currentEvidence = saved?.evidence ?? (draftActive ? null : session.state.evidence);
   const selectors = useReviewSelectors(journal, currentEvidence, saved?.bundleId ?? session.state.bundleId);
-  return { transport, session, native, journal, navigation, drawers, dialogs, selectors, currentEvidence, archive };
+  return { transport, fixtures, session, native, journal, navigation, drawers, dialogs, selectors, currentEvidence, archive };
 }
 
 /** Compose the complete local workspace controller. */
@@ -376,7 +382,7 @@ function useWorkspaceRefinement(frame: ReturnType<typeof useWorkspaceFrame>) {
 /** Cards and AI proposals stage explicit requests; only the local backend can create canonical evidence. */
 function useNativeActions(transport: AnalysisTransport, session: AnalysisSession, navigation: WorkspaceNavigation, native: NativeAnalysis) {
   const checkDraft = async (draft: DraftState): Promise<unknown> => {
-    if (!transport.command) throw new Error("Analysis bridge unavailable");
+    if (!transport.command) throw new Error("Connect the analysis server to check this draft.");
     const result = await transport.command(draftRequest(draft, session.state.evidence));
     if (!result.ok) throw new Error(result.error.message);
     return result.payload;

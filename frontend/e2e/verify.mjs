@@ -1,221 +1,66 @@
-/**
- * Browser verification for the local SQLolla frontend. Uses an installed Chrome
- * through playwright-core; it never calls a hosted analysis or provider API.
- */
+/** Browser checks for the shipped workbench, deliberately without a solver or provider. */
+import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright-core";
-import { preview as vitePreview } from "vite";
+import { preview } from "vite";
 
-const localServer = process.env.SQLLOLLA_URL ? null : await vitePreview({ logLevel: "error", preview: { host: "127.0.0.1", port: 4173, strictPort: true } });
-const BASE = process.env.SQLLOLLA_URL ?? "http://127.0.0.1:4173";
-const CHROME = process.env.CHROME_PATH ?? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const OUT = path.resolve(process.env.SQLLOLLA_SCREENSHOTS ?? "e2e/screenshots");
-fs.mkdirSync(OUT, { recursive: true });
+const local = process.env.SQLLOLLA_URL ? null : await preview({ logLevel: "error", preview: { host: "127.0.0.1", port: 4173, strictPort: true } });
+const origin = process.env.SQLLOLLA_URL ?? "http://127.0.0.1:4173";
+const chrome = process.env.CHROME_PATH ?? "C:/Program Files/Google/Chrome/Application/chrome.exe";
+const output = process.env.SQLLOLLA_SCREENSHOTS;
+if (output) fs.mkdirSync(output, { recursive: true });
 
-let failures = 0;
-const check = (condition, message) => {
-  if (condition) console.log(`PASS ${message}`);
-  else {
-    failures += 1;
-    console.error(`FAIL ${message}`);
-  }
-};
+/** Verify startup and the fixed-model BYOT form without transmitting even synthetic credentials. */
+async function checkWorkbench(page, size) {
+  const requests = [];
+  page.on("request", (request) => requests.push(new URL(request.url()).pathname));
+  await page.route("**/api/status", (route) => route.fulfill({ json: { schema: "sqlolla.host.v1", model: "gpt-6.1-sol", csrf_token: "a".repeat(64) } }));
+  await page.goto(origin, { waitUntil: "networkidle" });
+  await page.getByRole("heading", { name: "Query workbench" }).waitFor();
+  await page.getByText("Analysis server reachable", { exact: true }).waitFor();
+  assert.equal(await page.getByTestId("review-card").count(), 0);
+  assert.equal(await page.getByRole("button", { name: /scenario|demo terminal/i }).count(), 0);
+  assert.equal(await page.getByRole("button", { name: "Analyze query", exact: true }).isEnabled(), true);
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, size + " overflow");
+  if (output) await page.screenshot({ path: path.join(output, size + ".png") });
+  await page.getByRole("button", { name: "AI settings" }).click();
+  assert.equal(await page.getByLabel("Model identifier").inputValue(), "gpt-6.1-sol");
+  await page.getByLabel("API key (memory only)").fill("synthetic-browser-input");
+  await page.getByRole("button", { name: "Save in this tab · no send" }).click();
+  await page.getByRole("dialog").waitFor({ state: "detached" });
+  assert.equal(requests.filter((request) => request.startsWith("/api/ai/") || request === "/api/command").length, 0);
+  assert.equal(await page.evaluate(() => JSON.stringify(localStorage).includes("synthetic-browser-input")), false);
+}
 
-const browser = await chromium.launch({ executablePath: CHROME, headless: true });
-const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
-const page = await context.newPage();
-const resetView = async () => {
-  await page.evaluate(() => {
-    document.documentElement.style.scrollBehavior = "auto";
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    document.querySelector(".rail--left .rail-scroll")?.scrollTo({ top: 0, behavior: "instant" });
-    document.querySelector(".rail--right .rail-scroll")?.scrollTo({ top: 0, behavior: "instant" });
+/** Check accessible names, colors and landmarks on the desktop and mobile starting screen. */
+async function checkAccessibility(page) {
+  const axe = fs.readFileSync(path.resolve("node_modules/axe-core/axe.min.js"), "utf8");
+  await page.addScriptTag({ content: axe });
+  const failures = await page.evaluate(async () => {
+    const result = await window.axe.run({ runOnly: ["wcag2a", "wcag2aa", "wcag21aa"] });
+    return result.violations.map(({ id, nodes }) => ({ id, targets: nodes.map(({ target }) => target) }));
   });
-  await page.waitForTimeout(250);
-};
-const requests = [];
-const pageErrors = [];
-page.on("request", (request) => requests.push(request.url()));
-page.on("pageerror", (error) => pageErrors.push(error.message));
-
-await page.goto(BASE, { waitUntil: "networkidle" });
-await page.getByRole("heading", { name: "Orders without a tenant filter" }).waitFor();
-await page.locator(".graph-svg svg").waitFor({ timeout: 20000 });
-await resetView();
-await page.screenshot({ path: path.join(OUT, "desktop-initial.png") });
-await page.screenshot({ path: path.join(OUT, "desktop-review.png") });
-
-const external = requests.filter((url) => !url.startsWith(BASE) && !url.startsWith("data:") && !url.startsWith("blob:"));
-check(external.length === 0, `no external network requests (${external.join(", ") || "none"})`);
-check((await page.locator(".graph-svg svg").count()) === 1, "Graphviz rendered one sanitized SVG canvas");
-check((await page.getByTestId("review-card").count()) === 1, "one review card is mounted");
-check((await page.locator("script").count()) < 10, "page has no injected script payloads from evidence");
-
-const inspect = page.getByRole("button", { name: "Inspect triple" });
-check(await inspect.isEnabled(), "inspector is available once evidence is visible");
-await inspect.click();
-await page.getByRole("dialog").waitFor();
-check(await page.getByRole("heading", { name: "Evidence inspector" }).isVisible(), "inspector opens the SQL/IR/Alloy drawer");
-check(await page.getByRole("dialog").getByRole("button", { name: "Copy SQL" }).isEnabled(), "the evidence inspector exposes exact SQL copying");
-await page.getByRole("button", { name: "Close Evidence inspector" }).click();
-await page.getByRole("dialog").waitFor({ state: "detached" });
-
-const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-check(overflow <= 1, `desktop layout has no horizontal overflow (${overflow}px)`);
-
-const undo = page.getByRole("button", { name: /Undo label/i });
-check(await undo.isDisabled(), "undo starts disabled without feedback");
-await page.getByTestId("review-card").click({ position: { x: 40, y: 120 } });
-await page.keyboard.press("a");
-await page.waitForFunction(() => {
-  const button = [...document.querySelectorAll("button")].find((item) => /Undo label/i.test(item.textContent ?? ""));
-  return button && !button.disabled;
-});
-check(await undo.isEnabled(), "keyboard A appends an accepted label");
-await page.keyboard.press("Control+z");
-await page.waitForFunction(() => {
-  const button = [...document.querySelectorAll("button")].find((item) => /Undo label/i.test(item.textContent ?? ""));
-  return button && button.disabled;
-});
-check(await undo.isDisabled(), "keyboard undo appends a withdrawal and clears the active label");
-await page.keyboard.press("r");
-check(await undo.isEnabled(), "keyboard R appends an exclusion label");
-await undo.click();
-check(await undo.isDisabled(), "labelled Undo is equivalent to keyboard undo");
-
-const beforeDrag = await page.getByTestId("review-card").getAttribute("data-instance-id");
-const box = await page.locator(".graph-canvas").boundingBox();
-if (box) {
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(box.x + box.width / 2 + 120, box.y + box.height / 2 + 10, { steps: 6 });
-  await page.mouse.up();
+  assert.deepEqual(failures, []);
 }
-check((await page.getByTestId("review-card").getAttribute("data-instance-id")) === beforeDrag, "graph drag does not advance the case");
-check(await undo.isDisabled(), "graph drag does not create a review decision");
 
-const firstId = beforeDrag;
-const bins = page.getByRole("region", { name: "Review bins" });
-const originalPrompt = page.getByLabel("Original prompt", { exact: true });
-await originalPrompt.fill("Keep the intended behavior.");
-check((await originalPrompt.inputValue()) === "Keep the intended behavior.", "the filled prompt keeps its accessible name");
-const yes = bins.getByRole("region", { name: "Yes", exact: true });
-const no = bins.getByRole("region", { name: "No", exact: true });
-check((await yes.count()) === 1, "Yes bin is accessible");
-check((await no.count()) === 1, "No bin is accessible");
-const swipeSurface = page.locator(".review-header").first();
-await swipeSurface.evaluate((element) => element.scrollIntoView({ block: "center", behavior: "instant" }));
-for (const [distance, destination] of [
-  [114, yes],
-  [-114, no],
-]) {
-  await page.waitForFunction(() => getComputedStyle(document.querySelector(".review-card")).transform === "none");
-  const swipeBox = await swipeSurface.boundingBox();
-  const x = swipeBox.x + swipeBox.width / 2;
-  const y = swipeBox.y + swipeBox.height / 2;
-  await page.mouse.move(x, y);
-  await page.mouse.down();
-  await page.mouse.move(x + distance, y, { steps: 6 });
-  await page.mouse.up();
-  const opened = await destination.getByRole("button", { name: "Open case" }).isEnabled({ timeout: 5000 });
-  check(opened, `swipe ${distance > 0 ? "right" : "left"} records the case`);
-}
-check((await page.getByTestId("review-card").getAttribute("data-instance-id")) === firstId, "swiping leaves the current case in place");
-const unsure = bins.getByRole("region", { name: "Unsure", exact: true });
-await page.getByRole("button", { name: "Mark unsure" }).click();
-check(await unsure.getByRole("button", { name: "Open case" }).isEnabled(), "Unsure records the exact case without advancing");
-check(await page.getByRole("button", { name: "Regenerate SQL" }).isDisabled(), "Unsure alone cannot regenerate");
-await page.getByRole("button", { name: "Next counterexample" }).click();
-await page.waitForFunction((id) => document.querySelector('[data-testid="review-card"]')?.getAttribute("data-instance-id") !== id, firstId);
-check((await page.getByTestId("review-card").count()) === 1, "explicit Next replaces exactly one card");
-const secondId = await page.getByTestId("review-card").getAttribute("data-instance-id");
-await unsure.getByRole("button", { name: "Open case" }).click();
-await page.getByText("Reviewing a saved case").waitFor();
-check((await page.getByTestId("review-card").getAttribute("data-instance-id")) === firstId, "the bin reopens the exact previous case");
-await unsure.getByRole("button", { name: "Move to No" }).click();
-await no.getByRole("button", { name: "Withdraw" }).click();
-await page.getByRole("button", { name: "Return to current workspace" }).click();
-check((await page.getByTestId("review-card").getAttribute("data-instance-id")) === secondId, "leaving a bin restores the live case");
-
-await page.getByRole("button", { name: "Start a local draft" }).click();
-await page.getByRole("heading", { name: "Draft awaiting deterministic analysis" }).waitFor();
-check((await page.getByTestId("review-card").count()) === 0, "draft sets stored evidence aside");
-const limit = page.getByLabel(/Result limit/i);
-await limit.fill("42");
-await page.getByRole("button", { name: /Check draft with deterministic compiler/i }).click();
-await page.getByText("Analysis bridge unavailable").waitFor();
-check((await page.getByText(/LIMIT 42/).count()) > 0, "draft SQL preview reflects the local limit");
-check((await page.getByText("Analysis bridge unavailable").count()) === 1, "compiler gap is explicit and does not fake validation");
-await resetView();
-await page.screenshot({ path: path.join(OUT, "desktop-draft.png") });
-await page.getByRole("button", { name: /Discard draft & return to evidence/i }).click();
-await page.getByTestId("review-card").waitFor();
-
-const openStates = async () => {
-  if (!(await page.locator('[data-scenario-id="state-large"]').isVisible())) {
-    await page.locator(".state-library summary").click();
+const browser = await chromium.launch({ executablePath: chrome, headless: true });
+try {
+  for (const [size, width, height] of [
+    ["desktop", 1440, 1000],
+    ["mobile", 390, 844],
+    ["narrow", 320, 725],
+  ]) {
+    const page = await browser.newPage({ viewport: { width, height } });
+    const errors = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await checkWorkbench(page, size);
+    await checkAccessibility(page);
+    assert.deepEqual(errors, []);
+    await page.close();
+    console.log("PASS", size, "workbench, BYOT and accessibility");
   }
-};
-await openStates();
-await page.locator('[data-scenario-id="state-large"]').click();
-await page.locator(".partial-banner").waitFor();
-check((await page.getByText(/Graph-view completeness/i).count()) === 1, "large graph exposes an honest partial-view banner");
-await resetView();
-await page.screenshot({ path: path.join(OUT, "desktop-partial.png") });
-
-await openStates();
-await page.locator('[data-scenario-id="state-sql-error"]').click();
-await page.getByRole("heading", { name: "A modeled SQL rejection" }).waitFor();
-check((await page.getByText(/23514/).count()) > 0, "SQL error fixture retains supplied diagnostics");
-check((await page.getByTestId("review-card").count()) === 1, "SQL error evidence remains reviewable");
-
-await page.emulateMedia({ reducedMotion: "reduce" });
-const durations = await page.evaluate(() => {
-  const element = document.querySelector(".site-header__scanline");
-  return element ? [getComputedStyle(element).animationDuration, getComputedStyle(document.body).transitionDuration] : [];
-});
-check(Number.parseFloat(durations[0]) <= 0.001, `reduced motion disables animation (${durations[0]})`);
-
-const axePath = path.resolve("node_modules/axe-core/axe.min.js");
-if (fs.existsSync(axePath)) {
-  await page.addScriptTag({ content: fs.readFileSync(axePath, "utf8") });
-  const axe = await page.evaluate(async () => {
-    const results = await window.axe.run(document, { runOnly: ["wcag2a", "wcag2aa"] });
-    return results.violations.map((violation) => ({
-      id: violation.id,
-      impact: violation.impact,
-      nodes: violation.nodes.map((node) => ({ target: node.target, html: node.html, summary: node.failureSummary })),
-    }));
-  });
-  const severe = axe.filter((violation) => violation.impact === "serious" || violation.impact === "critical");
-  console.log("AXE", JSON.stringify(axe, null, 2));
-  check(severe.length === 0, `no serious/critical automated accessibility violations (${severe.map((item) => item.id).join(", ") || "none"})`);
+} finally {
+  await browser.close();
+  await local?.close();
 }
-
-const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
-const narrow = await mobile.newPage();
-await narrow.goto(BASE, { waitUntil: "networkidle" });
-await narrow.getByTestId("review-card").waitFor();
-const narrowOverflow = await narrow.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-check(narrowOverflow <= 1, `narrow layout has no horizontal overflow (${narrowOverflow}px)`);
-await narrow.screenshot({ path: path.join(OUT, "narrow-main.png") });
-await narrow.getByRole("button", { name: /Cases & draft/i }).click();
-await narrow.getByRole("button", { name: /Close cases and builder panel/i }).waitFor();
-await narrow.screenshot({ path: path.join(OUT, "narrow-library.png") });
-await narrow.getByRole("button", { name: /Close cases and builder panel/i }).click();
-await narrow.getByRole("button", { name: /^Explain/i }).click();
-await narrow.getByRole("button", { name: /Close explanation and ledger panel/i }).waitFor();
-await narrow.screenshot({ path: path.join(OUT, "narrow-explain.png") });
-await mobile.close();
-
-console.log("PAGE_ERRORS", JSON.stringify(pageErrors));
-check(pageErrors.length === 0, "no uncaught page errors");
-check(!requests.some((url) => new URL(url).pathname.startsWith("/api/ai/")), "review, bin changes and fixture navigation make no AI requests");
-await browser.close();
-await localServer?.close();
-if (failures > 0) {
-  console.error(`${failures} browser check(s) failed`);
-  process.exit(1);
-}
-console.log("All browser checks passed");

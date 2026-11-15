@@ -336,11 +336,12 @@ export interface StartCommand {
   readonly max_instances: number;
 }
 
-/** Injectable local transport: fixture by default, host bridge when supplied. */
+/** Same-origin solver transport with explicit fixture injection for UI tests. */
 export interface AnalysisTransport {
   readonly id: string;
   readonly label: string;
   readonly kind: "fixture" | "local-host";
+  readonly fixtures?: readonly FixtureScenario[];
   open(command: OpenCommand): Promise<TransportResult>;
   next(command: NextCommand): Promise<TransportResult>;
   start(command: StartCommand): Promise<TransportResult>;

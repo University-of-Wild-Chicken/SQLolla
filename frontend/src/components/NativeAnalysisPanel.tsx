@@ -4,19 +4,10 @@ import type { NativeAnalysis } from "../workspace/native";
 import { CopySqlButton } from "./CopySqlButton";
 
 /** Keep SQL readable while advanced catalog, parameters, bounds and property remain explicitly editable. */
-export function NativeAnalysisPanel({ analysis }: { readonly analysis: NativeAnalysis }): JSX.Element {
+export function NativeAnalysisPanel({ analysis, compact }: { readonly analysis: NativeAnalysis; readonly compact?: boolean }): JSX.Element {
   return (
     <div className="rail-scroll builder-panel">
-      <div className="rail-heading">
-        <span className="mono-label">LOCAL ANALYSIS</span>
-        <h2>Check your query</h2>
-        <p>Try a tenant-isolation example. Look for a result belonging to tenant 0 when only tenant 1 is allowed.</p>
-      </div>
-      <label className="field-label">
-        SQL query
-        <textarea aria-label="SQL query" className="code-block" rows={7} value={analysis.sql} onChange={(event) => analysis.editSql(event.target.value)} />
-      </label>
-      <CopySqlButton sql={analysis.sql} />
+      <SqlInput analysis={analysis} compact={compact} />
       <NativeControls analysis={analysis} />
       <AdvancedRequest analysis={analysis} />
       {analysis.error ? (
@@ -27,8 +18,31 @@ export function NativeAnalysisPanel({ analysis }: { readonly analysis: NativeAna
       <button type="button" className="primary-button" disabled={analysis.pending} onClick={() => void analysis.start()}>
         {analysis.pending ? "Analyzing…" : "Analyze query"}
       </button>
-      <p className="rail-footnote">Results cover the declared finite model. Your database is not connected or modified.</p>
+      <p className="rail-footnote">Runs against the declared finite model without a database connection.</p>
     </div>
+  );
+}
+
+/** Show SQL and copy controls without mixing the editable request with evidence. */
+function SqlInput({ analysis, compact }: { readonly analysis: NativeAnalysis; readonly compact?: boolean }): JSX.Element {
+  return (
+    <>
+      <div className="rail-heading">
+        <h2>{compact ? "Query and rule" : "Check your query"}</h2>
+        <p>The starter query tests whether orders can be returned for a tenant other than 1.</p>
+      </div>
+      <label className="field-label">
+        SQL query
+        <textarea
+          aria-label="SQL query"
+          className="code-block"
+          rows={compact ? 5 : 7}
+          value={analysis.sql}
+          onChange={(event) => analysis.editSql(event.target.value)}
+        />
+      </label>
+      <CopySqlButton sql={analysis.sql} />
+    </>
   );
 }
 
@@ -52,7 +66,7 @@ function AdvancedRequest({ analysis }: { readonly analysis: NativeAnalysis }): J
 /** Explicit example/counterexample and enumeration limits never change after evidence is produced. */
 function NativeControls({ analysis }: { readonly analysis: NativeAnalysis }): JSX.Element {
   return (
-    <div className="builder-section">
+    <div className="builder-section native-controls">
       <label>
         Look for
         <select aria-label="Analysis goal" value={analysis.kind} onChange={(event) => analysis.setKind(event.target.value as NativeAnalysis["kind"])}>
@@ -79,9 +93,13 @@ function NativeControls({ analysis }: { readonly analysis: NativeAnalysis }): JS
 export function NativeDraftState(): JSX.Element {
   return (
     <section className="state-panel">
-      <span className="mono-label">DRAFT AWAITING ANALYSIS</span>
+      <span className="result-placeholder-icon" aria-hidden="true">
+        ⊢
+      </span>
       <h2>Ready to check a new question</h2>
-      <p>Edit the SQL and explicit context, then choose Analyze query. The local backend will compile it, ask Alloy for a case, and replay the result.</p>
+      <p>
+        Choose <strong>Analyze query</strong> to search for a real case. Review its rows and graph, or open the generated SQL, IR and Alloy model.
+      </p>
     </section>
   );
 }

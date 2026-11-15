@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AI_MODEL } from "../ai/config";
 import { checkRevision, generateRevision, type CheckedRevision, type RefinementBasis, type RefinementLabel } from "../ai/refinement";
 import type { AiProviderSettings } from "../ai/summary";
-import { DEMO_SCENARIOS } from "../analysis/fixtures";
+import { fixtureHash } from "../analysis/fixtureFactory";
 import type { SessionState } from "../analysis/session";
 import type { AnalysisTransport } from "../analysis/types";
 import { activeDecisions, detectConflicts, type FeedbackEvent } from "../feedback/journal";
@@ -20,6 +20,8 @@ interface RefinementInputs {
 }
 
 type Operation = "generate" | "check";
+// Legacy browser labels stay visible, but synthetic cases cannot constrain a real solver run.
+const OLD_DEMO_BUNDLES = new Set(["tenant", "scoped", "mutation", "large", "sql-error"].map((name) => fixtureHash(`bundle:${name}`)));
 interface RunState {
   readonly identity: object;
   readonly busy?: Operation;
@@ -34,9 +36,8 @@ function issues(inputs: RefinementInputs, events: ReturnType<typeof activeDecisi
   if (detectConflicts(inputs.journal.events).length) return "Resolve contradictory Yes and No labels in the review bins or ledger.";
   if (events.some((event) => !event.bundle_id)) return "Some labels have no bundle identity. Review their original cases or withdraw those labels.";
   if (events.some((event) => inputs.archiveErrors[archiveKey(event)])) return "Some saved cases could not be reopened. Retry or withdraw their labels.";
-  const fixtureIds = new Set(DEMO_SCENARIOS.map((scenario) => scenario.bundleId));
-  if (events.some((event) => event.bundle_id !== inputs.session.bundleId && fixtureIds.has(event.bundle_id ?? null))) {
-    return "Some labels belong to demo cases. Local refinement needs archived solver cases.";
+  if (events.some((event) => event.bundle_id !== inputs.session.bundleId && OLD_DEMO_BUNDLES.has(event.bundle_id ?? ""))) {
+    return "Withdraw labels from retired demo cases before refining this query.";
   }
   if (new Set(events.map((event) => `${event.bundle_id}|${event.instance_id}`)).size !== events.length) {
     return "At least one case has multiple active labels. Keep one label for each saved case.";
