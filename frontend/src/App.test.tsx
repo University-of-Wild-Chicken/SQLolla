@@ -146,13 +146,13 @@ describe("review workspace workflows", () => {
     await user.click(screen.getByRole("button", { name: "Start a local draft" }));
     expect(await screen.findByRole("heading", { name: "Draft awaiting deterministic analysis" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Orders without a tenant filter" })).toBeNull();
-    await user.click(screen.getByRole("button", { name: "Continue in Query studio" }));
+    await user.click(screen.getByRole("button", { name: "Continue in query builder" }));
     const limit = screen.getByLabelText(/Result limit/i);
     await user.clear(limit);
     await user.type(limit, "25");
     expect(screen.getAllByText(/LIMIT 25/).length).toBeGreaterThan(0);
     await user.click(screen.getByRole("button", { name: "Check draft with deterministic compiler" }));
-    expect(await screen.findByText("Analysis bridge unavailable")).toBeInTheDocument();
+    expect(await screen.findByText("Could not check the draft")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "01 / Cases" }));
     await user.click(screen.getByRole("button", { name: /A parameterized tenant read/ }));
     expect(await screen.findByRole("heading", { name: "Discard the local draft?" })).toBeInTheDocument();

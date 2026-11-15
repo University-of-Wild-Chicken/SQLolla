@@ -65,7 +65,7 @@ export function DraftCheck({ draft, onCheck, onStage, onDiscard }: DraftCheckPro
       </button>
       {state.error ? (
         <div role="alert" className="inline-alert">
-          <strong>Analysis bridge unavailable</strong>
+          <strong>Could not check the draft</strong>
           <span>{state.error}</span>
         </div>
       ) : null}

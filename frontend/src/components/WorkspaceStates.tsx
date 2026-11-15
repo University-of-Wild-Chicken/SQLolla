@@ -1,7 +1,7 @@
 import { stringifyJson } from "../analysis/json";
 /**
  * Honest center-column states for loading, terminal enumeration, failures and
- * locally edited drafts awaiting a compiler bridge.
+ * locally edited drafts awaiting analysis.
  */
 import type { JSX } from "react";
 import { classifyAnalysisError, describeEnumerationStatus, type StatusDescriptor } from "../analysis/status";
@@ -159,9 +159,7 @@ function DraftSummary({ draft, errors }: DraftSummaryProps): JSX.Element {
       <div>
         <span className="mono-label">READINESS</span>
         <p>
-          {errors.length === 0
-            ? "Structurally complete for a future compiler, not semantically validated."
-            : `${errors.length} structural gap(s) to resolve in Query studio.`}
+          {errors.length === 0 ? "The draft has the required fields for a compiler check." : `${errors.length} draft issues to resolve in the query builder.`}
         </p>
       </div>
     </div>
@@ -197,7 +195,7 @@ function DraftPreview({ sql, errors }: DraftPreviewProps): JSX.Element {
       ) : (
         <div className="inline-alert">
           <strong>Preview unavailable</strong>
-          <span>{errors[0] ?? "Finish the draft in Query studio."}</span>
+          <span>{errors[0] ?? "Finish the draft in the query builder."}</span>
         </div>
       )}
       {errors.length > 0 ? (
@@ -211,7 +209,7 @@ function DraftPreview({ sql, errors }: DraftPreviewProps): JSX.Element {
   );
 }
 
-/** Render the draft's warning, headline and compiler-bridge explanation. */
+/** Explain the draft's current status and how to check it. */
 function DraftIntro(): JSX.Element {
   return (
     <>
@@ -220,14 +218,7 @@ function DraftIntro(): JSX.Element {
         <span className="status-stamp status-stamp--caution">Not validated</span>
       </div>
       <h1>Draft awaiting deterministic analysis</h1>
-      <p>
-        Your card edits are separate from the stored canonical evidence. The previous case has been set aside for this draft and is no longer presented as an
-        applicable result.
-      </p>
-      <div className="bridge-gap" role="note">
-        <strong>The compile bridge is not connected.</strong>
-        <span>A browser cannot start the local JSON-lines CLI. No client-generated SQL, IR or Alloy is presented as checked.</span>
-      </div>
+      <p>Check this draft in the query builder to see the generated IR and Alloy model. Start an analysis to create a review case.</p>
     </>
   );
 }
@@ -239,7 +230,7 @@ interface DraftStatePanelProps {
   readonly onDiscard: () => void;
 }
 
-/** Render the local draft as explicitly awaiting a deterministic compiler bridge. */
+/** Render the draft and its preview before a new analysis creates evidence. */
 export function DraftStatePanel({ scenario, draft, onEdit, onDiscard }: DraftStatePanelProps): JSX.Element {
   const errors = draftErrors(draft);
   return (
@@ -265,7 +256,7 @@ function DraftFooter({ scenario, onEdit, onDiscard }: DraftFooterProps): JSX.Ele
     <>
       <div className="state-actions">
         <button type="button" className="primary-button" onClick={onEdit}>
-          Continue in Query studio
+          Continue in query builder
         </button>
         <button type="button" className="ghost-button" onClick={onDiscard}>
           Discard draft & return to stored evidence

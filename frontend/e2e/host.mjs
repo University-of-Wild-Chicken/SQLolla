@@ -234,6 +234,8 @@ async function checkBuilder(page) {
   await page.reload({ waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Query builder", exact: true }).click();
   await page.getByRole("button", { name: "Start draft for this schema", exact: true }).click();
+  await page.getByText(/Check this draft in the query builder to see the generated IR and Alloy model/).waitFor();
+  assert.equal(await page.getByText(/compile bridge is not connected|local JSON-lines CLI/i).count(), 0);
   const sql = await page.locator(".builder-sql pre").textContent();
   assert.match(sql, /^SELECT/);
   await page.getByRole("button", { name: "Check draft with deterministic compiler", exact: true }).click();
