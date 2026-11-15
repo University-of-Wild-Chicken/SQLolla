@@ -1,0 +1,32 @@
+digraph SQLolla {
+  graph [rankdir=TB, bgcolor="white", pad=0.10, nodesep=0.22, ranksep=0.40,
+         fontname="DejaVu Sans", fontsize=11];
+  node [shape=box, style="rounded,filled", color="#54628d", fillcolor="#edf1fb",
+        fontname="DejaVu Sans", fontsize=14, width=1.31, margin="0.10,0.08"];
+  edge [color="#475272", fontcolor="#303753", fontname="DejaVu Sans", fontsize=10,
+        arrowsize=0.67];
+
+  browser [label="Browser workbench\nSQL, graphs, reviews", fillcolor="#e1e8fb"];
+  host [label="Rust HTTP host\nRequests and case IDs", fillcolor="#e1e8fb"];
+  provider [label="OpenAI\nOptional assistance", fillcolor="#faf1de", color="#98733e"];
+  parser [label="SQLeanParser\nLean syntax export"];
+  compile [label="Rust compiler\nBinding and typed RA"];
+  alloy [label="Java bridge\nAlloy SAT check"];
+  verify [label="Development checks\nLean and PostgreSQL 16", fillcolor="#f0f1f4", color="#6b7280"];
+  replay [label="Rust replay\nValidate solver evidence", fillcolor="#e6f4f1", color="#3c7a70"];
+  store [label="Evidence archive\nSQL, IR, Alloy and cases", shape=cylinder,
+         fillcolor="#e6f4f1", color="#3c7a70"];
+
+  { rank=same; browser; host; provider }
+  { rank=same; parser; compile; alloy }
+  { rank=same; verify; replay; store }
+  browser -> host [dir=both, label="Queries / cases"];
+  host -> provider [dir=both, style=dashed, color="#98733e", label="Explicit BYOT"];
+  host -> parser [label="SQL"];
+  parser -> compile [label="Syntax tree"];
+  compile -> alloy [label="Alloy model"];
+  alloy -> replay [label="SAT witness"];
+  verify -> compile [constraint=false, style=dashed, color="#6b7280", label="Tests"];
+  verify -> replay [style=invis];
+  replay -> store [dir=both, label="Save / reopen"];
+}
