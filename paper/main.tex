@@ -25,7 +25,7 @@
 \email{saya@uwc.edu.bi}
 
 \begin{abstract}
-SQLolla compiles supported PostgreSQL statements to typed relational algebra, searches finite models with Alloy, and stores replayed examples and counterexamples. Reviewers label concrete behavior to preserve or exclude during query revision. A deterministic gate replays the labeled cases and checks the original bounded assertion before a candidate can be adopted. Evaluation covers 276 parser exports, 552 recorded PostgreSQL observations, and 3,511 fresh comparisons on the native relational fragment. The browser workbench was exercised on Windows, Ubuntu under WSL2, Docker, and the deployed website. An evidence projection preserves the rule outcome and its decisive citation while withholding private source and cell values. In one live redacted trial, the explanation identified the failed rule and output position and cited the offending row.
+SQLolla compiles supported PostgreSQL statements to typed relational algebra, searches finite models with Alloy, and stores replayed examples and counterexamples. Reviewers label concrete behavior to preserve or exclude during query revision. A deterministic gate replays the labeled cases and checks the original bounded assertion before a candidate can be adopted. Evaluation covers 276 parser exports, 552 recorded PostgreSQL observations, and 3,511 fresh comparisons on the native relational fragment. The browser workbench was exercised on Windows, Ubuntu under WSL2, Docker, and the deployed website. Starting from an empty workbench, a live provider request produced a locally compiled inventory model. A separate browser replay edited the SQL, preserved the model, and found a counterexample to the selected row limit.
 \end{abstract}
 
 \keywords{PostgreSQL, relational algebra, Alloy, bounded model checking, counterexamples, query refinement}
@@ -40,7 +40,7 @@ We distinguish three evaluation questions. Parser coverage measures whether a re
   \centering
   \includegraphics[width=.98\textwidth]{architecture.pdf}
   \caption{SQLolla separates deterministic analysis and replay from optional provider assistance. PostgreSQL serves as a test oracle, and Lean specifies interface contracts.}
-  \Description{Architecture diagram. The browser sends SQL and a bounded rule to the Rust host. SQLeanParser exports a syntax tree. Rust binds it into typed relational algebra and produces an Alloy model. The Java bridge sends that model to Alloy. Rust replays the result and saves evidence. The browser reviews the case and may request optional OpenAI assistance. Lean and PostgreSQL connect through development checks.}
+  \Description{Architecture diagram. The browser sends SQL and a bounded rule to the Rust host. SQLeanParser exports a syntax tree. Rust binds it into typed relational algebra and produces an Alloy model. The Java bridge sends that model to Alloy. Rust replays the result and saves evidence. The browser can request a model or SQL draft and can ask OpenAI to explain an archived case. Lean and PostgreSQL connect through development checks.}
   \label{fig:architecture}
 \end{figure*}
 
@@ -50,6 +50,17 @@ Figure~\ref{fig:architecture} follows the request from the workbench to the arch
 Codd's relational model provides the algebraic setting~\cite{codd1970}. Jackson describes translating constrained relational models into bounded SAT problems~\cite{jackson2000}. SQLolla follows this bounded search approach and preserves bag multiplicity, typed nulls, and ordered output positions. It records observable errors and effects when the admitted profile supports them.
 
 The native relational profile compares a separately encoded Alloy result with the Rust interpreter. A wider profile encodes a complete table of finite outcomes produced by the interpreter. Its Alloy check exercises outcome selection and replay. Independent PostgreSQL comparisons are needed to assess the evaluator's SQL semantics. An inconsistent assumption set, timeout, coverage failure, or truncated search does not establish a bounded pass.
+
+\section{Build with AI}
+The workbench opens with an empty query and catalog. Users can declare a model themselves or describe it through Build with AI. A new-model request sends the description with explicit consent. Drafting SQL for an existing model also sends schema declarations and numbered parameter types. The host checks the proposed SQL with the local compiler. The user selects the proposal before it becomes the editable workbench request and runs the bounded analysis explicitly.
+
+In a live bring-your-own-token (BYOT) trial on \texttt{d71e8cf}, the user described an \texttt{inventory} table with two non-null \texttt{int32} columns, \texttt{item\_id} and \texttt{units}, and at most one row. The finite domain contained 0, 1, and 5. The rule allowed at most zero output rows. The reported proposal selected both columns from \texttt{inventory} and passed the compiler check. In a separate Chrome replay on the same deployment, we staged the model and submitted the following edit.
+\begin{verbatim}
+SELECT item_id, units
+FROM inventory
+WHERE units = 5
+\end{verbatim}
+Alloy found an input with \texttt{item\_id = 5} and \texttt{units = 5}. The edited query returned that row, violating the zero-row rule, and Rust confirmed the result by replay. Figure~\ref{fig:workbench} shows the blank composer and the replayed witness.
 
 \section{Review and refinement}
 Each case fixes an input $d$ and an observed behavior $b$. Write $O(q,d)$ for the complete set of modeled outcomes for candidate $q$ at that input. A Yes case requires $b \in O(q,d)$. A No case requires $b \notin O(q,d)$. Unsure retains a review decision without a replay obligation. The checker requires at least one active Yes or No, a compatible review basis, and a clean check of the original assertion within the original bounds. A candidate can become the next SQL draft only after the user chooses to adopt it. Editing the prompt or labels invalidates earlier adoption eligibility.
@@ -84,16 +95,21 @@ The Lean contract formalizes the projection from an approved observation with pr
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=.88\textwidth]{workbench.png}
-  \caption{A production counterexample returned an order outside the starter query's tenant rule. The workbench displays the rule, the replay status, and the Graphviz instance with a link to its SQL/RA/Alloy triple.}
-  \Description{Screenshot of the SQLolla workbench. The left pane shows the SQL query and the Analyze query button. The right pane shows a replay-confirmed counterexample and a graph pairing the input order with the returned output occurrence.}
+  \begin{minipage}[c]{.30\textwidth}
+    \includegraphics[width=\linewidth]{blank-workbench.png}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{.66\textwidth}
+    \includegraphics[width=\linewidth]{inventory-witness.png}
+  \end{minipage}
+  \caption{Build with AI on the blank production workbench (left) and the counterexample from a separate production replay of the edited inventory query (right). The edited query returned one row with \texttt{units = 5}.}
+  \Description{The left image shows an empty description field and the option to build a database model. The right image shows an input inventory row with item ID and units both equal to 5, and the same values in the returned row.}
   \label{fig:workbench}
 \end{figure*}
 
 \section{Evaluation and deployment}
 Table~\ref{tab:checks} summarizes the checks. The industrial ledger retains the supplied context for every SQL record, including driver expansion, bindings, and expected errors. The full ledger uses retained PostgreSQL outcomes. The independent PostgreSQL~16.16 cluster provided the fresh comparisons. Pivoted query synthesis illustrates the use of a separately justified test oracle~\cite{rigger2020}. Our comparisons instead use the actual PostgreSQL behaviors for the stated inputs and contexts. The refinement regression also exercises unordered \texttt{LIMIT} alternatives, duplicate occurrences, and expected PostgreSQL errors.
 
-The \href{https://github.com/University-of-Wild-Chicken/SQLolla/actions/runs/43723047506}{hosted Windows run} passed the Lean audit, parser exports, PostgreSQL and Alloy replays, IIS archive verification, and Chrome against the extracted package. Browser checks cover the builder handoff, stage and copy actions, Graphviz, case reopening and Next, the review bins, and the first-visit and credential controls. Cloudflare Access initially gated the deployment~\cite{cloudflareaccess}. After access opened, Chrome verified the workbench and opened the replay-confirmed case in Figure~\ref{fig:workbench} on the production rebuild of \texttt{d86dded}. The live trial confirmed that the provider request succeeded through the deployed proxy.
+The \href{https://github.com/University-of-Wild-Chicken/SQLolla/actions/runs/43723047506}{hosted Windows run} passed the Lean audit, parser exports, PostgreSQL and Alloy replays, IIS archive verification, and Chrome against the extracted package. Browser checks cover the builder handoff, stage and copy actions, Graphviz, case reopening and Next, the review bins, and the first-visit and credential controls. Cloudflare Access initially gated the deployment~\cite{cloudflareaccess}. The inventory trial exercised the provider request through the deployed proxy. The separate browser replay verified that the edited SQL reached the host with its original finite model and that the workbench opened the replay-confirmed witness.
 
 The private IIS and Linux packages include the host, parser, Java runtime, Alloy bridge, and static assets. Chrome passed against the Linux archive in Docker on Ubuntu under WSL2. The image requests \texttt{SIGINT} on stop~\cite{dockerstop}. The process exited with code zero, and a restarted container reopened the identical saved case from the named volume. Archive provenance binds compiler bytes. A platform migration therefore retains the original executable and archive for lookup and reanalyzes source queries to build native evidence on the destination.
 
@@ -103,6 +119,7 @@ The measurements apply to bounded fixtures and supported profiles. They do not e
 Source, validation entry points, contracts, and the corpus ledger are maintained in the \href{https://github.com/University-of-Wild-Chicken/SQLolla}{SQLolla repository}. To reproduce the checks with the pinned toolchains, run \path{parser/census.py}, \path{validation/run.py}, and \path{validation/corpus_semantics.py}. \path{validation/refinement.py} runs the feedback replay checks. Browser checks reside in \path{frontend/e2e}. The binary deployment archives are private.
 
 \FloatBarrier
+\balance
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
 \end{document}

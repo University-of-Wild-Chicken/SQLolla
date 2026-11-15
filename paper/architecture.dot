@@ -8,7 +8,7 @@ digraph SQLolla {
 
   browser [label="Browser workbench\nSQL, graphs, reviews", fillcolor="#e1e8fb"];
   host [label="Rust HTTP host\nRequests and case IDs", fillcolor="#e1e8fb"];
-  provider [label="OpenAI\nOptional assistance", fillcolor="#faf1de", color="#98733e"];
+  provider [label="OpenAI\nModel drafts and explanations", fillcolor="#faf1de", color="#98733e"];
   parser [label="SQLeanParser\nLean syntax export"];
   compile [label="Rust compiler\nBinding and typed RA"];
   alloy [label="Java bridge\nAlloy SAT check"];
