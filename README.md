@@ -6,6 +6,8 @@ provides an offline Rust CLI, a native Lean parser adapter and a narrow Java 17
 Alloy worker. It can compare concrete executions or find bounded counterexamples
 to read-result properties. It never executes submitted SQL against a live app.
 
+[Project cover images](assets/covers)
+
 The **MVP target is the full pinned SQLeanParser typed-AST surface**, including
 business queries and mutations. M1 is its tested relational foundation, not that
 complete MVP. [capabilities.json](capabilities.json) tracks the remaining families
