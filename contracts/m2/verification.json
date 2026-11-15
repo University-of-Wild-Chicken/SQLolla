@@ -5,9 +5,9 @@
   "compiler_sha256": "a8040e2cab341c12116ab591fed9f761816f5f6b08554f6cc1680e86dfbba0a2",
   "source_shortcut_gate": "PASS",
   "maximum_authored_declaration_lines": 30,
-  "authored_theorem_statements": 453,
-  "compiled_draft_declarations": 3951,
-  "compiled_draft_theorems_including_generated": 1391,
+  "authored_theorem_statements": 455,
+  "compiled_draft_declarations": 4029,
+  "compiled_draft_theorems_including_generated": 1426,
   "compiled_inherited_declarations": 1038,
   "observed_foundations": "[propext, Classical.choice, Quot.sound]",
   "custom_or_unapproved_axioms": 0,
@@ -27,7 +27,7 @@
     },
     {
       "path": "SQLollaM2\\AssistanceBoundary.lean",
-      "sha256": "60a47319ea55a5d06e85b28ae27f7dcca78751b9135652afc5d72fe0407c1d7f"
+      "sha256": "6820d46e00ef15493714e953317ae239a328b55034a88fad3f9568b1ee2b7777"
     },
     {
       "path": "SQLollaM2\\BackendSignals.lean",

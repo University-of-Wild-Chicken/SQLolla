@@ -61,7 +61,11 @@ export function LiveAssistancePanel(props: Props): JSX.Element {
   const disabled = !props.bundleId || !props.settings.apiKey.trim() || !!state?.busy;
   return (
     <div className="ai-live-controls">
-      <p>{props.settings.redactValues ? "SQL, IR, Alloy and values will be omitted." : "Canonical SQL, IR, Alloy and values will be sent to OpenAI."}</p>
+      <p>
+        {props.settings.redactValues
+          ? "Shares the verified rule outcome when available. SQL, IR, Alloy and literal values stay local."
+          : "Canonical SQL, IR, Alloy and values will be sent to OpenAI."}
+      </p>
       {!props.bundleId ? <p role="status">Open canonical host evidence before requesting live assistance.</p> : null}
       <label className="field-label">
         Question about this case

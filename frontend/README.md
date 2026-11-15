@@ -109,7 +109,8 @@ Save an OpenAI key in the tab to request explanations or use Regenerate SQL. Gen
 the original prompt, requires unredacted context and sends the canonical SQL, cases and notes only
 on that explicit action. The host uses OpenAI Responses with `gpt-6.1-sol` and `store:false`.
 The browser invalidates pending results and adoption when the prompt, source or feedback changes.
-Redacted explanations omit SQL, IR, Alloy, scalar values and fact payloads.
+Redacted explanations share the verified rule outcome and decisive fact when available.
+SQL, IR, Alloy, scalar values and fact payloads stay local.
 
 ## Security and truthfulness boundaries
 

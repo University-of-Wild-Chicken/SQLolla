@@ -49,13 +49,13 @@ async function nextCase(page) {
   return payload;
 }
 
-/** Configure explicit unredacted synthetic context; saving settings must not send the key. */
+/** Configure the default redacted explanation; saving settings must not send the key. */
 async function configureAi(page, apiKey) {
   await page.getByRole("button", { name: "AI settings" }).click();
   assert.doesNotMatch(await page.getByRole("dialog").innerText(), /gpt-6\.1-sol/i);
   assert.equal(await page.getByLabel("Model identifier").count(), 0);
   await page.getByLabel("API key (memory only)", { exact: true }).fill(apiKey);
-  await page.getByLabel("Redact SQL and values before sending explanation context").uncheck();
+  assert.equal(await page.getByLabel("Redact SQL and values before sending explanation context").isChecked(), true);
   await page.getByRole("button", { name: "Save in this tab · no send", exact: true }).click();
   await page.getByRole("dialog").waitFor({ state: "detached" });
 }
@@ -144,6 +144,7 @@ async function checkSyntheticAi(page, solved) {
     assert.equal(body.bundle_id, solved.bundle_id);
     assert.equal(body.instance_id, instance.instance_id);
     assert.equal(body.model_revision_sha256, instance.model_revision_sha256);
+    assert.equal(body.redact_values, true);
     sent++;
     return route.fulfill({ json: syntheticExplanation(body, instance) });
   });

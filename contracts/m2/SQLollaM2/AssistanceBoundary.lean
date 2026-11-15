@@ -73,6 +73,32 @@ theorem packet_absence_requires_completeness (packet : ExplanationPacket spec wi
     (omitted : fact ∉ packet.view.visibleFacts) : fact ∉ spec.facts witness.behavior :=
   SQLolla.complete_view_absence spec witness packet.view complete fact omitted
 
+/-- Approved redacted conclusions expose rule shape and occurrence positions. -/
+inductive RedactedRuleObservation where
+  | requiredValueMismatch (column occurrence : Nat)
+  | forbiddenValueReturned (column occurrence : Nat)
+  | rowLimitExceeded (occurrences : Nat)
+  | executionError
+  deriving DecidableEq, Repr
+
+/-- The replayed conclusion and its private source values are separate parts of disclosure. -/
+structure RuleDisclosure (Private : Type) where
+  replayed : Option RedactedRuleObservation
+  privatePayload : Private
+
+/-- Redacted packets carry only the approved conclusion from replay. -/
+def redactedObservation {Private : Type} (disclosure : RuleDisclosure Private) :
+    Option RedactedRuleObservation := disclosure.replayed
+
+/-- With the approved conclusion fixed, private SQL and values cannot change its projection. -/
+theorem redacted_observation_independent_of_payload {Private : Type}
+    (first second : RuleDisclosure Private) (same : first.replayed = second.replayed) :
+    redactedObservation first = redactedObservation second := same
+
+/-- The projection cannot manufacture a rule diagnosis when no replayed conclusion exists. -/
+theorem redacted_observation_requires_replay {Private : Type}
+    (payload : Private) : redactedObservation (⟨none, payload⟩ : RuleDisclosure Private) = none := rfl
+
 /-- Private authentication material is deliberately separate from public request content. -/
 structure PrivateInvocation (Credential PublicRequest : Type) where
   credential : Credential

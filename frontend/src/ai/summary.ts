@@ -178,7 +178,7 @@ export function buildContextPreview(evidence: EvidenceView, settings: AiProvider
     "Network request: NONE — requests require an explicit action after closing settings.",
     `Redaction: ${redact ? "values redacted" : "values included"}`,
     `SQL: ${redact ? "[redacted]" : evidence.bundle.request.sql}`,
-    `Rule: ${redact ? "Value-bearing property omitted" : propertySentence(evidence.bundle.request.property, evidence.output.columns)}`,
+    `Rule: ${redact ? "Verified rule outcome and witness position when available; rule values omitted" : propertySentence(evidence.bundle.request.property, evidence.output.columns)}`,
     `Bounds: ${stringifyJson(evidence.bundle.request.bounds)}`,
     `Domain values: ${evidence.bundle.request.domain.length}`,
     `Tables: ${evidence.inputTables.map((table) => table.tableId).join(", ") || "none"}`,

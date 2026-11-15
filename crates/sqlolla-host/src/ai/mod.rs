@@ -3,6 +3,7 @@ mod context;
 mod output;
 mod provider;
 mod refinement;
+mod rules;
 mod schema;
 #[cfg(test)]
 mod tests;

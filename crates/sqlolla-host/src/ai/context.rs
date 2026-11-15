@@ -79,20 +79,41 @@ pub(super) fn build(evidence: &Evidence, redacted: bool) -> Result<Prompt> {
         .as_array()
         .ok_or_else(|| failure("ai.facts", "Canonical facts are unavailable"))?;
     validate_facts(facts, &evidence.instance)?;
-    let supplied: Vec<_> = facts
-        .iter()
-        .take(64)
-        .map(|fact| fact_context(fact, redacted))
-        .collect();
+    let observation = rules::observe(evidence).filter(|item| {
+        item["witness_reference"]
+            .as_str()
+            .is_none_or(|reference| facts.iter().any(|fact| fact["reference"] == reference))
+    });
+    let preferred = observation
+        .as_ref()
+        .and_then(|item| item["witness_reference"].as_str());
+    let supplied = select_facts(facts, preferred, redacted);
     let references = supplied
         .iter()
         .filter_map(|fact| fact["reference"].as_str().map(str::to_owned))
         .collect();
     let mut value = base_context(evidence, supplied, facts.len(), redacted);
+    if let Some(observation) = observation {
+        value["rule_observation"] = observation;
+    }
     if !redacted {
         include_sources(&mut value, evidence)?;
     }
     finish(value, references)
+}
+
+/// Retain the canonical violating row even when other facts exhaust the prompt budget.
+fn select_facts(facts: &[Value], preferred: Option<&str>, redacted: bool) -> Vec<Value> {
+    let is_preferred =
+        |fact: &Value| preferred.is_some_and(|reference| fact["reference"] == reference);
+    facts
+        .iter()
+        .find(|fact| is_preferred(fact))
+        .into_iter()
+        .chain(facts.iter().filter(|fact| !is_preferred(fact)))
+        .take(64)
+        .map(|fact| fact_context(fact, redacted))
+        .collect()
 }
 
 /// Distinguish canonical completeness from the deliberately bounded, possibly redacted prompt view.
