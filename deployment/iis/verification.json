@@ -1,22 +1,29 @@
 {
   "schema": "sqlolla.iis_publication_check.v1",
   "status": "packaged_local_checks_passed_target_acceptance_pending",
-  "checked_at_utc": "2026-11-15T05:10:58.592296+00:00",
+  "checked_at_utc": "2026-11-15T07:40:29Z",
   "target": "Windows 10 IoT Enterprise LTSC 2021 21H2 x64, build 19044",
   "local_machine": "Windows 11 Pro x64 build 26200",
   "windows_powershell": "5.1.26100.9711",
   "archive": {
-    "path": "target/publication/sqlolla-iis-win-x64.zip",
-    "bytes": 100054083,
-    "sha256": "9f99eb1027e2e98487337f27e2eaa5e31bd83a926d8eecd9ca140aee15d5d70f",
+    "path": "target/publication/sqlolla-iis-4a2a17d-x64.zip",
+    "source_base_commit": "4a2a17d3b1381d00315d2326f549043e1509b7c4",
+    "bytes": 100055430,
+    "sha256": "586f58c5c87a7023450ae6e852c84812eb966576087c0f375165a2d90589ad2a",
     "zip_crc": "passed",
     "exact_inventory": "passed",
     "immutable_file_hashes": 536
   },
   "host_sha256": "18df165cc53a57173bf896e475039b248b69514ea3867e43e94b419815f39f1b",
   "cli_sha256": "52e20ae7836ead58afe4fbbc2daa6a8e7c6ad57232ad74bd9afa9ac536f5dae5",
+  "hosted_ci": {
+    "run_id": 43689580220,
+    "commit": "49560019ed19f7f48c7fee6ccf1c43db0e59a047",
+    "result": "passed",
+    "checks": ["Lean trust", "PostgreSQL/Alloy replays", "extracted IIS ZIP", "packaged Chrome refinement"]
+  },
   "checks": {
-    "frontend_tests": 82,
+    "frontend_tests": 84,
     "host_unit_tests": 31,
     "workspace_tests": "passed",
     "clippy": "passed",
@@ -42,17 +49,17 @@
     "browser_external_requests": 0,
     "desktop_and_mobile_axe_errors": 0,
     "desktop_and_mobile_overflow_px": 0,
-    "runtime_developer_tool_path": "Windows system directories only during packaged host browser test"
+    "configured_runtime": "The launcher used the bundled parser and Java17 runtime during the browser check"
   },
   "limits": [
     "IIS/ARR/URL Rewrite and actual Windows 10 build 19044 not available locally",
-    "New live AI refinement request not run; exact gpt-6.1-sol transport and structured outputs tested locally",
+    "Current browser test used a synthetic model response and Access-style redirect; live production authorization remains pending",
     "Industrial 552 comparisons are declared PostgreSQL fixture evidence, not PostgreSQL-wide proof",
     "SQLeanParser root redistribution license unresolved; private user deployment package",
     "Shared single-trust-domain evidence store; authenticated perimeter required before public access"
   ],
   "cleanup": {
-    "removed": "Obsolete proposal controls/context helpers, duplicate rail scaffolding, owned agent test journals/clusters and temporary screenshots",
+    "removed": "Seven tracked screenshots of the retired fixture workspace and the temporary Docker test containers and volumes",
     "automatic_approval_reason": "blocked by policy",
     "local_artifacts_remaining": "Ignored staging assets and local test temporary directories. They are outside the publication ZIP and source control.",
     "obsolete_staging_assets_in_zip": false
