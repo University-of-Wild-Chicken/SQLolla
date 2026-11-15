@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import csv
 from pathlib import Path
 import secrets
 import shutil
@@ -30,6 +31,17 @@ def available_port() -> int:
     with socket.socket() as listener:
         listener.bind(("127.0.0.1", 0))
         return listener.getsockname()[1]
+
+
+def grant_windows_oracle_access(directory: Path) -> None:
+    """Allow the exact runner SID after PostgreSQL removes admin group access."""
+    if os.name != "nt" or os.environ.get("GITHUB_ACTIONS") != "true":
+        return
+    system = Path(os.environ["SystemRoot"]) / "System32"
+    identity = subprocess.check_output([str(system / "whoami.exe"), "/user", "/fo", "csv", "/nh"], **process_options())
+    sid = next(csv.reader([identity.decode("ascii", errors="replace").strip()]))[1]
+    subprocess.run([str(system / "icacls.exe"), str(directory), "/grant", f"*{sid}:(OI)(CI)M", "/Q"],
+                   check=True, capture_output=True, **process_options())
 
 
 def remove_owned_directory(directory: Path) -> None:
@@ -68,6 +80,7 @@ class TemporaryPostgres:
 
     def initialize(self) -> None:
         """Create an UTF-8/C-locale cluster using a transient random password file."""
+        grant_windows_oracle_access(self.directory)
         version = run_binary("postgres", ["--version"]).stdout
         if "PostgreSQL) 16." not in version: raise ValueError("Oracle requires an actual PostgreSQL16 runtime")
         password_file = self.directory / "password.txt"
