@@ -66,8 +66,12 @@ jobs:
           $dependencies = Join-Path (Split-Path -Parent $PWD.Path) 'dependencies'
           $parser = Join-Path $dependencies 'SQLeanParser'
           git init $parser
-          git -C $parser -c core.longpaths=true fetch --depth=1 https://github.com/University-of-Wild-Chicken/SQLeanParser.git ad15c585155ff7fc2c5fc4c9746905e4959ff5eb
-          git -C $parser -c core.longpaths=true -c core.autocrlf=false checkout --detach FETCH_HEAD
+          git -C $parser config core.longpaths true
+          # The pinned grammar and corpus evidence use the Windows checkout bytes.
+          git -C $parser config core.autocrlf true
+          git -C $parser fetch --depth=1 https://github.com/University-of-Wild-Chicken/SQLeanParser.git ad15c585155ff7fc2c5fc4c9746905e4959ff5eb
+          git -C $parser checkout --detach FETCH_HEAD
+          python -c "import sys; from pathlib import Path; sys.path.insert(0, 'parser'); from census import verify_dependency; verify_dependency(Path(sys.argv[1]))" $parser
 
           $leanTools = Join-Path $PWD 'm0/parser/.tools'
           New-Item -ItemType Directory -Path $leanTools -Force | Out-Null
