@@ -1,0 +1,58 @@
+{
+  "schema_version": "sqlolla.validation.postgres-runtime/1",
+  "retrieved_on": "2026-11-14",
+  "version": "16.16",
+  "package_build": "16.16-1",
+  "platform": "Windows x86-64",
+  "purpose": "Ephemeral PostgreSQL oracle for M1 differential validation",
+  "official_discovery": [
+    "https://www.postgresql.org/download/windows/",
+    "https://www.postgresql.org/support/versioning/",
+    "https://www.enterprisedb.com/download-postgresql-binaries"
+  ],
+  "discovery_evidence": "Saved edb-download-page.html identifies Version16.16 Windows x86-64 link fileid1260670; PostgreSQL Windows page points expert users to these EDB archives.",
+  "observed_redirect": "https://sbp.enterprisedb.com/getfile.jsp?fileid=1260670",
+  "archive_url": "https://get.enterprisedb.com/postgresql/postgresql-16.16-1-windows-x64-binaries.zip",
+  "archive_bytes": 378078504,
+  "checksum_url": "https://get.enterprisedb.com/postgresql/postgresql-16.16-1-windows-x64-binaries.zip.sha256",
+  "expected_sha256": "5c0d06f3d26a929ecb36dd931409f1e51a4181355794a259b90aae8bffc57a9f",
+  "actual_sha256": "5c0d06f3d26a929ecb36dd931409f1e51a4181355794a259b90aae8bffc57a9f",
+  "checksum_verified": true,
+  "signature_verification": "No detached signature verification; official HTTPS plus publisher SHA256 sidecar.",
+  "extracted_prefix": "C:\\HackUTA26\\SQLolla\\tools\\.tools\\postgres-16.16\\pgsql",
+  "extracted_subtrees": [
+    "bin",
+    "lib",
+    "share"
+  ],
+  "extracted_file_count": 1636,
+  "extraction_safety": "Each archive entry resolved beneath the isolated destination; traversal outside it rejected.",
+  "actual_binary_versions": {
+    "postgres": "postgres (PostgreSQL) 16.16",
+    "psql": "psql (PostgreSQL) 16.16"
+  },
+  "server_smoke_evidence": "validation/results/symbolic.json",
+  "server_actual_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "server_profile": {
+    "listen_addresses": "127.0.0.1",
+    "encoding": "UTF8",
+    "database_collation": "C",
+    "host_auth": "scram-sha-256",
+    "port": "per-run free loopback port",
+    "run_directory": "validation/.runs/pg16-*"
+  },
+  "lifecycle": "No global installation, PATH edit, Windows service, external listener or production database. Random password passed through transient pwfile/child environment without logging. Cluster stopped and owned path removed after smoke.",
+  "discovered_hazard": "Windows pg_ctl startup with captured output pipes kept inherited handles alive in the server. Fixed by DEVNULL stdin/stdout/stderr for startup, with a dedicated server log.",
+  "version_specific_note": "Database collation read from pg_database.datcollate; current_setting('lc_collate') is not recognized on this tested runtime.",
+  "retained_download_evidence": [
+    "tools/postgresql-provenance.json",
+    "tools/.tools/postgres-download/edb-download-page.html",
+    "tools/.tools/postgres-download/postgresql-16.16-1-windows-x64-binaries.zip.sha256"
+  ],
+  "untested": [
+    "Linux PostgreSQL runtime",
+    "macOS PostgreSQL runtime",
+    "production installation",
+    "packaged application"
+  ]
+}

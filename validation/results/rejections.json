@@ -1,0 +1,288 @@
+{
+  "cases": 31,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "failures": [],
+  "missing_response_ids": [],
+  "results": [
+    {
+      "id": "reject/sql/write_without_metadata",
+      "response": {
+        "code": "unsupported.mutation_context",
+        "id": "reject/sql/write_without_metadata",
+        "message": "Complete table semantics are required",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/multiple",
+      "response": {
+        "code": "syntax.rejected",
+        "id": "reject/sql/multiple",
+        "message": "SQL could not be exported under the supported parser profile",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/recursive",
+      "response": {
+        "code": "unsupported.recursive",
+        "id": "reject/sql/recursive",
+        "message": "Recursive CTE",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/values_local_unknown",
+      "response": {
+        "code": "invalid.type",
+        "id": "reject/sql/values_local_unknown",
+        "message": "Incompatible SQL scalar types",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/nested_unknown",
+      "response": {
+        "code": "invalid.type",
+        "id": "reject/sql/nested_unknown",
+        "message": "Incompatible SQL scalar types",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/ambiguous",
+      "response": {
+        "code": "invalid.ambiguous_column",
+        "id": "reject/sql/ambiguous",
+        "message": "Ambiguous column x",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/hidden_qualifier",
+      "response": {
+        "code": "invalid.column",
+        "id": "reject/sql/hidden_qualifier",
+        "message": "Unknown column x",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/missing_column",
+      "response": {
+        "code": "invalid.column",
+        "id": "reject/sql/missing_column",
+        "message": "Unknown column y",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/mixed_set_types",
+      "response": {
+        "code": "invalid.type",
+        "id": "reject/sql/mixed_set_types",
+        "message": "Incompatible SQL scalar types",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/duplicate_cte",
+      "response": {
+        "code": "invalid.cte",
+        "id": "reject/sql/duplicate_cte",
+        "message": "Duplicate CTE name",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/forward_cte",
+      "response": {
+        "code": "invalid.table",
+        "id": "reject/sql/forward_cte",
+        "message": "Unknown table later",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/unicode_integer_whitespace",
+      "response": {
+        "code": "invalid.literal_coercion",
+        "id": "reject/sql/unicode_integer_whitespace",
+        "message": "String is not an admitted Int32 input",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/unicode_boolean_whitespace",
+      "response": {
+        "code": "invalid.literal_coercion",
+        "id": "reject/sql/unicode_boolean_whitespace",
+        "message": "String is not Boolean input",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/sql/cte_expansion_budget",
+      "response": {
+        "code": "resource.plan_nodes",
+        "id": "reject/sql/cte_expansion_budget",
+        "message": "Expanded plan exceeds 256 nodes",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/data/extra_table",
+      "response": {
+        "code": "invalid.database",
+        "id": "reject/data/extra_table",
+        "message": "Unknown table identifier public.ghost",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/data/missing_table",
+      "response": {
+        "code": "invalid.database",
+        "id": "reject/data/missing_table",
+        "message": "concrete modes require every catalog table; use an empty bag explicitly",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/data/unused_wrong_type",
+      "response": {
+        "code": "invalid.row_type",
+        "id": "reject/data/unused_wrong_type",
+        "message": "Invalid cell in x",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/data/wrong_arity",
+      "response": {
+        "code": "invalid.row_arity",
+        "id": "reject/data/wrong_arity",
+        "message": "Wrong row arity",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/data/wrong_null_type",
+      "response": {
+        "code": "invalid.row_type",
+        "id": "reject/data/wrong_null_type",
+        "message": "Invalid cell in x",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/data/nonnullable_null",
+      "response": {
+        "code": "invalid.row_type",
+        "id": "reject/data/nonnullable_null",
+        "message": "Invalid cell in x",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/property_in_compare",
+      "response": {
+        "code": "invalid.workflow_fields",
+        "id": "reject/intent/property_in_compare",
+        "message": "concrete modes do not accept property, bounds or domain",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/bounds_in_compare",
+      "response": {
+        "code": "invalid.workflow_fields",
+        "id": "reject/intent/bounds_in_compare",
+        "message": "concrete modes do not accept property, bounds or domain",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/domain_in_compare",
+      "response": {
+        "code": "invalid.workflow_fields",
+        "id": "reject/intent/domain_in_compare",
+        "message": "concrete modes do not accept property, bounds or domain",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/unknown_field",
+      "response": {
+        "code": "invalid_request",
+        "id": "reject/intent/unknown_field",
+        "message": "unknown field `execute`, expected one of `id`, `sql`, `catalog`, `database`, `parameters`, `mode`, `property`, `bounds`, `domain`, `include_model`, `execution` at line 1 column 556",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/unknown_mode",
+      "response": {
+        "code": "unsupported_mode",
+        "id": "reject/intent/unknown_mode",
+        "message": "use compare, compile or analyze",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/missing_parameter",
+      "response": {
+        "code": "invalid.parameter",
+        "id": "reject/intent/missing_parameter",
+        "message": "Undeclared parameter $1",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/capacity",
+      "response": {
+        "code": "inconclusive_encoding",
+        "id": "reject/intent/capacity",
+        "message": "complete occurrence capacity exceeds 256 slots",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/intent/analyze_database",
+      "response": {
+        "code": "invalid.workflow_fields",
+        "id": "reject/intent/analyze_database",
+        "message": "analyze does not accept a concrete database",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/text/parameter",
+      "response": {
+        "code": "invalid_request",
+        "id": "reject/text/parameter",
+        "message": "invalid.text_nul: PostgreSQL text cannot contain NUL at line 1 column 560",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/text/unused_database",
+      "response": {
+        "code": "invalid_request",
+        "id": "reject/text/unused_database",
+        "message": "invalid.text_nul: PostgreSQL text cannot contain NUL at line 1 column 517",
+        "status": "error"
+      }
+    },
+    {
+      "id": "reject/text/unused_setting",
+      "response": {
+        "code": "invalid_request",
+        "id": "reject/text/unused_setting",
+        "message": "invalid.text_nul: PostgreSQL text cannot contain NUL at line 1 column 663",
+        "status": "error"
+      }
+    }
+  ],
+  "status": "passed"
+}

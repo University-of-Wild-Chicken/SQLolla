@@ -1,0 +1,480 @@
+{
+  "schema_version": "sqlolla.validation.industrial-context/1",
+  "context_claim": "All catalogs, column nullability and input rows below are synthetic M1 test contracts. No authoritative upstream DDL, keys, widths, business constraints or production-data claim is made.",
+  "fixture_modes": [
+    "empty",
+    "matching_duplicates_and_miss",
+    "typed_null_parameter"
+  ],
+  "parameter_policy": "Numbered typed values are bound through PostgreSQL PREPARE/EXECUTE; query text is never substituted or rewritten.",
+  "profiles": [
+    {
+      "id": "benchbase:tatp:DeleteCallForwarding:getSubscriber",
+      "parameters": [
+        {
+          "type": "text",
+          "value": "555001"
+        }
+      ],
+      "tables": {
+        "subscriber": {
+          "columns": [
+            [
+              "s_id",
+              "int32"
+            ],
+            [
+              "sub_nbr",
+              "text"
+            ]
+          ],
+          "matching": [
+            7,
+            "555001"
+          ],
+          "nonmatching": [
+            8,
+            "other"
+          ]
+        }
+      },
+      "output_types": [
+        "int32"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    },
+    {
+      "id": "benchbase:tatp:GetAccessData:getAccessInfo",
+      "parameters": [
+        {
+          "type": "int32",
+          "value": 7
+        },
+        {
+          "type": "int32",
+          "value": 1
+        }
+      ],
+      "tables": {
+        "access_info": {
+          "columns": [
+            [
+              "s_id",
+              "int32"
+            ],
+            [
+              "ai_type",
+              "int32"
+            ],
+            [
+              "data1",
+              "int32"
+            ],
+            [
+              "data2",
+              "int32"
+            ],
+            [
+              "data3",
+              "text"
+            ],
+            [
+              "data4",
+              "text"
+            ]
+          ],
+          "matching": [
+            7,
+            1,
+            10,
+            20,
+            "abc",
+            "hello"
+          ],
+          "nonmatching": [
+            8,
+            2,
+            11,
+            21,
+            "xyz",
+            "other"
+          ]
+        }
+      },
+      "output_types": [
+        "int32",
+        "int32",
+        "text",
+        "text"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    },
+    {
+      "id": "benchbase:tatp:GetNewDestination:getNewDestination",
+      "parameters": [
+        {
+          "type": "int32",
+          "value": 7
+        },
+        {
+          "type": "int32",
+          "value": 1
+        },
+        {
+          "type": "int32",
+          "value": 5
+        },
+        {
+          "type": "int32",
+          "value": 5
+        }
+      ],
+      "tables": {
+        "special_facility": {
+          "columns": [
+            [
+              "s_id",
+              "int32"
+            ],
+            [
+              "sf_type",
+              "int32"
+            ],
+            [
+              "is_active",
+              "int32"
+            ]
+          ],
+          "matching": [
+            7,
+            1,
+            1
+          ],
+          "nonmatching": [
+            7,
+            2,
+            1
+          ]
+        },
+        "call_forwarding": {
+          "columns": [
+            [
+              "s_id",
+              "int32"
+            ],
+            [
+              "sf_type",
+              "int32"
+            ],
+            [
+              "start_time",
+              "int32"
+            ],
+            [
+              "end_time",
+              "int32"
+            ],
+            [
+              "numberx",
+              "text"
+            ]
+          ],
+          "matching": [
+            7,
+            1,
+            0,
+            10,
+            "555010"
+          ],
+          "nonmatching": [
+            7,
+            1,
+            7,
+            8,
+            "555099"
+          ]
+        }
+      },
+      "output_types": [
+        "text"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    },
+    {
+      "id": "benchbase:tpcc:Delivery:delivGetCustIdSQL",
+      "parameters": [
+        {
+          "type": "int32",
+          "value": 100
+        },
+        {
+          "type": "int32",
+          "value": 2
+        },
+        {
+          "type": "int32",
+          "value": 3
+        }
+      ],
+      "tables": {
+        "oorder": {
+          "columns": [
+            [
+              "o_c_id",
+              "int32"
+            ],
+            [
+              "o_id",
+              "int32"
+            ],
+            [
+              "o_d_id",
+              "int32"
+            ],
+            [
+              "o_w_id",
+              "int32"
+            ]
+          ],
+          "matching": [
+            42,
+            100,
+            2,
+            3
+          ],
+          "nonmatching": [
+            43,
+            101,
+            2,
+            3
+          ]
+        }
+      },
+      "output_types": [
+        "int32"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payGetCustCdataSQL",
+      "parameters": [
+        {
+          "type": "int32",
+          "value": 3
+        },
+        {
+          "type": "int32",
+          "value": 2
+        },
+        {
+          "type": "int32",
+          "value": 42
+        }
+      ],
+      "tables": {
+        "customer": {
+          "columns": [
+            [
+              "c_data",
+              "text"
+            ],
+            [
+              "c_w_id",
+              "int32"
+            ],
+            [
+              "c_d_id",
+              "int32"
+            ],
+            [
+              "c_id",
+              "int32"
+            ]
+          ],
+          "matching": [
+            "customer's 数据",
+            3,
+            2,
+            42
+          ],
+          "nonmatching": [
+            "other",
+            3,
+            2,
+            43
+          ]
+        }
+      },
+      "output_types": [
+        "text"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payGetDistSQL",
+      "parameters": [
+        {
+          "type": "int32",
+          "value": 3
+        },
+        {
+          "type": "int32",
+          "value": 2
+        }
+      ],
+      "tables": {
+        "district": {
+          "columns": [
+            [
+              "d_street_1",
+              "text"
+            ],
+            [
+              "d_street_2",
+              "text"
+            ],
+            [
+              "d_city",
+              "text"
+            ],
+            [
+              "d_state",
+              "text"
+            ],
+            [
+              "d_zip",
+              "text"
+            ],
+            [
+              "d_name",
+              "text"
+            ],
+            [
+              "d_w_id",
+              "int32"
+            ],
+            [
+              "d_id",
+              "int32"
+            ]
+          ],
+          "matching": [
+            "1 Main",
+            "Suite 2",
+            "Arlington",
+            "TX",
+            "76010",
+            "D'istrict",
+            3,
+            2
+          ],
+          "nonmatching": [
+            "2 Main",
+            "",
+            "Other",
+            "CA",
+            "90000",
+            "Other",
+            3,
+            9
+          ]
+        }
+      },
+      "output_types": [
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+        "text"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    },
+    {
+      "id": "benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL",
+      "parameters": [
+        {
+          "type": "int32",
+          "value": 3
+        },
+        {
+          "type": "int32",
+          "value": 2
+        }
+      ],
+      "tables": {
+        "district": {
+          "columns": [
+            [
+              "d_next_o_id",
+              "int32"
+            ],
+            [
+              "d_w_id",
+              "int32"
+            ],
+            [
+              "d_id",
+              "int32"
+            ]
+          ],
+          "matching": [
+            101,
+            3,
+            2
+          ],
+          "nonmatching": [
+            202,
+            3,
+            9
+          ]
+        }
+      },
+      "output_types": [
+        "int32"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery",
+      "parameters": [
+        {
+          "type": "text",
+          "value": "appdb"
+        }
+      ],
+      "tables": {
+        "schema_version": {
+          "columns": [
+            [
+              "curr_version",
+              "text"
+            ],
+            [
+              "version_partition",
+              "int32"
+            ],
+            [
+              "db_name",
+              "text"
+            ]
+          ],
+          "matching": [
+            "1.2",
+            0,
+            "appdb"
+          ],
+          "nonmatching": [
+            "2.0",
+            1,
+            "appdb"
+          ]
+        }
+      },
+      "output_types": [
+        "text"
+      ],
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL"
+    }
+  ]
+}

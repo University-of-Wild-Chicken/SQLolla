@@ -1,0 +1,187 @@
+{
+  "cases": 15,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "postgres_executions": 90,
+  "results": [
+    {
+      "actual": [
+        "[\"[1]\", \"[1]\", \"[null]\"]"
+      ],
+      "expected": [
+        "[\"[1]\", \"[1]\", \"[null]\"]"
+      ],
+      "id": "ordering/plain_order",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1]\"]",
+        "[\"[null]\"]"
+      ],
+      "expected": [
+        "[\"[1]\"]",
+        "[\"[null]\"]"
+      ],
+      "id": "ordering/plain_limit",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1]\", \"[1]\"]",
+        "[\"[1]\", \"[null]\"]"
+      ],
+      "expected": [
+        "[\"[1]\", \"[1]\"]",
+        "[\"[1]\", \"[null]\"]"
+      ],
+      "id": "ordering/plain_offset",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "id": "ordering/hidden_key",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]",
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]",
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "id": "ordering/unordered",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"b\\\"]\"]",
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"b\\\"]\"]",
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "ordering/offset",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1]\", \"[null]\"]"
+      ],
+      "expected": [
+        "[\"[1]\", \"[null]\"]"
+      ],
+      "id": "ordering/distinct",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "id": "ordering/derived",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "id": "ordering/cte",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\", 1]\", \"[\\\"b\\\", 1]\", \"[\\\"c\\\", null]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\", 1]\", \"[\\\"b\\\", 1]\", \"[\\\"c\\\", null]\"]"
+      ],
+      "id": "ordering/ordinal",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[]"
+      ],
+      "expected": [
+        "[]"
+      ],
+      "id": "ordering/empty",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\"]",
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\"]",
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\"]"
+      ],
+      "id": "ordering/ASCFIRST",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "id": "ordering/ASCLAST",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\"]",
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\"]",
+        "[\"[null, \\\"c\\\"]\", \"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\"]"
+      ],
+      "id": "ordering/DESCFIRST",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[1, \\\"a\\\"]\", \"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "id": "ordering/DESCLAST",
+      "status": "passed"
+    }
+  ],
+  "scope": "Exact output-set equality over all six physical input permutations; not a universal PostgreSQL completeness proof.",
+  "status": "passed",
+  "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit"
+}

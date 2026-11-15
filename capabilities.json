@@ -1,0 +1,453 @@
+{
+  "schema": "sqlolla.capabilities.v1",
+  "current_milestone": "CORPUS_276_VALIDATED_LOCAL_HOST_AND_GPT_6_1_SOL_DEMO",
+  "mvp_complete": false,
+  "mvp_target": "Full pinned SQLeanParser advanced typed-AST surface, including business queries and mutations. M1 limits are incremental, not a permanent reduction of MVP scope.",
+  "upstream": {
+    "repository": "https://github.com/University-of-Wild-Chicken/SQLeanParser",
+    "commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+    "inventory": "SQLean/AdvancedSyntax.lean",
+    "grammar_baseline": "PostgreSQL 16.15",
+    "runtime_oracle": "PostgreSQL 16.16",
+    "distinction": "Full grammar CST recognition, typed AST acceptance, static validity and runtime equivalence are different assurance levels."
+  },
+  "stages": [
+    "parse",
+    "export",
+    "bind",
+    "interpret",
+    "encode",
+    "replay",
+    "postgres_differential",
+    "adversarial_review"
+  ],
+  "status_definitions": {
+    "validated_fragment": "Executable evidence for every stage in the stated fragment, not a universal preservation proof.",
+    "partial": "Only the stated fragment is admitted; remaining modifiers fail closed and stay in MVP backlog.",
+    "queued": "Available in upstream syntax, explicitly refused by M1, still required for broad MVP."
+  },
+  "families": [
+    {
+      "id": "relations",
+      "status": "validated_fragment",
+      "includes": [
+        "SELECT with/without FROM",
+        "VALUES",
+        "scan/projection/WHERE",
+        "qualified names",
+        "aliases/column aliases",
+        "DISTINCT"
+      ]
+    },
+    {
+      "id": "joins_sets",
+      "status": "validated_fragment",
+      "includes": [
+        "CROSS/comma product",
+        "INNER/LEFT/RIGHT/FULL ON",
+        "UNION/INTERSECT/EXCEPT each ALL and DISTINCT"
+      ],
+      "queued": [
+        "USING/NATURAL"
+      ],
+      "next": "S3"
+    },
+    {
+      "id": "composition",
+      "status": "partial",
+      "includes": [
+        "Aliased non-LATERAL derived sources",
+        "Nonrecursive CTE lexical order/shadowing"
+      ],
+      "queued": [
+        "Recursive CTE",
+        "LATERAL",
+        "Anonymous derived sources"
+      ],
+      "next": "S3"
+    },
+    {
+      "id": "scalar",
+      "status": "partial",
+      "adversarial_signature_backlog": {
+        "status": "PostgreSQL expectations observed; current full-pipeline differential and fixes pending",
+        "oracle": "PostgreSQL 16.16, Visual C++ 1944, Windows x64, isolated disposable cluster",
+        "source": "https://www.postgresql.org/docs/16/functions-math.html",
+        "engine_review": "Generic round and text-function return-type inference does not yet establish complete overload admission; NULL folding must not bypass signature rejection.",
+        "cases": [
+          {
+            "sql": "SELECT round(true)",
+            "sqlstate": "42883"
+          },
+          {
+            "sql": "SELECT round(NULL::boolean)",
+            "sqlstate": "42883"
+          },
+          {
+            "sql": "SELECT round(1)",
+            "return_type": "double precision",
+            "rows": [
+              [
+                "1"
+              ]
+            ]
+          },
+          {
+            "sql": "SELECT round(1.5::float8)",
+            "return_type": "double precision",
+            "rows": [
+              [
+                "2"
+              ]
+            ]
+          },
+          {
+            "sql": "SELECT lower(1)",
+            "sqlstate": "42883"
+          },
+          {
+            "sql": "SELECT lower(NULL::integer)",
+            "sqlstate": "42883"
+          },
+          {
+            "sql": "SELECT length(true)",
+            "sqlstate": "42883"
+          },
+          {
+            "sql": "SELECT replace(true,false,true)",
+            "sqlstate": "42883"
+          },
+          {
+            "sql": "SELECT left(true,1)",
+            "sqlstate": "42883"
+          },
+          {
+            "sql": "SELECT concat_ws(1,2)",
+            "sqlstate": "42883"
+          }
+        ],
+        "scope": "Outside the current 276-record corpus credit; this backlog is not validated semantic coverage."
+      },
+      "includes": [
+        "Checked integer and exact numeric arithmetic with overflow/division SQL errors",
+        "Typed NULL and SQL three-valued predicates",
+        "Explicit and assignment casts with distinct coercion rules",
+        "CASE/COALESCE/NULLIF and lazy context lookup",
+        "IS DISTINCT FROM, IN lists, BETWEEN, row comparisons",
+        "Native int32/bool/text read algebra"
+      ],
+      "queued": [
+        "Remaining PostgreSQL cast/function signatures and typmods",
+        "Streaming error alternatives across pagination and subqueries"
+      ],
+      "next": "S1",
+      "evidence": [
+        "validation/results/expression_outcomes.json",
+        "validation/results/intervals.json"
+      ]
+    },
+    {
+      "id": "grouping",
+      "status": "partial",
+      "includes": [
+        "GROUP BY/HAVING",
+        "COUNT/SUM/AVG/MIN/MAX",
+        "Aggregate DISTINCT/FILTER"
+      ],
+      "next": "S2",
+      "queued": [
+        "Outer-owned aggregates and complex correlated HAVING composition",
+        "Order-dependent floating aggregation"
+      ],
+      "evidence": "validation/results/grouping.json"
+    },
+    {
+      "id": "ordering",
+      "status": "partial",
+      "includes": [
+        "ORDER BY with hidden/output keys",
+        "NULLS FIRST/LAST",
+        "nonnegative LIMIT/OFFSET",
+        "complete tie and unordered pagination alternatives",
+        "DISTINCT ON representative selection with implicit key ordering before pagination"
+      ],
+      "obligations": [
+        "Ties/nondeterministic outcomes",
+        "Pagination errors/scope"
+      ],
+      "next": "S2",
+      "queued": [
+        "Remaining pagination expressions/errors",
+        "Grouped DISTINCT ON composition"
+      ],
+      "evidence": [
+        "validation/results/ordering.json",
+        "validation/results/distinct_on.json"
+      ]
+    },
+    {
+      "id": "subqueries",
+      "status": "partial",
+      "includes": [
+        "Scalar/EXISTS/IN",
+        "ANY/SOME/ALL queries",
+        "Correlation",
+        "Flat row comparisons/row IN"
+      ],
+      "obligations": [
+        "Scalar cardinality errors",
+        "Empty/NULL quantified truth tables"
+      ],
+      "next": "S3",
+      "queued": [
+        "Differing scalar child alternatives",
+        "General unordered ARRAY ordering",
+        "Outer-owned aggregates and complex EXISTS pruning",
+        "Streaming child-error precedence"
+      ],
+      "evidence": "validation/results/subqueries.json"
+    },
+    {
+      "id": "functions_context",
+      "status": "partial",
+      "includes": [
+        "Explicit stable transaction/session values",
+        "Admitted deterministic scalar signatures",
+        "EXTRACT and SUBSTRING",
+        "LIKE and ASCII ILIKE",
+        "Named make_interval arguments",
+        "Explicit complete catalog identity/search-path/schema-USAGE context",
+        "OID/internal-char/regclass nominal identity and to_regclass",
+        "Explicit PostgreSQL product/version context",
+        "Declared immutable SQL function bodies with exact signatures and effective search-path resolution",
+        "Bounded PostgreSQL regular-expression subset with explicit unsupported-ARE refusals",
+        "Typed string/array conversion, exact Xid equality and declared platform input boundaries",
+        "Transactional notifications and advisory transaction ownership in complete session contexts",
+        "pg_terminate_backend(pid,0) signal-request outcomes under an explicit stable target/capability profile"
+      ],
+      "obligations": [
+        "Signatures/volatility",
+        "Locale/time-zone/session context",
+        "No uninterpreted UDF safety claims"
+      ],
+      "next": "S4",
+      "queued": [
+        "Remaining system-catalog types and dynamic observations",
+        "Remaining locale and arbitrary UDF semantics",
+        "Blocking backend termination waits, self-target and PID races; arbitrary live-session effects"
+      ],
+      "evidence": [
+        "validation/results/catalog-context.json",
+        "validation/results/intervals.json",
+        "validation/results/sql_functions.json",
+        "validation/results/regex-subset.json",
+        "validation/results/xid-scalars.json",
+        "validation/results/session-effects.json",
+        "validation/results/backend-effects.json"
+      ]
+    },
+    {
+      "id": "structured_values",
+      "status": "partial",
+      "includes": [
+        "Typed scalar arrays and quantified ANY/ALL comparisons",
+        "Exact numeric, temporal, interval and JSONB transport",
+        "Admitted JSONB and array scalar operations",
+        "Sibling target-list UNNEST with NULL padding and storage-order pagination",
+        "JSONB ->, ->>, #>, #>> with typed selectors, negative indexes and SQL NULL/JSON null separation"
+      ],
+      "next": "S4",
+      "queued": [
+        "Remaining subscripting/slicing and set-returning function combinations",
+        "Remaining PostgreSQL structured type families"
+      ],
+      "evidence": [
+        "validation/results/set_returning.json",
+        "validation/results/collections.json"
+      ]
+    },
+    {
+      "id": "mutations",
+      "status": "partial",
+      "includes": [
+        "Single-table INSERT/UPDATE/DELETE with RETURNING",
+        "Complete declared constraints/defaults and atomic SQL-error outcomes",
+        "Simultaneous UPDATE assignment and affected counts",
+        "Disjoint writable CTE snapshot/RETURNING composition",
+        "UPDATE FROM and DELETE USING with unambiguous matching rows",
+        "Explicit DEFAULT and basic ON CONFLICT actions",
+        "Per-proposal volatile defaults and retained sequence allocations under exclusive cache-one snapshots",
+        "Immutable partial unique-index predicates and observed index enforcement order",
+        "INSERT/ON CONFLICT RETURNING xmin/xmax under explicit exclusive top-level tuple-header context"
+      ],
+      "obligations": [
+        "Before/after/frame conditions",
+        "Simultaneous assignment",
+        "Constraints/defaults/errors/aborts",
+        "Affected-row counts"
+      ],
+      "next": "S5",
+      "queued": [
+        "Overlapping writable CTEs and ambiguous source matches",
+        "Complete ON CONFLICT/partial-index inference",
+        "General effectful source/consumer interleaving and concurrent sequence allocation",
+        "Ordinary UPDATE/DELETE system-column transitions, subtransactions and MultiXact",
+        "Initially deferred constraint completion through a COMMIT API"
+      ],
+      "evidence": [
+        "validation/results/cte.json",
+        "validation/results/sequence-effects.json",
+        "validation/results/unique_indexes.json",
+        "validation/results/system_columns.json",
+        "validation/results/system_columns_river.json"
+      ]
+    },
+    {
+      "id": "ddl",
+      "status": "partial",
+      "includes": [
+        "CREATE TABLE with primary/unique/not-null metadata",
+        "IF NOT EXISTS namespace collision handling",
+        "CREATE VIEW, stored view reads and DROP VIEW dependencies",
+        "Explicit non-system catalog transition evidence"
+      ],
+      "obligations": [
+        "Catalog transitions/dependent effects"
+      ],
+      "next": "S5",
+      "queued": [
+        "Remaining CREATE TABLE constraints/defaults",
+        "ALTER TABLE and DROP TABLE",
+        "CASCADE and remaining dependent-object effects"
+      ],
+      "evidence": [
+        "validation/results/ddl.json"
+      ]
+    },
+    {
+      "id": "locks_transactions",
+      "status": "partial",
+      "includes": [
+        "Single-base SELECT row locks under an explicit fixed ownership snapshot",
+        "All four row modes, NOWAIT, SKIP LOCKED, OFFSET and LIMIT0 ownership",
+        "Unpaginated distinct-origin inner/cross joined row locking under a nonconflicting ownership snapshot"
+      ],
+      "obligations": [
+        "Structured sequential transaction boundaries",
+        "Abort/rollback",
+        "Separate schedule/isolation model for concurrency"
+      ],
+      "next": "S6",
+      "queued": [
+        "Joined partial conflict acquisition and self-join origin handling",
+        "CTE/derived lock-effect composition",
+        "Transactional composition and concurrent schedules"
+      ],
+      "evidence": [
+        "validation/results/locking.json",
+        "validation/results/locking_join.json"
+      ]
+    }
+  ],
+  "iterations": [
+    {
+      "id": "S1",
+      "deliverable": "Scalar predicates, arithmetic/errors, CASE/casts"
+    },
+    {
+      "id": "S2",
+      "deliverable": "Aggregation, ordering, pagination, DISTINCT ON"
+    },
+    {
+      "id": "S3",
+      "deliverable": "USING/NATURAL, subqueries, LATERAL, recursive CTEs"
+    },
+    {
+      "id": "S4",
+      "deliverable": "Remaining types/functions and session context"
+    },
+    {
+      "id": "S5",
+      "deliverable": "CRUD/upsert/RETURNING, catalog changes, failure/rollback"
+    },
+    {
+      "id": "S6",
+      "deliverable": "Lock/concurrency profile, instance UI/BYOT, portable release"
+    }
+  ],
+  "delegation": {
+    "parser_type_agent": "Preserve AST fields; type/error contract and Lean obligations.",
+    "core_encoder_agent": "Pure RA evaluation and deterministic complete-outcome encoding.",
+    "oracle_adversarial_agent": "Independent PG corpus, exhaustive symbolic oracle and semantic mutants.",
+    "integrator": "Interfaces, trust gates, source freeze, portability, review closure and cleanup."
+  },
+  "extension_gate": [
+    "Preserve all admitted constructor/modifier fields in protocol/parser-ast.json; reject unimplemented fields.",
+    "Define types, bags/NULL, errors/effects; extend Rust interpretation and Alloy encoding together.",
+    "Account for every intermediate occurrence/value/error; excessive scope yields refusal, never safety.",
+    "Add actual PG positive/negative/composition/boundary cases and unchanged authentic examples where catalog/session context is known.",
+    "Cross-check symbolic SAT/UNSAT using independent exhaustive finite inputs; replay witnesses and kill targeted mutants.",
+    "Pass trust/protocol/style/regression gates and close independent review findings.",
+    "Update this ledger/canonical evidence and remove temporary experiments/duplicate reports."
+  ],
+  "mvp_release_gates": [
+    "Account for every pinned typed-AST family; unsupported families cannot silently leave MVP scope.",
+    "Publish per-case export/bind/execute/analyze census for pinned synthetic/authentic corpora, with denominators and unexplained rejections resolved or user-approved.",
+    "Parsing coverage is not transaction safety; verify effects, constraints, errors and rollback.",
+    "Native Windows/Linux/macOS CI, clean-machine packaging and dependency provenance/notices.",
+    "Parser redistribution permission, hosted job isolation, BYOT and instance-rendering security."
+  ],
+  "evidence": {
+    "parser": "parser/test-results.json",
+    "differential": "validation/results/summary.json",
+    "symbolic": "validation/results/symbolic.json",
+    "mutations": "validation/results/mutations.json",
+    "rejections": "validation/results/rejections.json",
+    "formal_trust": "m0/formal/report.json",
+    "industrial_export_census": "parser/census-results.json",
+    "industrial_runtime_replay": "validation/results/industrial.json",
+    "m2_formal_trust": "contracts/m2/verification.json",
+    "industrial_semantic_ledger": "validation/corpus-manifest.json",
+    "ordering": "validation/results/ordering.json",
+    "grouping": "validation/results/grouping.json",
+    "subqueries": "validation/results/subqueries.json",
+    "intervals": "validation/results/intervals.json",
+    "locking": "validation/results/locking.json",
+    "assertion_examples": "examples/translation-pairs.json"
+  },
+  "assurance_limits": [
+    "Native M1 independently encodes the admitted pure read algebra. Extended writes/errors/effects use evaluator-backed finite tables with PostgreSQL differential evidence; they do not model unrestricted RLS/triggers or concurrent schedules.",
+    "Explicit finite domains/capacities; unknown/resource failure never produces a security verdict.",
+    "Lean contracts and parser trust auditing do not prove Rust SQL-to-Alloy preservation.",
+    "Deterministic compilation; solver-selected witnesses may vary by platform/version.",
+    "Windows x64 executed; Linux/macOS/WSL and deployment unvalidated."
+  ],
+  "corpus_target": {
+    "records": 276,
+    "definition": "Correct semantics under explicit contexts, including expected PostgreSQL errors; unsupported/resource/engine refusals do not count.",
+    "ledger": "validation/corpus-manifest.json",
+    "parser_exports": 276,
+    "syntax_is_not_runtime_coverage": true,
+    "validated_records": 276,
+    "validated_fixtures": 552,
+    "binary_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
+    "claim": "All declared authentic-schema baseline/nonempty fixtures match actual PostgreSQL16 outcomes and evaluator-backed Alloy tables. Broader typed-AST, arbitrary data and concurrency remain separate MVP obligations."
+  },
+  "encoding_profiles": {
+    "sqlolla.m1.relational.v1": "Independent occurrence-preserving RA encoder",
+    "sqlolla.explicit_outcomes.v2": "Evaluator-backed complete finite transition table; PostgreSQL is the independent semantic oracle."
+  },
+  "assertion_protocol": {
+    "semantics_predicates": [
+      "QuerySemantics",
+      "ExecutionTable"
+    ],
+    "property_predicate": "ResultProperty",
+    "assertion": "QueryProperty",
+    "base_command": "run semantics predicate",
+    "property_command": "check QueryProperty",
+    "counterexample": "SAT with deterministic decoded witness replay",
+    "bounded_no_counterexample": "UNSAT only after satisfiable assumptions",
+    "table_encoding_is_not_independent_sql_semantics": true
+  }
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "component": "cargo",
+    "url": "https://static.rust-lang.org/dist/2026-11-12/cargo-1.100.0-x86_64-pc-windows-msvc.tar.xz",
+    "sha256": "efb63c35df751dbd58b7aa73d6a43d75b00bd356bfdb925901e85379d0de108a"
+  },
+  {
+    "component": "rustfmt-preview",
+    "url": "https://static.rust-lang.org/dist/2026-11-12/rustfmt-1.100.0-x86_64-pc-windows-msvc.tar.xz",
+    "sha256": "1bdb2b7287fcbaafa002c3c000b94a740e2063df51d2dcdfccf875aa46f9fca7"
+  },
+  {
+    "component": "clippy-preview",
+    "url": "https://static.rust-lang.org/dist/2026-11-12/clippy-1.100.0-x86_64-pc-windows-msvc.tar.xz",
+    "sha256": "e5c14bc2fe3528d6c3a2b71ccd44a440652e0e01eee761657e72b4a74774d9c5"
+  }
+]

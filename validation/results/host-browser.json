@@ -1,0 +1,29 @@
+{
+  "schema": "sqlolla.host_browser_check.v1",
+  "status": "passed",
+  "startOpen": true,
+  "graphviz": true,
+  "explicitNext": true,
+  "assurance": "native_ra_alloy_with_rust_replay",
+  "precision": {
+    "schema": "sqlolla.instance.v1",
+    "exactInt64": true,
+    "typedNull": true
+  },
+  "ai": {
+    "model": "gpt-6.1-sol",
+    "explanationClaims": 3,
+    "proposalAnalysis": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS"
+  },
+  "browserExternalRequests": 0,
+  "uncaughtErrors": 0,
+  "checked_at_utc": "2026-11-15T04:19:54.229Z",
+  "host_binary_sha256": "26b30281fc5dcf077f1d785fd188c7be7ddd83c21ecc42de11ef46cf3ef8519e",
+  "cli_binary_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
+  "frontend_index_sha256": "b7d29fa5feb3a9a784d41ab0721e8eb1b3cec69976e5a6d60044d8c5a954bf7c",
+  "credential_persistence_checks": {
+    "browser_storage_absent": true,
+    "disconnect_cleared": true
+  },
+  "limits": "Synthetic end-to-end smoke check; cited prose accuracy and complete feedback preservation are not proved."
+}

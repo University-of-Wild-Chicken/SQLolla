@@ -1,0 +1,1333 @@
+{
+  "formalization": {
+    "product": "SQLolla",
+    "document_kind": "Architecture and delivery gameplan; no implementation",
+    "version": "0.1-draft",
+    "prepared_on": "2026-11-14",
+    "purpose": "Find bounded counterexamples to declared data-access and transaction policies for an explicitly supported PostgreSQL 16 subset.",
+    "assurance_claim": "No counterexample found means only that the modeled property held for the reported finite bounds, environment, semantics profile, and completed checks.",
+    "first_release_mode": "Offline/pre-deployment analyzer using synthetic schemas and data; no production SQL execution.",
+    "deterministic_pipeline": [
+      "SQL or low-code graph",
+      "SQLeanParser Advanced AST / validated typed graph",
+      "Rust binding and capability checks",
+      "typed bag-aware relational IR + effect IR",
+      "canonical Alloy model",
+      "Java 17 Alloy API",
+      "SAT result",
+      "Rust witness validation and structured evidence"
+    ],
+    "ai_boundary": "AI can propose typed edits and explain existing evidence. It cannot decide support, alter formal results, silently weaken policies, or implement SQL/Alloy translation.",
+    "query_semantics": "Eval(Q, state, parameters, context) -> Bag<Row> | OrderedRows | SqlError; modeled nondeterminism is explicit.",
+    "transaction_semantics": "Step(statement, prestate, context) -> candidate_state, observations, outcome; Exec(transaction) composes steps with commit/abort behavior and exact frame conditions.",
+    "admissibility": "A(s,p,c) = well_formed(s,c) AND enforced_database_constraints(s) AND declared_preconditions(s,p,c).",
+    "obligations": [
+      "SAT(A) establishes that assumptions admit an initial state within the selected bounds.",
+      "SAT(A AND Exec(T,s,p,c,s2,o)) establishes at least one modeled execution; a missing execution is an encoding/coverage issue unless separately justified.",
+      "SAT(A AND Exec(T,s,p,c,s2,o) AND Bad(s,p,c,s2,o)) seeks a counterexample for each named property.",
+      "Bad includes committed business-invariant violation, disallowed observed output, disallowed write delta, or an abort classified as unexpected by the declared contract.",
+      "Expected error paths are still reported; an error is not automatically a business-invariant violation.",
+      "A property under test is never imposed as a poststate fact. Database-enforced constraints determine commit versus abort.",
+      "For invariant-preservation checks, require the named business invariant in the prestate as an explicit assumption; finding a pre-existing violation is a separate diagnostic."
+    ],
+    "result_dimensions": {
+      "support": [
+        "SUPPORTED",
+        "UNSUPPORTED",
+        "INCOMPLETE_CONTEXT"
+      ],
+      "assumptions": [
+        "SATISFIABLE",
+        "INCONSISTENT_WITHIN_BOUNDS",
+        "UNKNOWN"
+      ],
+      "analysis": [
+        "COUNTEREXAMPLE",
+        "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+        "INCONCLUSIVE",
+        "CANCELLED",
+        "INTERNAL_ERROR"
+      ],
+      "witness": [
+        "MODEL_WITNESS",
+        "REPLAY_CONFIRMED",
+        "REPLAY_MISMATCH",
+        "NOT_APPLICABLE"
+      ],
+      "inconclusive_reasons": [
+        "TIMEOUT",
+        "MEMORY_LIMIT",
+        "BOUND_INSUFFICIENT",
+        "NUMERIC_ENCODING_LIMIT",
+        "MISSING_EXECUTION",
+        "UNVALIDATED_ABSTRACTION",
+        "REPLAY_MISMATCH"
+      ]
+    },
+    "reverse_mapping": "RA/effect IR -> canonical parameterized PostgreSQL is deterministic for an admitted fragment. Alloy -> SQL is only a partial decoder for SQLolla-generated, versioned, integrity-checked model packages; arbitrary Alloy specifications have no general SQL inverse.",
+    "trusted_computing_base": [
+      "SQLeanParser and its profile-specific claims",
+      "Lean compiler/runtime and JSON adapter",
+      "Rust binder/type checker/IR semantics/encoder/decoder",
+      "Java bridge",
+      "Alloy/Pardinus/Kodkod and configured SAT solver",
+      "catalog and policy declarations",
+      "runtime and operating system"
+    ],
+    "exclusions_from_claim": [
+      "Unbounded correctness",
+      "All PostgreSQL behavior",
+      "Universal SQL-injection prevention",
+      "Timing/cache/resource side-channel noninterference",
+      "Unmodeled triggers, functions, privileges or concurrency",
+      "Safety of deployed execution after schema/query/context drift",
+      "General confidentiality noninterference; initial read checks cover declared forbidden outputs, with two-execution information-flow modeling reserved for later work."
+    ]
+  },
+  "evidence_baseline": {
+    "workspace": "C:/HackUTA26/SQLolla",
+    "observed_workspace": "Empty directory, not a Git repository at inspection; no application code created.",
+    "parser": {
+      "path": "C:/HackUTA26/dependencies/SQLeanParser",
+      "commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+      "worktree": "Clean at inspection",
+      "lean_toolchain": "leanprover/lean4:v4.34.0",
+      "declared_postgresql_target": "16.15, source commit f0595c3d839debdb140903621c1b44a4f4d86256",
+      "release_state": "Upstream alpha explicitly held; APIs/profiles experimental",
+      "three_layers": [
+        "Full grammar CST/source reconstruction is separate from typed AST and PostgreSQL semantic actions.",
+        "Advanced AST and executable static checker cover more syntax than the independent SELECT contracts.",
+        "Static and renderer proofs do not establish execution equivalence or transaction safety; CLI rendering report states semanticPreservation=false."
+      ],
+      "integration_gap": "Existing --ast emits Lean Repr text. A versioned machine-readable full AST adapter is proposed work, not an existing interface.",
+      "source_map_gap": "Advanced AST lacks pervasive spans; grammar offsets exist separately. Export truthful statement-level locations until a checked node-to-source mapping is implemented.",
+      "unavailable_typed_syntax": [
+        "BEGIN/COMMIT transaction commands",
+        "UPDATE FROM",
+        "DELETE USING",
+        "data-modifying CTEs",
+        "window functions",
+        "complete FK/CHECK/trigger/privilege DDL"
+      ],
+      "limited_independent_contracts": [
+        "grouping/aggregates",
+        "correlation/LATERAL",
+        "DISTINCT ON",
+        "some recursive dependencies"
+      ],
+      "corpus_observation": "Upstream records 257/276 industrial statement records accepted (241/260 distinct SQL texts). These are syntax results, not SQLolla verification results; not rerun in this planning task.",
+      "oracle_caution": "Some extracted-source grammar checks used PostgreSQL 17.7 via pglast. They do not establish PostgreSQL 16 runtime semantics.",
+      "documentation_caution": "An older unsupported-form list conflicts with newer flat-row IN contracts. Resolve support from pinned source, tests and current contract, not one README list.",
+      "redistribution_gate": "No root parser LICENSE/COPYING found; confirm permission and attribution before distribution. Fixture licenses do not establish parser licensing."
+    },
+    "alloy": {
+      "path": "C:/HackUTA26/dependencies/org.alloytools.alloy.dist.jar",
+      "observed_manifest_version": "6.2.0.202501090817",
+      "observed_java_requirement": "JavaSE 17; built with Java 17.0.13",
+      "feasibility_gate": "Confirm usable JDK17, exact API signatures, SAT4J availability, native solver coverage, checksums and licensing on each target. No solver run or build performed here."
+    },
+    "patch_version_policy": "Keep parser baseline pinned and explicitly record the PostgreSQL binary/image used as runtime oracle. PostgreSQL 16 documentation currently advertises 16.16; validate patch-version compatibility rather than silently equating it with the parser's 16.15 source baseline."
+  },
+  "product_contract": {
+    "intended_users": [
+      "Business analyst exploring query effects",
+      "Application developer reviewing SQL changes",
+      "Security reviewer defining data policies"
+    ],
+    "inputs": [
+      "Catalog snapshot or explicit synthetic catalog",
+      "SQL statement or structured transaction",
+      "Typed parameter declarations and domains",
+      "Actor/tenant/session context",
+      "Named security and business properties",
+      "Finite bounds and execution profile"
+    ],
+    "policies": [
+      "Tenant-scoped result disclosure",
+      "Tenant-scoped writes",
+      "Allowed tables/columns and rows affected",
+      "Maximum change cardinality",
+      "Nonnegative stock or balances",
+      "Transfer conservation",
+      "Uniqueness and referential expectations",
+      "Expected error behavior"
+    ],
+    "policy_authority": "A user-authored or reviewed policy is required. Natural-language intent alone cannot establish the correct business invariant.",
+    "missing_policy_behavior": "Show modeled effects and coverage; do not claim overall security without named properties.",
+    "evidence_bundle": [
+      "Original SQL and parameter map",
+      "Canonical IR and Alloy model",
+      "Parser/compiler/solver/runtime versions and hashes",
+      "Catalog/context/policy hashes",
+      "Exact scope and resource limits",
+      "Assumption/reachability outcomes",
+      "Per-property findings",
+      "Witness before/after rows and observations",
+      "Replay evidence or mismatch",
+      "Coverage gaps",
+      "AI explanation metadata without secrets"
+    ]
+  },
+  "architecture": {
+    "frontend": "TypeScript + React low-code graph editor with accessible forms and tables; technology choice is proposed, not installed.",
+    "rust_owned_modules": [
+      {
+        "name": "domain",
+        "purpose": "Identifiers, types, policy contracts, typed errors, immutable input/output types"
+      },
+      {
+        "name": "catalog",
+        "purpose": "Versioned catalog/session context and capability completeness"
+      },
+      {
+        "name": "ir",
+        "purpose": "Relational, scalar, ordering, effect and transaction IR definitions"
+      },
+      {
+        "name": "compiler",
+        "purpose": "AST binding, lowering, normalization, SQL emission and provenance"
+      },
+      {
+        "name": "semantics",
+        "purpose": "Independent bounded interpreter and arithmetic/NULL/operator definitions"
+      },
+      {
+        "name": "alloy_encoding",
+        "purpose": "Deterministic relational encoding, scope accounting and witness decoding"
+      },
+      {
+        "name": "verification",
+        "purpose": "Obligations, job orchestration, replay comparison and evidence assembly"
+      },
+      {
+        "name": "provider_adapters",
+        "purpose": "Credential handling, egress, OpenAI/Anthropic/Gemini normalization"
+      },
+      {
+        "name": "api_and_cli",
+        "purpose": "HTTP, CLI, persistence and process ports around the pure core"
+      }
+    ],
+    "lean_parser_dependency": {
+      "role": "Supplied parser dependency plus a thin serialization/diagnostic adapter; no new SQL grammar or business analysis core in Lean.",
+      "proposed_protocol": "Versioned bounded JSON request/response over child-process stdin/stdout; request_id, parser_commit, AST_schema_version, assurance profile and diagnostics.",
+      "restrictions": [
+        "No parsing Lean Repr strings",
+        "No shell-built command strings",
+        "Reject unknown node tags/version mismatches",
+        "Preserve numeric lexemes and parameter identity",
+        "Cap bytes, depth, time and stdout/stderr",
+        "No foreign source claims beyond upstream assurance",
+        "Cross-check Rust binding against available SQLean static output using identical catalog/type/collation/parameter inputs; disagreement is INTERNAL_MISMATCH and blocks conclusions."
+      ]
+    },
+    "java_bridge": {
+      "role": "Java 17 only for Alloy API invocation and structured solver results.",
+      "operations": [
+        "Load compiler-generated model and pinned library modules",
+        "Select command, bounds and solver",
+        "Invoke Alloy translation/solver API",
+        "Serialize satisfiability, evaluated tuples and diagnostics"
+      ],
+      "exclusions": [
+        "SQL parsing",
+        "Business-rule decisions",
+        "IR normalization",
+        "HTTP application server",
+        "LLM orchestration"
+      ],
+      "proposed_transport": "Length-bounded JSON over private stdin/stdout; no externally reachable bridge port.",
+      "isolation": "Supervised worker process per isolated job initially; Rust owns deadlines, cancellation, process-tree termination and cleanup.",
+      "compiler_input_policy": "Hosted MVP accepts generated Alloy only. Reject arbitrary imports, filesystem paths and uploaded Alloy modules."
+    },
+    "pipeline_rule": "Pure transformations return typed Result values. I/O is restricted to adapters and a small explicit orchestration layer; no hidden mutable global state.",
+    "job_protocol": {
+      "lifecycle": [
+        "CREATED",
+        "VALIDATING",
+        "QUEUED",
+        "RUNNING",
+        "COMPLETED or FAILED or CANCELLED or EXPIRED"
+      ],
+      "interface": [
+        "Submit analysis -> 202 + job_id",
+        "Read status/result",
+        "Cancel job",
+        "Download redacted evidence"
+      ],
+      "safeguards": [
+        "Tenant ownership checked for every operation",
+        "Idempotency key tied to user and input hash",
+        "No shared cross-tenant evidence cache",
+        "Authenticated bounded queue and rate limits",
+        "Configuration drift invalidates cached result"
+      ]
+    }
+  },
+  "relational_dsl": {
+    "representation": "A versioned typed JSON AST is the canonical DSL. Low-code blocks and optional human-readable algebra are views over that AST.",
+    "node_fields": [
+      "node_id",
+      "operator",
+      "inputs",
+      "ordered_output_schema",
+      "expression_types",
+      "nullability",
+      "bag_or_set_semantics",
+      "ordering_contract",
+      "catalog_object_ids",
+      "source_origin",
+      "required_capabilities"
+    ],
+    "scalar_types_initial": [
+      "BOOL with SQL UNKNOWN in predicates",
+      "INTEGER with explicitly modeled range/domain",
+      "Opaque TEXT equality under a declared supported comparison profile",
+      "Typed NULL",
+      "Typed bound parameters"
+    ],
+    "scalar_types_later": [
+      "BIGINT and exact fixed-scale NUMERIC",
+      "Declared date/time/timezone semantics",
+      "Selected strings/casts/functions",
+      "Arrays/JSON only with independent semantics"
+    ],
+    "operators": [
+      {
+        "family": "Core",
+        "operators": [
+          "Scan",
+          "Values",
+          "Filter/selection",
+          "Project/extended projection",
+          "Rename"
+        ],
+        "phase": "M1"
+      },
+      {
+        "family": "Joins",
+        "operators": [
+          "CartesianProduct",
+          "InnerJoin/theta/equi",
+          "LeftOuterJoin",
+          "RightOuterJoin",
+          "FullOuterJoin"
+        ],
+        "phase": "M1"
+      },
+      {
+        "family": "Existence",
+        "operators": [
+          "SemiJoin",
+          "AntiJoin",
+          "Exists",
+          "ScalarSubquery",
+          "InSubquery"
+        ],
+        "phase": "M1-M2; each separately gated"
+      },
+      {
+        "family": "Set/bag",
+        "operators": [
+          "Distinct",
+          "UnionAll",
+          "UnionDistinct",
+          "IntersectAll",
+          "IntersectDistinct",
+          "ExceptAll",
+          "ExceptDistinct"
+        ],
+        "phase": "M1"
+      },
+      {
+        "family": "Derived",
+        "operators": [
+          "Let/nonrecursive CTE",
+          "DerivedRelation",
+          "Division"
+        ],
+        "phase": "M2; Division defined as a set-domain derived operator with explicit empty-domain behavior"
+      },
+      {
+        "family": "Grouping",
+        "operators": [
+          "GroupBy",
+          "Count",
+          "Sum",
+          "Min",
+          "Max",
+          "Avg",
+          "Having",
+          "AggregateFilter"
+        ],
+        "phase": "M2; exact NULL, empty-group, type and overflow behavior required"
+      },
+      {
+        "family": "Ordered results",
+        "operators": [
+          "Sort",
+          "Limit",
+          "Offset",
+          "TopK"
+        ],
+        "phase": "M2; sequence semantics and tie nondeterminism, never pretend these are ordinary set RA"
+      },
+      {
+        "family": "Recursion",
+        "operators": [
+          "BoundedFixpoint/RecursiveCTE"
+        ],
+        "phase": "M5 research; report depth exhaustion, no general termination claim"
+      }
+    ],
+    "nonclassical_semantics": [
+      "Rows have occurrence identities; projection can create equal-valued duplicates without collapsing them. Alloy's set relations need an explicit occurrence encoding.",
+      "SQL equality and boolean operations use TRUE/FALSE/UNKNOWN. WHERE/HAVING/ON match only TRUE.",
+      "Duplicate/grouping equality is distinct from predicate equality; NULLs group together as required by the supported PostgreSQL operation.",
+      "Outer joins create explicit null-extended output occurrences.",
+      "Scalar subqueries have zero-row NULL, one-row value, and multi-row error outcomes.",
+      "Set ALL variants retain multiplicity arithmetic; do not replace EXCEPT ALL by set difference.",
+      "Unordered results are bags. ORDER BY ties and LIMIT without a total order require all permitted outcomes or a support diagnostic.",
+      "Casts and arithmetic are partial functions with errors. Do not assume expression short-circuit order or hide planner-time failures.",
+      "Context-dependent functions require declared context and an admitted semantic model; volatile/effectful functions are unsupported initially."
+    ],
+    "normalization": "Only apply rewrites with stated bag/NULL/error/collation preconditions. Disable optimizer-style rewrites by default until independently checked.",
+    "sql_emission": "Quote resolved identifiers, emit typed parameters separately, preserve positional output schema and parameter maps, and reparse/rebind generated SQL. Check normalize(lower(parse(emit(IR)))) = normalize(IR) for the admitted fragment, and separately validate semantics; this equality does not establish execution equivalence."
+  },
+  "effects_and_transactions": {
+    "envelope": [
+      "transaction_id",
+      "statements as individually parsed SQL strings",
+      "parameter bindings",
+      "isolation_profile",
+      "actor/session context",
+      "commit/abort policy",
+      "properties"
+    ],
+    "parsing_boundary": "Use structured boundaries because SQLeanParser's typed AST does not parse transaction control. Never split arbitrary SQL on semicolons.",
+    "initial_profile": "Single transaction with no concurrent transactions; this is not a claim about default PostgreSQL READ COMMITTED behavior under concurrency.",
+    "effects": [
+      "Insert(target, source_rows)",
+      "Update(target, predicate, simultaneous_assignments)",
+      "Delete(target, predicate)",
+      "Returning(projection)",
+      "Commit",
+      "Abort(sqlstate_category)"
+    ],
+    "state_model": [
+      "Table row identities and typed values",
+      "Statement snapshot",
+      "Transaction working state",
+      "Committed state",
+      "Observed result/RETURNING values",
+      "Direct and modeled indirect change sets",
+      "Outcome/error phase"
+    ],
+    "transition_rules": [
+      "All UPDATE assignment expressions read the appropriate old row; preserve untouched rows, columns and tables.",
+      "INSERT allocates fresh row identities and checks capacity; DELETE removes exactly selected rows before modeled referential actions.",
+      "Each statement uses explicit snapshot semantics and read-your-writes in the sequential profile.",
+      "Enforced NOT NULL, PK/UNIQUE and supported CHECK/FK constraints cause commit or abort as PostgreSQL does; CHECK UNKNOWN does not by itself reject a row.",
+      "Rollback restores modeled transactional table state. Previously observed data is not erased by rollback.",
+      "Immediate and deferred constraints are distinct; deferred constraints, sequences, triggers and cascades stay unsupported until their transitions are implemented.",
+      "Expected SQL errors and unintended persistent changes are separate findings.",
+      "After an error, model PostgreSQL's failed-transaction behavior and eventual rollback; do not continue applying subsequent writes as though the statement succeeded. Savepoints and recovery inside an aborted transaction are unsupported initially."
+    ],
+    "catalog_requirements": [
+      "Column types/nullability",
+      "Keys and uniqueness NULL policy",
+      "Constraints and timing",
+      "Defaults/generated values",
+      "Triggers/rewrite rules",
+      "Foreign-key actions",
+      "Relevant views/functions and volatility",
+      "Privileges/RLS/role bypass behavior",
+      "Search path/collation/timezone",
+      "Absence or modeled presence of each effect dependency"
+    ],
+    "absent_metadata": "A declared synthetic catalog may assert a closed effect universe. A real catalog import must establish relevant metadata completeness; unknown is not equivalent to absent.",
+    "later_concurrency_profile": {
+      "phase": "M5",
+      "model": [
+        "Bounded transactions/events",
+        "Read/write versions",
+        "Statement and transaction snapshots",
+        "Commit/abort events",
+        "Locks and conflict rules",
+        "Isolation-specific outcomes"
+      ],
+      "cases": [
+        "Lost update",
+        "Write skew",
+        "Phantoms",
+        "Read/modify/write races",
+        "Serialization failure",
+        "Deadlock and retry/idempotency behavior"
+      ],
+      "boundary": "Validate each isolation model against PostgreSQL 16 schedules; sequential checking alone cannot justify a concurrency claim. Client retry logic must be modeled to claim retry safety."
+    },
+    "parameter_contract": "Parameters are local to each statement; $1 in one statement is not implicitly the same binding in another. MVP bindings are explicit typed inputs. Feed-forward from earlier results requires a later explicit, typed binding node; no hidden application control flow.",
+    "context_contract": "Capture session, statement and transaction context explicitly. Time-dependent expressions remain unsupported until transaction/statement-time semantics are defined.",
+    "row_accounting": "Track matched/affected rows, value-changed rows, inserted/deleted rows and returned rows separately. An UPDATE assigning existing values may still count as affected."
+  },
+  "solver_and_validation": {
+    "initial_backend": "Alloy 6.2 via Java17, preferring a bundled pure-Java SAT solver such as SAT4J after feasibility verification; benchmark native solvers later.",
+    "finite_bounds": [
+      "Per-table base row count",
+      "Value domains and integer bitwidth/range",
+      "NULL participation",
+      "Parameter domains",
+      "Intermediate/output occurrence capacity",
+      "Statement count",
+      "Transaction/event count when concurrency enabled",
+      "Recursion depth when enabled"
+    ],
+    "bounds_policy": [
+      "Never use arbitrary small intermediate scopes that can suppress cross-products or INSERT rows.",
+      "Compute conservative capacities or use a structurally complete occurrence encoding; scope exhaustion yields INCONCLUSIVE.",
+      "Small Alloy integers are analysis bounds, not PostgreSQL machine integer semantics.",
+      "Guard all arithmetic and cardinality encodings against solver overflow; model SQL overflow as an explicit outcome where supported.",
+      "Start with exact finite semantics. Approximation requires a documented soundness direction; candidate counterexamples need concretization and no-counterexample claims require adequate soundness.",
+      "Increase scopes in a declared ladder; reports show completed checks and skipped/timed-out scopes separately."
+    ],
+    "proposed_demo_budget": {
+      "base_rows_per_table": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "transaction_statements_max": 3,
+      "default_job_seconds": 10,
+      "hard_job_seconds": 30,
+      "worker_memory_mib": 512,
+      "status": "Initial targets to benchmark, not measured capacity; preflight must refuse unsupported model sizes."
+    },
+    "witness_processing": [
+      "Decode typed rows and parameter values",
+      "Recompute outcome with independent Rust interpreter",
+      "Attempt witness reduction with bounded additional queries; call the result reduced unless minimality is actually established.",
+      "Replay in disposable PostgreSQL16 instance where permitted",
+      "Compare output multiplicities, changes, errors and transaction outcome",
+      "Preserve mismatch as blocking evidence"
+    ],
+    "determinism_contract": "Equal canonical inputs and pinned compiler versions yield byte-identical IR/model/SQL and stable identifiers. SAT witness selection can vary across solvers/platforms; archive the concrete witness and options instead of promising identical solutions.",
+    "replay_safety": "Only isolated disposable databases with synthetic data and restricted roles; no production replay and no untrusted effectful SQL.",
+    "coverage_record": [
+      "parse",
+      "static_assurance_profile",
+      "bind",
+      "lower",
+      "encode",
+      "sql_emit",
+      "interpreter",
+      "postgres_replay",
+      "property_coverage"
+    ],
+    "corpus_strategy": [
+      "Import existing synthetic and source-derived fixtures unchanged with origin, commit, license and hashes.",
+      "Separate syntax-only inputs from schema-complete semantic cases; never invent an application catalog and label it authentic.",
+      "Keep external templates unexpanded unless a separately modeled expansion is supplied.",
+      "Add generated finite schemas/instances and boundary values for each admitted operator.",
+      "Differentially compare PostgreSQL16, the Rust interpreter and Alloy witnesses; expected output comes from independently reviewed contracts.",
+      "Use meaningful metamorphic checks only under their valid SQL bag/NULL/error preconditions.",
+      "Mutation-test the encoder by dropping filters, frame constraints, NULL rules, parameter bindings and tenant predicates; reviewers must detect seeded defects.",
+      "Report exact denominators and all unsupported cases; upstream parse totals are not SQLolla proof coverage.",
+      "Provide a pinned disposable PostgreSQL16 runtime in the later test environment (WSL/Ubuntu or containers locally). Its availability was not established by the supplied dependency list.",
+      "Exhaustively compare all permitted outcomes on tiny finite domains, including successful commits, aborts, output bags and allowed nondeterminism. Replaying only found witnesses cannot detect outcomes omitted by a faulty encoding."
+    ]
+  },
+  "byot_and_ai": {
+    "provider_support": [
+      "OpenAI native adapter",
+      "Anthropic native adapter",
+      "Gemini native adapter",
+      "Optional administrator-approved OpenAI-compatible endpoint adapter"
+    ],
+    "normalization": "Each adapter handles its actual authentication, streaming, tool-call and structured-output protocol; compatibility is not assumed to mean identical APIs. Pin supported API versions and model capabilities; fail visibly for unsupported features. Link current provider data/retention terms rather than promising universal no-retention behavior.",
+    "credential_custody": [
+      "Browser form necessarily receives the key transiently; send over TLS to the Rust service and clear the input.",
+      "Keep credentials in a short-lived session secret store in memory by default; never localStorage, URLs, analytics, logs, evidence files or agent checkpoints.",
+      "Hosted mode discloses that Cloudflare may terminate TLS and the hosted origin processes the key. Private mode can bypass Cloudflare.",
+      "Use revocable session references, disconnect/expiry deletion and best-effort memory zeroization; do not promise instantaneous erasure from every runtime/network buffer.",
+      "Persistent vault/KMS integration is a later explicit deployment option."
+    ],
+    "egress_controls": [
+      "Known provider allowlist in hosted mode",
+      "Custom endpoints only through administrator policy",
+      "HTTPS with certificate verification",
+      "No redirects carrying credentials across origins",
+      "DNS rebinding and private/loopback/link-local/metadata address protections",
+      "Timeout, size, rate, token and spend caps",
+      "Separate credential references per provider"
+    ],
+    "data_sharing": "Default to synthetic/redacted evidence. Show the exact outbound payload and obtain explicit sharing consent before sending sensitive schema, SQL or witness content.",
+    "graph_state": [
+      "Intent",
+      "Catalog and policy references",
+      "Current IR revision",
+      "Typed proposal",
+      "Validation diagnostics",
+      "Analysis job and evidence references",
+      "User decision",
+      "Provider metadata"
+    ],
+    "pipeline": [
+      "Collect intent",
+      "Retrieve allowed schema/policy context",
+      "Propose typed IR patch",
+      "Deterministic schema/type/capability validation",
+      "Show SQL/graph/policy diff",
+      "User accepts patch",
+      "Run formal analysis",
+      "Validate and display evidence",
+      "Generate evidence-linked explanation",
+      "Revise with bounded loop or stop"
+    ],
+    "langgraph_like_design": "Implement an explicit typed state machine/DAG with checkpoints in Rust. LangGraph-like orchestration does not require adding a Python backend or placing trust in LLM tool output.",
+    "agent_limits": [
+      "No DB execution tool",
+      "No raw shell/network tool",
+      "Cannot reduce scope, remove policies or change verdict without an explicit visible user change",
+      "Revision hashes prevent stale approval",
+      "Maximum loop/tool/token budgets",
+      "Resume never repeats a mutation implicitly"
+    ],
+    "explanation_schema": [
+      "finding_id",
+      "evidence_ids",
+      "plain_language_effect",
+      "why_it_matters",
+      "suggested_change",
+      "uncertainties"
+    ],
+    "explanation_validation": "Require valid evidence references and keep formal verdict immutable. Structured-output validation cannot prove the prose true; unsupported claims are labeled or replaced by deterministic templates.",
+    "availability": "All formal analysis, finding summaries and demo flows work without a token or provider availability.",
+    "injection_boundary": "SQL comments, identifiers, schema descriptions and retrieved text are untrusted data; never instructions with authority to change policies, tools or credentials.",
+    "web_security": [
+      "Escape schema/SQL/witness strings",
+      "Sanitize AI Markdown and disallow raw HTML",
+      "Restrictive CSP and no third-party analytics on token entry surfaces",
+      "CSRF and session protection",
+      "Secret handles are tenant/session-bound and never authorize by possession alone"
+    ]
+  },
+  "user_experience": {
+    "default_path": [
+      "Choose a business scenario",
+      "Inspect sample tables",
+      "Build query with labeled blocks",
+      "Declare/check business rules",
+      "Click Find problems",
+      "Inspect before/after counterexample",
+      "Accept a proposed repair",
+      "Rerun and compare bounded results"
+    ],
+    "low_code_blocks": [
+      "Table",
+      "Filter",
+      "Choose columns",
+      "Join",
+      "Combine",
+      "Group",
+      "Insert",
+      "Update",
+      "Delete"
+    ],
+    "visual_design": [
+      "Plain-language labels with optional RA notation",
+      "SQL and algebra views synchronized through the same IR",
+      "Before/after tables with highlighted affected rows",
+      "Affected tenant/table/column summaries",
+      "Expandable technical evidence",
+      "Accessible keyboard/forms alternative to graph dragging"
+    ],
+    "result_language": {
+      "counterexample": "A scenario breaks this rule.",
+      "bounded_clear": "No counterexample found in these bounds.",
+      "unsupported": "This feature is not modeled yet.",
+      "invalid_assumptions": "No starting database fits these assumptions within the selected bounds.",
+      "inconclusive": "The analysis did not finish or could not cover this model."
+    },
+    "demos": [
+      {
+        "name": "Tenant filter missing",
+        "setup": "Orders with tenant_id and globally unique id; actor belongs to tenant A",
+        "defect": "An UPDATE selected by id without actor tenant restriction can modify tenant B's order",
+        "expected_evidence": "Two tenants, offending parameter, before/after row and violated write policy",
+        "repair": "Add tenant predicate and rerun"
+      },
+      {
+        "name": "Stock decrement",
+        "setup": "Inventory with bounded INTEGER stock and requested quantity; business rule stock >= 0",
+        "defect": "Unconditional decrement can commit negative stock when no DB CHECK is declared",
+        "alternate": "With enforced CHECK, report abort instead of a committed negative row",
+        "repair": "Guard update and explicitly handle zero affected rows"
+      },
+      {
+        "name": "Duplicate join effect",
+        "setup": "An order with two matching detail rows",
+        "defect": "Join duplicates order-level values and violates a declared result multiplicity rule",
+        "repair": "Correct join/aggregation only after the selected semantics are supported"
+      }
+    ],
+    "demo_targets": [
+      "A first-time user can reproduce the tenant defect and inspect the repair in under five minutes",
+      "No API key required for core demo",
+      "Timeout and unsupported screens demonstrated intentionally",
+      "Saved evidence clearly labeled when not generated live"
+    ]
+  },
+  "deployment": {
+    "public": {
+      "ui": "sqlolla.us static frontend through Cloudflare Pages or equivalent static hosting",
+      "api": "api.sqlolla.us -> Cloudflare ingress/Tunnel -> authenticated Rust origin",
+      "compute": "Rust service supervises Lean parser and Java/Alloy workers on Linux VM/container origin",
+      "async": "Jobs use submit/status/cancel endpoints; no dependency on a long edge HTTP request",
+      "caveat": "Ordinary Cloudflare Workers are not the planned JVM/SAT host; verify current origin/edge limits during deployment."
+    },
+    "private": [
+      "Single-host service with local static UI and reverse proxy",
+      "Linux OCI/Compose bundle",
+      "Native Windows/Linux/macOS packages with loopback default",
+      "Air-gapped formal analysis with AI disabled",
+      "Optional organization-controlled provider egress and identity"
+    ],
+    "portability": [
+      "Native packages for Windows x86_64, Linux x86_64 and macOS arm64 first; Linux arm64 and macOS x86_64 admitted after native CI.",
+      "Containers on Windows/macOS use their supported Linux VM/WSL2 path; container success is not evidence of native compatibility.",
+      "Bundle/check compatible parser runtime and JRE17 under verified licenses; no end-user Lean toolchain required if packaged binaries pass validation.",
+      "Use filesystem/process APIs, UTF-8 protocols, platform data directories and PATH-independent executable discovery.",
+      "Validate CRLF, Unicode paths, spaces, permissions, process-tree cancellation and temporary-file cleanup.",
+      "Test every supported OS/architecture with a small SAT job, protocol roundtrip, error, cancellation and offline startup."
+    ],
+    "operations": [
+      "Worker quotas and bounded queues",
+      "Tenant-isolated job storage and retention",
+      "No public Alloy worker port",
+      "Restricted worker filesystem and no worker network egress",
+      "Authenticated access or strict public-demo quotas",
+      "Metrics without SQL/keys by default",
+      "Signed artifacts/checksums/SBOM",
+      "Health/readiness and version reporting",
+      "Backup/restore and schema migration procedures",
+      "Documented rollback and data deletion"
+    ],
+    "dependency_release_gates": [
+      "Parser redistribution permission",
+      "Alloy/JRE/SAT solver licenses",
+      "Fixture attribution",
+      "Pinned build inputs",
+      "Clean-target installation tests",
+      "Provider endpoint policy",
+      "Cloudflare DNS/TLS/account configuration"
+    ]
+  },
+  "engineering_and_maintenance": {
+    "max_method_lines": "Every authored function/method has at most 30 physical source lines from signature through closing delimiter after formatting. Do not evade with minification, huge closures or meaningless helper fragmentation.",
+    "documentation": [
+      "Rustdoc for all Rust functions/types/modules including relevant private helpers",
+      "Javadoc for every Java bridge method/type",
+      "TSDoc for frontend interfaces and methods",
+      "Lean docstrings for parser adapter functions",
+      "Purpose, inputs, output, errors, invariants, side effects and examples where useful"
+    ],
+    "dependency_boundary": "Vendored/generated upstream parser/Alloy sources retain their provenance and are not reformatted to pretend to satisfy an authored-code rule.",
+    "checks": [
+      "Formatter then AST-aware line-span rule",
+      "Rust compiler/Clippy and rustdoc warnings",
+      "Javadoc/doclint and Java bridge tests",
+      "TypeScript type/lint/accessibility checks",
+      "Dependency direction checks",
+      "Protocol compatibility tests",
+      "Semantics and adversarial corpus",
+      "OS packaging matrix"
+    ],
+    "coding_style": [
+      "Small cohesive modules",
+      "Typed errors with context",
+      "No panic-based normal control flow",
+      "Immutable value transforms",
+      "Explicit effects/ports",
+      "No implicit global services or hidden retries"
+    ],
+    "required_docs": [
+      "Architecture overview",
+      "RA and transaction semantics reference",
+      "Support matrix",
+      "Threat model and token/data flow",
+      "How to add an operator/type/provider",
+      "Build and private deployment guide",
+      "Troubleshooting solver/timeout/protocol failures",
+      "Catalog drift and reanalysis guide",
+      "Dependency update and migration runbook",
+      "Release/rollback checklist"
+    ],
+    "change_recipe": [
+      "Write semantic contract and capability declaration",
+      "Implement pure model and serialization",
+      "Add encoder/decoder and canonical SQL support where applicable",
+      "Independent reviewer supplies adversarial cases",
+      "Differential and mutation checks pass",
+      "Update support matrix/docs and version",
+      "Publish only after dependency and portability gates"
+    ],
+    "dependency_updates": "Pin parser/Lean/Alloy/solver/oracle versions independently. Review upstream changes, rerun admitted profiles, compare canonical outputs, invalidate incompatible cached evidence and preserve old bundle interpreters or migration tooling.",
+    "optional_future_proof_work": "Prove selected pure IR rewrite/encoding lemmas only after semantics stabilize; do not label the whole system verified based on parser proofs."
+  },
+  "delivery_and_delegation": {
+    "scheduling_assumption": "Illustrative 8-12 week limited demo program with three experienced implementers plus an independent reviewer; a planning estimate, not a delivery commitment. Re-estimate after M0. Broad SQL and concurrency coverage are separately sized.",
+    "critical_path": [
+      "M0 contracts/feasibility",
+      "M1 relational semantics",
+      "M2 transactions and runtime validation",
+      "M3 trustworthy demo/AI",
+      "M4 portable release",
+      "M5 advanced/concurrency"
+    ],
+    "milestones": [
+      {
+        "id": "M0",
+        "target": "Weeks 1-2",
+        "deliverables": [
+          "Version/license ledger",
+          "Capability matrix",
+          "AST/IR/evidence protocol designs",
+          "Parser/native packaging and Alloy Java17 feasibility spikes after implementation is authorized",
+          "Numeric/bag encoding design review"
+        ],
+        "gate": "No unexamined parser protocol, license, numeric soundness or deployment blocker"
+      },
+      {
+        "id": "M1",
+        "target": "Weeks 3-5",
+        "deliverables": [
+          "Core bag/NULL RA",
+          "Deterministic AST lowering and SQL/Alloy emitters",
+          "Rust interpreter",
+          "Scope-safe counterexample checks",
+          "Read-disclosure and multiplicity examples"
+        ],
+        "gate": "Every admitted core operator passes hand-reviewed, differential and mutation tests"
+      },
+      {
+        "id": "M2",
+        "target": "Weeks 5-8",
+        "deliverables": [
+          "Single-table CRUD",
+          "Sequential transaction envelope",
+          "Explicit commit/abort and frame semantics",
+          "Initial constraint support",
+          "Tenant and stock witnesses",
+          "Selected aggregates/derived operators after contracts pass"
+        ],
+        "gate": "Witnesses replay against pinned PostgreSQL16; no accepted unsupported effect metadata"
+      },
+      {
+        "id": "M3",
+        "target": "Weeks 5-9 in parallel after IR contract",
+        "deliverables": [
+          "Low-code editor",
+          "Accessible evidence view",
+          "BYOT adapters",
+          "Typed agent pipeline",
+          "No-token demo"
+        ],
+        "gate": "AI cannot change verdicts/policies invisibly; novice walkthrough and credential isolation tests pass"
+      },
+      {
+        "id": "M4",
+        "target": "Weeks 9-12",
+        "deliverables": [
+          "Cloudflare origin deployment design/configuration when later authorized",
+          "Native/OCI packages",
+          "Maintenance docs",
+          "Independent red-team report"
+        ],
+        "gate": "All advertised OS targets pass clean-install checks; no open critical/high false-assurance or secret-exposure finding"
+      },
+      {
+        "id": "M5",
+        "target": "Later; separately sized",
+        "deliverables": [
+          "Isolation-specific bounded schedules",
+          "Retry/idempotency models",
+          "Additional types/functions/RLS/triggers only by contract",
+          "Recursive and advanced operators"
+        ],
+        "gate": "Each added claim has independent semantics and PostgreSQL behavioral evidence"
+      }
+    ],
+    "subagents": [
+      {
+        "id": "A0",
+        "role": "Architect/integrator",
+        "owns": [
+          "Semantic contracts",
+          "Versioned interfaces",
+          "Risk register",
+          "Final scope decisions"
+        ],
+        "restriction": "Cannot approve own high-risk semantic change"
+      },
+      {
+        "id": "A1",
+        "role": "Parser/DSL specialist",
+        "owns": [
+          "Lean adapter",
+          "Catalog binding",
+          "IR schemas",
+          "Source maps",
+          "Corpus provenance"
+        ],
+        "handoff": "Versioned fixtures and roundtrip examples to A2/A4"
+      },
+      {
+        "id": "A2",
+        "role": "Rust formal core specialist",
+        "owns": [
+          "Interpreter",
+          "Effect semantics",
+          "Alloy encoding",
+          "Bounds and witness validation"
+        ],
+        "handoff": "Evidence schema and independently replayable cases"
+      },
+      {
+        "id": "A3",
+        "role": "Java/solver and platform specialist",
+        "owns": [
+          "Minimal Java17 bridge",
+          "Worker isolation",
+          "Native solver/OS matrix",
+          "Packaging"
+        ],
+        "restriction": "No SQL/business logic in Java"
+      },
+      {
+        "id": "A4",
+        "role": "Frontend/agent specialist",
+        "owns": [
+          "Low-code graph",
+          "Evidence UX",
+          "Typed proposal workflow",
+          "Accessibility"
+        ],
+        "restriction": "Uses published IR API, never duplicates compiler semantics in UI"
+      },
+      {
+        "id": "A5",
+        "role": "Security/BYOT specialist",
+        "owns": [
+          "Provider adapters",
+          "Credential custody",
+          "Egress controls",
+          "Tenant access"
+        ],
+        "restriction": "No solver or policy verdict authority"
+      },
+      {
+        "id": "R1",
+        "role": "Independent semantics adversary",
+        "owns": [
+          "Counterexamples to encoding/rewrite assumptions",
+          "Constraint/vacuity/scope review",
+          "PostgreSQL mismatch triage"
+        ],
+        "restriction": "Does not rubber-stamp implementation-authored expected outputs"
+      },
+      {
+        "id": "R2",
+        "role": "Independent security/product adversary",
+        "owns": [
+          "Token exfiltration/SSRF/XSS tests",
+          "Cross-tenant access",
+          "Misleading UI and explanation review",
+          "Demo usability"
+        ],
+        "restriction": "No secrets/real customer data in fixtures"
+      }
+    ],
+    "work_allocation": "Roles are workstreams, not a claim that eight simultaneous agents are required. With four slots, run architect plus three focused tasks in waves. Lock interface contracts before parallel implementations; keep reviewers independent of the change they review."
+  },
+  "adversarial_review_register": [
+    {
+      "id": "R-01",
+      "severity": "critical",
+      "failure": "Set encoding collapses duplicate SQL rows",
+      "attack": "VALUES duplicates, projection collisions and many-to-many joins",
+      "gate": "Bag multiplicities match PostgreSQL and interpreter; mutant set collapse is detected"
+    },
+    {
+      "id": "R-02",
+      "severity": "critical",
+      "failure": "NULL/3VL or CHECK UNKNOWN changes meaning",
+      "attack": "NOT IN containing NULL, outer joins, NULL CHECK and UNIQUE policies",
+      "gate": "Truth tables and database outcome agree for all admitted cases"
+    },
+    {
+      "id": "R-03",
+      "severity": "critical",
+      "failure": "Vacuous no-counterexample result",
+      "attack": "Contradictory assumptions, impossible transition or tested invariant installed as a fact",
+      "gate": "Separate assumption/reachability checks; no safety label on vacuity"
+    },
+    {
+      "id": "R-04",
+      "severity": "critical",
+      "failure": "Missing frame or hidden indirect effects",
+      "attack": "Unrelated table changes, trigger/cascade/sequence/default dependencies",
+      "gate": "Exact frame conditions and blocking diagnostic for unmodeled effects"
+    },
+    {
+      "id": "R-05",
+      "severity": "critical",
+      "failure": "Scope/numeric encoding produces false UNSAT",
+      "attack": "Join output larger than auxiliary scope; INSERT freshness; SQL integer boundary and aggregate overflow",
+      "gate": "Capacity/range accounting complete or INCONCLUSIVE"
+    },
+    {
+      "id": "R-06",
+      "severity": "high",
+      "failure": "SQL errors modeled as invalid committed states",
+      "attack": "Duplicate PK, NOT NULL/CHECK violation, scalar cardinality, division/cast errors",
+      "gate": "Explicit abort/error and rollback observations match the admitted profile"
+    },
+    {
+      "id": "R-07",
+      "severity": "critical",
+      "failure": "Sequential result marketed as concurrent safety",
+      "attack": "Two-session stock update, write skew and serialization failure",
+      "gate": "MVP explicitly excludes concurrency; later isolation profiles pass controlled schedule tests"
+    },
+    {
+      "id": "R-08",
+      "severity": "high",
+      "failure": "Parser support mistaken for semantic coverage",
+      "attack": "Correlated query, DML CTE, window syntax, effectful SELECT and incomplete catalog",
+      "gate": "Per-stage capability flags; unsupported features never silently disappear"
+    },
+    {
+      "id": "R-09",
+      "severity": "high",
+      "failure": "Order, casts, search path or source provenance lost",
+      "attack": "LIMIT ties, quoted names, $n reorder, Unicode/CRLF, locale comparison",
+      "gate": "Exact context and source claims; reparse/rebind and semantic comparison"
+    },
+    {
+      "id": "R-10",
+      "severity": "critical",
+      "failure": "BYOT exfiltration or internal-network request",
+      "attack": "Malicious endpoint, redirect, DNS rebind, prompt injection and token logging",
+      "gate": "Endpoint policy and egress validation; keys absent from stored artifacts and telemetry"
+    },
+    {
+      "id": "R-11",
+      "severity": "critical",
+      "failure": "Cross-tenant evidence leakage or worker escape",
+      "attack": "Guess job IDs, cache collision, raw Alloy import paths, malicious XML/JSON and oversized input",
+      "gate": "Ownership checks, bounded parsers, disabled external entities/imports, process isolation"
+    },
+    {
+      "id": "R-12",
+      "severity": "high",
+      "failure": "AI converts uncertainty into a safety claim",
+      "attack": "Hallucinated evidence, timeout described as safe, hidden policy removal or scope reduction",
+      "gate": "Immutable formal verdict, evidence references, visible diffs and deterministic fallback text"
+    },
+    {
+      "id": "R-13",
+      "severity": "high",
+      "failure": "Determinism claim overreaches",
+      "attack": "Vary solver/platform/order/hash seed; edit generated Alloy metadata",
+      "gate": "Deterministic compiler artifacts, integrity checks, solver witness variability disclosed"
+    },
+    {
+      "id": "R-14",
+      "severity": "high",
+      "failure": "Coverage inflation from scraped corpus",
+      "attack": "Template SQL, missing app schemas, duplicated records and PG17 syntax oracle",
+      "gate": "Separate provenance and per-stage denominators; no invented runtime guarantees"
+    },
+    {
+      "id": "R-15",
+      "severity": "high",
+      "failure": "Release cannot run or be redistributed",
+      "attack": "No JDK, missing native libraries, path spaces, shutdown, offline deployment, missing licenses",
+      "gate": "Clean OS matrix and resolved dependency redistribution ledger"
+    }
+  ],
+  "release_acceptance": [
+    "All eight requirements have corresponding design decisions and owned delivery gates.",
+    "Every advertised operator/type/effect has explicit semantics, capability entries and independent behavioral checks.",
+    "No open critical/high finding that can produce false assurance, secret disclosure or cross-tenant access.",
+    "Every curated positive demo defect yields a validated witness; every repaired demo has satisfiable assumptions and a completed bounded result.",
+    "Mutation suite detects seeded loss of tenant filters, frame constraints, duplicate/NULL behavior and parameter identity.",
+    "Timeout, cancellation, unsupported syntax, incomplete catalog and inconsistent assumptions remain distinguishable in API/UI/evidence.",
+    "Canonical inputs produce reproducible compiler artifacts across supported platforms; witness variability is tracked separately.",
+    "BYOT disabled/provider failure leaves formal analysis usable; credential deletion and storage/logging checks pass.",
+    "All supported deployment targets pass isolated install/run/cancel/error/offline checks and documented recovery.",
+    "Alloy/Rust/PostgreSQL discrepancies block the affected capability rather than being explained away by AI."
+  ],
+  "requirement_traceability": {
+    "0": "evidence_baseline.parser; architecture.lean_parser_dependency; solver_and_validation.corpus_strategy",
+    "1": "relational_dsl; effects_and_transactions",
+    "2": "formalization.obligations; solver_and_validation; adversarial_review_register",
+    "3": "architecture.rust_owned_modules; architecture.java_bridge; Lean remains the supplied parser dependency",
+    "4": "formalization.reverse_mapping; byot_and_ai",
+    "5": "user_experience; byot_and_ai.pipeline",
+    "6": "engineering_and_maintenance",
+    "7": "deployment"
+  },
+  "decisions_to_validate_in_M0": [
+    "Permission to redistribute SQLeanParser and dependency artifacts.",
+    "AST adapter completeness and Lean runtime packaging on advertised targets.",
+    "Exact numeric and occurrence encoding performance before promising inventory/financial scenarios.",
+    "Catalog completeness contract for imported databases, including role and effect metadata.",
+    "Available hosting origin resources/budget and expected demo concurrency.",
+    "Which PostgreSQL16 patch versions are supported and used as isolated execution oracles."
+  ],
+  "planning_review_performed": {
+    "status": "Three read-only specialist reviews plus primary synthesis; these are design reviews, not implemented-system certification.",
+    "parser_review": "Inspected local parser APIs, contracts, AST, fixtures, toolchain and repository provenance.",
+    "formal_review": "Challenged SQL/Alloy semantic fidelity, vacuity, constraints, scope/overflow and concurrency claims; inspected Alloy jar metadata.",
+    "security_ux_review": "Reviewed Cloudflare architecture, BYOT custody, provider differences, agent authority and nontechnical result language.",
+    "implementation_status": "No production code, dependency changes, builds, SAT analyses or deployment performed."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "SQLeanParser pinned README and repository",
+      "url": "https://github.com/University-of-Wild-Chicken/SQLeanParser/tree/ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+      "local": "C:/HackUTA26/dependencies/SQLeanParser/README.md"
+    },
+    {
+      "id": "S2",
+      "title": "Parser rendering report explicitly excludes semantic preservation",
+      "local": "C:/HackUTA26/dependencies/SQLeanParser/Main.lean:124"
+    },
+    {
+      "id": "S3",
+      "title": "Parser AST output is Repr",
+      "local": "C:/HackUTA26/dependencies/SQLeanParser/Main.lean:332"
+    },
+    {
+      "id": "S4",
+      "title": "Parser release assurance boundaries",
+      "local": "C:/HackUTA26/dependencies/SQLeanParser/docs/releases/0.0.1-alpha.md"
+    },
+    {
+      "id": "S5",
+      "title": "Application corpus provenance",
+      "local": "C:/HackUTA26/dependencies/SQLeanParser/fixtures/external_postgresql/APPLICATION_SOURCES.md"
+    },
+    {
+      "id": "S6",
+      "title": "Alloy documentation and embeddable API",
+      "url": "https://alloytools.org/documentation.html"
+    },
+    {
+      "id": "S7",
+      "title": "PostgreSQL16 SELECT",
+      "url": "https://www.postgresql.org/docs/16/sql-select.html"
+    },
+    {
+      "id": "S8",
+      "title": "PostgreSQL16 constraints",
+      "url": "https://www.postgresql.org/docs/16/ddl-constraints.html"
+    },
+    {
+      "id": "S9",
+      "title": "PostgreSQL16 transaction isolation",
+      "url": "https://www.postgresql.org/docs/16/transaction-iso.html"
+    },
+    {
+      "id": "S10",
+      "title": "Cloudflare Workers limits",
+      "url": "https://developers.cloudflare.com/workers/platform/limits/"
+    },
+    {
+      "id": "S11",
+      "title": "Cloudflare Pages custom domains",
+      "url": "https://developers.cloudflare.com/pages/configuration/custom-domains/"
+    },
+    {
+      "id": "S12",
+      "title": "Cloudflare Tunnel",
+      "url": "https://developers.cloudflare.com/tunnel/get-started/"
+    },
+    {
+      "id": "S13",
+      "title": "PostgreSQL16 comparison predicates",
+      "url": "https://www.postgresql.org/docs/16/functions-comparison.html"
+    },
+    {
+      "id": "S14",
+      "title": "PostgreSQL16 aggregate behavior",
+      "url": "https://www.postgresql.org/docs/16/functions-aggregate.html"
+    },
+    {
+      "id": "S15",
+      "title": "PostgreSQL16 subquery expressions",
+      "url": "https://www.postgresql.org/docs/16/functions-subquery.html"
+    },
+    {
+      "id": "S16",
+      "title": "Alloy language specification",
+      "url": "https://alloytools.org/spec.html"
+    },
+    {
+      "id": "S17",
+      "title": "PostgreSQL16 row security",
+      "url": "https://www.postgresql.org/docs/16/ddl-rowsecurity.html"
+    },
+    {
+      "id": "S18",
+      "title": "OpenAI authentication",
+      "url": "https://developers.openai.com/api/reference/overview"
+    },
+    {
+      "id": "S19",
+      "title": "Anthropic API overview",
+      "url": "https://platform.claude.com/docs/en/api/overview"
+    },
+    {
+      "id": "S20",
+      "title": "Gemini API key security",
+      "url": "https://ai.google.dev/gemini-api/docs/api-key"
+    },
+    {
+      "id": "S21",
+      "title": "LangGraph interrupt workflow pattern",
+      "url": "https://docs.langchain.com/oss/javascript/langgraph/interrupts"
+    }
+  ],
+  "worked_formalization_example": {
+    "kind": "Synthetic design specimen; not executed in this planning task",
+    "scenario": "Tenant isolation on an order update",
+    "catalog": {
+      "tables": [
+        {
+          "id": "orders",
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": false
+            },
+            {
+              "name": "tenant_id",
+              "type": "integer",
+              "nullable": false
+            },
+            {
+              "name": "status",
+              "type": "text",
+              "nullable": false
+            }
+          ],
+          "primary_key": [
+            "id"
+          ]
+        }
+      ],
+      "declared_environment": "No triggers, defaults, RLS or concurrent transactions; this is an explicit synthetic environment, not an assertion about any real database."
+    },
+    "context": {
+      "actor_tenant": 1
+    },
+    "statement": {
+      "sql": "UPDATE orders SET status = $1 WHERE id = $2",
+      "parameters": [
+        {
+          "position": 1,
+          "type": "text",
+          "value": "paid"
+        },
+        {
+          "position": 2,
+          "type": "integer",
+          "value": 101
+        }
+      ]
+    },
+    "proposed_ir": {
+      "op": "Update",
+      "target": "orders",
+      "predicate": {
+        "op": "SqlEq",
+        "left": {
+          "column": "orders.id"
+        },
+        "right": {
+          "parameter": 2
+        }
+      },
+      "assignments": [
+        {
+          "column": "orders.status",
+          "value": {
+            "parameter": 1
+          }
+        }
+      ],
+      "assignment_snapshot": "prestatement",
+      "frame": "All unmatched rows and unassigned columns unchanged"
+    },
+    "policy": {
+      "id": "write_only_actor_tenant",
+      "property": "Every affected order has prestate tenant_id = actor_tenant"
+    },
+    "illustrative_witness": {
+      "before": [
+        {
+          "id": 100,
+          "tenant_id": 1,
+          "status": "pending"
+        },
+        {
+          "id": 101,
+          "tenant_id": 2,
+          "status": "pending"
+        }
+      ],
+      "after": [
+        {
+          "id": 100,
+          "tenant_id": 1,
+          "status": "pending"
+        },
+        {
+          "id": 101,
+          "tenant_id": 2,
+          "status": "paid"
+        }
+      ],
+      "outcome": "COMMIT",
+      "violated_property": "write_only_actor_tenant",
+      "observation": "Order 101 belongs to tenant 2 but was changed by tenant 1."
+    },
+    "proposed_repair": {
+      "sql": "UPDATE orders SET status = $1 WHERE id = $2 AND tenant_id = $3",
+      "additional_parameter": {
+        "position": 3,
+        "type": "integer",
+        "value": 1
+      }
+    },
+    "repair_review": "The same illustrative input now updates zero rows. If business intent requires exactly one row, declare and check that requirement separately; tenant isolation alone does not prove successful order processing.",
+    "bounded_analysis": "Search over declared small table and parameter domains, with sufficient scalar/occurrence encoding; keep policies and bounds unchanged for comparison. No result is claimed until the implementation actually runs."
+  },
+  "m0_update": {
+    "status": "M0 architecture decisions finalized with open implementation/release gates",
+    "decision_record": "m0/architecture.json",
+    "readable_architecture": "ARCHITECTURE.md",
+    "lean_spec": "formal/SQLolla.lean",
+    "trust_gate": "formal/verify.ps1",
+    "evidence_index": "m0/README.md",
+    "production_code_built": false,
+    "instance_requirement": "Deterministic solver-instance explorer with tables, graph, transaction trace and separate BYOT AI explanations; AlloyStudio reference reviewed",
+    "historical_note": "Original planning statements describe the earlier pre-M0 snapshot. Later Lean builds and disposable parser/Alloy/portability probes are documented by the linked M0 reports."
+  }
+}

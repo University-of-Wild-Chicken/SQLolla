@@ -1,0 +1,2645 @@
+{
+  "cases": 22,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "failures": [],
+  "results": [
+    {
+      "id": "locking/key_share/key_share",
+      "postgres": {
+        "held_rows": {
+          "0": "key_share",
+          "1": "key_share",
+          "2": "key_share"
+        },
+        "result": {
+          "affected_rows": 3,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 3",
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ],
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a6e71e32d951ab609cae6dc1935c64450eefe0310d8cc720a51c43b9c68ef264",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "e25f34e2d09d687766f16535d5e52567758b6bab7d56634cbf663b4fedeeffe1",
+        "id": "locking/key_share/key_share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "efc6010fb52d449e9ab0985157df45f8e9bb84fd1e8d842321326a1004a47520",
+        "mode": "compare",
+        "model_sha256": "7779179c91ce12a237ea11f96ddf4648184908be1624660d497240aa5122171b",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 3",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "key_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "key_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "key_share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "408bed7ccf0f44a2e94f3003ea2dea22ba6a5ff793aa3ec4109442042bda10c6",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "b8399651cb11787f74045968f3950826052926a682475e33ac3b917c6fc5fc67",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/key_share/share",
+      "postgres": {
+        "held_rows": {
+          "0": "key_share",
+          "1": "key_share",
+          "2": "key_share"
+        },
+        "result": {
+          "affected_rows": 3,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 3",
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ],
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "cf9a55ce011e2a41cfb987f22696ef287f4373ac50041743388fa19264b1d69b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "58893c9c6efa8c4cd673e887b8d097c2946a4b8f8b0e74afbd232a1e11a17e60",
+        "id": "locking/key_share/share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "efc6010fb52d449e9ab0985157df45f8e9bb84fd1e8d842321326a1004a47520",
+        "mode": "compare",
+        "model_sha256": "7779179c91ce12a237ea11f96ddf4648184908be1624660d497240aa5122171b",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 3",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "key_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "key_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "key_share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "408bed7ccf0f44a2e94f3003ea2dea22ba6a5ff793aa3ec4109442042bda10c6",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "b8399651cb11787f74045968f3950826052926a682475e33ac3b917c6fc5fc67",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/key_share/no_key_update",
+      "postgres": {
+        "held_rows": {
+          "0": "key_share",
+          "1": "key_share",
+          "2": "key_share"
+        },
+        "result": {
+          "affected_rows": 3,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 3",
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ],
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "6e140a6432efd65df633062f24175178fdb270d8887931c183232010bf3cb535",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "b2d1048a13f37fb697b777886a8fac592c98c64f17fb593afc69f58d291a6e69",
+        "id": "locking/key_share/no_key_update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "efc6010fb52d449e9ab0985157df45f8e9bb84fd1e8d842321326a1004a47520",
+        "mode": "compare",
+        "model_sha256": "7779179c91ce12a237ea11f96ddf4648184908be1624660d497240aa5122171b",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 3",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "key_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "key_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "key_share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "408bed7ccf0f44a2e94f3003ea2dea22ba6a5ff793aa3ec4109442042bda10c6",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "b8399651cb11787f74045968f3950826052926a682475e33ac3b917c6fc5fc67",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/key_share/update",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "8cc08ec0d587fccffc6745cde2cbb6cfa05b2bf0491b7d73ff09e9a5a079120b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "5f2c40955ba247c1ea86a846111aa284454741e52c0d441209864a032fc02d98",
+        "id": "locking/key_share/update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "efc6010fb52d449e9ab0985157df45f8e9bb84fd1e8d842321326a1004a47520",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "408bed7ccf0f44a2e94f3003ea2dea22ba6a5ff793aa3ec4109442042bda10c6",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/share/key_share",
+      "postgres": {
+        "held_rows": {
+          "0": "share",
+          "1": "share",
+          "2": "share"
+        },
+        "result": {
+          "affected_rows": 3,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 3",
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ],
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a31f7250a933b7db0c1fdf4634efa2924ecc6cdeb6b435cd4bac0138d948fd16",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "e25f34e2d09d687766f16535d5e52567758b6bab7d56634cbf663b4fedeeffe1",
+        "id": "locking/share/key_share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "b04514b45053f48b7cc4b1f507c3f7fc59662fe4c523a3e05bbfebe3f55ac5d4",
+        "mode": "compare",
+        "model_sha256": "ad8e1542dacb73f8e443538f54605ea66d8fa5619b62956f679a69cfe0e1ff10",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 3",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6547b52afb0d93c3d2da9f7380a7094a1bb7e7f1df7d4c24754c12433df5d334",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "06cb8568f2e18d4410be3760a751ed5ded5154b5d55bdbc1d859cf5b0d0b84a4",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/share/share",
+      "postgres": {
+        "held_rows": {
+          "0": "share",
+          "1": "share",
+          "2": "share"
+        },
+        "result": {
+          "affected_rows": 3,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 3",
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ],
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "d18011f4983ef4fa3258e6d22d5cb7ed57132c3bf6e148cbd302709b3ac8b868",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "58893c9c6efa8c4cd673e887b8d097c2946a4b8f8b0e74afbd232a1e11a17e60",
+        "id": "locking/share/share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "b04514b45053f48b7cc4b1f507c3f7fc59662fe4c523a3e05bbfebe3f55ac5d4",
+        "mode": "compare",
+        "model_sha256": "ad8e1542dacb73f8e443538f54605ea66d8fa5619b62956f679a69cfe0e1ff10",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 3",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6547b52afb0d93c3d2da9f7380a7094a1bb7e7f1df7d4c24754c12433df5d334",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "06cb8568f2e18d4410be3760a751ed5ded5154b5d55bdbc1d859cf5b0d0b84a4",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/share/no_key_update",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "28a2eeeefbb198bebe7e67ae97f3b10fd37fa67c620d08a7a30330ed8249596d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "b2d1048a13f37fb697b777886a8fac592c98c64f17fb593afc69f58d291a6e69",
+        "id": "locking/share/no_key_update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "b04514b45053f48b7cc4b1f507c3f7fc59662fe4c523a3e05bbfebe3f55ac5d4",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6547b52afb0d93c3d2da9f7380a7094a1bb7e7f1df7d4c24754c12433df5d334",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/share/update",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "b5710ff67b7c366051abd4c72d1795217a59537e9d8a7d05249253e2c260598e",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "5f2c40955ba247c1ea86a846111aa284454741e52c0d441209864a032fc02d98",
+        "id": "locking/share/update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "b04514b45053f48b7cc4b1f507c3f7fc59662fe4c523a3e05bbfebe3f55ac5d4",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6547b52afb0d93c3d2da9f7380a7094a1bb7e7f1df7d4c24754c12433df5d334",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/no_key_update/key_share",
+      "postgres": {
+        "held_rows": {
+          "0": "no_key_update",
+          "1": "no_key_update",
+          "2": "no_key_update"
+        },
+        "result": {
+          "affected_rows": 3,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 3",
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ],
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "41ce891e43e82bdda1c7b75b9eeb06c401c36a838dc2f73e16b07f68446ca1a0",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "e25f34e2d09d687766f16535d5e52567758b6bab7d56634cbf663b4fedeeffe1",
+        "id": "locking/no_key_update/key_share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "8006fefe8da32f21d8a129cc97d226b760f02a23301b8039af6c7a68a13b3c29",
+        "mode": "compare",
+        "model_sha256": "9abf8eddb3dba803e1b1887edb1c6a31894794e8154767ec534991af8985030a",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 3",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "no_key_update",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "no_key_update",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "no_key_update",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7a7f0c63fc6dd1a988ceb8453caa5d5a14a0b99b4046d2acd6599223be89d5d3",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "52621bb555b8ec63fbe8f722abef6d342a8e716ff909a0a35461de6c37239b7f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/no_key_update/share",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "1629c0b2acb57c596735664033d8b4f0e02bf3325bdb66f6c44cb29bea3d3d8e",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "58893c9c6efa8c4cd673e887b8d097c2946a4b8f8b0e74afbd232a1e11a17e60",
+        "id": "locking/no_key_update/share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "8006fefe8da32f21d8a129cc97d226b760f02a23301b8039af6c7a68a13b3c29",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7a7f0c63fc6dd1a988ceb8453caa5d5a14a0b99b4046d2acd6599223be89d5d3",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/no_key_update/no_key_update",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "7e687de412cb13ab595b45d5b4e7277ebbb32e52a371a0466213fd6c87edffa4",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "b2d1048a13f37fb697b777886a8fac592c98c64f17fb593afc69f58d291a6e69",
+        "id": "locking/no_key_update/no_key_update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "8006fefe8da32f21d8a129cc97d226b760f02a23301b8039af6c7a68a13b3c29",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7a7f0c63fc6dd1a988ceb8453caa5d5a14a0b99b4046d2acd6599223be89d5d3",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/no_key_update/update",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "66844d95b044b6c342a0ce1f8587ad2037110b4a14a0b926a695ca46d03c5221",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "5f2c40955ba247c1ea86a846111aa284454741e52c0d441209864a032fc02d98",
+        "id": "locking/no_key_update/update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "8006fefe8da32f21d8a129cc97d226b760f02a23301b8039af6c7a68a13b3c29",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7a7f0c63fc6dd1a988ceb8453caa5d5a14a0b99b4046d2acd6599223be89d5d3",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/update/key_share",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "30d912ca3a4a46f1ddfe3a0a921b09f376240c963142b80a7ec450099db52538",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "e25f34e2d09d687766f16535d5e52567758b6bab7d56634cbf663b4fedeeffe1",
+        "id": "locking/update/key_share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "0cac3cce5017af2e2c2cd709edf72004e05d6fe01427c462b09538f520c4f8a4",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a5611ffaa0710290fee379293a4ae25292c345411bf83d76f6a27610ac41aa84",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/update/share",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "1f9e951987af3a9b28f7b038784d5eaad5585e47991d1f94e6a7ab4f6e48373d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "58893c9c6efa8c4cd673e887b8d097c2946a4b8f8b0e74afbd232a1e11a17e60",
+        "id": "locking/update/share",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "0cac3cce5017af2e2c2cd709edf72004e05d6fe01427c462b09538f520c4f8a4",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a5611ffaa0710290fee379293a4ae25292c345411bf83d76f6a27610ac41aa84",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/update/no_key_update",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "72adae70ece6bdcfb18a54cad429ad4211108f721ecd58ee2eba21c8b1d7de72",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "b2d1048a13f37fb697b777886a8fac592c98c64f17fb593afc69f58d291a6e69",
+        "id": "locking/update/no_key_update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "0cac3cce5017af2e2c2cd709edf72004e05d6fe01427c462b09538f520c4f8a4",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a5611ffaa0710290fee379293a4ae25292c345411bf83d76f6a27610ac41aa84",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/update/update",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "could not obtain lock on row in relation \"r\"",
+          "sqlstate": "55P03",
+          "status": "error",
+          "table_name": null
+        },
+        "row_share": false
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "77f8ab2b3af6b121fe6e0b55849b392c760ee85cbab2d77ab3616d21a8a1df0d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "5f2c40955ba247c1ea86a846111aa284454741e52c0d441209864a032fc02d98",
+        "id": "locking/update/update",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "0cac3cce5017af2e2c2cd709edf72004e05d6fe01427c462b09538f520c4f8a4",
+        "mode": "compare",
+        "model_sha256": "bb21c43e08bae562a4c3447f4c6a188dec6e1e5c3b39a78daeb94d1e5bbe4426",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "55P03"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a5611ffaa0710290fee379293a4ae25292c345411bf83d76f6a27610ac41aa84",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d815dd138142a0cabe25cd091db048feac860b40f8ace071ead6ca73f0085db9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/skip",
+      "postgres": {
+        "held_rows": {
+          "0": "update",
+          "2": "update"
+        },
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "f1aa6dda25f6443070fa7a0f383b628c715a881ae05317edbf27192bac3f84c2",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "5f2c40955ba247c1ea86a846111aa284454741e52c0d441209864a032fc02d98",
+        "id": "locking/skip",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "572f5a142e0aeb82aa59d3fdd325d18d04ffd0226864d478ef9f1ee604f388fe",
+        "mode": "compare",
+        "model_sha256": "e19e2eef631bec6b60a87233762400ed31a7ce8baa114d455c8b2b664789b0c9",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 1",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "update",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "update",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "975519be4359060ba636229c379b8bee3a5a69a0c8acd8885fcf7fcac56856c6",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "84799bbc99a9610839bae1a4c852b36eee53e020a8aca6b06655f51380584e00",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/offset",
+      "postgres": {
+        "held_rows": {
+          "0": "update",
+          "1": "update"
+        },
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "2"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "b757bc03ed5e2f0c9b2e585060d6e33d38527b5f40ee2dc542962b549c74f99c",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "cdba674af1b4400be7ad0e62393c51bee80fd37beef627c83b74fd7e54e9e25b",
+        "id": "locking/offset",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "093fc0f909b30b84643c89fbf4fdede39a22e89587ce05de9e9cf794396d7615",
+        "mode": "compare",
+        "model_sha256": "bcedb29b298def694a55e79cd85ae602aa7e92503d3c2f04233521fa232e66ed",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 1",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "update",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "update",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "25a08155ff18bed9afe1267bcadfbeca100f8a4a56a8af0888d116ba843b8c8e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "c32df637ecd8ec9d2651dee875b42cca729e60456d7000f457d5c8612f9f421c",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/zero",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "41de5f3b76ffa350c0e4aabe2511f147880dbd032dc30a17eab42a91f8937249",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "cdba674af1b4400be7ad0e62393c51bee80fd37beef627c83b74fd7e54e9e25b",
+        "id": "locking/zero",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "94f5e71475510c14440fac6697605835287b725bb041fcc66acb7c7ef746a1fe",
+        "mode": "compare",
+        "model_sha256": "3793d6330fc842bc84f51426c33cad424b69e8cfc045e332b75b67f2e0b5a30c",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 0",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "17fa8815fa10a8f1f4134594daaeefeb053b2124c6f2a8230ac177f5b6a5fd57",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "6895f9a8c61c25e9a68c29374443366771c42f90f9a03eb6a9ce9024b9537da2",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/zero_expression",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "?column?",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a0c5fa877915b492ea2c60e894ee4fbc22891b91f61e525d9c3a47fb5d7d3e9a",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "cdba674af1b4400be7ad0e62393c51bee80fd37beef627c83b74fd7e54e9e25b",
+        "id": "locking/zero_expression",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "04335d3d9c2aca6be041946cd476e2b6831733246ce715e6d195a70577024ca1",
+        "mode": "compare",
+        "model_sha256": "dbe98fc535e9ced42047221d370dc6eac2fe413b60dc7a9258683e6e43897dca",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 0",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "?column?",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "5c895f1229ec7facc9f44e2afb11ba6d6bcb1ca3cfce62b4780a8ebfb3dcf7bc",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "8f58e6ed479a7430851a91c52e14f749405b87845a9b69067935a3059c61c7b2",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/none",
+      "postgres": {
+        "held_rows": {},
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "dbea44d974dc619a2fc98a3ce3b1773d5c653fd3a0b04f8a3bc083f3954c5eca",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "cdba674af1b4400be7ad0e62393c51bee80fd37beef627c83b74fd7e54e9e25b",
+        "id": "locking/none",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "0586bca6fdeba8a550705e960c3eb50e8a2afd7d31ad63890b37b21c7d025eff",
+        "mode": "compare",
+        "model_sha256": "dbe98fc535e9ced42047221d370dc6eac2fe413b60dc7a9258683e6e43897dca",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 0",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "fb455d5bee07dd780cd294ce09952b8fbf3afb4197afc8782d9111090ba3fea1",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "8f58e6ed479a7430851a91c52e14f749405b87845a9b69067935a3059c61c7b2",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "locking/reentrant",
+      "postgres": {
+        "held_rows": {
+          "0": "key_share",
+          "1": "update",
+          "2": "key_share"
+        },
+        "result": {
+          "affected_rows": 3,
+          "columns": [
+            {
+              "name": "id",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 3",
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ],
+            [
+              "3"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_share": true
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "8b4661474216e97649e24f33ed96be4037cf2ac7c9d41e3673bea28d685b7ee3",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "8f3fd214b0559a76e4ccde85f3d91429a217f04e6f73f879761552be4915c6c3",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "f378826251e4b962bf8efbbb83c866f6f9d3b02e19860a479be7d6bc5356f874",
+        "id": "locking/reentrant",
+        "input_sha256": "01ac06fd73548aef13df9f03b3a06b8a5a539976047b546bf605efca0dc3f49f",
+        "ir_sha256": "cca0b0dfff30b2eab58137c61ec22cde00ed2e1e5431d5f22e738db48d7cac3b",
+        "mode": "compare",
+        "model_sha256": "7c4164b2d11207967e6049aca8773955394b59da598c335272c76e09346be099",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.r": {
+                    "columns": [
+                      {
+                        "name": "id",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "r",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "SELECT 3",
+              "database": {
+                "public.r": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "table_lock",
+                  "mode": "row_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 0,
+                  "strength": "key_share",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 1,
+                  "strength": "update",
+                  "table": "public.r"
+                },
+                {
+                  "kind": "row_lock",
+                  "occurrence": 2,
+                  "strength": "key_share",
+                  "table": "public.r"
+                }
+              ],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "71923a34a44148ef473e29ffb0e1da70591fdd03b22467fadcea92deda5fa8ac",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "3a103a80b6a76ec1811ed8f2640c1b4828139fc0bd9a6239f1a9e18851ec0ccd",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    }
+  ],
+  "scope": "Fixed competing row-lock snapshot; no concurrent row updates, wait completion or isolation-schedule claim.",
+  "status": "passed",
+  "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit"
+}

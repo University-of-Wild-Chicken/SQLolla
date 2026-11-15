@@ -1,0 +1,246 @@
+{
+  "status": "PASS",
+  "milestone": "M2_MAINTAINED_SPECIFICATION",
+  "compiler": "Lean (version 4.34.0, x86_64-w64-windows-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)",
+  "compiler_sha256": "a8040e2cab341c12116ab591fed9f761816f5f6b08554f6cc1680e86dfbba0a2",
+  "source_shortcut_gate": "PASS",
+  "maximum_authored_declaration_lines": 30,
+  "authored_theorem_statements": 442,
+  "compiled_draft_declarations": 3543,
+  "compiled_draft_theorems_including_generated": 1263,
+  "compiled_inherited_declarations": 1038,
+  "observed_foundations": "[propext, Classical.choice, Quot.sound]",
+  "custom_or_unapproved_axioms": 0,
+  "inherited_sources_unchanged": true,
+  "draft_sources": [
+    {
+      "path": "M2TrustAudit.lean",
+      "sha256": "c409b665388d27904205424fbe1846dc52ce72174e0475456bac652f0e9c1d46"
+    },
+    {
+      "path": "SQLollaM2.lean",
+      "sha256": "30e81991e4c46f772bf6eb196ab7207439e0a5b0ae9b0cf293a5323f342ee4e2"
+    },
+    {
+      "path": "SQLollaM2\\Aggregates.lean",
+      "sha256": "2214012ec4adb993d3bd95bff4d54d337dcbbf1aa6c2d704af5e3e6699c92fec"
+    },
+    {
+      "path": "SQLollaM2\\AssistanceBoundary.lean",
+      "sha256": "cecfdc43332c8fc528105bd01cdc95bf0618ae4aa015a6ad808653d1380e0f89"
+    },
+    {
+      "path": "SQLollaM2\\BackendSignals.lean",
+      "sha256": "2f5cbdaa7c915542ddc67457c7cc1c3e4a098caba2886be2ec2abb091298add9"
+    },
+    {
+      "path": "SQLollaM2\\BranchEffects.lean",
+      "sha256": "f54d6c137d048e168f5ed583f6f8f1d87aeda6ca2af847aceae0c04b6a58d616"
+    },
+    {
+      "path": "SQLollaM2\\Collections.lean",
+      "sha256": "1de8138e36174675db455169627330b38d961ee6c267dbc312527576a20f04f7"
+    },
+    {
+      "path": "SQLollaM2\\Comparability.lean",
+      "sha256": "00b3a9bccdf83a85b3ba9345a36707dc546c4f3f561ee66adeb758ca1f5ba281"
+    },
+    {
+      "path": "SQLollaM2\\Conflict.lean",
+      "sha256": "e707a608ad650da371dce6e5afe8a7b5e09fa5246ca4c926ba54405e8e00cfe3"
+    },
+    {
+      "path": "SQLollaM2\\ConsumerLineage.lean",
+      "sha256": "3224907ed2dfb860497de980139b478479902dc2ce576b63bba4a79909360474"
+    },
+    {
+      "path": "SQLollaM2\\Coverage.lean",
+      "sha256": "821a8b77fd88a1497c031042e00121b0eea4ed370f3c27226a179bc5e75d1a1d"
+    },
+    {
+      "path": "SQLollaM2\\Crud.lean",
+      "sha256": "ab692f6e1de56d1b5aa97cf4f213c62cac53dd641f2bcb06da2dca8d9502ffb0"
+    },
+    {
+      "path": "SQLollaM2\\Ddl.lean",
+      "sha256": "57e7d9eb7934ab8ca1b07ff84360504b38881d8b1ffee8c10948786889f5ec1c"
+    },
+    {
+      "path": "SQLollaM2\\Defaults.lean",
+      "sha256": "3819619222f1446b6119248f3220ef8668dc4756df0238a0c1ff1998bacec576"
+    },
+    {
+      "path": "SQLollaM2\\Enumeration.lean",
+      "sha256": "c2b36f5edba0aa890c7877bce77800bec378154e9634b6aaf6aa62039f78b74f"
+    },
+    {
+      "path": "SQLollaM2\\Extensions.lean",
+      "sha256": "1574f55bc5a4d992c30041a144b10bf612e965bd506af56f7c3004368ae19c4e"
+    },
+    {
+      "path": "SQLollaM2\\FiniteSearch.lean",
+      "sha256": "061c48e0e8a848551d8d278de1c624d9c3a51a1807c78e80ebc850daadd69628"
+    },
+    {
+      "path": "SQLollaM2\\FunctionResolution.lean",
+      "sha256": "bdf3f8cfcced020001e595f89a6b9156bbf5adb771f2a515e572f8a8c5e6f4c3"
+    },
+    {
+      "path": "SQLollaM2\\InsertionEffects.lean",
+      "sha256": "39bb85d845c4deaa0917ff2f886a525a7c92cf0dca99cb4468a3805766b378cd"
+    },
+    {
+      "path": "SQLollaM2\\InstanceReview.lean",
+      "sha256": "f1b291f17ac97006575de260f65e9439015de24885ebb7cb7242891d54deba80"
+    },
+    {
+      "path": "SQLollaM2\\Intervals.lean",
+      "sha256": "fb3e741831b60e3ac0360cd78be5b71aa2f5a94335b80c144118da3b85227e7a"
+    },
+    {
+      "path": "SQLollaM2\\Locks.lean",
+      "sha256": "c7ac9926a1c9c4bc2d758d3df388de1194ebb9a346139b62c5e32dd2bf71ac18"
+    },
+    {
+      "path": "SQLollaM2\\MutationSource.lean",
+      "sha256": "4a175998d1c1c2d239d4091b7bb22d9d6cc29eec833ebad264866cc038f37f4c"
+    },
+    {
+      "path": "SQLollaM2\\Outcome.lean",
+      "sha256": "315148cc8423848ebd998552a607c960087ed85324df085d5af610a7df1f814c"
+    },
+    {
+      "path": "SQLollaM2\\OutputLabels.lean",
+      "sha256": "ac604458582b7d924c8c811f3ae7077b70ceb196e28609795fcf7637151634fc"
+    },
+    {
+      "path": "SQLollaM2\\Predicates.lean",
+      "sha256": "d41f544d32875dc76b84e32fea86f9db05e7362a208db837625080e9d542d81c"
+    },
+    {
+      "path": "SQLollaM2\\RegexSubset.lean",
+      "sha256": "e0fc9a71f1f3984040e569a9e920d443ed598514e03bbe70074dfc54d83c465a"
+    },
+    {
+      "path": "SQLollaM2\\RelationalEffects.lean",
+      "sha256": "58555693bad39b2c7e3fc2b4d5d3ee5872f920ed66fd3e271733c9f87bc91f94"
+    },
+    {
+      "path": "SQLollaM2\\RelationInitialization.lean",
+      "sha256": "85dde1382c2ee65aaf5c4628dfb204f801f795252028e4ea3cff139d93f96044"
+    },
+    {
+      "path": "SQLollaM2\\Scalar.lean",
+      "sha256": "70bb02c3876ffed143afc165a763dbfb6c4f9ca9122f8fb3bb377410c65f4376"
+    },
+    {
+      "path": "SQLollaM2\\ScalarPropagation.lean",
+      "sha256": "a7b0fb7650e17e5914e74304ac62bff09e2f728e31eceabb2f5a55951035e7a4"
+    },
+    {
+      "path": "SQLollaM2\\SequenceEffects.lean",
+      "sha256": "024d2dddbd3c8483fe9e84c935e917a57138bb74346ea6a7dcd3d9c6993cd349"
+    },
+    {
+      "path": "SQLollaM2\\SessionContext.lean",
+      "sha256": "72cdf48ff46c275c3a16dcd49f2b40887f4f05dae221e9b18cebf3c31bfae941"
+    },
+    {
+      "path": "SQLollaM2\\SessionEffects.lean",
+      "sha256": "cd70d8faad2bb789b941578e19e72b9e1a19d6587fa235f5b89b4fcd9f86e761"
+    },
+    {
+      "path": "SQLollaM2\\SetReturning.lean",
+      "sha256": "bfbbccc0cd7745db058681963805d4d9563ac5d608e1a9977328d5e06f5c12bf"
+    },
+    {
+      "path": "SQLollaM2\\SqlFunction.lean",
+      "sha256": "7a53202e6a5a302ec5476d849845078fbf8c954175bf09c4b60684c05efe2246"
+    },
+    {
+      "path": "SQLollaM2\\StringCollections.lean",
+      "sha256": "2a6ece4de6e61eb529e8e4acd409917d1fc1cecc223b89d7d10eb2531d932ec5"
+    },
+    {
+      "path": "SQLollaM2\\Subquery.lean",
+      "sha256": "5e1f105e39f2fab36dc512dbf642ec8ea61d18555bbd7c4e49f4ed9c6b2ece4e"
+    },
+    {
+      "path": "SQLollaM2\\Transaction.lean",
+      "sha256": "b20b8a02d1a6f977bc4932ccea9d1d42f9c00dc31498632f7ce5a3bbb0e7076d"
+    },
+    {
+      "path": "SQLollaM2\\TupleVersion.lean",
+      "sha256": "6a79ad9a943c35efff29ee8a95a7285ff99c8d9994588cef6bb8fa82c3c0abab"
+    },
+    {
+      "path": "SQLollaM2\\UniqueIndex.lean",
+      "sha256": "92490cf83c9497fbcebcdaeb6a72c6c555942a00088ce9f8668afcfa093408ee"
+    },
+    {
+      "path": "SQLollaM2\\Values.lean",
+      "sha256": "02b975b00be766cbab5733da43af42a3e26f420ad0be73f4c9f3423d4ed3d1b3"
+    },
+    {
+      "path": "SQLollaM2\\Windows.lean",
+      "sha256": "ae5a1608b8a2ebcb59af177dcc955e95cb12839d7ead1e717c8847a95b758629"
+    },
+    {
+      "path": "SQLollaM2\\Witnesses.lean",
+      "sha256": "5f75cd0e3088c3de59b85aceeab4424a5bf8af98f59285097ff4579087e4fc43"
+    },
+    {
+      "path": "SQLollaM2\\WritableCte.lean",
+      "sha256": "b0465366456b329b7af5a25d4475c31031861a004c6abb017f1ff6d64fe1acd9"
+    },
+    {
+      "path": "SQLollaM2\\XidScalars.lean",
+      "sha256": "afb8f1a30c7cee2a693bd4496c0543c6e07d4abed1bf2356e6372f0dbcd52f16"
+    }
+  ],
+  "inherited_sources": [
+    {
+      "path": "SQLolla.lean",
+      "sha256": "1a8328bb44843125f698efe61a6c6acd7be1470d9b1519fa67eff8141da56729"
+    },
+    {
+      "path": "SQLolla\\Analysis.lean",
+      "sha256": "a73105cf4941e9d726b8168d305e13a72f04ba77b99a3805d4ea2565092c7cd1"
+    },
+    {
+      "path": "SQLolla\\Encoding.lean",
+      "sha256": "a85ea4712b6213c537328d96d7cb5e58f7f2c79873d30071c3928a1aac2c760b"
+    },
+    {
+      "path": "SQLolla\\Examples.lean",
+      "sha256": "3a3287d8863ef38d664b6bb04d5452f2098dc75c8fb62859e2680a81ff1bdf29"
+    },
+    {
+      "path": "SQLolla\\Instance.lean",
+      "sha256": "b688de05b4b29a893853c18f167d426b26abd021e53cf68b5b7335c3a58d0132"
+    },
+    {
+      "path": "SQLolla\\IR.lean",
+      "sha256": "52676b425e0e4e6c110e5766502264b53638631e0e75089a502b1ca6b68b268d"
+    },
+    {
+      "path": "SQLolla\\Relation.lean",
+      "sha256": "0559b4b22a97456aa1e6825a71cec2887e8e321e02d395e2c6606ba8baa3505b"
+    },
+    {
+      "path": "SQLolla\\Transaction.lean",
+      "sha256": "27882b802be5a654b39ce9dd3e84df79d751ebda8f4e5845f7c7e982416347f1"
+    },
+    {
+      "path": "SQLolla\\Truth.lean",
+      "sha256": "ab6b0be0faecbdf4b352574f840e6c8411a50dbfbc659e0d6bfd29f869a59b22"
+    },
+    {
+      "path": "TrustAudit.lean",
+      "sha256": "7f27fd4d86479c3d98f56c4f392a0bebbe289c7752962efdf4e005ca8216a9fe"
+    }
+  ],
+  "claim": "Kernel-checked abstract contracts and conditional lemmas; no PostgreSQL/Rust/Alloy preservation proof.",
+  "audit_boundary": "Module-owned SQLollaM2 and SQLolla declarations, including private/generated declarations and transitive axiom dependencies.",
+  "trust_boundary": "Pinned Lean kernel/toolchain and audit metaprogram; not a hostile-code sandbox."
+}

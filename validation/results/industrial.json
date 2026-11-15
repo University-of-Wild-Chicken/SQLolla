@@ -1,0 +1,2802 @@
+{
+  "baseline": {
+    "distinct_sql_texts": 260,
+    "outcomes": {
+      "exported": 276
+    },
+    "records": 276
+  },
+  "cli_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
+  "comparisons": 24,
+  "context_claim": "All catalogs, column nullability and input rows below are synthetic M1 test contracts. No authoritative upstream DDL, keys, widths, business constraints or production-data claim is made.",
+  "contexts_sha256": "42b6c5fdf956cbf0f2e5f745cda5a73d4ddb715d0609f6b67b22e4d477f672a5",
+  "distinct_sql_queries_replayed": 8,
+  "failures": [],
+  "fixtures_per_query": 3,
+  "limitations": [
+    "No production catalog, keys, constraints, collation, authorization or transaction behavior is certified.",
+    "BenchBase SQL retains its documented corpus JDBC-to-PostgreSQL conversion; no further SQL rewrite occurs here.",
+    "Duplicate and NULL fixtures intentionally stress the declared synthetic nullable schemas."
+  ],
+  "parameters": "PostgreSQL typed PREPARE/EXECUTE; no SQL parameter substitution",
+  "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+  "results": [
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:DeleteCallForwarding:getSubscriber/empty",
+      "input_sha256": "cafaec72102c5e2cbf1b0c907b80482e5705e658ab75d9b1343da636c4e60903",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "text",
+          "value": "555001"
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tatp:DeleteCallForwarding:getSubscriber",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 7
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 7
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:DeleteCallForwarding:getSubscriber/matching_duplicates_and_miss",
+      "input_sha256": "e2149d9714c1f6c6456704af5bc7cef6bdc9b3ccbe90fd83ff29dbc0e1d65d6e",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "text",
+          "value": "555001"
+        }
+      },
+      "postgres_rows": [
+        [
+          7
+        ],
+        [
+          7
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 7
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 7
+          }
+        ]
+      ],
+      "source_id": "benchbase:tatp:DeleteCallForwarding:getSubscriber",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:DeleteCallForwarding:getSubscriber/typed_null_parameter",
+      "input_sha256": "e2149d9714c1f6c6456704af5bc7cef6bdc9b3ccbe90fd83ff29dbc0e1d65d6e",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "text"
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tatp:DeleteCallForwarding:getSubscriber",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:GetAccessData:getAccessInfo/empty",
+      "input_sha256": "cff0c12eab44fe95d91add2c016816b51119387a53977a97ef4c09de307d68e1",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 7
+        },
+        "2": {
+          "type": "int32",
+          "value": 1
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tatp:GetAccessData:getAccessInfo",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 10
+          },
+          {
+            "type": "int32",
+            "value": 20
+          },
+          {
+            "type": "text",
+            "value": "abc"
+          },
+          {
+            "type": "text",
+            "value": "hello"
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 10
+          },
+          {
+            "type": "int32",
+            "value": 20
+          },
+          {
+            "type": "text",
+            "value": "abc"
+          },
+          {
+            "type": "text",
+            "value": "hello"
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:GetAccessData:getAccessInfo/matching_duplicates_and_miss",
+      "input_sha256": "883b285ed580e7f84182ab8ec80e3052fe9c27bf361925f926e50b303715fa0d",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 7
+        },
+        "2": {
+          "type": "int32",
+          "value": 1
+        }
+      },
+      "postgres_rows": [
+        [
+          10,
+          20,
+          "abc",
+          "hello"
+        ],
+        [
+          10,
+          20,
+          "abc",
+          "hello"
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 10
+          },
+          {
+            "type": "int32",
+            "value": 20
+          },
+          {
+            "type": "text",
+            "value": "abc"
+          },
+          {
+            "type": "text",
+            "value": "hello"
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 10
+          },
+          {
+            "type": "int32",
+            "value": 20
+          },
+          {
+            "type": "text",
+            "value": "abc"
+          },
+          {
+            "type": "text",
+            "value": "hello"
+          }
+        ]
+      ],
+      "source_id": "benchbase:tatp:GetAccessData:getAccessInfo",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:GetAccessData:getAccessInfo/typed_null_parameter",
+      "input_sha256": "883b285ed580e7f84182ab8ec80e3052fe9c27bf361925f926e50b303715fa0d",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "int32"
+        },
+        "2": {
+          "type": "int32",
+          "value": 1
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tatp:GetAccessData:getAccessInfo",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:GetNewDestination:getNewDestination/empty",
+      "input_sha256": "6f7d2f1037562ea4950f50029b248234fd6d97ff2c1365afa1daabd589ae3a18",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 7
+        },
+        "2": {
+          "type": "int32",
+          "value": 1
+        },
+        "3": {
+          "type": "int32",
+          "value": 5
+        },
+        "4": {
+          "type": "int32",
+          "value": 5
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tatp:GetNewDestination:getNewDestination",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:GetNewDestination:getNewDestination/matching_duplicates_and_miss",
+      "input_sha256": "d0ab40827f2a0d3b685ccdc1220a898cfb99026c1f5ae564f2d9f80cb9941158",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 7
+        },
+        "2": {
+          "type": "int32",
+          "value": 1
+        },
+        "3": {
+          "type": "int32",
+          "value": 5
+        },
+        "4": {
+          "type": "int32",
+          "value": 5
+        }
+      },
+      "postgres_rows": [
+        [
+          "555010"
+        ],
+        [
+          "555010"
+        ],
+        [
+          "555010"
+        ],
+        [
+          "555010"
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "555010"
+          }
+        ]
+      ],
+      "source_id": "benchbase:tatp:GetNewDestination:getNewDestination",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tatp:GetNewDestination:getNewDestination/typed_null_parameter",
+      "input_sha256": "d0ab40827f2a0d3b685ccdc1220a898cfb99026c1f5ae564f2d9f80cb9941158",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "int32"
+        },
+        "2": {
+          "type": "int32",
+          "value": 1
+        },
+        "3": {
+          "type": "int32",
+          "value": 5
+        },
+        "4": {
+          "type": "int32",
+          "value": 5
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tatp:GetNewDestination:getNewDestination",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Delivery:delivGetCustIdSQL/empty",
+      "input_sha256": "0822b506ee18b91494e90cd9f658a78866735109a3f88b4a269fb4597cd867d7",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 100
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        },
+        "3": {
+          "type": "int32",
+          "value": 3
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:Delivery:delivGetCustIdSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 42
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 42
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Delivery:delivGetCustIdSQL/matching_duplicates_and_miss",
+      "input_sha256": "b2d0149fb812b3cf50895c7a3ee91322575990943eff0a52a095eac229b2df1b",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 100
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        },
+        "3": {
+          "type": "int32",
+          "value": 3
+        }
+      },
+      "postgres_rows": [
+        [
+          42
+        ],
+        [
+          42
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 42
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 42
+          }
+        ]
+      ],
+      "source_id": "benchbase:tpcc:Delivery:delivGetCustIdSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Delivery:delivGetCustIdSQL/typed_null_parameter",
+      "input_sha256": "b2d0149fb812b3cf50895c7a3ee91322575990943eff0a52a095eac229b2df1b",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "int32"
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        },
+        "3": {
+          "type": "int32",
+          "value": 3
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:Delivery:delivGetCustIdSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Payment:payGetCustCdataSQL/empty",
+      "input_sha256": "b0f54f95edf2f4e3f384fe5f20b9a225ca171ec9aa768b979e9cae7e5abbe71d",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 3
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        },
+        "3": {
+          "type": "int32",
+          "value": 42
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:Payment:payGetCustCdataSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "text",
+            "value": "customer's 数据"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "customer's 数据"
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Payment:payGetCustCdataSQL/matching_duplicates_and_miss",
+      "input_sha256": "5bb4e312ef39218f3d7cc161e4013279a5d9708a5903111224a93b768c28c49c",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 3
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        },
+        "3": {
+          "type": "int32",
+          "value": 42
+        }
+      },
+      "postgres_rows": [
+        [
+          "customer's 数据"
+        ],
+        [
+          "customer's 数据"
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "text",
+            "value": "customer's 数据"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "customer's 数据"
+          }
+        ]
+      ],
+      "source_id": "benchbase:tpcc:Payment:payGetCustCdataSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Payment:payGetCustCdataSQL/typed_null_parameter",
+      "input_sha256": "5bb4e312ef39218f3d7cc161e4013279a5d9708a5903111224a93b768c28c49c",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "int32"
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        },
+        "3": {
+          "type": "int32",
+          "value": 42
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:Payment:payGetCustCdataSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Payment:payGetDistSQL/empty",
+      "input_sha256": "dc50e2c7e3909842c4bd58e24485e3b5623c1bba650bd20998f69c290a5d0a0f",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 3
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:Payment:payGetDistSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "text",
+            "value": "1 Main"
+          },
+          {
+            "type": "text",
+            "value": "Suite 2"
+          },
+          {
+            "type": "text",
+            "value": "Arlington"
+          },
+          {
+            "type": "text",
+            "value": "TX"
+          },
+          {
+            "type": "text",
+            "value": "76010"
+          },
+          {
+            "type": "text",
+            "value": "D'istrict"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "1 Main"
+          },
+          {
+            "type": "text",
+            "value": "Suite 2"
+          },
+          {
+            "type": "text",
+            "value": "Arlington"
+          },
+          {
+            "type": "text",
+            "value": "TX"
+          },
+          {
+            "type": "text",
+            "value": "76010"
+          },
+          {
+            "type": "text",
+            "value": "D'istrict"
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Payment:payGetDistSQL/matching_duplicates_and_miss",
+      "input_sha256": "e36a7b251a269010dbe375b87bd29fef892cc8a9458b65355545c99cd060eb67",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 3
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        }
+      },
+      "postgres_rows": [
+        [
+          "1 Main",
+          "Suite 2",
+          "Arlington",
+          "TX",
+          "76010",
+          "D'istrict"
+        ],
+        [
+          "1 Main",
+          "Suite 2",
+          "Arlington",
+          "TX",
+          "76010",
+          "D'istrict"
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "text",
+            "value": "1 Main"
+          },
+          {
+            "type": "text",
+            "value": "Suite 2"
+          },
+          {
+            "type": "text",
+            "value": "Arlington"
+          },
+          {
+            "type": "text",
+            "value": "TX"
+          },
+          {
+            "type": "text",
+            "value": "76010"
+          },
+          {
+            "type": "text",
+            "value": "D'istrict"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "1 Main"
+          },
+          {
+            "type": "text",
+            "value": "Suite 2"
+          },
+          {
+            "type": "text",
+            "value": "Arlington"
+          },
+          {
+            "type": "text",
+            "value": "TX"
+          },
+          {
+            "type": "text",
+            "value": "76010"
+          },
+          {
+            "type": "text",
+            "value": "D'istrict"
+          }
+        ]
+      ],
+      "source_id": "benchbase:tpcc:Payment:payGetDistSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:Payment:payGetDistSQL/typed_null_parameter",
+      "input_sha256": "e36a7b251a269010dbe375b87bd29fef892cc8a9458b65355545c99cd060eb67",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "int32"
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:Payment:payGetDistSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL/empty",
+      "input_sha256": "dc50e2c7e3909842c4bd58e24485e3b5623c1bba650bd20998f69c290a5d0a0f",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 3
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 101
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 101
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL/matching_duplicates_and_miss",
+      "input_sha256": "f4c8e7a4497f4c2734877e12dae4d18a6749c62dad370a28ac54beea8c21feea",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "int32",
+          "value": 3
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        }
+      },
+      "postgres_rows": [
+        [
+          101
+        ],
+        [
+          101
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "int32",
+            "value": 101
+          }
+        ],
+        [
+          {
+            "type": "int32",
+            "value": 101
+          }
+        ]
+      ],
+      "source_id": "benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL/typed_null_parameter",
+      "input_sha256": "f4c8e7a4497f4c2734877e12dae4d18a6749c62dad370a28ac54beea8c21feea",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "int32"
+        },
+        "2": {
+          "type": "int32",
+          "value": 2
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery/empty",
+      "input_sha256": "777fa021662aeeda1f26345d999b7153c8b8a0f2ea9e1ffd3cf7cccd2aaea179",
+      "mode": "empty",
+      "parameters": {
+        "1": {
+          "type": "text",
+          "value": "appdb"
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [
+        [
+          {
+            "type": "text",
+            "value": "1.2"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "1.2"
+          }
+        ]
+      ],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery/matching_duplicates_and_miss",
+      "input_sha256": "3a15ebb50a5316d0fa1f7659e2c24d3d0e0e1e577d0c2e94a77544e61070f0e8",
+      "mode": "matching_duplicates_and_miss",
+      "parameters": {
+        "1": {
+          "type": "text",
+          "value": "appdb"
+        }
+      },
+      "postgres_rows": [
+        [
+          "1.2"
+        ],
+        [
+          "1.2"
+        ]
+      ],
+      "rust_bag": [
+        [
+          {
+            "type": "text",
+            "value": "1.2"
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "value": "1.2"
+          }
+        ]
+      ],
+      "source_id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery",
+      "status": "ok"
+    },
+    {
+      "alloy_bag": [],
+      "alloy_status": "SAT",
+      "context_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "error": null,
+      "id": "industrial/temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery/typed_null_parameter",
+      "input_sha256": "3a15ebb50a5316d0fa1f7659e2c24d3d0e0e1e577d0c2e94a77544e61070f0e8",
+      "mode": "typed_null_parameter",
+      "parameters": {
+        "1": {
+          "type": "null",
+          "value": "text"
+        }
+      },
+      "postgres_rows": [],
+      "rust_bag": [],
+      "source_id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery",
+      "status": "ok"
+    }
+  ],
+  "runner_sha256": "3b270d7b9e1f5d8690732e666cb3af5698d9043ccb10a01b6b10daa4822de91c",
+  "runtime": {
+    "cluster_removed": true,
+    "collation": "C",
+    "encoding": "UTF8",
+    "listen": "127.0.0.1",
+    "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit"
+  },
+  "selected_populations": {
+    "benchbase": 7,
+    "temporal": 1
+  },
+  "selected_source_records": 8,
+  "skipped_selected_cases": 0,
+  "sources": [
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+      "corpus_file": "fixtures/external_postgresql/benchbase.jsonl",
+      "corpus_line": 22,
+      "id": "benchbase:tatp:DeleteCallForwarding:getSubscriber",
+      "inherited_extraction_transformations": [
+        "java_literal_expression_decoded",
+        "declared_static_defaults_substituted",
+        "jdbc_to_postgresql_parameters"
+      ],
+      "license": "Apache-2.0 per BenchBase source manifest",
+      "source_file": "src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/DeleteCallForwarding.java",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/DeleteCallForwarding.java#L31",
+      "sql_sha256": "97b52ad5c616f47ee97e0ee936ab6d9d40a573f43f91e03ed2f5d6356ad7ecce",
+      "sql_unchanged_from_corpus": true
+    },
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+      "corpus_file": "fixtures/external_postgresql/benchbase.jsonl",
+      "corpus_line": 24,
+      "id": "benchbase:tatp:GetAccessData:getAccessInfo",
+      "inherited_extraction_transformations": [
+        "java_literal_expression_decoded",
+        "declared_static_defaults_substituted",
+        "jdbc_to_postgresql_parameters"
+      ],
+      "license": "Apache-2.0 per BenchBase source manifest",
+      "source_file": "src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/GetAccessData.java",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/GetAccessData.java#L31",
+      "sql_sha256": "5d8db4d6d02ee6d3b9baa38edf6db83aa7112830f4f1a523d9834b1c273ec881",
+      "sql_unchanged_from_corpus": true
+    },
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+      "corpus_file": "fixtures/external_postgresql/benchbase.jsonl",
+      "corpus_line": 25,
+      "id": "benchbase:tatp:GetNewDestination:getNewDestination",
+      "inherited_extraction_transformations": [
+        "java_literal_expression_decoded",
+        "declared_static_defaults_substituted",
+        "jdbc_to_postgresql_parameters"
+      ],
+      "license": "Apache-2.0 per BenchBase source manifest",
+      "source_file": "src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/GetNewDestination.java",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/GetNewDestination.java#L31",
+      "sql_sha256": "aeb74ab7da9ffd4ed254f1c3e5f8c6215ab44ce9828ce54fd40b7cf123763912",
+      "sql_unchanged_from_corpus": true
+    },
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+      "corpus_file": "fixtures/external_postgresql/benchbase.jsonl",
+      "corpus_line": 35,
+      "id": "benchbase:tpcc:Delivery:delivGetCustIdSQL",
+      "inherited_extraction_transformations": [
+        "java_literal_expression_decoded",
+        "declared_static_defaults_substituted",
+        "trim_outer_whitespace",
+        "jdbc_to_postgresql_parameters"
+      ],
+      "license": "Apache-2.0 per BenchBase source manifest",
+      "source_file": "src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java#L57",
+      "sql_sha256": "d4af1721a69fa0d8b73428bb6fd5c6a9e0784aecf10ab9227cbd0d65157af2aa",
+      "sql_unchanged_from_corpus": true
+    },
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+      "corpus_file": "fixtures/external_postgresql/benchbase.jsonl",
+      "corpus_line": 56,
+      "id": "benchbase:tpcc:Payment:payGetCustCdataSQL",
+      "inherited_extraction_transformations": [
+        "java_literal_expression_decoded",
+        "declared_static_defaults_substituted",
+        "trim_outer_whitespace",
+        "jdbc_to_postgresql_parameters"
+      ],
+      "license": "Apache-2.0 per BenchBase source manifest",
+      "source_file": "src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L91",
+      "sql_sha256": "5183c61466a2e82a41a168f109c86185b9b8afe4763fb778accc5f5a84012ab2",
+      "sql_unchanged_from_corpus": true
+    },
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+      "corpus_file": "fixtures/external_postgresql/benchbase.jsonl",
+      "corpus_line": 58,
+      "id": "benchbase:tpcc:Payment:payGetDistSQL",
+      "inherited_extraction_transformations": [
+        "java_literal_expression_decoded",
+        "declared_static_defaults_substituted",
+        "trim_outer_whitespace",
+        "jdbc_to_postgresql_parameters"
+      ],
+      "license": "Apache-2.0 per BenchBase source manifest",
+      "source_file": "src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L68",
+      "sql_sha256": "2ba5f68862ee77363b404e6abef8b8da84792a65f6bb85a9fcd6941b86cc44f4",
+      "sql_unchanged_from_corpus": true
+    },
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+      "corpus_file": "fixtures/external_postgresql/benchbase.jsonl",
+      "corpus_line": 66,
+      "id": "benchbase:tpcc:StockLevel:stockGetDistOrderIdSQL",
+      "inherited_extraction_transformations": [
+        "java_literal_expression_decoded",
+        "declared_static_defaults_substituted",
+        "trim_outer_whitespace",
+        "jdbc_to_postgresql_parameters"
+      ],
+      "license": "Apache-2.0 per BenchBase source manifest",
+      "source_file": "src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/StockLevel.java",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/StockLevel.java#L37",
+      "sql_sha256": "ff66a5d4252567def37d974b1ebd342640e35c840c3332109d8b31e2dc093d33",
+      "sql_unchanged_from_corpus": true
+    },
+    {
+      "catalog_kind": "synthetic_test_catalog_not_upstream_DDL",
+      "commit": "b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6",
+      "corpus_file": "fixtures/external_postgresql/temporal.jsonl",
+      "corpus_line": 1,
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:readSchemaVersionQuery",
+      "inherited_extraction_transformations": [],
+      "license": "MIT",
+      "source_file": "common/persistence/sql/sqlplugin/postgresql/admin.go",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/admin.go#L11",
+      "sql_sha256": "d3ccd232c7724d1732b944d4e42e21585718bcf789a2f9cf75f44518cc62b60b",
+      "sql_unchanged_from_corpus": true
+    }
+  ],
+  "status": "passed",
+  "unreplayed_exported_records": [
+    {
+      "id": "benchbase:smallbank:Amalgamate:GetAccount",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Amalgamate.java#L48",
+      "sql_sha256": "971151712281e879c242e201d30c6001b44e4a81a0b46e825b19a662f99c40e0"
+    },
+    {
+      "id": "benchbase:smallbank:Amalgamate:GetCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Amalgamate.java#L54",
+      "sql_sha256": "62fdb1f9c642253a6ec086244bed88d626679e6b8c1fbfcc9b8b53c3ac6d60ec"
+    },
+    {
+      "id": "benchbase:smallbank:Amalgamate:GetSavingsBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Amalgamate.java#L51",
+      "sql_sha256": "a19e134d3a1a06fd2eb91c9a0c714a5bcaf110f3ee315f8972bb0fbc1c434a9b"
+    },
+    {
+      "id": "benchbase:smallbank:Amalgamate:UpdateCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Amalgamate.java#L64",
+      "sql_sha256": "636e64510238295164f87f999ee8f3b3cd39522920f1fe2d437ecadeb9569c6b"
+    },
+    {
+      "id": "benchbase:smallbank:Amalgamate:UpdateSavingsBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Amalgamate.java#L57",
+      "sql_sha256": "e7ddf1bcae1260fb5e61505e5cb249dcec626eb9e3fe783b339008d025fcd01c"
+    },
+    {
+      "id": "benchbase:smallbank:Amalgamate:ZeroCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Amalgamate.java#L71",
+      "sql_sha256": "48780b468bf03a3cde54a6f26e3d7fd5b458387aa7ed6e2c12a02127a0cf574e"
+    },
+    {
+      "id": "benchbase:smallbank:Balance:GetAccount",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Balance.java#L39",
+      "sql_sha256": "53d6db0d933c0434fd5a8eb3c866c9676e7a04e4233b0a5da143b554bc757b1f"
+    },
+    {
+      "id": "benchbase:smallbank:Balance:GetCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Balance.java#L45",
+      "sql_sha256": "62fdb1f9c642253a6ec086244bed88d626679e6b8c1fbfcc9b8b53c3ac6d60ec"
+    },
+    {
+      "id": "benchbase:smallbank:Balance:GetSavingsBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/Balance.java#L42",
+      "sql_sha256": "a19e134d3a1a06fd2eb91c9a0c714a5bcaf110f3ee315f8972bb0fbc1c434a9b"
+    },
+    {
+      "id": "benchbase:smallbank:DepositChecking:GetAccount",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/DepositChecking.java#L44",
+      "sql_sha256": "53d6db0d933c0434fd5a8eb3c866c9676e7a04e4233b0a5da143b554bc757b1f"
+    },
+    {
+      "id": "benchbase:smallbank:DepositChecking:UpdateCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/DepositChecking.java#L47",
+      "sql_sha256": "636e64510238295164f87f999ee8f3b3cd39522920f1fe2d437ecadeb9569c6b"
+    },
+    {
+      "id": "benchbase:smallbank:SendPayment:GetAccount",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/SendPayment.java#L44",
+      "sql_sha256": "971151712281e879c242e201d30c6001b44e4a81a0b46e825b19a662f99c40e0"
+    },
+    {
+      "id": "benchbase:smallbank:SendPayment:GetCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/SendPayment.java#L47",
+      "sql_sha256": "62fdb1f9c642253a6ec086244bed88d626679e6b8c1fbfcc9b8b53c3ac6d60ec"
+    },
+    {
+      "id": "benchbase:smallbank:SendPayment:UpdateCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/SendPayment.java#L50",
+      "sql_sha256": "636e64510238295164f87f999ee8f3b3cd39522920f1fe2d437ecadeb9569c6b"
+    },
+    {
+      "id": "benchbase:smallbank:TransactSavings:GetAccount",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/TransactSavings.java#L44",
+      "sql_sha256": "53d6db0d933c0434fd5a8eb3c866c9676e7a04e4233b0a5da143b554bc757b1f"
+    },
+    {
+      "id": "benchbase:smallbank:TransactSavings:GetSavingsBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/TransactSavings.java#L47",
+      "sql_sha256": "a19e134d3a1a06fd2eb91c9a0c714a5bcaf110f3ee315f8972bb0fbc1c434a9b"
+    },
+    {
+      "id": "benchbase:smallbank:TransactSavings:UpdateSavingsBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/TransactSavings.java#L50",
+      "sql_sha256": "e7ddf1bcae1260fb5e61505e5cb249dcec626eb9e3fe783b339008d025fcd01c"
+    },
+    {
+      "id": "benchbase:smallbank:WriteCheck:GetAccount",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/WriteCheck.java#L44",
+      "sql_sha256": "53d6db0d933c0434fd5a8eb3c866c9676e7a04e4233b0a5da143b554bc757b1f"
+    },
+    {
+      "id": "benchbase:smallbank:WriteCheck:GetCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/WriteCheck.java#L50",
+      "sql_sha256": "62fdb1f9c642253a6ec086244bed88d626679e6b8c1fbfcc9b8b53c3ac6d60ec"
+    },
+    {
+      "id": "benchbase:smallbank:WriteCheck:GetSavingsBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/WriteCheck.java#L47",
+      "sql_sha256": "a19e134d3a1a06fd2eb91c9a0c714a5bcaf110f3ee315f8972bb0fbc1c434a9b"
+    },
+    {
+      "id": "benchbase:smallbank:WriteCheck:UpdateCheckingBalance",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/smallbank/procedures/WriteCheck.java#L53",
+      "sql_sha256": "ab3d6e1fc5ec3dc5e6752b2a29d25022cbbf085f494dac175069a797b0740073"
+    },
+    {
+      "id": "benchbase:tatp:DeleteCallForwarding:updateCallForwarding",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/DeleteCallForwarding.java#L34",
+      "sql_sha256": "fb68c804f765f8b50181e59daedd2c9d6a0305883438da3b0dba6566400162d7"
+    },
+    {
+      "id": "benchbase:tatp:GetSubscriberData:getSubscriber",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/GetSubscriberData.java#L31",
+      "sql_sha256": "6094eeeacbcf2bbeb4fad83dfe829fe7b34793781f7285e5df63e74f5030ddde"
+    },
+    {
+      "id": "benchbase:tatp:InsertCallForwarding:getSpecialFacility",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/InsertCallForwarding.java#L34",
+      "sql_sha256": "0782b697b4d4bbb814863bf0f3f4485354cfd136fc7a37d770a027755eb7d274"
+    },
+    {
+      "id": "benchbase:tatp:InsertCallForwarding:getSubscriber",
+      "reason": "identical SQL hash replayed under another source ID; this record not separately executed",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/InsertCallForwarding.java#L31",
+      "sql_sha256": "97b52ad5c616f47ee97e0ee936ab6d9d40a573f43f91e03ed2f5d6356ad7ecce"
+    },
+    {
+      "id": "benchbase:tatp:InsertCallForwarding:insertCallForwarding",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/InsertCallForwarding.java#L38",
+      "sql_sha256": "4bf629dd9dfbabe57fba92c79973701ee1784ce783372f6322560cc006e17958"
+    },
+    {
+      "id": "benchbase:tatp:UpdateLocation:getSubscriber",
+      "reason": "identical SQL hash replayed under another source ID; this record not separately executed",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/UpdateLocation.java#L31",
+      "sql_sha256": "97b52ad5c616f47ee97e0ee936ab6d9d40a573f43f91e03ed2f5d6356ad7ecce"
+    },
+    {
+      "id": "benchbase:tatp:UpdateLocation:updateSubscriber",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/UpdateLocation.java#L34",
+      "sql_sha256": "e84e3d358ec41b32cf711aee4c733831662285b5797055c45d86db1086d4cfb7"
+    },
+    {
+      "id": "benchbase:tatp:UpdateSubscriberData:updateSpecialFacility",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/UpdateSubscriberData.java#L33",
+      "sql_sha256": "e3d9d3243352b583bad4ba2c5f8377bcbaf1524315c8999d420243158e7f0919"
+    },
+    {
+      "id": "benchbase:tatp:UpdateSubscriberData:updateSubscriber",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tatp/procedures/UpdateSubscriberData.java#L30",
+      "sql_sha256": "37febe289c8ce76b2ff32fff6b123d755c4af912a82ef08f74f60c60ff9fb328"
+    },
+    {
+      "id": "benchbase:tpcc:Delivery:delivDeleteNewOrderSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java#L47",
+      "sql_sha256": "13911fc5cf0945e343150606c22dcb66c02e2f2fdc643c20e4172a222c1ef5a0"
+    },
+    {
+      "id": "benchbase:tpcc:Delivery:delivGetOrderIdSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java#L36",
+      "sql_sha256": "8072ffc63fd5d9d1478032975f4c998500b0c1c5f7269d58be1ff7096c01db71"
+    },
+    {
+      "id": "benchbase:tpcc:Delivery:delivSumOrderAmountSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java#L89",
+      "sql_sha256": "1bd9e68f9f4a3a4c51f961b17b7efe79b7b58b77a3c818a245dce2031bc5d152"
+    },
+    {
+      "id": "benchbase:tpcc:Delivery:delivUpdateCarrierIdSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java#L67",
+      "sql_sha256": "3ebc530253ff8c86b34ad19750c1a1a79f9e8c2573f33f1e554e17d1d3854f7c"
+    },
+    {
+      "id": "benchbase:tpcc:Delivery:delivUpdateCustBalDelivCntSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java#L100",
+      "sql_sha256": "5f4e69fe7555d54403eff2791d16fd7583c7c2a6c344e73d6f75d14c98eea736"
+    },
+    {
+      "id": "benchbase:tpcc:Delivery:delivUpdateDeliveryDateSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java#L78",
+      "sql_sha256": "782ea18d5618c39445095b9bfe115300710bd4574bec0c9696ffc00460ccbdd6"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtGetCustSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L36",
+      "sql_sha256": "6219904888d8af33787e934a8fc8e7021bb5dc012f2ce9f20b6ef143f180c648"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtGetDistSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L56",
+      "sql_sha256": "96885e1bb5369af8fba31950489b2b46fa96d77abf86917929648f5ea0534370"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtGetItemSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L93",
+      "sql_sha256": "7ded05ae03ff729f36fdf0613ab12516d29b527e06b9bd6acdc56ffee8c71f4e"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtGetStockSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L102",
+      "sql_sha256": "17a7e65f60e0de32cd398d17cba84e657dc6eecff6c022614e82336dcef8c14b"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtGetWhseSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L47",
+      "sql_sha256": "6892fa649bfe211a49fe39f64c33c5653d7b6cea0beb478b7feed9559bc7b7dc"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtInsertNewOrderSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L65",
+      "sql_sha256": "84a1b32ec47287b2b9bd6069cf4a78833fcc1e8e33b4fd2940decce13089aecd"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtInsertOOrderSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L84",
+      "sql_sha256": "0f670c78ee8a0a67f7138aa007abbb92297049be237689ea079ddc36097dae98"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtInsertOrderLineSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L126",
+      "sql_sha256": "a65b76213aed69be456e2f5e8f37b67e9d0a9093722d2272056a8658048275bb"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtUpdateDistSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L74",
+      "sql_sha256": "8fd60b85c1c532f77451998027a0182ecf30f1e58436a2c0824c772ab6a8641e"
+    },
+    {
+      "id": "benchbase:tpcc:NewOrder:stmtUpdateStockSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java#L113",
+      "sql_sha256": "78859ce170feb189b986c89a69e19ffb8292a097c71f986bc668b4693a64e209"
+    },
+    {
+      "id": "benchbase:tpcc:OrderStatus:customerByNameSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/OrderStatus.java#L77",
+      "sql_sha256": "a3f71cfe3b37890d0c58944fc6e1d4df4d1b53533d933a4f5f3106f840a2e1c8"
+    },
+    {
+      "id": "benchbase:tpcc:OrderStatus:ordStatGetNewestOrdSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/OrderStatus.java#L41",
+      "sql_sha256": "5b0e6451ebb381b59d43e508c82f020557f58777caa117567a011e2407dcc5f0"
+    },
+    {
+      "id": "benchbase:tpcc:OrderStatus:ordStatGetOrderLinesSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/OrderStatus.java#L53",
+      "sql_sha256": "517d4b42b6f0ec211a7f555e12ea61c75272b458a0c0391ed42c7126e8a0d2f0"
+    },
+    {
+      "id": "benchbase:tpcc:OrderStatus:payGetCustSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/OrderStatus.java#L64",
+      "sql_sha256": "53cdfab077b9cb7f0b01eeef87e934495c5c2aa1185d720a46a6bde75ad431f0"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:customerByNameSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L138",
+      "sql_sha256": "e349fe5c9e0dc0e0b2b6e5afceadc5d8e9b55691fd284ed9ce520d4307581b7a"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payGetCustSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L78",
+      "sql_sha256": "ed801c9d016d534024ca2d935782482ef646d28895a261b5754799ffc3058705"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payGetWhseSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L49",
+      "sql_sha256": "0cf05032f5b61c9af6ea4b0fdc8c9c0ba70a71df5fc74d5d72638843574a3235"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payInsertHistSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L129",
+      "sql_sha256": "8d60cac004992b23c78070336bd0a0c1fe363f0039487832454bd5b1674d041d"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payUpdateCustBalCdataSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L102",
+      "sql_sha256": "53a72e0e412fbb83ba3ad52968598f788103525cd0e1f1b98f33d4766b10eb20"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payUpdateCustBalSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L116",
+      "sql_sha256": "db07c8d8b0aaa9ca3a0b5c882db684308cb5514933402dec16a34bd5d9b0ec85"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payUpdateDistSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L58",
+      "sql_sha256": "afd7bc7a828bba4a2b4ee5b5a40d16a085804ebb5541c9a834df977ef2cf34f2"
+    },
+    {
+      "id": "benchbase:tpcc:Payment:payUpdateWhseSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java#L40",
+      "sql_sha256": "5030ffcec9d3bd40db06bab6a887ac0ae1606eb4681eafee3210bd460803b1f6"
+    },
+    {
+      "id": "benchbase:tpcc:StockLevel:stockGetCountStockSQL",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpcc/procedures/StockLevel.java#L47",
+      "sql_sha256": "a03e6923429c74bf3400e411b368adef2bafa1790fdf2c6c69a4756ab4e90191"
+    },
+    {
+      "id": "benchbase:tpch:Q10:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L35",
+      "sql_sha256": "c0f23d6d0115dd8c5316f1a7ae61283bc0e3b5cc40adbdb1e3e32bc4076f553f"
+    },
+    {
+      "id": "benchbase:tpch:Q11:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q11.java#L31",
+      "sql_sha256": "c38ed6ebe1f63c6a0d01bb34402444fad43eac91c6806eb0e8427c317474046b"
+    },
+    {
+      "id": "benchbase:tpch:Q12:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L41",
+      "sql_sha256": "a4dc06a314229bd88b42f07221e1551346ccab2fa891d6fd72e58d7aca64cf55"
+    },
+    {
+      "id": "benchbase:tpch:Q13:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q13.java#L30",
+      "sql_sha256": "4311f17a5a99c37773a79d5494c197c2d0eb45b963935c073014d66c22f542f3"
+    },
+    {
+      "id": "benchbase:tpch:Q14:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L47",
+      "sql_sha256": "76cc12e655a9619690383400c214cf58833d375000dd2afbae2c65721ecab141"
+    },
+    {
+      "id": "benchbase:tpch:Q15:createview_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L53",
+      "sql_sha256": "30f89c0fa80f4aa1c5316fee4742a8b467eb3940ea88df3d67592940ab8c983c"
+    },
+    {
+      "id": "benchbase:tpch:Q15:dropview_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q15.java#L70",
+      "sql_sha256": "b97f2f4adf269a57e2c31e71aa7a57bea46e658b53d642ca53eefb615173db74"
+    },
+    {
+      "id": "benchbase:tpch:Q15:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q15.java#L46",
+      "sql_sha256": "acfb6a8e22cac7a6089fcec169a2acb06ed855a571de222d4b6060d70fae2efb"
+    },
+    {
+      "id": "benchbase:tpch:Q16:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q16.java#L33",
+      "sql_sha256": "eeb7fd0919b2be409d98f06e2c4bfd3b8cd7f48b796c331e1be0780229bce98e"
+    },
+    {
+      "id": "benchbase:tpch:Q17:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q17.java#L31",
+      "sql_sha256": "4b1491258359e0160e6ff3eb2e52553f35f71766a82d96b1666dc4a80daf06f3"
+    },
+    {
+      "id": "benchbase:tpch:Q18:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q18.java#L29",
+      "sql_sha256": "eee8a91263fc6ac274db2ae2fe26de8735dafa35a2965b656cfe8fc6badaa984"
+    },
+    {
+      "id": "benchbase:tpch:Q19:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q19.java#L30",
+      "sql_sha256": "bfea28d4baa227d7e19f05a33b16050370be1552ed0467a68fdee45f77729c6f"
+    },
+    {
+      "id": "benchbase:tpch:Q1:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L5",
+      "sql_sha256": "d45483f2564660d048f36a306980ec4eca31250ed2717ac0ac534367d3c9aca3"
+    },
+    {
+      "id": "benchbase:tpch:Q20:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L59",
+      "sql_sha256": "78ba74c0fed90d88c4e94ac87e763a1f27f9e0f729577af53298976531fb347b"
+    },
+    {
+      "id": "benchbase:tpch:Q21:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q21.java#L31",
+      "sql_sha256": "c1943db0bc571a97aba5a731c54750c962c00bcfdd93cf894a780ccca5708c0d"
+    },
+    {
+      "id": "benchbase:tpch:Q22:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L64",
+      "sql_sha256": "d54ea27e617cc00ee6bf82dcd0975ec702d971b4091b7ce4a50e6120d96a9613"
+    },
+    {
+      "id": "benchbase:tpch:Q2:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q2.java#L31",
+      "sql_sha256": "2cbab186c4acd545a0966f72234313fe87c56a627bccfa6f696d52e198c912bc"
+    },
+    {
+      "id": "benchbase:tpch:Q3:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L11",
+      "sql_sha256": "94408bd6225f65d3f05a74c405cf8ef245c3ea0c93a04d2a51fb3977ee0fa41c"
+    },
+    {
+      "id": "benchbase:tpch:Q4:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L17",
+      "sql_sha256": "e4ee54496f825d297bf0b66245879f1b1a1ffd333ee194d07f8e8e5f7639c57d"
+    },
+    {
+      "id": "benchbase:tpch:Q5:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L23",
+      "sql_sha256": "562d7d374c988526c37eb4dfabd025170e992767ce6b7bf71ef2eaaa08478e3a"
+    },
+    {
+      "id": "benchbase:tpch:Q6:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/tpch/dialect-postgres.xml#L29",
+      "sql_sha256": "b0593d5573a5696e442ad5ec3f73e98bf207f08a24ed23cd25335f611e4add89"
+    },
+    {
+      "id": "benchbase:tpch:Q7:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q7.java#L31",
+      "sql_sha256": "06d9322ac87e7ff06cdf3ad3b029226342f18db426477d32dcd642989a5e5dbb"
+    },
+    {
+      "id": "benchbase:tpch:Q8:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q8.java#L31",
+      "sql_sha256": "6bc0f023d11191bcd9f072cb147250943f0ee394926b7a8f307cb2aef9e617b0"
+    },
+    {
+      "id": "benchbase:tpch:Q9:query_stmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/tpch/procedures/Q9.java#L31",
+      "sql_sha256": "bdc978b72f36e36c12d54583eef3ad282898074856e16c271e2beb7c2052d3a5"
+    },
+    {
+      "id": "benchbase:twitter:GetFollowers:getFollowerNames",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/twitter/dialect-postgres.xml#L21",
+      "sql_sha256": "8affa2350a441213ad10abfc4e9a43472142d458ab2b76794fd2c5a7ba5b0e0b"
+    },
+    {
+      "id": "benchbase:twitter:GetFollowers:getFollowers",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/twitter/dialect-postgres.xml#L18",
+      "sql_sha256": "cd1ca08b02c2cfc2bf2c002e1de8296a7f89f751bb6b68d8a0de25dd95afa122"
+    },
+    {
+      "id": "benchbase:twitter:GetTweet:getTweet",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/twitter/dialect-postgres.xml#L5",
+      "sql_sha256": "7028eb35c8ec55b508b39f440403168f94891d038074864cdf3ead5920a1f69c"
+    },
+    {
+      "id": "benchbase:twitter:GetTweetsFromFollowing:getFollowing",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/twitter/dialect-postgres.xml#L10",
+      "sql_sha256": "91e6df033c491840cecaeea1646baa14e116f4ca1d12b4214fbeda7db3e683c5"
+    },
+    {
+      "id": "benchbase:twitter:GetTweetsFromFollowing:getTweets",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/twitter/dialect-postgres.xml#L13",
+      "sql_sha256": "b24225655ebe3370986d76f7b0c2f2b9767143616ceb78c4d14ebf4a1a951900"
+    },
+    {
+      "id": "benchbase:twitter:GetUserTweets:getTweets",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/twitter/dialect-postgres.xml#L26",
+      "sql_sha256": "2bfb7e06f485c5451d304007f8d16752f4f57f8340876b09f0fdffa6d35791f3"
+    },
+    {
+      "id": "benchbase:twitter:InsertTweet:insertTweet",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/resources/benchmarks/twitter/dialect-postgres.xml#L31",
+      "sql_sha256": "963df7af1282bd90840b80ec1584e77a2af1930196892173874e6877cbe9f53f"
+    },
+    {
+      "id": "benchbase:ycsb:DeleteRecord:deleteStmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/ycsb/procedures/DeleteRecord.java#L29",
+      "sql_sha256": "835ffab14701aba7f139a154d2bd4a8bd9a770af6664bdad8e9113af720c67d3"
+    },
+    {
+      "id": "benchbase:ycsb:InsertRecord:insertStmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/ycsb/procedures/InsertRecord.java#L30",
+      "sql_sha256": "727b80476af83aa5923a1542cdb5edca69858050c75fe46854aa0aa6b0ae1f41"
+    },
+    {
+      "id": "benchbase:ycsb:ReadModifyWriteRecord:selectStmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/ycsb/procedures/ReadModifyWriteRecord.java#L32",
+      "sql_sha256": "37429fbf65c15b5a3229585aafeb155b64091cab9463b0c3ef340e2e1ff7ffd2"
+    },
+    {
+      "id": "benchbase:ycsb:ReadModifyWriteRecord:updateAllStmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/ycsb/procedures/ReadModifyWriteRecord.java#L34",
+      "sql_sha256": "ded6477fe77c9da099ebf58abee4c4751ccd08eaf37f06c386d1d4a8e1cb079f"
+    },
+    {
+      "id": "benchbase:ycsb:ReadRecord:readStmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/ycsb/procedures/ReadRecord.java#L31",
+      "sql_sha256": "bb4c7357f716a096640eff24b86e956244d59d4e3eae7bb41040cd4936ddaed0"
+    },
+    {
+      "id": "benchbase:ycsb:ScanRecord:scanStmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/ycsb/procedures/ScanRecord.java#L33",
+      "sql_sha256": "d069780dd35e2d99d8a3e9db1092316952c96b21488695bee6e01f0c2ff06f5e"
+    },
+    {
+      "id": "benchbase:ycsb:UpdateRecord:updateAllStmt",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/cmu-db/benchbase/blob/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/benchmarks/ycsb/procedures/UpdateRecord.java#L31",
+      "sql_sha256": "ded6477fe77c9da099ebf58abee4c4751ccd08eaf37f06c386d1d4a8e1cb079f"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/pg_misc.sql.go:pGAdvisoryXactLock",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/pg_misc.sql.go#L14",
+      "sql_sha256": "8ba4ec985a0b1c897adc60dbf3880b5d14d0b42d14dc6110f3d319bb95e501b8"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/pg_misc.sql.go:pGGetProductAndVersion",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/pg_misc.sql.go#L23",
+      "sql_sha256": "aeabd9fd9002c30f657bc5ccd99b60566fbabb3c09a01c28de2167999ee9a852"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/pg_misc.sql.go:pGNotifyMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/pg_misc.sql.go#L43",
+      "sql_sha256": "8ac5adbc8dee5a8ec0368edaa579956f4cc64ab125324a6d0a6d9b35eeb6e047"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobCancel",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L16",
+      "sql_sha256": "034c11150a647c3b48ba89e44a18814ef5d3799dc8d97c2bfc1378c32170f111"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobCountByAllStates",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L105",
+      "sql_sha256": "a5206785f93868e3e3c9d36681b7fd5656c031e9f470918da810e4d3d6cf013a"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobCountByQueueAndState",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L136",
+      "sql_sha256": "53e1d0d9a263afbc86480b4f74afb4eee920e06e7e4d100dbd876436a7048e74"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobCountByState",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L201",
+      "sql_sha256": "0e08d1032bbdd6d4078b1ad1d915251b24410c4881deb1b28c6d76d22d896a09"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobDelete",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L214",
+      "sql_sha256": "f650742f21973f477799b84ffff0eb2199b27f1f93d12ccbfa37d5eb7ab6f5f9"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobDeleteBefore",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L265",
+      "sql_sha256": "7e2bb863197b223c28074f6627b0add2864b8d46fb7e88cd2250185aae43ccaf"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobDeleteMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L314",
+      "sql_sha256": "99614ca94a87def0ab133cac7103681f82e3972ae9f08cdb6914240dd8b532a5"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobGetAvailable",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L377",
+      "sql_sha256": "f6481c05563db53408b965d288a32d22bbe0819efb99bdfe62a7c3f56ffe5961"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobGetByID",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L473",
+      "sql_sha256": "bccca68c48ac6f6d4683e32da50537f02ceb687486ddd86d0126af58c4968096"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobGetByIDMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L506",
+      "sql_sha256": "d26eb9eb884f8ba56e4d530311fe13bf4dabe5c95bb087044b0e1b01c8c697c8"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobGetByKindMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L552",
+      "sql_sha256": "bfa5eb6611f798585f255b9e14987ea3fb4eaf5ca3d639f176fe2eb2c751ce6c"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobGetCancelRequested",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L598",
+      "sql_sha256": "7c65d9d151aec919851e0ec9907fdb3a47eb02f3a0f82bd7a06f5f2afafb01b6"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobGetStuck",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L627",
+      "sql_sha256": "1d0f5286d3ebd1de4847a8bc69ca843141dfcd2f3fc1c9d08ee8e69c94acfb79"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobInsertFastMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L682",
+      "sql_sha256": "b98dfbbc679649262cf83e614028079e6294fada4ce697074d929595216af081"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobInsertFastManyNoReturning",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L818",
+      "sql_sha256": "7d54f1fa37865166b51dc5628b04f440d6f4796697c1ec282e7a6cf4be14301e"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobInsertFull",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L894",
+      "sql_sha256": "3f89315c61e8d9d3379da107e44b3bbc626e40caf30c6b9e0301e14ee9755e56"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobInsertFullMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1001",
+      "sql_sha256": "cf6232e7a253de28989df4764e7c0581ac38a20e2e6ba74071e4c9036d381a28"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobKindList",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1133",
+      "sql_sha256": "9957fe12533c3e4a791e03b42647781ccf52bda9c773b56797f8bc293cdabfda"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobList",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1175",
+      "sql_sha256": "cd5e4b3906960fa6351ce8581c83026385b4a8f783e86701e7d56eab50e327ea"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobRescueMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1222",
+      "sql_sha256": "9c466dddc8c38ac5121dcdd03b6379e8ed3466c6c121284295d735742137179c"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobRetry",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1274",
+      "sql_sha256": "a3ca6790dee470863377358a20bd3537e7d60713e773dcdc0930f6d129ae6ef2"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobSchedule",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1342",
+      "sql_sha256": "7b898c243b27be806d6bcd17d53b8c2611ef973cbbbabe18fc8804bf94781643"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobSetStateIfRunningMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1474",
+      "sql_sha256": "4c501085ba095e4c522a0b8ceabaa751df97cd74e45110b14ab801d0029ce1e8"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobUpdate",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1625",
+      "sql_sha256": "5c6e447fef187402da82f28f8996d101f448df4b6cf56236d015dba54ea49dac"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go:jobUpdateFull",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_job.sql.go#L1673",
+      "sql_sha256": "d0dd5c01fc1280beb4ccd125a178a2a2be69f04995a46e43f9ed2762d87389f3"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go:leaderAttemptElect",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go#L15",
+      "sql_sha256": "23eb2691b563c63d6e4b204c100c52ee5807d7e7d734864d38c5ed83a09eef2b"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go:leaderAttemptReelect",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go#L49",
+      "sql_sha256": "42db768f6bbb531a1436c967cb5e1016cff171a0cc97b8a66a7bf5bc1a0140ec"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go:leaderDeleteExpired",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go#L83",
+      "sql_sha256": "970f4ae924af52ded83432e71dff0988dbacb4fc8f7d59279a971cdd381799df"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go:leaderGetElectedLeader",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go#L96",
+      "sql_sha256": "e5f2a506c96b73819d9e56214b82f7ecaa3577c590374ccce478a01e1a442108"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go:leaderInsert",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go#L113",
+      "sql_sha256": "21e4a462f89d44bc8d02ae6f4c632e2c0bf438f18d6524a30d02046772c5075f"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go:leaderResign",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_leader.sql.go#L151",
+      "sql_sha256": "9d4f5117826cc66ed4d32cb48d2f91aa1fc487ca8073ba469585e88c6f829cd4"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go:riverMigrationDeleteAssumingMainMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go#L13",
+      "sql_sha256": "fa69b796c21df8a9835abc6fe86f267b728db772ec6a449874320cf0ddec98cf"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go:riverMigrationDeleteByLineAndVersionMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go#L46",
+      "sql_sha256": "712febaf03a2ffd2280cf008fa18c21033d165738f40a2ccd5a951c4d34801fc"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go:riverMigrationGetAllAssumingMain",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go#L78",
+      "sql_sha256": "4c742d81bd381755c6517a30e17da2e347957dc43a98e737ed30702b0a82a5cb"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go:riverMigrationGetByLine",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go#L116",
+      "sql_sha256": "76523917bef7454c27dfcf91be6c3719be5c8cf57bc90bfbb8f0fb997bceae40"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go:riverMigrationInsert",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go#L143",
+      "sql_sha256": "a351792126e2635b3fa9f07eed9a34a2d01465a6d28dc0fa0627146e8a28258f"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go:riverMigrationInsertMany",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go#L165",
+      "sql_sha256": "8435a0ab828dfbeb62c613f4babe3bf20f62b37721e03699c338155d70a61c8d"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go:riverMigrationInsertManyAssumingMain",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_migration.sql.go#L201",
+      "sql_sha256": "a019cc0bd76118f2ba6be97d149752ac1cb05df4f91cebaeb660454b41d96bb6"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_notification.sql.go:notificationDeleteBefore",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_notification.sql.go#L13",
+      "sql_sha256": "8efde8ee074699e1501a43afb0eb1f7ac3186766c6195bed426e69eb3fda051e"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queueCreateOrSetUpdatedAt",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L13",
+      "sql_sha256": "9a6bef019a95c527bebdadaab75b13449c8c9cc5e2128f2e951b1df70a43b42b"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queueDeleteExpired",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L59",
+      "sql_sha256": "8aa8280ed61e772903d327b437f22cf4083be16d7aa344d3a3d40bcc4e246b1f"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queueGet",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L102",
+      "sql_sha256": "92653ef20184206f116a6e709d9d9482a8e0fde4be861acbffa65f21f0faad2d"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queueList",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L121",
+      "sql_sha256": "d2116b561a689b5140d3012821e4d172a56a7e609aa0dcf53d54af25746ce441"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queueNameList",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L154",
+      "sql_sha256": "7ae03dffa1ade72b535fcf4f67d96832e91fc275ce8e2eaa3f1a82c59c5017c5"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queuePause",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L196",
+      "sql_sha256": "eaa964965a620aa13ef899cac45c825f933682dff1ce5021d94868329a93fd46"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queueResume",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L217",
+      "sql_sha256": "74943ebbb1d1f9643de70aec5e62790ec7fbf8163f9fc29c3f0f3ce46c77117d"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go:queueUpdate",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/river_queue.sql.go#L238",
+      "sql_sha256": "0d7e7121fced17c8536377203fe2637a533151b9730dd7c8a3c69e0262409261"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go:columnExists",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go#L14",
+      "sql_sha256": "ddee811041e82f1d4f393ceeaa345779962987a6a3c0996f9188e099c94859aa"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go:indexExists",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go#L36",
+      "sql_sha256": "d923768e93659b22c4a101300ca698059a6f5d13d778a5e8fd809d0a1b717ca6"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go:indexReindexArtifacts",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go#L59",
+      "sql_sha256": "13d221fdefece897e2a9cf6a7c5c6e4e0927eba87e0054912eea2b5bad21956b"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go:indexesExist",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go#L101",
+      "sql_sha256": "15af35b05812a3bab44bf1f5bf26efde8e9159243b22e463d83d96795f234e17"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go:schemaGetExpired",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go#L147",
+      "sql_sha256": "c46a700a7510b1e41357b8f1cb5bea5517aa5411bb2093eab640b36a389e358d"
+    },
+    {
+      "id": "river:riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go:tableExists",
+      "reason": "context/type blocked: runtime schema template and elected_at/expires_at timestamp context are outside the certified M1 test catalog",
+      "source_url": "https://github.com/riverqueue/river/blob/1354a059d7cbe5790acc7a755a2ab7ac6d2f1ed8/riverdriver/riverpgxv5/internal/dbsqlc/schema.sql.go#L180",
+      "sql_sha256": "26a83f8362c20170e794b2cc6dbf4f8077a6f272f0a3cbffb9777405ce62b9dd"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:writeSchemaVersionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/admin.go#L13",
+      "sql_sha256": "78b5ae740a74d53701b4441cca213aaabe253e3a73c9b7d3f3eca69b617e2098"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:writeSchemaUpdateHistoryQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/admin.go#L19",
+      "sql_sha256": "ec15e2bcf45d10156fefacb2cd42490682706941287b129b502c5462fb536b20"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:createSchemaVersionTableQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/admin.go#L21",
+      "sql_sha256": "a8e574b7a70e7031f3dbfc9ca840517eea9386960f792b290c56d0d40f23f876"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:createSchemaUpdateHistoryTableQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/admin.go#L29",
+      "sql_sha256": "28a22514f894216a114c1856ae6a43d054cdc4c8b95f724a8578d4fbdab000f9"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:terminateDatabaseConnectionsQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/admin.go#L46",
+      "sql_sha256": "d4ded4ba2a31c6db5ab14593a92454be177bbb63775f63668fa1497b7732a97b"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/admin.go:listTablesQuery",
+      "reason": "system-catalog context blocked: authentic information_schema relation not loaded as a business test fixture",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/admin.go#L48",
+      "sql_sha256": "e840567dd7e894c76bfa9deb08290a1f4f488faa3ef755f3c3276724139c029f"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:insertClusterMetadataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L17",
+      "sql_sha256": "10d0fb46bdda11ac673f988b8a5656ffb263670c3ac3812402dc9755648d181b"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:updateClusterMetadataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L19",
+      "sql_sha256": "a2e22f9e52d0d72fbdbf9d14a0258506718ec338c3664d2b9b7116040d4e2261"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:getClusterMetadataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L22",
+      "sql_sha256": "ae66bfd878fca41fe9a9a182fec238fccf3715546cbb8fcb90baf2f541afe38b"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:listClusterMetadataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L23",
+      "sql_sha256": "fac687ddd9a9908485d11bce64e0e45189c3f8c0612f3d279b52e5ba635e5a36"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:listClusterMetadataRangeQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L24",
+      "sql_sha256": "b5adaf49348b0f487e0969aba7f0808e2815c96d126dbc51ae7606500b813928"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:writeLockGetClusterMetadataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L26",
+      "sql_sha256": "3162f78db18d869a18cf24b0deee16ab82e3d644d1522e1b0d35a34c259c7f01"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:deleteClusterMetadataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L28",
+      "sql_sha256": "6cf03d77fa73f44342eeccb32f0700f3d4a03e001572f7a89caf58165bb62613"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:templateUpsertActiveClusterMembership",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L31",
+      "sql_sha256": "09a5b8b39bc31dcd5deb14bb090fdf7cd4abf94657503373c7486b4f5247081d"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go:templatePruneStaleClusterMembership",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/cluster_metadata.go#L38",
+      "sql_sha256": "cc19693ea9ac9eafa20f2fefb92c4e9cadca4f3fed577f921c06fb795a8176c2"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:getHistoryNodesQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L18",
+      "sql_sha256": "0a38ff798a853f8483f1d6c2065642dea6cb659386fead40b0fae3f03566cc75"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:getHistoryNodesReverseQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L22",
+      "sql_sha256": "f9d7dfb674f3d67dead2fa585929526577204cfa41d0ef3b3dae15d7bd3f18a6"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:getHistoryNodeMetadataQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L26",
+      "sql_sha256": "e4b244a54ce6b57da92c7bcb75d1611e0f52992027607ee39059e712043bb6d4"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:deleteHistoryNodeQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L30",
+      "sql_sha256": "e320a9b69a7435b779675e96951bbb08da4136e5231e2e6d73dd5fe5821e7587"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:deleteHistoryNodesQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L32",
+      "sql_sha256": "8c0835f59485649ab0467e012a12f91345467b2106ec663a5ba459a8e4809439"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:getHistoryTreeQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L41",
+      "sql_sha256": "1e10ee3d79d628ac59475c59425f30234011bf231da036c8323b84f75147bdf1"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:paginateBranchesQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L43",
+      "sql_sha256": "7e51ad64c8f657d007d2e29f023795b77e6ec4c578b8cf0cd1d04ed115baccba"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/events.go:deleteHistoryTreeQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/events.go#L49",
+      "sql_sha256": "79c514fe2ae3b448b1bf328f83280c378fe9492bde11da97b2ebe14419bbfb94"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L26",
+      "sql_sha256": "7995c36db019f03821e33e72ddfeeb75005a28cb4dd27821bae0bc2754120122"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L29",
+      "sql_sha256": "79a6ad83d07d0c79c081529322d84294f7351675d79b0ae5a1a27f8debde3c09"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:writeLockExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L35",
+      "sql_sha256": "fb1a8340ff1d1029796112fc44c0c7162cd0b855842f11e42c79acda6b8a0975"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:readLockExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L36",
+      "sql_sha256": "80ba613e7ab186c471b86ceb6076cfaa7ef2c633a1883498b726e64f47b58a55"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteCurrentExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L45",
+      "sql_sha256": "614768d87c1698087076e1a5fbc135f449f0b65393ec029f4bcd0bb4f26ac245"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteCurrentChasmExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L46",
+      "sql_sha256": "790d7b19aa563fdab22aa90ff4b457dc694c1e48dd1b471db1a72fecbc741f9b"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getCurrentExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L48",
+      "sql_sha256": "09c92fa59526211cef1eadf8f56eaeeed34e4313c2cacba8cf0867af0fd3ad51"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getCurrentChasmExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L51",
+      "sql_sha256": "37446bb0d6be1755f50f830859d16d94d74eb90b7cea9a1d76f4148ffaff098f"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:lockCurrentExecutionJoinExecutionsQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L55",
+      "sql_sha256": "3a23daad0ed21d60c03c05c77e35d3b43f6e10b7d31efa74afcc32ff38192ae4"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:lockCurrentChasmExecutionJoinExecutionsQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L60",
+      "sql_sha256": "ef3b73e63cd9a7ac7525ca1cfc76522130c7540e2b3135836fcf03ff48d4298f"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:lockCurrentExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L66",
+      "sql_sha256": "df1bbcfa207f47e6a9000c776adc7d7e23248568162d42fcdf6df8c22d528669"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:lockCurrentChasmExecutionQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L67",
+      "sql_sha256": "75989401d5450aad98db335f3247c16711b5528ce0c655c41e32e6be29ffd600"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getHistoryImmediateTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L88",
+      "sql_sha256": "b609f02d18983000ae229aca2fb1c23862c31d5fb9142fd40eb6a53a01b4fc5d"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteHistoryImmediateTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L91",
+      "sql_sha256": "02dc3086789872b8edc69fe8fac99ab834737b851eeabd792c2157f45084195e"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:rangeDeleteHistoryImmediateTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L92",
+      "sql_sha256": "bcc7fce3962ca76d2b362f2dc2d5bcd5fb7a0fde3418cc7959d380869c42dcbf"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getHistoryScheduledTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L97",
+      "sql_sha256": "e50ceff524128a26e8158e7e957a9e4707f2d16862a732fec9671ce689f6a93c"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteHistoryScheduledTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L104",
+      "sql_sha256": "4c27d6457d5a4596da48069f23c88926f88097b5fa7186ab8e3c3649232b9cb7"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:rangeDeleteHistoryScheduledTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L105",
+      "sql_sha256": "7ee12e8f22e73738cb22b5692f21c016ece82fee8647319cb0903004b7fedf18"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getTransferTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L110",
+      "sql_sha256": "ea333f1893ff08e155d09a5401bcf7ba30d539fd579b26edffde606470263018"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteTransferTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L113",
+      "sql_sha256": "fd591d06ab57add426b52bf3e6fc9420ee1e907affae3bacdbc9712f478b29b9"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:rangeDeleteTransferTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L114",
+      "sql_sha256": "8df1e56f1cb5b0b33b7c6689cfdd7c884641db5cdf40224501a81feefe3070ea"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getTimerTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L119",
+      "sql_sha256": "b1f8672f329568da20f6890a83f872d29ea7d1a9dbf3a5a1fab254d800784d36"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteTimerTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L125",
+      "sql_sha256": "c1414c7509d32057dc20ce39158cce0d1c8918fc128f3941ce16be3cb47460dc"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:rangeDeleteTimerTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L126",
+      "sql_sha256": "287a096ab16e90ce9aad67410b33732d7a909f7a98c881669993097f770a0d44"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getReplicationTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L131",
+      "sql_sha256": "9aeef8fee1578481b1720f1b830fc7d879da4c50e2f0833365073d80f05f9714"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteReplicationTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L134",
+      "sql_sha256": "73fb3ee4580031127140a99dc4c47f1bf2fc9fa55ebee80e8fff510e74080ea4"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:rangeDeleteReplicationTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L135",
+      "sql_sha256": "580b8f7d3c61799f3db54d71348aa0e3bcf3d2a6f5da7c3c341ff53bfe3ff527"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getReplicationTasksDLQQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L137",
+      "sql_sha256": "a549dd49153109b3fc90ff78c2fa44d08e13c1ba99f772edaa590bc004096e8a"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getVisibilityTasksQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L147",
+      "sql_sha256": "1e5b080f6c2f436ed0ae7c641327a889ce61738177375295b9bcf82ab16d997f"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteVisibilityTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L150",
+      "sql_sha256": "281278aa92800a63c5a87cc4d0ef4ad538e5605eb6dd26767699c31586738979"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:rangeDeleteVisibilityTaskQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L151",
+      "sql_sha256": "b2bda2a88bd4f04f5adcc95e4290ac1a57376081a234449fd7fcd43aeea58c27"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteBufferedEventsQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L157",
+      "sql_sha256": "6ec4e0ace7b214359ed5dc2ee5ad19b00101058c0df84ae63f1fcb9225788045"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:getBufferedEventsQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L158",
+      "sql_sha256": "3b100bdd2e9e85f090412e8aa57661124ce4cbcd4cb779ee193c6cab0fa69409"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:deleteReplicationTaskFromDLQQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L173",
+      "sql_sha256": "acf737169094c7c1a1bcddd9e8f67a9295179d6285f2c832c308168f864f6c3f"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution.go:rangeDeleteReplicationTaskFromDLQQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution.go#L179",
+      "sql_sha256": "123ef51bf52381e154ce32debf8da2cb485c41128dcbb851cd88634bcc1efa05"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution_maps.go:deleteAllSignalsRequestedSetQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution_maps.go#L59",
+      "sql_sha256": "21af13bb847cb0d6ba10e1a5c4099c59464dd119abcdf4472a33017628b73168"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/execution_maps.go:getSignalsRequestedSetQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/execution_maps.go#L81",
+      "sql_sha256": "9963add783bf695e7ae132587cde9fb3b168ed46d24be31bf3a72521d81d2d32"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:createNamespaceQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L13",
+      "sql_sha256": "85bba4a89632a5a9136a63dc10ea84cedfa04118951ee76ad348987066605466"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:updateNamespaceQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L17",
+      "sql_sha256": "5d8818cee89299c53c70040c662c1c22b5e0baddf8a158f3e6a6a67cc8eab938"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:getNamespaceByIDQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L23",
+      "sql_sha256": "290ed9c39ad126b4be5b2591bf0b01514027231c2982677c7797b3ac08fdb566"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:getNamespaceByNameQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L24",
+      "sql_sha256": "97a44e55deaf3dce05e2cf223b26b16826e3eb759f40a8dc4b1ab57a2c85fc3d"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:listNamespacesQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L26",
+      "sql_sha256": "3df9ec64584d8a9bea36b53c61153de2b72cb4c4c6961165417805525c8f2e1e"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:listNamespacesRangeQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L27",
+      "sql_sha256": "7d1d4f2e5961f23abf5adc2d6d967ffec45fcd3627c28168f67d304be44adec9"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:deleteNamespaceByIDQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L29",
+      "sql_sha256": "f6f0ab232a228cbb5cb92868a895d3ddff278431244c7168bd2d11727f22c95d"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:deleteNamespaceByNameQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L30",
+      "sql_sha256": "8aa768ee54c728a51e62764a576f6edede98da35d12107e99fe68fa4a9108c13"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:getNamespaceMetadataQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L32",
+      "sql_sha256": "7ae154f92c9b730acc35de915c32593add1ef3a7cfc4ab9f6da06a6e376767b8"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:lockNamespaceMetadataQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L33",
+      "sql_sha256": "2b3b83014dc41366eb1e46db6b4539f51d6acecc4d677a0b99f97fdef76bd108"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/namespace.go:updateNamespaceMetadataQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/namespace.go#L34",
+      "sql_sha256": "95b8dd91827749125bfe5145792f2aa534eb2ee9951607fd9db9d548680edda3"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:createEndpointsTableVersionQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L12",
+      "sql_sha256": "41c30ca2fe1d3216581f664f695f95e6b9f3ad934a1d464375d5288cfbcbda2e"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:incrementEndpointsTableVersionQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L13",
+      "sql_sha256": "0267b63bcb696b8144feb927acef03f282045214c4f299af8c9681a6968880a1"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:getEndpointsTableVersionQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L14",
+      "sql_sha256": "136e5965140a737641afdc41dbd3a80ab513094aa0a06e3b06996676b94ad4b7"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:createEndpointQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L16",
+      "sql_sha256": "08691f7afa74170ca17e2412dd02ff81099dadf26152b0928378abc49e7703c3"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:updateEndpointQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L17",
+      "sql_sha256": "08a08f85c8a299ed5a6c405b73e1c8b55198502406704707c101b14ea09a661e"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:deleteEndpointQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L18",
+      "sql_sha256": "4d33fdead0713f80e073a0cb0082be4a58aa224b095282b2255f58df374f4eae"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:getEndpointByIdQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L19",
+      "sql_sha256": "74e4225ab20babe165d4d32fd61fb29c16840937ab5ef39fe58204e31b8d801b"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go:getEndpointsQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/nexus_endpoints.go#L20",
+      "sql_sha256": "8cdaa558e6beb4f77669ea36bd55405c59ca55af18e1046f552ce3d09b3bebf8"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue.go:templateGetMessageQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue.go#L13",
+      "sql_sha256": "746376a2dac274dcb492d198da581f7db3ef3c4148553b724429d78c024b614d"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue.go:templateGetMessagesQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue.go#L14",
+      "sql_sha256": "253895590b88a1984815d675a245918d970979b747d3d67905f9830796b6bd5e"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue.go:templateDeleteMessageQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue.go#L15",
+      "sql_sha256": "8dfce87929a7491d012f4e5de573d15224957341c9aa27de97102a99b17c9b16"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue.go:templateRangeDeleteMessagesQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue.go#L16",
+      "sql_sha256": "63a5abb9d7ea2e2f61831c65fedf808c527765dc3b6d14574e82fdc6facc09cf"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue.go:templateGetLastMessageIDQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue.go#L18",
+      "sql_sha256": "1ef5bd8223e980c5420c52a43832afe102f9af3a7fbd3fb0708b87cf3b2f674f"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue.go:templateGetQueueMetadataQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue.go#L22",
+      "sql_sha256": "34e01307efafb1df68ce0eb6291ab5535870fd30badc9d77040451dcc3509239"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue.go:templateLockQueueMetadataQuery",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue.go#L23",
+      "sql_sha256": "547ba8042f44820de36e5815c9d11c4661f09f7d3189f13adb3411ef8c2f1684"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue_v2.go:templateGetMessagesQueryV2",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue_v2.go#L12",
+      "sql_sha256": "b048f59b62cca5d23d988069f86c86d9de1177321b05adf5b4b8e0ad1f058551"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue_v2.go:templateRangeDeleteMessagesQueryV2",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue_v2.go#L13",
+      "sql_sha256": "6e615c391fa6000be5f2972cf5066203908c0d4f5e4ab541d2ed470eb9c8534c"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue_v2.go:templateGetLastMessageIDQueryV2",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue_v2.go#L14",
+      "sql_sha256": "47d8a77d08261fbc9f52f1551510dfd8086a708efbf08982227c36fd15ace5d0"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue_v2.go:templateGetQueueMetadataQueryV2",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue_v2.go#L17",
+      "sql_sha256": "eeaa57c357336741d7f4fa309fc0b7bc3623522c3275c24a542139839f51d8f4"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue_v2.go:templateGetQueueMetadataQueryV2ForUpdate",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue_v2.go#L18",
+      "sql_sha256": "de28729aeb43c3750c26dd3557849ad0f224796f6ef572b99f3aa513ad358f52"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/queue_v2.go:templateGetNameFromQueueMetadataV2",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/queue_v2.go#L19",
+      "sql_sha256": "66c3506f463583108f878fe0e514ebc387aae572a9f2f49043099d7af729c723"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/shard.go:createShardQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/shard.go#L11",
+      "sql_sha256": "2ad7456bebc044364028177caa4ac21f159068de6d6f4bb91b53b87fd3cd68d2"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/shard.go:getShardQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/shard.go#L14",
+      "sql_sha256": "069ef585d7abe36a450e98a7f615417917638a217b3fc88366d66d6fca3859c2"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/shard.go:updateShardQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/shard.go#L18",
+      "sql_sha256": "db5819c93f52f58bab345768b6b49a3411b65419c47b76681b5d49a2e694ff93"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/shard.go:lockShardQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/shard.go#L22",
+      "sql_sha256": "428d8fd202d0b82654342ce173abc6a7692733abc58ec260d84461daaebf24fb"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/shard.go:readLockShardQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/shard.go#L23",
+      "sql_sha256": "d1df33a9bc08781c399edc83ec828d21a58253c4f831d1b89a05037212bda915"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_queues.go:listTaskQueueRowSelect",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_queues.go#L27",
+      "sql_sha256": "9b1a7bc6a78b71fab51d394b2d46f50f67591859f61d7d8fe15818609035a967"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_queues.go:listTaskQueueWithHashRangeQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_queues.go#L29",
+      "sql_sha256": "3c8c83b06dcef33fd42165ad9ba233367a46e51645c8a23fc555af7e2492089c"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_queues.go:listTaskQueueQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_queues.go#L32",
+      "sql_sha256": "afc674dc7a2dacdf5290abbf71be5f3093563441432859c1aaa1a6026e11ecc7"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_queues.go:getTaskQueueQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_queues.go#L35",
+      "sql_sha256": "b3c3221b2eb5bba04e7f076431f6598970e94357e0d0b2718077526771abbe6a"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_queues.go:deleteTaskQueueQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_queues.go#L38",
+      "sql_sha256": "e826283d9dc13b2a062c8ee097f61bcd24e401fad26b11842cf0a9e3a5579bab"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_queues.go:lockTaskQueueQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_queues.go#L40",
+      "sql_sha256": "531b4ced4d83390d5c113be59f47589a5a11cb4cb080f2f249c804e9b2433c0c"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_user_data.go:getTaskQueueUserDataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_user_data.go#L13",
+      "sql_sha256": "b9b1d6ca12f695df033f1e11f2dd3a52aab07a8949845c7bcdfd68b3ce556d21"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_user_data.go:updateTaskQueueUserDataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_user_data.go#L16",
+      "sql_sha256": "7eaf6fed00dc4e8ff5111335eb4af0e45c7fea898cc0cd964e733f40ac3d35b8"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_user_data.go:insertTaskQueueUserDataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_user_data.go#L24",
+      "sql_sha256": "1dba409445539fa46a76e058e9b06355e50ab73424e8b7d41711f857bb562143"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_user_data.go:listTaskQueueUserDataQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_user_data.go#L28",
+      "sql_sha256": "113f7a085d22475190108188c1d1bd41f80c22f70bc9558041ddb1bc4f66ab96"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_user_data.go:listTaskQueuesByBuildIdQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_user_data.go#L32",
+      "sql_sha256": "6ccf792475e6eac4957c5e47268c72b68c466c5e55afc43cd534f256de9df41b"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_user_data.go:countTaskQueuesByBuildIdQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_user_data.go#L33",
+      "sql_sha256": "ccf7570f6bb6409cd7580eab154fefd08932b3143205c554fc20c2bf22d891a1"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_v1.go:getTaskMinMaxQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_v1.go#L12",
+      "sql_sha256": "2d9b57c3dbff8b0f60c9e32b2b85403fa6743db2392d92cca39a4fbe27c28eb9"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_v1.go:getTaskMinQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_v1.go#L17",
+      "sql_sha256": "acb2af997b6d471e3842ab73fefe0ec540d82c194315c0fc6b51159c53fe7a44"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_v1.go:rangeDeleteTaskQry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_v1.go#L25",
+      "sql_sha256": "b4643b249c849b17aea1bfcd031b98de0c3945396539c540d052141adb0f5d65"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_v2.go:getTaskV2Qry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_v2.go#L12",
+      "sql_sha256": "186125a1ee894686c236fc470855833358c6f0c7c3b269fd287ab4cd92630b6e"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_v2.go:getTaskV2QryWithLimit",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_v2.go#L19",
+      "sql_sha256": "14c231a5d4ae687dbb998b8b24ecb6a1f743e24fb6ca8fddd49381028939136d"
+    },
+    {
+      "id": "temporal:common/persistence/sql/sqlplugin/postgresql/task_v2.go:rangeDeleteTaskV2Qry",
+      "reason": "catalog/type context not configured for this replay suite",
+      "source_url": "https://github.com/temporalio/temporal/blob/b7bc978d1040afe2dcbc68ecfe8b228ae198e0b6/common/persistence/sql/sqlplugin/postgresql/task_v2.go#L25",
+      "sql_sha256": "c59e024df46432e45e017b7e071e42663ed10f368fcaf900b3de3071c53f1f7b"
+    }
+  ]
+}

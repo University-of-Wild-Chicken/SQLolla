@@ -1,0 +1,258 @@
+{
+  "javaVersion": "17.0.21",
+  "javaRuntimeVersion": "17.0.21+9",
+  "javaVendor": "Eclipse Adoptium",
+  "osName": "Windows 11",
+  "osArch": "amd64",
+  "solver": "sat4j",
+  "solverType": "java",
+  "solverPresent": true,
+  "defaultNoOverflow": false,
+  "cases": [
+    {
+      "id": "relational_sat",
+      "model": "sig Row { value: one Int }\nrun { one Row and all r: Row | r.value \u003d 3 } for 3 but 4 Int",
+      "expectedSat": true,
+      "satisfiable": true,
+      "matchesExpected": true,
+      "noOverflow": true,
+      "bitwidth": 4,
+      "elapsedMilliseconds": 133,
+      "cnfCallbacks": [
+        {
+          "prefixLength": 0,
+          "totalVariables": 357,
+          "clauses": 680,
+          "primaryVariables": 51
+        }
+      ],
+      "witness": {
+        "this/Row": [
+          [
+            "Row$0"
+          ]
+        ],
+        "this/Row.value": [
+          [
+            "Row$0",
+            "3"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "pigeonhole_unsat",
+      "model": "sig Row { key: one Key } sig Key {}\nrun { all disj a,b: Row | a.key !\u003d b.key } for exactly 3 Row, exactly 2 Key",
+      "expectedSat": false,
+      "satisfiable": false,
+      "matchesExpected": true,
+      "noOverflow": true,
+      "bitwidth": 4,
+      "elapsedMilliseconds": 10,
+      "cnfCallbacks": [
+        {
+          "prefixLength": 0,
+          "totalVariables": 62,
+          "clauses": 89,
+          "primaryVariables": 6
+        }
+      ]
+    },
+    {
+      "id": "overflow_wrap_enabled",
+      "model": "open util/integer\none sig N { value: one Int }\nrun { N.value \u003d 7 and add[N.value,1] \u003d -8 } for 4 Int",
+      "expectedSat": true,
+      "satisfiable": true,
+      "matchesExpected": true,
+      "noOverflow": false,
+      "bitwidth": 4,
+      "elapsedMilliseconds": 8,
+      "cnfCallbacks": [
+        {
+          "prefixLength": 0,
+          "totalVariables": 191,
+          "clauses": 548,
+          "primaryVariables": 16
+        }
+      ],
+      "witness": {
+        "this/N": [
+          [
+            "N$0"
+          ]
+        ],
+        "this/N.value": [
+          [
+            "N$0",
+            "7"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "overflow_rejected",
+      "model": "open util/integer\none sig N { value: one Int }\nrun { N.value \u003d 7 and add[N.value,1] \u003d -8 } for 4 Int",
+      "expectedSat": false,
+      "satisfiable": false,
+      "matchesExpected": true,
+      "noOverflow": true,
+      "bitwidth": 4,
+      "elapsedMilliseconds": 5,
+      "cnfCallbacks": [
+        {
+          "prefixLength": 0,
+          "totalVariables": 192,
+          "clauses": 651,
+          "primaryVariables": 16
+        }
+      ]
+    },
+    {
+      "id": "in_range_four_bits",
+      "model": "open util/integer\none sig N { value: one Int }\nrun { N.value \u003d 6 and add[N.value,1] \u003d 7 } for 4 Int",
+      "expectedSat": true,
+      "satisfiable": true,
+      "matchesExpected": true,
+      "noOverflow": true,
+      "bitwidth": 4,
+      "elapsedMilliseconds": 5,
+      "cnfCallbacks": [
+        {
+          "prefixLength": 0,
+          "totalVariables": 192,
+          "clauses": 651,
+          "primaryVariables": 16
+        }
+      ],
+      "witness": {
+        "this/N": [
+          [
+            "N$0"
+          ]
+        ],
+        "this/N.value": [
+          [
+            "N$0",
+            "6"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "widened_five_bits",
+      "model": "open util/integer\none sig N { value: one Int }\nrun { N.value \u003d 7 and add[N.value,1] \u003d 8 } for 5 Int",
+      "expectedSat": true,
+      "satisfiable": true,
+      "matchesExpected": true,
+      "noOverflow": true,
+      "bitwidth": 5,
+      "elapsedMilliseconds": 8,
+      "cnfCallbacks": [
+        {
+          "prefixLength": 0,
+          "totalVariables": 455,
+          "clauses": 1617,
+          "primaryVariables": 32
+        }
+      ],
+      "witness": {
+        "this/N": [
+          [
+            "N$0"
+          ]
+        ],
+        "this/N.value": [
+          [
+            "N$0",
+            "7"
+          ]
+        ]
+      }
+    }
+  ],
+  "enumeration": {
+    "instances": [
+      {
+        "this/Key": [
+          [
+            "Key$0"
+          ]
+        ],
+        "this/Val": [
+          [
+            "Val$0"
+          ]
+        ],
+        "this/Record": [
+          [
+            "Record$0"
+          ]
+        ],
+        "this/Record.link": [
+          [
+            "Record$0",
+            "Key$0",
+            "Val$0"
+          ]
+        ],
+        "this/Record.flag": [
+          [
+            "Record$0",
+            "1"
+          ]
+        ]
+      },
+      {
+        "this/Key": [
+          [
+            "Key$0"
+          ]
+        ],
+        "this/Val": [
+          [
+            "Val$0"
+          ]
+        ],
+        "this/Record": [
+          [
+            "Record$0"
+          ]
+        ],
+        "this/Record.link": [
+          [
+            "Record$0",
+            "Key$0",
+            "Val$0"
+          ]
+        ],
+        "this/Record.flag": [
+          [
+            "Record$0",
+            "2"
+          ]
+        ]
+      }
+    ],
+    "instanceCount": 2,
+    "semanticFlagValues": [
+      "1",
+      "2"
+    ],
+    "nextCalls": 2,
+    "cap": 3,
+    "exhausted": true,
+    "capped": false,
+    "orderedTernaryPositionsPreserved": true,
+    "matchesExpected": true,
+    "model": "one sig Key {} one sig Val {}\none sig Record { link: Key -\u003e Val, flag: one Int }\nrun { some Record.link and (Record.flag\u003d1 or Record.flag\u003d2) } for 3 Int",
+    "cnfCallbacks": [
+      {
+        "prefixLength": 0,
+        "totalVariables": 30,
+        "clauses": 56,
+        "primaryVariables": 9
+      }
+    ]
+  },
+  "allMatchedExpected": true
+}

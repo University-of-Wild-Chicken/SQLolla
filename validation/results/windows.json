@@ -1,0 +1,2984 @@
+{
+  "cases": 21,
+  "claim": "Actual PG observations and exact independently enumerated small tie sets; finite Alloy checks evaluator-backed outcomes.",
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "failures": [],
+  "postgres_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "results": [
+    {
+      "errors": [],
+      "id": "window/0",
+      "postgres": {
+        "affected_rows": 3,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "rank",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "dense_rank",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 3",
+        "rows": [
+          [
+            "1",
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "2",
+            "2",
+            "2"
+          ],
+          [
+            "3",
+            "3",
+            "3",
+            "3"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "b29d3ad21604b5c966dab88719a1039350e5a5ca9bf18ef41b383c29dcc214fb",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/0",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "4e65b07cb76096a9850ac186d3d4153827675d908364b61a645b270c97df95d3",
+        "mode": "compare",
+        "model_sha256": "13a7c7f7f3cfba1e567c32ebb6622738eafb8e4745c86ec6b39a4566f32eaec6",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 3",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "row_number",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "dense_rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "aff73940ef2ea9049ab4b52c1c1e254e77659a2b48dc3761e459375508061aba",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "6827d2410e15e3e1ca6193654b74d92ffdc75178b2a5fb0969ddb060d5be6b40",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,row_number()OVER(ORDER BY x),rank()OVER(ORDER BY x),dense_rank()OVER(ORDER BY x) FROM(VALUES(3),(1),(2))t(x)",
+      "sql_sha256": "aff73940ef2ea9049ab4b52c1c1e254e77659a2b48dc3761e459375508061aba",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/1",
+      "postgres": {
+        "affected_rows": 4,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rank",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "dense_rank",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 4",
+        "rows": [
+          [
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "3",
+            "3",
+            "2"
+          ],
+          [
+            null,
+            "4",
+            "3"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "676f01a21e55062ce71438ae5b3de0c026def07665f5ba904a54b970dd7faf51",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/1",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "99d8931e01ba8cf99ed1cdc74d8c8a7e1129fa11ff5b5f199c84377c5d484bb5",
+        "mode": "compare",
+        "model_sha256": "ef626a379bfe1854b7afec07489dbb45af67ebd3999cb7e46e981509e0f7598e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 4,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 4",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "int32"
+                  },
+                  {
+                    "type": "int64",
+                    "value": 4
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "dense_rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "2ad6843605d8917d479555b710fff1fdeeffac0231261d4dbfd13070bd8cf441",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "aa85eac2cfc75ebca017a6edfe68d19ceec573d6440cdfbbe817e0d507a93236",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,rank()OVER(ORDER BY x),dense_rank()OVER(ORDER BY x) FROM(VALUES(1),(1),(3),(NULL::int))t(x)",
+      "sql_sha256": "2ad6843605d8917d479555b710fff1fdeeffac0231261d4dbfd13070bd8cf441",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/2",
+      "postgres": {
+        "affected_rows": 4,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rank",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "dense_rank",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 4",
+        "rows": [
+          [
+            null,
+            "1",
+            "1"
+          ],
+          [
+            "3",
+            "2",
+            "2"
+          ],
+          [
+            "1",
+            "3",
+            "3"
+          ],
+          [
+            "1",
+            "3",
+            "3"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "0fdd3c1a0473c38559c1f05c984464b561752f13ca626ab20eddc21dc7f92a8e",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/2",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "ca53cc86ac64ed0f3157f647238b842add55aecaa7af1b72e007c6c849b90c3f",
+        "mode": "compare",
+        "model_sha256": "25a134298a6720090bd6320a6dbad8bfddaedf13d07088aaffc646a7f211c2c7",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 4,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 4",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "int32"
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "dense_rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a5f32ea4e72eba7165b17967437be6fb9f9c135e5a12839cb2a3d99c35f9ac9a",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "05002d432e0cf4046bee6870ab04f511cd3d94b4a067ce22b02425cd80339de3",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,rank()OVER(ORDER BY x DESC NULLS FIRST),dense_rank()OVER(ORDER BY x DESC NULLS FIRST) FROM(VALUES(1),(1),(3),(NULL::int))t(x)",
+      "sql_sha256": "a5f32ea4e72eba7165b17967437be6fb9f9c135e5a12839cb2a3d99c35f9ac9a",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/3",
+      "postgres": {
+        "affected_rows": 3,
+        "columns": [
+          {
+            "name": "g",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 3",
+        "rows": [
+          [
+            "1",
+            "3",
+            "1"
+          ],
+          [
+            null,
+            "1",
+            "1"
+          ],
+          [
+            null,
+            "2",
+            "2"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "68b1e3c908229de1559ad4cfa561df93d48a247034e9691f4171fd6a2de9faf6",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/3",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "e4b9a69baf26d8406f6b405ac44ee0e808132a0bd8b94d633608cb56f4583fb3",
+        "mode": "compare",
+        "model_sha256": "797f24c30bd8259841e267a0783c37414d3ed67e97598db7971a39e0b0c8336a",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 3",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "int32"
+                  },
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "null",
+                    "value": "int32"
+                  },
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "g",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "row_number",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "25464b4d743908fa8478286451c34962edc0ac6ea20e3a53abfd381002b6fe62",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "b73ef4424b389e73190ddaf3c6a82d19c14501767f86aa9c145a421d15a91711",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT g,x,row_number()OVER(PARTITION BY g ORDER BY x) FROM(VALUES(NULL::int,2),(NULL::int,1),(1,3))t(g,x)",
+      "sql_sha256": "25464b4d743908fa8478286451c34962edc0ac6ea20e3a53abfd381002b6fe62",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/4",
+      "postgres": {
+        "affected_rows": 3,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "case",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 3",
+        "rows": [
+          [
+            "0",
+            null
+          ],
+          [
+            "1",
+            "2"
+          ],
+          [
+            "2",
+            "3"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "f056e0ae246801204509a00b233c196487c1966e36348224527ee6897c4efcb3",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/4",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "9ce2b7fc6a10cbc05f426a170ce748413fe82f0d8eafcf18b629de6f9b4d2c13",
+        "mode": "compare",
+        "model_sha256": "0e7d12288ed742c21b89c5e5d5e0a411d8607f4d8f30253a17147754c6c2bfad",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 3",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 0
+                  },
+                  {
+                    "type": "null",
+                    "value": "int64"
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "case",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "9e956b71550d7fc80d8c430b507e7c047aaf4bfca4e44191ba0f3e75437148bd",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "9bd0cac9f0e0a36c6625c2aabc928c6341367170b125c56d4b9edad4d66f309f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,CASE WHEN x>0 THEN row_number()OVER(ORDER BY x) ELSE NULL END FROM(VALUES(0),(1),(2))t(x)",
+      "sql_sha256": "9e956b71550d7fc80d8c430b507e7c047aaf4bfca4e44191ba0f3e75437148bd",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/5",
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "2"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "19d0615ff73ebca160dba3bcf192cf3a32af091405acd4a9860442cbd8858d9d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/5",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "3b8058aa40b777d6d7a4cf8156d671db1fbfbaeda4bc57ab40faa0f940d747d8",
+        "mode": "compare",
+        "model_sha256": "530744a4ca3b7b044cf805489c31d91d4be3d389b135a0b4748338cf1be8da35",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "row_number",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "5bcd21f89c3e60f26a9c0cb6fd407333af6735d101a4771a80861cea8494d7e1",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "31a70e8f1b4fd48bff98989b7152462320ed4beb2951b8fe29660a2eedebde67",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT *,row_number()OVER(ORDER BY x) FROM(VALUES(2),(1))t(x)",
+      "sql_sha256": "5bcd21f89c3e60f26a9c0cb6fd407333af6735d101a4771a80861cea8494d7e1",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/6",
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "rank",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rank",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "1"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "d1c59f26054b80d2eed31d76a1059bd3970e89ebbd0364985265357c19310f41",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/6",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "df6ececca7d8a3ea3e75145f6891c60a87364b4febd7eb3566b0f7f1cca898da",
+        "mode": "compare",
+        "model_sha256": "47da59e56053a5a9b338ea475e9cf0563d29533e3c8c789242f10061898cf158",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "rank",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "bb5e004dd94593956876cea3a9f376b0d4e20b56cd62e7231565f04765985261",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "620629a7c7d92a5cebef075d9609c0c55a260aff7292e0abdeef56218b26003d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT rank,rank()OVER() FROM(VALUES(1),(2))t(rank)",
+      "sql_sha256": "bb5e004dd94593956876cea3a9f376b0d4e20b56cd62e7231565f04765985261",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/7",
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "2"
+          ],
+          [
+            "1"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "1ed418497d1bb7a79a85693c1663a4efece0a111695c4f3de75e97e7f1bcbc84",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/7",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "b5b0e90d2cc77cd67a7e4345c07a80c1f0c8c6c281c4eecb2dbcc5c0abe7f098",
+        "mode": "compare",
+        "model_sha256": "f69264827e73faac4db0d5fca9cd257f5827933d9b4cc2bffd78acdb05a27995",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e93e9e9a068021110364c2d6c3087ce22cbea5c38c99535e21fe0d1d3e12bc15",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "3752b9595c69c91bd95e9b5bc1034d54d9ceab1d1792efdbe5a7a41f9a98630c",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM(VALUES(2),(1))t(x) ORDER BY row_number()OVER(ORDER BY x DESC)",
+      "sql_sha256": "e93e9e9a068021110364c2d6c3087ce22cbea5c38c99535e21fe0d1d3e12bc15",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/8",
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "n",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "2",
+            "2"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "e0b63db4e32233c66e98093bf8c99a0c8ec7fa0a76133e7304c1c948f6ab3c90",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/8",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "c62ff1964fcd575ac19ea56d458d02239478a4420517aec388664f52455d2b94",
+        "mode": "compare",
+        "model_sha256": "375d723c1d21413b21e2d367614abab48c8f79170d80d872df1a552f14ca2ce4",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "n",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "59faba742f6c66802ad3657ab32abe611122034c002a5cc73d2c0374f1ea7dee",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "4b9507f2d497d534cf0fc836d8c3560f64e6c4710e60d30f2ce12ed6dd0810bf",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,row_number()OVER(ORDER BY x) AS n FROM(VALUES(2),(1))t(x) ORDER BY n DESC LIMIT 1",
+      "sql_sha256": "59faba742f6c66802ad3657ab32abe611122034c002a5cc73d2c0374f1ea7dee",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/9",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "3d9877bbdc144657bebd8f5920e3afe7d3728adf49fab5bfe9f71d98a8e19317",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/9",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "b5ea4efed4afb1c6f1c9b37a49f61555df5b18298c228fbcc73fc46cccd58e9a",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "row_number",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "beb90dfe7aea10f5cf97aa748f9ca9d7190b7b943098daf1ef50650f7d2c1230",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number()OVER() FROM(VALUES(1))t(x) WHERE false",
+      "sql_sha256": "beb90dfe7aea10f5cf97aa748f9ca9d7190b7b943098daf1ef50650f7d2c1230",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/10",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "division by zero",
+        "sqlstate": "22012",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "93eb929506731682ba1649fe4edd87721457563e3f33cc891e3d3b80de4bdc2f",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/10",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "7cfc924925909db4a0a8098d3a5072bd6441321588910bec5be246f81fb8fe7a",
+        "mode": "compare",
+        "model_sha256": "73dd805ccf143a3803ab8249539c1281e0f563026908b041fd5b74e05f4a3eb5",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "22012"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "aff496a93562d265b8f81ce313594b9fdd8793ead75142daf66d7c482ef7f7f1",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "76aafb7691c5b12dfb29e3913c6980e9a9756117d79da851196b2f7375ded47d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number()OVER(ORDER BY 1/0) FROM(VALUES(1))t(x) WHERE false",
+      "sql_sha256": "aff496a93562d265b8f81ce313594b9fdd8793ead75142daf66d7c482ef7f7f1",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/11",
+      "postgres": {
+        "affected_rows": 3,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rank",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "dense_rank",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 3",
+        "rows": [
+          [
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "1",
+            "1"
+          ],
+          [
+            "3",
+            "1",
+            "1"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "ab7a15f988e2d7e76cfd668487334759cf970dac60461b4cdc3deaaf623e0678",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/11",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "45acef4ea6fc960282d224e86eac56936ae1ac34b978af654f430daeeb0ac12b",
+        "mode": "compare",
+        "model_sha256": "68c2406f5930f3cfa1bd88927bde8b3868f8d9fbfbbf22b9bdaf323169c44379",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 3,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 3",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "dense_rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "57762909aae0dce7f2ece11cdf0da57d0c132a227a3bfe0aeddd29f18c09f711",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "b7619a82d0adba6028897bacfee97922a4500e56d9292c097bf1f6c4057155c9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,rank()OVER(ORDER BY 1),dense_rank()OVER(ORDER BY 1) FROM(VALUES(1),(2),(3))t(x)",
+      "sql_sha256": "57762909aae0dce7f2ece11cdf0da57d0c132a227a3bfe0aeddd29f18c09f711",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/12",
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "rank",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "1"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "0ef73c3e28d218126e284459e1bf4f14d68d04f007a46b6b0c2855f762204cd4",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/12",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "b6dfd25e0d832c92c5318bdf227eaa7e9dbdca3e780765bb99b6b7f48c5530d2",
+        "mode": "compare",
+        "model_sha256": "86f41141b3a69b14e8eb645db828e96085d46d6cbf000f7cc9f18db0a521d5dc",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int64",
+                    "value": 3
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "2b4cf7e26565b5f1c596c8fd499c2c8a2d0cfe552ac88adbea636e38c86fc237",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "fe2ab0b8efdbc712d5cb1a65b1557ee8c72483338c4668ac7f511906069abde3",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT rank()OVER(ORDER BY x) FROM(VALUES(1),(1),(2))t(x)",
+      "sql_sha256": "2b4cf7e26565b5f1c596c8fd499c2c8a2d0cfe552ac88adbea636e38c86fc237",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/13",
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "2",
+            "1"
+          ],
+          [
+            "1",
+            "1"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "c60a53ce3011b1b4a120069d02bc0258c98d5d8d39b8ebd1bba8994fa9e208fd",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/13",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "eb7ce001ac3774f1ef6880a0aedcf0532b5b8f0156c80b476ad4983043f21841",
+        "mode": "compare",
+        "model_sha256": "47da59e56053a5a9b338ea475e9cf0563d29533e3c8c789242f10061898cf158",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "row_number",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "c721627ef093808c968327994690995a873c858a656e6e8d6d6ca0bfb3085a80",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "620629a7c7d92a5cebef075d9609c0c55a260aff7292e0abdeef56218b26003d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,(SELECT row_number()OVER(ORDER BY t.x)) FROM(VALUES(2),(1))t(x)",
+      "sql_sha256": "c721627ef093808c968327994690995a873c858a656e6e8d6d6ca0bfb3085a80",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/14",
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "1"
+          ],
+          [
+            "1"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "4bdde4dbc54775f95fe42ffd68b9a42c389c3662d67400358fabc087f2a62e57",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/14",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "16d22d552ead580f9ab61a520f0910562bcf09ed0e9e2945572a68aab9fd48a3",
+        "mode": "compare",
+        "model_sha256": "7b61c97080276f9e24c33f2c03d31d028c3f5eaa771716b43267566a79db94f4",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "row_number",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "28c2bf820848434e52c271166a1f5fe2978a5bd922fc06b4854c52f635f71fa4",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "f23f0b5b2398c170d92f7d77203d190854d1ecc5aba573ff9b0c107d6deddaae",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number()OVER() UNION ALL SELECT row_number()OVER()",
+      "sql_sha256": "28c2bf820848434e52c271166a1f5fe2978a5bd922fc06b4854c52f635f71fa4",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/15",
+      "postgres": {
+        "affected_rows": 8,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rank",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "dense_rank",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 8",
+        "rows": [
+          [
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "1",
+            "1"
+          ],
+          [
+            "3",
+            "1",
+            "1"
+          ],
+          [
+            "4",
+            "1",
+            "1"
+          ],
+          [
+            "5",
+            "1",
+            "1"
+          ],
+          [
+            "6",
+            "1",
+            "1"
+          ],
+          [
+            "7",
+            "1",
+            "1"
+          ],
+          [
+            "8",
+            "1",
+            "1"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "87bae85f057bf99bbca911703137c9fb9ac3c5955c019c7b2530912ef6d94b4c",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/15",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "062453fa8fbcef963a9dd7683ef19a25cf0b0d1c2edc8b200d85eccbad139f9f",
+        "mode": "compare",
+        "model_sha256": "7e4baf7f30ec18360c82a050256340a5fd145760bbe7df2183a7dbc987e25662",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 8,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 8",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 4
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 5
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 6
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 7
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 8
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "dense_rank",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "486d95be2bb77a6b91f72b4083ee4f9f5145a28d33a87474327f389d3c7b4cf4",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "eac40c3442c751fa2a4f6dae8f4d526d7d41639a6914cf02c11da2bd4467157c",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x,rank()OVER(),dense_rank()OVER() FROM(VALUES(1),(2),(3),(4),(5),(6),(7),(8))t(x)",
+      "sql_sha256": "486d95be2bb77a6b91f72b4083ee4f9f5145a28d33a87474327f389d3c7b4cf4",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/16",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "division by zero",
+        "sqlstate": "22012",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a9b3206b49654f04e85eaf0a52e1bd8257283dfe625a53e22e3165f0a93c1a11",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/16",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "7cfc924925909db4a0a8098d3a5072bd6441321588910bec5be246f81fb8fe7a",
+        "mode": "compare",
+        "model_sha256": "73dd805ccf143a3803ab8249539c1281e0f563026908b041fd5b74e05f4a3eb5",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "22012"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "fdd41c5ea00fb27420e165d2f439668bbe71f7db2fbef410033d7c295df60d75",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "76aafb7691c5b12dfb29e3913c6980e9a9756117d79da851196b2f7375ded47d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number()OVER(ORDER BY 1/x) FROM(VALUES(0))t(x) WHERE false",
+      "sql_sha256": "fdd41c5ea00fb27420e165d2f439668bbe71f7db2fbef410033d7c295df60d75",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/17",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "division by zero",
+        "sqlstate": "22012",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "68fde9c2ed340f52461bbd4bf729850c0211968df989dc175431e5e793eff50f",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/17",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "7cfc924925909db4a0a8098d3a5072bd6441321588910bec5be246f81fb8fe7a",
+        "mode": "compare",
+        "model_sha256": "73dd805ccf143a3803ab8249539c1281e0f563026908b041fd5b74e05f4a3eb5",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "22012"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "bae19c50d6a00a011571e6ac3beeb092e06fb83b9b0adba6f0807441c1ed30ad",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "76aafb7691c5b12dfb29e3913c6980e9a9756117d79da851196b2f7375ded47d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number()OVER(ORDER BY 1/x) FROM(VALUES(0))t(x)",
+      "sql_sha256": "bae19c50d6a00a011571e6ac3beeb092e06fb83b9b0adba6f0807441c1ed30ad",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/18",
+      "independent_legal_sets": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            2,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            2
+          ]
+        ]
+      ],
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "id",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rn",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "again",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "2",
+            "2"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "63c335e961c5e6bc7f8d84fcb46d0e518600825f9017b8720ae408144f5a024f",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/18",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "b4cb605cf6c944c6d55c867d53189976274b769be0ba05bafca3738ecff9d256",
+        "mode": "compare",
+        "model_sha256": "26cf068a6345379efa2bced91cafdf7f983aa2f97bcc90cee8f9d293e128a5c1",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          },
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rn",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "again",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "f5d8d619319e80103e1596a20d87508b008d56cf6f3278328bc580722d0d49c7",
+        "status": "ok",
+        "transition_count": 2,
+        "transition_payload_sha256": "8f2a4ba3e51a1e4228ebe1e890f741d68b2f1ff86483214b9fb8f2d727bd4bc3",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT id,row_number()OVER(ORDER BY k) AS rn,row_number()OVER(ORDER BY k) AS again FROM(VALUES(1,0),(2,0))t(id,k)",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/19",
+      "independent_legal_sets": [
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            2,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            1,
+            2,
+            2
+          ]
+        ]
+      ],
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "id",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rn",
+            "type": "bigint",
+            "type_oid": 20
+          },
+          {
+            "name": "again",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "2",
+            "1",
+            "1"
+          ],
+          [
+            "1",
+            "2",
+            "2"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "84940fc90843a5e9978975998fcf65574c12adc16bc0a6220681d6ced78f6c83",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/19",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "f792030773f5dcaff30d2a55375a0cca8b9a6c7bd457852136f05b217c7fe346",
+        "mode": "compare",
+        "model_sha256": "26cf068a6345379efa2bced91cafdf7f983aa2f97bcc90cee8f9d293e128a5c1",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          },
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rn",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          },
+          {
+            "name": "again",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "3b41b8d20ec6f39100c89702c55d86e971dcef156426f581107e78b4e0a0be69",
+        "status": "ok",
+        "transition_count": 2,
+        "transition_payload_sha256": "8f2a4ba3e51a1e4228ebe1e890f741d68b2f1ff86483214b9fb8f2d727bd4bc3",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT id,row_number()OVER(ORDER BY k) AS rn,row_number()OVER(ORDER BY k) AS again FROM(VALUES(2,0),(1,0))t(id,k)",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "window/20",
+      "independent_legal_sets": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      ],
+      "postgres": {
+        "affected_rows": 4,
+        "columns": [
+          {
+            "name": "id",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "rn",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 4",
+        "rows": [
+          [
+            "1",
+            "1"
+          ],
+          [
+            "2",
+            "2"
+          ],
+          [
+            "3",
+            "1"
+          ],
+          [
+            "4",
+            "2"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "742fe8e1cdff6489c3c7bb06a2458c950d994550787d3e6e0bbc3ab0fe370d51",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "window/20",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "046cfa3be11385fb3808b3e448c9dff0da4b52bf5480c2acd8463c963ae566b5",
+        "mode": "compare",
+        "model_sha256": "81f07b5ada7bbf195b5c8729cad287785de4c04c420d2034a620e320aa3eb3b5",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 4,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 4",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 4
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          },
+          {
+            "outcome": {
+              "affected": 4,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 4",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 4
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          },
+          {
+            "outcome": {
+              "affected": 4,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 4",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 4
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          },
+          {
+            "outcome": {
+              "affected": 4,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 4",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int64",
+                    "value": 2
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 4
+                  },
+                  {
+                    "type": "int64",
+                    "value": 1
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "rn",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 3,
+        "sql_sha256": "1e2fdc9a804c2a9ef04d2b929881a01a805db44d1f06ee2645817a99a7585cdf",
+        "status": "ok",
+        "transition_count": 4,
+        "transition_payload_sha256": "99aeaa37f2f254225a764269bf8df20887ce41bee34838d6c297322a569647b9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT id,row_number()OVER(PARTITION BY g ORDER BY k) AS rn FROM(VALUES(1,0,0),(2,0,0),(3,1,0),(4,1,0))t(id,g,k)",
+      "status": "passed"
+    }
+  ],
+  "status": "passed"
+}

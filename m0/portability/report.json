@@ -1,0 +1,595 @@
+{
+  "schema_version": "sqlolla.m0.portability/1",
+  "reviewed_on": "2026-11-14",
+  "status": "partial_validation_with_release_blockers",
+  "scope": {
+    "authorized": "M0 evidence gathering and disposable non-production probes only",
+    "owned_directory": "C:\\HackUTA26\\SQLolla\\m0\\portability",
+    "production_code_written": false,
+    "deployments_or_network_services_started": false,
+    "global_installs_performed": false,
+    "tested_platforms": [
+      "Windows x64"
+    ],
+    "untested_platforms": [
+      "Linux native",
+      "Ubuntu under WSL",
+      "macOS x64",
+      "macOS arm64",
+      "Linux arm64"
+    ],
+    "limitations": [
+      "This report validates host primitives and tiny Java/Rust probes, not the production SQLolla runtime.",
+      "Alloy semantic/API tests and JDK acquisition provenance belong to m0/alloy.",
+      "Lean parser extraction and native Lean execution belong to m0/parser.",
+      "The local Cloudflare account, sqlolla.us DNS, TLS, ownership and billing were not inspected or changed."
+    ]
+  },
+  "verdict": {
+    "windows_java17_smoke": "passed",
+    "windows_rust_host_probe": "passed_compile_link_and_execution_with_portable_rust1.100.0",
+    "windows_rust_core_compilation": "not_run_no_production_core_built",
+    "windows_lean": "portable Lean4.34.0 and Lake5.0.0-src+293d5d0 executed successfully; parser semantics delegated to parser owner",
+    "wsl_linux": "unavailable_no_distribution_registered_for_current_user",
+    "macos": "not_tested_no_runner",
+    "publishable_support_claim": "Windows Java17/Rust host probes and pinned Lean startup only; no cross-platform release claim",
+    "next_action": "Use explicit portable pinned tool paths; plan Cargo only when dependency-based M1 builds are authorized; run independent Linux and macOS CI before release."
+  },
+  "host": {
+    "os_description": "Microsoft Windows 10.0.26200",
+    "os_architecture": "X64",
+    "process_architecture": "X64",
+    "cpu": "AMD Ryzen 7 6800H with Radeon Graphics",
+    "physical_cores": 8,
+    "logical_processors": 16,
+    "powershell": "7.6.9",
+    "dotnet_runtime": "10.0.14",
+    "task_workspace": "C:\\HackUTA26\\SQLolla"
+  },
+  "runtime_inventory": [
+    {
+      "name": "Rust",
+      "status": "initial_gap_resolved_by_verified_portable_rustc_and_std",
+      "evidence": "Initial PATH/search inventory found no toolchain. Authorized follow-up acquired official checksum-verified Rust1.100.0 and std under this subtree; version, native compile/link and host probe all passed. Cargo/rustup were not installed.",
+      "verified_rustc": "C:\\HackUTA26\\SQLolla\\m0\\portability\\.tools\\rust-1.100.0-x86_64-pc-windows-msvc\\bin\\rustc.exe",
+      "verified_version": "1.100.0 (0ef1bc386 2026-11-09), x86_64-pc-windows-msvc, LLVM23.1.5",
+      "provenance_file": ".tools/rust-provenance.json",
+      "global_install_or_PATH_change": false,
+      "searched_roots": [
+        "C:\\HackUTA26",
+        "C:\\Program Files",
+        "C:\\Program Files (x86)",
+        "C:\\Users\\Not AI Slop\\.codex",
+        "C:\\Users\\Not AI Slop\\AppData\\Local\\Programs",
+        "C:\\Users\\Not AI Slop\\Downloads",
+        "C:\\图吧工具箱"
+      ],
+      "expected_user_directories_absent": [
+        "C:\\Users\\Not AI Slop\\.cargo\\bin",
+        "C:\\Users\\Not AI Slop\\.rustup\\toolchains"
+      ],
+      "limitation": "Original search inventory is historical. Current portable compiler was tested on this host only; Cargo, production dependency builds and clean-machine packaging remain untested."
+    },
+    {
+      "name": "Lean/Elan",
+      "status": "portable_pinned_runtime_verified_after_initial_shim_gap",
+      "path": "C:\\Users\\Not AI Slop\\.elan\\bin\\lean.exe",
+      "parser_pin": "leanprover/lean4:v4.34.0",
+      "verified_portable_path": "C:\\HackUTA26\\SQLolla\\m0\\parser\\.tools\\lean-4.34.0-windows\\bin\\lean.exe",
+      "verified_version": "Lean4.34.0, x86_64-w64-windows-gnu, commit293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release",
+      "verified_lake_version": "5.0.0-src+293d5d0 (Lean4.34.0)",
+      "archive_sha256_reported_by_parser_owner": "c07e88d1fe4839ec96a79f54637b2a3a983ea6c5b7e82ff35afa22a7700a86b7",
+      "caution": "Invoking the shim outside the pinned parser checkout attempted to download v4.35.0 and was cancelled. Use a verified absolute portable Lean path; no completed global installation occurred.",
+      "followup_owner": "m0/parser"
+    },
+    {
+      "name": "Java17",
+      "status": "executed_successfully",
+      "path": "C:\\HackUTA26\\SQLolla\\m0\\alloy\\.tools\\jdk-17.0.21+9\\bin\\java.exe",
+      "version": "OpenJDK 17.0.21 Temurin-17.0.21+9, Windows x86_64",
+      "javac_version": "javac 17.0.21",
+      "original_PATH_status": "java and javac absent",
+      "provenance_owner": "m0/alloy",
+      "available_packaging_tools": [
+        "java.exe",
+        "javac.exe",
+        "jar.exe",
+        "jlink.exe",
+        "jpackage.exe"
+      ],
+      "packaging_execution": "javac only; jlink/jpackage/installer production untested"
+    },
+    {
+      "name": "WSL",
+      "status": "binary_available_no_registered_distribution",
+      "path": "C:\\windows\\system32\\wsl.exe",
+      "command": "wsl.exe --list --verbose",
+      "exit_code": -1,
+      "stdout_decoded_utf16": "适用于 Linux 的 Windows 子系统没有已安装的分发。",
+      "interpretation": "No installed distributions visible to this Windows user; Ubuntu/Linux execution unavailable. No OS distribution installed."
+    },
+    {
+      "name": "MSVC",
+      "status": "available_and_native_Rust_Msvc_linking_succeeded",
+      "compiler": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe",
+      "linker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\link.exe",
+      "limitation": "The std-only Rust executable linked successfully without PATH/LIB changes. This does not validate a full production dependency build or a clean machine."
+    },
+    {
+      "name": "Git",
+      "status": "executed_successfully",
+      "path": "C:\\Program Files\\Git\\cmd\\git.exe",
+      "version": "2.56.1.windows.1"
+    },
+    {
+      "name": "GitHub CLI",
+      "status": "executed_successfully_outside_PATH",
+      "path": "C:\\Program Files\\GitHub CLI\\gh.exe",
+      "version": "2.104.0",
+      "authenticated_account_tested": false
+    },
+    {
+      "name": "Docker",
+      "status": "not_on_PATH_and_not_located_in_searched_trees",
+      "execution_tested": false
+    },
+    {
+      "name": "Archive tooling",
+      "status": "present",
+      "tools": [
+        "C:\\windows\\system32\\tar.exe",
+        "Microsoft.PowerShell.Archive/Compress-Archive"
+      ],
+      "production_packaging_tested": false
+    }
+  ],
+  "actual_checks": [
+    {
+      "id": "P01",
+      "name": "Unicode filesystem and UTF-8 bytes",
+      "result": "pass",
+      "evidence": "native-probes.json",
+      "details": "JSON containing ü, 数据, emoji and an escaped newline round-tripped in a directory containing spaces and non-ASCII characters. Saved bytes had no UTF-8 BOM."
+    },
+    {
+      "id": "P02",
+      "name": "Java17 compilation",
+      "result": "pass",
+      "command": "& 'C:\\HackUTA26\\SQLolla\\m0\\alloy\\.tools\\jdk-17.0.21+9\\bin\\javac.exe' -encoding UTF-8 -d 'C:\\HackUTA26\\SQLolla\\m0\\portability\\space ü 数据' 'C:\\HackUTA26\\SQLolla\\m0\\portability\\ProtocolProbe.java'",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "id": "P03",
+      "name": "Explicit UTF-8 stdin/stdout protocol smoke",
+      "result": "pass",
+      "command": "& 'C:\\HackUTA26\\SQLolla\\m0\\alloy\\.tools\\jdk-17.0.21+9\\bin\\java.exe' -Djava.awt.headless=true -cp 'C:\\HackUTA26\\SQLolla\\m0\\portability\\space ü 数据' ProtocolProbe echo 'argument with spaces ü 数据'",
+      "process_api": "System.Diagnostics.ProcessStartInfo.ArgumentList; UseShellExecute=false; CreateNoWindow=true",
+      "details": "One JSON line arrived intact; stderr remained separate; quoted/non-ASCII argument and working directory remained intact.",
+      "scope_limit": "Not an Alloy/Lean protocol integration test, not a throughput/backpressure test."
+    },
+    {
+      "id": "P04",
+      "name": "Direct process cancellation",
+      "result": "pass",
+      "evidence": "native-probes.json",
+      "process_api": "Process.Kill(entireProcessTree=true) followed by WaitForExit(3000)",
+      "observed_elapsed_ms": 23,
+      "observed_exit_code": -1,
+      "descendants_tested": false,
+      "details": "A ready, sleeping Java process terminated. This does not establish cleanup of grandchildren or native solver subprocesses."
+    },
+    {
+      "id": "P05",
+      "name": "WSL availability and encoding",
+      "result": "blocked",
+      "command": "wsl.exe --list --verbose",
+      "details": "Default tool decoding garbled UTF-16LE output. Explicit StandardOutputEncoding=Unicode yielded the no-distribution message; exit=-1."
+    },
+    {
+      "id": "P06",
+      "name": "Parser provenance",
+      "result": "inspected",
+      "command": "git -C 'C:\\HackUTA26\\dependencies\\SQLeanParser' rev-parse HEAD; git -C 'C:\\HackUTA26\\dependencies\\SQLeanParser' status --short",
+      "commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+      "working_tree_output": "",
+      "meaning": "Clean checkout at the inspected time; no dependency files modified by this audit."
+    },
+    {
+      "id": "P07",
+      "name": "Alloy JAR inventory",
+      "result": "inspected",
+      "command": "Get-FileHash -LiteralPath 'C:\\HackUTA26\\dependencies\\org.alloytools.alloy.dist.jar' -Algorithm SHA256; [System.IO.Compression.ZipFile]::OpenRead(...)",
+      "sha256": "6b8c1cb5bc93bedfc7c61435c4e1ab6e688a242dc702a394628d9a9801edb78d"
+    },
+    {
+      "id": "P08",
+      "name": "Pinned portable Lean and Lake runtime",
+      "result": "pass",
+      "command": "& 'C:\\HackUTA26\\SQLolla\\m0\\parser\\.tools\\lean-4.34.0-windows\\bin\\lean.exe' --version; & 'C:\\HackUTA26\\SQLolla\\m0\\parser\\.tools\\lean-4.34.0-windows\\bin\\lake.exe' --version",
+      "result_detail": "Lean4.34.0 and Lake5.0.0-src+293d5d0 executed natively; parser owner reports native parser_probe.exe build succeeded.",
+      "limitation": "The parser owner owns specimen results; this check independently verifies runtime startup/version only."
+    },
+    {
+      "id": "P09",
+      "name": "Official portable Rust compiler and standard library",
+      "result": "pass",
+      "provenance": ".tools/rust-provenance.json",
+      "details": "Official manifest2026-11-12 supplied rustc/std1.100.0 Windows MSVC archive hashes; both matched downloaded bytes. Native rustc -vV and sysroot checks passed. No global installation, rustup or PATH change."
+    },
+    {
+      "id": "P10",
+      "name": "Rust std-only compile/link and host process probe",
+      "result": "pass",
+      "source": "rust_host_probe.rs",
+      "evidence": "rust-host-probe.json",
+      "details": "Compiled with edition2024, linked with available MSVC, exited0. UTF8 file and stdin/stdout roundtrips, Unicode/spaces executable/cwd/argument, separate stderr, direct child kill/reap passed.",
+      "cancel_elapsed_ms": 0,
+      "descendants_tested": false,
+      "limitation": "Milliseconds are truncated duration, not a latency guarantee; no production modules or external Rust crates were built."
+    }
+  ],
+  "reproducibility": {
+    "run_probe": "& 'C:\\HackUTA26\\SQLolla\\m0\\portability\\native-probes.ps1'",
+    "runtime_inventory_command": "Get-Command rustc,cargo,rustup,lean,lake,elan,java,javac,wsl,docker,git,gh,clang,gcc,cmake -ErrorAction SilentlyContinue | Select-Object Name,Source",
+    "executable_search": "rg --files --hidden --no-ignore -g java.exe -g javac.exe -g rustc.exe -g cargo.exe -g rustup.exe -g docker.exe <each recorded search root>",
+    "system_inventory": "[System.Runtime.InteropServices.RuntimeInformation]::OSDescription; [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture; [System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture; Get-CimInstance Win32_Processor | Select-Object Name,NumberOfCores,NumberOfLogicalProcessors",
+    "wsl_decode": "ProcessStartInfo('C:\\windows\\system32\\wsl.exe'), arguments --list --verbose, redirected stdout/stderr with System.Text.Encoding.Unicode, UseShellExecute=false, CreateNoWindow=true.",
+    "java_version_command": "& 'C:\\HackUTA26\\SQLolla\\m0\\alloy\\.tools\\jdk-17.0.21+9\\bin\\java.exe' -version",
+    "javac_version_command": "& 'C:\\HackUTA26\\SQLolla\\m0\\alloy\\.tools\\jdk-17.0.21+9\\bin\\javac.exe' -version",
+    "jar_inventory": "Read META-INF/MANIFEST.MF and enumerate LICENSES/*, META-INF/LICENSE.txt, META-INF/NOTICE.txt and native/* through System.IO.Compression.ZipFile.",
+    "retained_probe_files": [
+      "ProtocolProbe.java",
+      "native-probes.ps1",
+      "native-probes.json",
+      "space ü 数据/fixture.json",
+      "space ü 数据/ProtocolProbe.class",
+      "rust_host_probe.rs",
+      "rust-host-probe.json",
+      "space ü 数据/rust_host_probe.exe",
+      "space ü 数据/rust UTF8 ü 数据.json",
+      ".tools/rust-provenance.json"
+    ],
+    "safe_logging": "No environment dump, account-token lookup, provider calls or secret contents were collected."
+  },
+  "artifact_provenance_and_licensing": [
+    {
+      "artifact": "Portable Rust1.100.0 compiler and Windows MSVC standard library",
+      "location": "C:\\HackUTA26\\SQLolla\\m0\\portability\\.tools\\rust-1.100.0-x86_64-pc-windows-msvc",
+      "provenance": ".tools/rust-provenance.json",
+      "official_manifest": "https://static.rust-lang.org/dist/channel-rust-stable.toml",
+      "pinned_manifest_date": "2026-11-12",
+      "manifest_sha256": "3051e859570f64a8c5acb9d09e87425db52c7d97287c67e8f6d57d7d34ef9258",
+      "rustc_archive_sha256": "4f1f70145ab94e1036b6a9fb0a1fa1393352999701699aedab4dd2724047149e",
+      "rust_std_archive_sha256": "24ad2f28791e08a573b9c7df5efa3ace884eecd1fa7e7f5b62c65f4b49bb4532",
+      "observed_licenses": "Both package roots retain LICENSE-MIT, LICENSE-APACHE and COPYRIGHT; full component notice inventory remains a packaging task.",
+      "action": "Retain the pinned archive/hash manifest and package notices; do not bundle development archives in production application packages."
+    },
+    {
+      "artifact": "SQLeanParser source",
+      "location": "C:\\HackUTA26\\dependencies\\SQLeanParser",
+      "repository": "https://github.com/University-of-Wild-Chicken/SQLeanParser",
+      "commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+      "observation": "No top-level LICENSE, COPYING or NOTICE was present in inspected checkout. README/lakefile search did not disclose a project license.",
+      "action": "Obtain/identify the explicit upstream license grant before redistribution; do not equate a public repository with a distribution license.",
+      "release_gate": true
+    },
+    {
+      "artifact": "Scraped/vendored SQL fixtures",
+      "observation": "Fixture-specific license and source records exist; license terms vary by upstream.",
+      "evidence": [
+        "fixtures/external_postgresql/APPLICATION_SOURCES.md",
+        "fixtures/external_postgresql/licenses/river-LICENSE.txt",
+        "fixtures/external_postgresql/licenses/temporal-LICENSE.txt",
+        "fixtures/quantified_subqueries/CONCRETE_SOURCES.md",
+        "fixtures/factor_sources/licenses/"
+      ],
+      "action": "Keep immutable source URLs, commit hashes, extraction recipe, file hashes and notices per fixture. Use synthetic demos by default; select redistribution-approved concrete fixtures instead of bundling the entire corpus.",
+      "caveat": "This is an inventory, not a completed legal/license determination."
+    },
+    {
+      "artifact": "Alloy distribution",
+      "location": "C:\\HackUTA26\\dependencies\\org.alloytools.alloy.dist.jar",
+      "sha256": "6b8c1cb5bc93bedfc7c61435c4e1ab6e688a242dc702a394628d9a9801edb78d",
+      "bundle_version": "6.2.0.202501090817",
+      "git_sha": "794226dd07b536fe35c5ca44b529417183cd629b",
+      "created_by": "17.0.13 (Eclipse Adoptium)",
+      "required_execution_environment": "JavaSE 17",
+      "manifest_license": "MIT",
+      "embedded_license_files": [
+        "LICENSES/Electrod.txt",
+        "LICENSES/Gini.txt",
+        "LICENSES/Glucose.txt",
+        "LICENSES/Kodkod.txt",
+        "LICENSES/Lingeling.txt",
+        "LICENSES/MiniSat.txt",
+        "LICENSES/SAT4J.txt",
+        "META-INF/LICENSE.txt",
+        "META-INF/NOTICE.txt"
+      ],
+      "observations": [
+        "Electrod text begins Mozilla Public License Version 2.0.",
+        "SAT4J text begins GNU Lesser General Public License.",
+        "META-INF/NOTICE.txt identifies Apache Commons IO.",
+        "The bundle-level MIT field does not replace embedded component obligations."
+      ],
+      "action": "Build a component-level SBOM/notice set for the exact distributed JAR and solver selection; retain required license texts and identify source/offer obligations before release."
+    },
+    {
+      "artifact": "Portable JDK17",
+      "location": "C:\\HackUTA26\\SQLolla\\m0\\alloy\\.tools\\jdk-17.0.21+9",
+      "observed_release": {
+        "IMPLEMENTOR": "Eclipse Adoptium",
+        "JAVA_VERSION": "17.0.21",
+        "OS_ARCH": "x86_64",
+        "OS_NAME": "Windows",
+        "SOURCE": ".:git:551f220d8884"
+      },
+      "license_directory_present": "legal/",
+      "archive_provenance_owner": "m0/alloy",
+      "action": "Use the Alloy owner's archive URL/checksum evidence and retain the full distribution notices; audit any later jlink runtime separately."
+    }
+  ],
+  "alloy_native_payload_matrix": [
+    {
+      "platform": "Windows x64",
+      "directory": "native/windows/amd64",
+      "observed": [
+        "electrod.exe",
+        "glucose.dll",
+        "minisat.dll",
+        "libgcc_s_seh-1.dll",
+        "libstdc++-6.dll",
+        "libwinpthread-1.dll"
+      ],
+      "runtime_verification": "owned by m0/alloy"
+    },
+    {
+      "platform": "Linux x64",
+      "directory": "native/linux/amd64",
+      "observed": [
+        "electrod",
+        "libglucose.so",
+        "libminisat.so",
+        "libminisatprover.so",
+        "plingeling"
+      ],
+      "runtime_verification": "not run"
+    },
+    {
+      "platform": "macOS x64",
+      "directory": "native/darwin/amd64",
+      "observed": [
+        "electrod",
+        "libglucose.dylib",
+        "libminisat.dylib",
+        "libminisatprover.dylib",
+        "plingeling"
+      ],
+      "runtime_verification": "not run"
+    },
+    {
+      "platform": "macOS arm64",
+      "directory": "native/darwin/arm64",
+      "observed": [
+        "electrod",
+        "libglucose.dylib",
+        "libminisat.dylib",
+        "libminisatprover.dylib",
+        "plingeling"
+      ],
+      "runtime_verification": "not run"
+    },
+    {
+      "platform": "Linux arm64",
+      "directory": null,
+      "observed": [],
+      "runtime_verification": "no matching native directory observed; portable Java solver path must be tested before support"
+    },
+    {
+      "platform": "Windows arm64",
+      "directory": null,
+      "observed": [],
+      "runtime_verification": "no matching native directory observed; not in initial release claim"
+    }
+  ],
+  "hazards_and_required_controls": [
+    {
+      "hazard": "Ambient PATH/default toolchain drift",
+      "observed": "Rust/Java absent from PATH; Lean shim attempted newer download.",
+      "control": "Pin executable paths/toolchains; perform version/hash handshake and offline startup; no runtime downloads.",
+      "verified": "Java, Lean and Rust absolute-path version/startup checks; Java and Rust compile/run probes"
+    },
+    {
+      "hazard": "Encoding and line framing",
+      "observed": "WSL emitted UTF-16LE; explicitly UTF-8 Java probe passed.",
+      "control": "Versioned UTF-8 without BOM for app IPC; accept LF/CRLF deliberately; escape payload newlines; prohibit stdout logs; bound frame size; reject invalid JSON/UTF-8.",
+      "verified": "small one-frame UTF-8 echo and stderr separation; limits/rejection cases planned"
+    },
+    {
+      "hazard": "Path quoting, Unicode and shell interpretation",
+      "observed": "Spaces and Unicode cwd/arguments passed.",
+      "control": "Use argument arrays/direct process spawning; never shell-interpolate SQL, paths or models; use platform path APIs.",
+      "verified": "Java and Rust launch/argument/filesystem probes"
+    },
+    {
+      "hazard": "Pipe deadlock and output exhaustion",
+      "control": "Drain stdout/stderr concurrently, cap bytes, reject oversized frames, backpressure jobs.",
+      "verified": "concurrent drain implemented in probe; saturation not tested"
+    },
+    {
+      "hazard": "Cancellation leaves solver descendants",
+      "control": "Windows Job Objects/process tree termination; Linux process groups/cgroups; macOS process groups; reap and remove only owned job directories.",
+      "verified": "direct Java and Rust child cancellation only; descendant/native solver cleanup remains untested"
+    },
+    {
+      "hazard": "JVM/native solver memory exhaustion",
+      "control": "Per-job heap and OS resource controls plus wall/CPU deadline, bounded queue and concurrency; timeout/error remains inconclusive.",
+      "verified": "not tested"
+    },
+    {
+      "hazard": "Native library extraction and platform ABI",
+      "control": "Verify each solver/OS/CPU tuple, writable dedicated temp directory, dynamic library dependencies, and explicit fallback solver provenance.",
+      "verified": "JAR entry inventory only"
+    },
+    {
+      "hazard": "Read-only install, long paths and filesystem casing",
+      "control": "Separate immutable binaries from writable jobs/cache; canonicalize owned paths; test Linux case sensitivity and Windows long paths.",
+      "verified": "Unicode/spaces only"
+    },
+    {
+      "hazard": "macOS signing/quarantine",
+      "control": "Build/test native macOS artifacts, executable permissions, signing/notarization strategy and arm64 solver loading.",
+      "verified": "not tested"
+    },
+    {
+      "hazard": "Replaying a different cached result",
+      "control": "Cache key includes schema/query/policy hash, parser/compiler/Alloy/solver versions, scopes, numeric domain and options; enforce tenant ownership.",
+      "verified": "design only"
+    },
+    {
+      "hazard": "Confusing bundled solver presence with working support",
+      "control": "Run SAT/UNSAT/counterexample decode and cancellation tests on actual target runners; record backend selected.",
+      "verified": "inventory is explicitly separated from execution"
+    }
+  ],
+  "cloudflare_origin_recommendation": {
+    "status": "design_validated_against_primary_documentation_not_deployed",
+    "public_ui": "sqlolla.us static frontend using Cloudflare Pages or equivalent static assets",
+    "api": "api.sqlolla.us routes through Cloudflare/Tunnel to a native/container origin",
+    "origin_components": [
+      "Rust API/orchestrator/core",
+      "pinned Lean parser executable",
+      "Java17 Alloy bridge",
+      "bounded per-job workers"
+    ],
+    "ordinary_workers": "Do not place the JVM/Alloy SAT computation in an ordinary Worker isolate. Current documented memory is 128 MB/isolate; paid CPU defaults to 30 seconds and can be raised to 5 minutes.",
+    "job_transport": "Return 202 with authorized job ID; poll or stream progress; computation does not depend on a single request remaining open.",
+    "private_mode": "Same native/container origin can serve frontend locally with Cloudflare, AI and external telemetry disabled.",
+    "TLS": "Keep origin certificate verification enabled. Hosted BYOT must disclose that the origin and Cloudflare TLS path handle the request; no key logging.",
+    "sources": [
+      {
+        "url": "https://developers.cloudflare.com/workers/platform/limits/",
+        "supports": "Worker runtime constraints; checked during planning review on 2026-11-14"
+      },
+      {
+        "url": "https://developers.cloudflare.com/pages/configuration/custom-domains/",
+        "supports": "Custom apex/subdomain configuration"
+      },
+      {
+        "url": "https://developers.cloudflare.com/tunnel/get-started/",
+        "supports": "Public hostname routing to origin and certificate configuration"
+      }
+    ]
+  },
+  "planned_release_matrix": [
+    {
+      "target": "Windows x64 native",
+      "M0": "Java17 and Rust1.100.0 compile/UTF8/paths/direct-cancel probes and Lean4.34 runtime startup passed; detailed Lean/Alloy semantic tests belong to their owner reports",
+      "release_checks": [
+        "Rust+Lean+Java package startup from clean machine",
+        "SAT/UNSAT fixture equivalence",
+        "descendant cancellation",
+        "native solver loading",
+        "read-only install/user data directory",
+        "offline startup"
+      ]
+    },
+    {
+      "target": "Ubuntu Linux x64 native/OCI",
+      "M0": "not run: no local WSL distro/Docker",
+      "release_checks": [
+        "actual Linux CI runner",
+        "glibc/base-image and shared library pinning",
+        "non-root runtime",
+        "resource enforcement",
+        "signals and descendant cleanup",
+        "golden fixture parity"
+      ]
+    },
+    {
+      "target": "Ubuntu under WSL2",
+      "M0": "unavailable",
+      "release_checks": [
+        "installed WSL2 Ubuntu runner",
+        "Linux filesystem and /mnt/c path behavior",
+        "network binding defaults",
+        "exit/cancellation parity"
+      ]
+    },
+    {
+      "target": "macOS arm64",
+      "M0": "not tested",
+      "release_checks": [
+        "native runner",
+        "JRE17 and Lean artifact availability",
+        "solver dylib loading",
+        "quarantine/signing strategy",
+        "UTF8/path/cancellation/golden parity"
+      ]
+    },
+    {
+      "target": "macOS x64",
+      "M0": "not tested",
+      "release_checks": [
+        "native runner",
+        "equivalent toolchain/solver smoke and corpus"
+      ]
+    },
+    {
+      "target": "Linux arm64",
+      "M0": "not tested; no corresponding native solver directory in this JAR",
+      "release_checks": [
+        "explicit portable Java solver fallback or audited build",
+        "native runner and bounded model parity"
+      ],
+      "initial_status": "defer public support claim until passing"
+    }
+  ],
+  "release_blockers": [
+    {
+      "id": "PORT-B01",
+      "priority": "P0_before_redistribution",
+      "issue": "SQLeanParser source license not identified in local checkout",
+      "owner": "maintainer/legal-provenance review",
+      "resolution": "Record explicit grant and compatible distribution notice requirements."
+    },
+    {
+      "id": "PORT-B03",
+      "priority": "P0_before_crossplatform_claim",
+      "issue": "No Linux/WSL/macOS execution evidence",
+      "owner": "platform owner",
+      "resolution": "Run the release matrix on actual target runners; do not replace with JAR directory inventory."
+    },
+    {
+      "id": "PORT-B04",
+      "priority": "P0_before_hosted_untrusted_jobs",
+      "issue": "Process isolation, descendants, resource limits and bounded protocol not verified",
+      "owner": "security/platform",
+      "resolution": "Add adversarial worker tests and verify enforced limits and cleanup on each supported OS."
+    },
+    {
+      "id": "PORT-B05",
+      "priority": "P0_before_packaging",
+      "issue": "Complete transitive license/SBOM/source provenance not assembled",
+      "owner": "release owner",
+      "resolution": "Inventory parser, Lean runtime, JRE, Alloy and selected solver distribution, plus any shipped fixtures."
+    }
+  ],
+  "resolved_environment_gaps": [
+    {
+      "id": "PORT-B02",
+      "former_issue": "Rust compiler/toolchain not located",
+      "resolution": "Authorized isolated official rustc/std1.100.0 acquisition, archive checksum validation, native Windows compile/link and host probe passed. No Cargo/global install/PATH change.",
+      "evidence": [".tools/rust-provenance.json", "rust-host-probe.json", "rust_host_probe.rs"]
+    }
+  ],
+  "final_recommendation": [
+    "Proceed with M0 semantics research using verified portable Rust1.100.0, Java17 and Lean4.34.0; keep the probes non-production.",
+    "Keep Rust as the authoritative core and orchestration language; Java17 remains a narrow Alloy process bridge.",
+    "Use versioned UTF-8 JSON IPC with explicit process arguments and tenant/job-scoped temporary directories.",
+    "Adopt native/container origin deployment behind Cloudflare; keep private/offline deployment independent of Cloudflare.",
+    "Publish OS support only after actual build/solver/protocol/cancellation validation on that OS/CPU.",
+    "Resolve upstream source and transitive distribution license evidence before packaging a public artifact."
+  ]
+}

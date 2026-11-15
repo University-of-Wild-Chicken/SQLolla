@@ -1,0 +1,214 @@
+{
+  "artifact": "SQLolla M0 parser feasibility report",
+  "version": "0.1.0",
+  "status": "native_windows_feasibility_demonstrated_with_open_gates",
+  "scope": "Disposable parser integration specimen; no production adapter, RA implementation, SQL execution or PostgreSQL semantic proof",
+  "dependency": {
+    "path": "C:/HackUTA26/dependencies/SQLeanParser",
+    "repository": "https://github.com/University-of-Wild-Chicken/SQLeanParser",
+    "commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+    "tracked_diff_after_build": "empty",
+    "created_untracked_build_artifact": "C:/HackUTA26/dependencies/SQLeanParser/.lake/",
+    "interface_used": [
+      "SQLean.Advanced.parse",
+      "SQLean.Advanced.render",
+      "SQLean.Advanced.Statement"
+    ],
+    "postgresql_target": "16.15",
+    "source_files_not_edited": true
+  },
+  "toolchain": {
+    "initial_environment": "lean/lake were Elan shims with no installed toolchain; local dependency had no .lake artifacts; WSL had no installed distribution",
+    "resolution": "Downloaded and verified an isolated portable release under this probe's .tools directory; no global Elan or PATH configuration changed",
+    "version": "4.34.0",
+    "target": "x86_64-w64-windows-gnu",
+    "commit": "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b",
+    "release_url": "https://github.com/leanprover/lean4/releases/tag/v4.34.0",
+    "archive_url": "https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-windows.tar.zst",
+    "archive_bytes": 588837341,
+    "published_and_actual_archive_sha256": "c07e88d1fe4839ec96a79f54637b2a3a983ea6c5b7e82ff35afa22a7700a86b7",
+    "lean_executable": "C:/HackUTA26/SQLolla/m0/parser/.tools/lean-4.34.0-windows/bin/lean.exe",
+    "lean_executable_sha256": "a8040e2cab341c12116ab591fed9f761816f5f6b08554f6cc1680e86dfbba0a2",
+    "lake_executable": "C:/HackUTA26/SQLolla/m0/parser/.tools/lean-4.34.0-windows/bin/lake.exe"
+  },
+  "commands": [
+    {
+      "cwd": "C:/HackUTA26/SQLolla/m0/parser",
+      "command": ".\\.tools\\lean-4.34.0-windows\\bin\\lean.exe --version",
+      "exit_code": 0
+    },
+    {
+      "cwd": "C:/HackUTA26/SQLolla/m0/parser",
+      "command": "$env:PATH = (Join-Path $PWD '.tools/lean-4.34.0-windows/bin') + ';' + $env:PATH; & .\\.tools\\lean-4.34.0-windows\\bin\\lake.exe build parser_probe",
+      "exit_code": 0,
+      "evidence": "build.log"
+    },
+    {
+      "cwd": "C:/HackUTA26/SQLolla/m0/parser",
+      "command": ".\\run-probe.ps1",
+      "exit_code": 0,
+      "evidence": "results.json"
+    },
+    {
+      "cwd": "C:/HackUTA26/SQLolla/m0/parser",
+      "command": ".\\run-corpus.ps1",
+      "exit_code": 0,
+      "evidence": "corpus-results.json"
+    },
+    {
+      "cwd": "C:/HackUTA26/SQLolla/m0/parser",
+      "command": "$env:PATH = (Join-Path $PWD '.tools/lean-4.34.0-windows/bin') + ';' + $env:PATH; & .\\.tools\\lean-4.34.0-windows\\bin\\lake.exe env lean TrustCheck.lean",
+      "exit_code": 0,
+      "evidence": "trust.log"
+    },
+    {
+      "cwd": "C:/HackUTA26/SQLolla/m0/parser",
+      "command": "rg -n '\\b(sorry|sorryAx|admit|axiom|native_decide|unsafe)\\b' ParserProbe.lean TrustCheck.lean",
+      "exit_code": 1,
+      "interpretation": "No matching prohibited source tokens; rg exit 1 means no matches"
+    },
+    {
+      "cwd": "C:/HackUTA26/SQLolla/m0/parser",
+      "command": "$env:PATH = 'C:\\Windows\\System32;C:\\Windows'; & .\\.lake\\build\\bin\\parser_probe.exe 'SELECT NULL;'",
+      "exit_code": 0,
+      "interpretation": "Smoke succeeded with no Lean or Elan directory on PATH; not a clean-machine portability test"
+    },
+    {
+      "cwd": "C:/HackUTA26/dependencies/SQLeanParser",
+      "command": "git diff --stat; git status --short",
+      "exit_code": 0,
+      "observed": "No tracked diff; only ?? .lake/"
+    }
+  ],
+  "native_probe": {
+    "source": "ParserProbe.lean",
+    "executable": ".lake/build/bin/parser_probe.exe",
+    "executable_bytes": 111025664,
+    "executable_sha256": "f9558a510c92fc1d2dcd1ae5dbd82d33158dfaee7b6fb717ccc4997fb9f7bdc6",
+    "protocol": "sqlolla.m0.parser.specimen.v0",
+    "implemented": "Typed tagged JSON export for a deliberately restricted subset of SELECT, VALUES, set operations and UPDATE",
+    "integer_encoding": "Unsigned literal magnitude is a decimal string; negative sign is a separate unary AST node",
+    "null_encoding": "SQL NULL has tag sql_null; absent optional syntax is JSON null",
+    "not_implemented": [
+      "catalog binding",
+      "type validation",
+      "proof serialization",
+      "source spans",
+      "complete AST export",
+      "JSON-to-AST inverse",
+      "RA lowering",
+      "SQL-to-Alloy mapping",
+      "transaction execution"
+    ]
+  },
+  "observed_results": {
+    "authored_cases": 25,
+    "authored_expectations_passed": 25,
+    "authored_exported_cases": 14,
+    "authored_parsed_but_export_unsupported": 3,
+    "authored_parser_rejections": 8,
+    "authored_repetitions_per_case": 2,
+    "upstream_sample_cases": 26,
+    "upstream_sample_parsed": 26,
+    "upstream_sample_exported": 9,
+    "upstream_sample_repeat_stable": 26,
+    "sample_rule": "First five statements each from fixtures/crud/select.sql, insert.sql, update.sql, delete.sql; first three records each from external_postgresql/river.jsonl and temporal.jsonl",
+    "determinism_claim": "Byte-identical outputs on the two observed executions per specimen only; no universal or cross-platform determinism theorem",
+    "roundtrip_claim": "Parsed canonical SQL yielded equal SQLean ASTs for the tested accepted specimens; this is finite syntax evidence, not execution equivalence",
+    "sql_executed": false,
+    "upstream_historical_test_counts_not_rerun": true
+  },
+  "breaking_modes_observed": [
+    {
+      "mode": "syntax_acceptance_without_binding",
+      "witness": "SELECT missing FROM absent;",
+      "outcome": "Parsed and exported with syntax-only assurance"
+    },
+    {
+      "mode": "SELECT_can_have_effects",
+      "witness": "pg_notify and source-derived pg_advisory_xact_lock queries",
+      "outcome": "Parsed but unsupported by specimen export; no purity claim"
+    },
+    {
+      "mode": "transaction_envelope_required",
+      "witness": "BEGIN; and multiple statements",
+      "outcome": "Rejected by the typed parser"
+    },
+    {
+      "mode": "typed_surface_limits",
+      "witness": "UPDATE FROM, window function, DML CTE, FK DDL, schema-qualified UPDATE target",
+      "outcome": "Rejected in authored specimens"
+    },
+    {
+      "mode": "parser_coverage_exceeds_adapter",
+      "witness": "JOIN, ORDER BY/LIMIT and function calls",
+      "outcome": "Parsed but explicitly unsupported; none silently lowered"
+    }
+  ],
+  "logical_trust": {
+    "authored_source_static_shortcut_scan": "No prohibited source tokens found",
+    "compiled_entry_points_audited": [
+      "SQLolla.M0.ParserProbe.probe",
+      "SQLolla.M0.ParserProbe.statementJson",
+      "SQLolla.M0.ParserProbe.roundTrip"
+    ],
+    "transitive_axioms_observed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unexpected_or_placeholder_axioms": [],
+    "interpretation": "Standard Lean foundations only for audited declarations; these programs are not a theorem of SQL semantics or native execution correctness",
+    "runtime_tcb": [
+      "Lean kernel for logical checking",
+      "Lean compiler/runtime and native toolchain for executable behavior",
+      "SQLeanParser source and this adapter",
+      "OS process and UTF-8 transport"
+    ],
+    "upstream_boundary": "Full PostgreSQL grammar CST, advanced typed AST, independent SELECT validity and serialization contracts remain distinct; this probe invokes typed parsing/rendering only"
+  },
+  "protocol_limits": [
+    "One SQL argument per process is a specimen interface, not production IPC; command lines may be logged and have OS length limits",
+    "The PowerShell runner uses argument-list transport without shell interpolation and a 30-second process timeout, but this is not server resource isolation",
+    "No version negotiation, input byte cap, cancellation protocol, comprehensive source mapping, binder agreement, complete AST inventory or JSON inverse exists",
+    "A successful process exit means a report was emitted; clients must inspect parse_status and export_status",
+    "Canonical rendering is upstream unchecked rendering; the observed AST comparison does not turn it into an independent rendering certificate",
+    "Native binary size is 111025664 bytes; release size and dependency packaging need measurement before distribution"
+  ],
+  "licensing": {
+    "parser_root_license": "No root LICENSE/COPYING found at pinned checkout; redistribution permission remains an open release gate",
+    "source_fixture_licenses": {
+      "river": "MPL-2.0",
+      "temporal": "MIT"
+    },
+    "source_fixture_handling": "Corpus evidence records exact SQL SHA256 and original provenance; it does not copy the upstream SQL source text",
+    "toolchain_attribution": "Portable release retains its bundled license files; release asset provenance and SHA256 are recorded above"
+  },
+  "recommendation": {
+    "architecture": "Keep a small compiled Lean parser adapter as an external parser dependency; Rust owns catalog/binding checks, RA semantics, lowering, solver orchestration and evidence; Java17 remains Alloy-only",
+    "transaction_input": "Use a structured envelope of separately parsed statements with explicit parameter scope and no-concurrency assumption in the first model",
+    "next_gates": [
+      "confirm SQLeanParser redistribution terms",
+      "design and review exhaustive versioned AST schema with fail-closed coverage",
+      "pin and handshake source/build/compiler/schema hashes",
+      "cross-check Rust binding against applicable Lean contract outputs",
+      "package and smoke-test Windows/Linux/macOS binaries in clean environments",
+      "add full source/parameter provenance and independent bounded semantic checks"
+    ]
+  },
+  "artifact_sha256": {
+    "ParserProbe.lean": "bb830cd20c9bf227dce75f604fd59e9726deca78b2fb0ee1c02cc0c4970b0783",
+    "TrustCheck.lean": "3bf190596f96b0bd926b7d975288e36baf3b583ec244aa2f375fb404dff1ec1d",
+    "cases.json": "96a22d1e08015e528869e4b8e5d77eccbfacd9a4e656ddc92f17252367ede594",
+    "run-probe.ps1": "c0501048925fc0de3999638ba770327de27a9696d1ec8b6a6e792eb4712f7955",
+    "run-corpus.ps1": "036b35ae6d4106b2ff6588bddf88bbe097070674f15e2f7fa21e094808926372",
+    "results.json": "4c988219e7aa7d105251964a934ed581c782ead127f33d5cb23d0ba2d1c81c97",
+    "corpus-results.json": "dfdc692380f67c6a1e905544767539d3db7b3cabfaf7b6d45559e2745bfd489c",
+    "build.log": "693c84ef37d86186621687f31208ff11a0910c4e2daf0522c419224fce0ebad5",
+    "trust.log": "5b205d4c512c0d614e83e1f61d814566269a5dc88172fd1c3b748ac891e2fc8a",
+    "lakefile.toml": "edd20192d2875d8467ee85e39225f378265459254039747ddfee9ca5554ecead",
+    "lake-manifest.json": "5ebd39cfe05925bddd08137903235fd116ca489cb55e314e672cf4d74105f5e4",
+    "lean-toolchain": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632",
+    "README.md": "a4fc9b5294c7ccd3d224b617696058fe490e6f7f67113978f9fcac31b8ee9690"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "review_kind": "Independent M0 Lean specification adversarial review",
+  "prepared_on": "2026-11-14",
+  "scope": "Read-only review of formal/SQLolla/*.lean and TrustAudit.lean, followed by an independent invocation of the compiled-environment trust audit against the author's completed build. No specification files edited.",
+  "status": "PASS_M0_SPECIFICATION_AND_INSTANCE_BOUNDARIES; all three original review notes resolved",
+  "positive_boundaries": [
+    "The top-level module explicitly disclaims PostgreSQL implementation and a verified SQL-to-Alloy compiler.",
+    "Bag operations preserve occurrences; NULL truth and CHECK acceptance are distinguished.",
+    "Execution and constraint rejection are separate from poststate facts.",
+    "BoundedClaim requires nonvacuity, at least one reachable execution, per-input modeled reachability and safety over the declared modeled outcomes.",
+    "Conditional encoding theorems distinguish SAT witness soundness from the completeness needed for UNSAT transfer.",
+    "The empty-encoding example demonstrates why witness replay alone cannot establish absence of failures.",
+    "Typed RA constructors are expressly representation shapes, not supported PostgreSQL semantics. Mathematical Int and opaque text are explicitly limited.",
+    "Instance presentation and AI reference contracts preserve evidence ownership while expressly excluding a proof of AI prose truthfulness."
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "importance": "material witness-evidence contract gap",
+      "file": "formal/SQLolla/Encoding.lean",
+      "declaration": "WitnessSound",
+      "observation": "At initial review, the definition required some semantic failure to exist for each encoded model, but contained no decoding relation tying that failure to the particular model. The docstring claimed correspondence for each reported model.",
+      "requested_change": "Introduce a model-to-behavior decoding/correspondence relation and require it in WitnessSound, or narrow the name/documentation to failure-existence soundness and explicitly defer witness fidelity.",
+      "impact": "The existential transfer theorem is valid, but by itself cannot validate displayed witness rows, parameters or outcomes.",
+      "status": "RESOLVED",
+      "resolution": "FailureEncoding now carries decodes : Model -> Behavior -> Prop; WitnessSound and FailureComplete require this correspondence. The underlying relation remains an explicit obligation for a future concrete encoder/decoder."
+    },
+    {
+      "id": "F-02",
+      "importance": "claim-boundary clarification",
+      "file": "formal/SQLolla/Analysis.lean",
+      "declaration": "summarize / AllInputsCovered",
+      "observation": "The coverage Boolean and solver enums do not construct BoundedClaim or connect UNSAT to actual semantic executions. AllInputsCovered guarantees at least one outcome per input, not all nondeterministic outcomes.",
+      "requested_change": "State explicitly that summarize is an operational classifier only; solver correctness, all-outcome encoding completeness and its connection to Contract require separate evidence.",
+      "impact": "No false theorem exists; future callers must not treat a true coverage flag or summary constructor as a semantic proof.",
+      "status": "RESOLVED",
+      "resolution": "summarize documentation now explicitly says that it creates no BoundedClaim or encoding proof. AllInputsCovered remains correctly scoped to per-input reachability; stronger failure completeness is a separate conditional obligation."
+    },
+    {
+      "id": "F-03",
+      "importance": "transaction-observation information gap",
+      "file": "formal/SQLolla/Transaction.lean",
+      "declaration": "finish / Observation",
+      "observation": "At initial review, finish retained visible state and supplied events but dropped the explicit failed SqlError. A no-op commit and an abort could become indistinguishable unless the caller manually inserted an error event.",
+      "requested_change": "Carry Commit/Abort(error) in the finished observation or explicitly label finish a projection requiring a separate outcome carrier.",
+      "impact": "Future UnexpectedAbort analysis needs an observable transaction outcome, not just a state delta.",
+      "status": "RESOLVED",
+      "resolution": "Observation includes result : Termination with committed and aborted(error). finish retains it, and abort_result_retained proves preservation of the explicit abort result."
+    }
+  ],
+  "trust_boundary": {
+    "source_scan": "No sorry, custom axiom declaration or native_decide found in the reviewed authored specification source. unsafePay is a scenario function name, not an unsafe declaration.",
+    "source_scan_limit": "Text inspection cannot establish transitive proof trust; compiled-environment axiom analysis is still required.",
+    "independent_audit_result": "PASS: reviewer independently invoked Lean 4.34.0 on module-owned TrustAudit.lean after Instance completeness additions. The Instance.olean timestamp follows the reviewed source. Exit code 0; TRUST_PASS declarations=1038 theorems=285 foundations=[propext, Classical.choice, Quot.sound]. Raw output is lean-trust-audit.log; stderr is empty.",
+    "audit_scope": "Every loaded declaration owned by module SQLolla or SQLolla.*, including private declarations, generated declarations and names outside the SQLolla namespace, is checked for direct axiom/unsafe status. collectAxioms traverses logical dependencies and rejects axioms outside the three-foundation allowlist, including sorryAx and native compiler-trust shortcuts.",
+    "build_integration": "lakefile.toml includes both SQLolla and TrustAudit in defaultTargets.",
+    "audit_limits": [
+      "The 285 theorem declarations include compiler-generated theorems; this is not 285 independently authored semantic guarantees.",
+      "Module ownership fixes the prior namespace/private-name scope gap. Unimported source modules and independently named future libraries still require import/build-scope coverage; the current SQLolla aggregate imports all eight reviewed semantic modules.",
+      "The audit trusts the Lean kernel/compiler, standard libraries and artifact integrity. It does not validate a proposed SQL execution model or a future encoding.",
+      "Explicit theorem hypotheses and proof obligations still require concrete instantiation; absence of unapproved axioms does not discharge conditional premises."
+    ],
+    "wording_requirement": "If standard Lean foundational axioms occur, list them and say no unapproved axioms rather than axiom-free.",
+    "conditional_obligations": "Proof fields and explicit theorem hypotheses are assumptions to discharge in future implementations. They are not evidence that a parser, SQL execution semantics or SAT encoding has already been verified."
+  },
+  "conclusion": "No remaining blocking finding for this M0 semantic-contract artifact. No PostgreSQL, Rust, parser, Alloy or solver implementation is thereby verified.",
+  "remaining_scope_gaps": [
+    "No concrete PostgreSQL execution relation or full RelExpr interpreter.",
+    "No Rust or Java implementation refinement theorem.",
+    "No executable Alloy encoder or certified SAT proof checker.",
+    "No complete imported catalog, finite SQL numeric domain, NULL/collation profile or concurrency semantics.",
+    "Finite input support does not by itself establish bounded outcome-space adequacy for a future solver encoding."
+  ],
+  "reviewed_source_sha256": {
+    "formal/SQLolla/Analysis.lean": "a73105cf4941e9d726b8168d305e13a72f04ba77b99a3805d4ea2565092c7cd1",
+    "formal/SQLolla/Encoding.lean": "a85ea4712b6213c537328d96d7cb5e58f7f2c79873d30071c3928a1aac2c760b",
+    "formal/SQLolla/Examples.lean": "3a3287d8863ef38d664b6bb04d5452f2098dc75c8fb62859e2680a81ff1bdf29",
+    "formal/SQLolla/Instance.lean": "b688de05b4b29a893853c18f167d426b26abd021e53cf68b5b7335c3a58d0132",
+    "formal/SQLolla/IR.lean": "52676b425e0e4e6c110e5766502264b53638631e0e75089a502b1ca6b68b268d",
+    "formal/SQLolla/Relation.lean": "0559b4b22a97456aa1e6825a71cec2887e8e321e02d395e2c6606ba8baa3505b",
+    "formal/SQLolla/Transaction.lean": "27882b802be5a654b39ce9dd3e84df79d751ebda8f4e5845f7c7e982416347f1",
+    "formal/SQLolla/Truth.lean": "ab6b0be0faecbdf4b352574f840e6c8411a50dbfbc659e0d6bfd29f869a59b22",
+    "formal/TrustAudit.lean": "7f27fd4d86479c3d98f56c4f392a0bebbe289c7752962efdf4e005ca8216a9fe"
+  },
+  "instance_contract_review": {
+    "status": "PASS_ABSTRACT_CONTRACT_BOUNDARY",
+    "file": "formal/SQLolla/Instance.lean",
+    "observations": [
+      "ValidatedInstance ties a model and decoded behavior to explicit validity and correspondence obligations.",
+      "A counterexample label requires a violation in the same decoded behavior; a satisfying example explicitly makes no universal safety claim.",
+      "InstanceView authenticity proves membership in that instance facts, and Explanation reference validity is tied to the same witness.",
+      "Documentation correctly says valid references do not establish truthful AI prose. Rendering, hashes, provider behavior and authentication remain future implementation work.",
+      "ViewComplete separately requires every retained instance fact to be present in the view. complete_view_absence validly transfers nonmembership only under that premise.",
+      "truncated_view_absence_example correctly exhibits a fact absent from a truncated list but present in the full list; it does not claim a concrete renderer is verified.",
+      "ARCHITECTURE.md now separates full-evidence, transport and view completeness and forbids absence claims from filtered or truncated views."
+    ],
+    "limitations": [
+      "Facts and decoding remain abstract. No actual renderer, serialized instance identity/hash or provider explanation is verified.",
+      "ViewComplete is membership completeness, not a multiset, uniqueness or ordering theorem. A future viewer must preserve occurrence identities and ordered n-ary tuple positions; duplicated presentation must not imply additional SQL occurrences. Architecture now explicitly requires those identities and positions.",
+      "A reference-valid explanation may still contain unsupported prose. Deterministic evidence and verdicts must retain authority."
+    ],
+    "api_probe_link": "probe-results.json: enumeration independently demonstrates two semantically distinct API instances, positional ternary tuples and finite exhaustion for one fixed tiny model.",
+    "completeness_extension_status": "PASS; no new blocking finding"
+  }
+}

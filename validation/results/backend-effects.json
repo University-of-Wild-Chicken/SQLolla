@@ -1,0 +1,2947 @@
+{
+  "cases": 14,
+  "claim": "Every complete engine outcome compared with PG values/errors and actual warnings. Positive signal request tested only against an owned worker; eventual disappearance is observed separately and is not implied by the modeled timeout-zero return.",
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "comparisons": [
+    {
+      "errors": [],
+      "id": "backend/scalar/0",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/0",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(0)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "c89e13645b03b0d99fe4876ae46c431e30d438993788435dd770bb9ebad6b65a",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/0",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "89a7024e5468ffc7dec27bdbc3988db57aef7b1c852e24ede9105956c47e18f9",
+        "mode": "compare",
+        "model_sha256": "8d52322845f7930b1b9419a50e2f9382d6efe51e91e192882e6b8516bb446d9f",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [
+                {
+                  "kind": "sql_warning",
+                  "message": "PID 0 is not a PostgreSQL backend process",
+                  "sqlstate": "01000"
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e54401f4a5cf3b9e37100200e5e507289d1a62fd9748510c40186d68c938854c",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d62a98c0c99fbdc28a91f60125ac0cf7001ac7ec77240264b885a7abdd7f7c95",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/1",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/1",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(-1)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a93f4825431f2d395f283285012d51a2ce77e1fc2a3fec60c096e40231844ab0",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/1",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "f514c24120f1ac57414510fc3e385a1fae509344574a066f45f47e44aa3014c0",
+        "mode": "compare",
+        "model_sha256": "4dfb2bca803c75198ae704291ed5e3f290860fb1c1e17d40030998a764ac532b",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [
+                {
+                  "kind": "sql_warning",
+                  "message": "PID -1 is not a PostgreSQL backend process",
+                  "sqlstate": "01000"
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "bf7aa7957db62df715a8df5e76969c8e4c5b923267feebc1fa1cc2d79edf5de2",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "76684e1603719613e2e6b8d1bcb0b4638fdda29e4fed3ee70584dd84b948dd80",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/2",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/2",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(0,1)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "b080d205296844076198502e9c67f7971ae1ab98644687e2eec18a277c1b12fe",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/2",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "fd441821d6ef2fb7bfc1eb41c72c56ecde1601dca315a4d274128eb1abf1d5d2",
+        "mode": "compare",
+        "model_sha256": "8d52322845f7930b1b9419a50e2f9382d6efe51e91e192882e6b8516bb446d9f",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [
+                {
+                  "kind": "sql_warning",
+                  "message": "PID 0 is not a PostgreSQL backend process",
+                  "sqlstate": "01000"
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7a0b7b5c513a2507ab94488c7121c5752367a71b9a31b198cf7db99570bc0c6a",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d62a98c0c99fbdc28a91f60125ac0cf7001ac7ec77240264b885a7abdd7f7c95",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/3",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/3",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(0,-1)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "ad37c838bba0df4fa6ea6d5283baf151673140295540bec13a7a3164551eefcc",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/3",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "cace1bb81cd98043671dd3905391627853b5e0462af32e7bc6b9fb1be0821589",
+        "mode": "compare",
+        "model_sha256": "325faab0db62260cf967a5dc217e97ceee86d97398ea45cad8c2228c21f8101e",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "22003"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "3242ce25d35bbfab2e28b2bb46ff5c426dd882fa68d1f1a0006c77957b7f594d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "37459c5612d71ebbc087c2070e5836107d809d79155ef3a8b2cbb57274d16518",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/4",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/4",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(NULL)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "9366b2c4828a14c04d9809c621ee8a57085ee9842f45eccc47c9b32fbbf65382",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/4",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "68736f9ed6186e3efdce06b606a4ac0422820cd4766d786bfd4e73d8f4134692",
+        "mode": "compare",
+        "model_sha256": "783fd83b174a3f7e0c661f08a8511e7eb83419e0950e8732429ee4b91b784019",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "bool"
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7f736bd14a801885876350b8a6216c84e400254346af68a33f0a102cc7a29008",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "902926c23ab31015ce3f7be57513b65b040d7f697fdbc36ace3c335d042a674a",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/5",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/5",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(0,NULL)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "d70cf2081891c878a45aba6ee415570fd0a5a6ad9563eba976c7bad529174017",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/5",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "68736f9ed6186e3efdce06b606a4ac0422820cd4766d786bfd4e73d8f4134692",
+        "mode": "compare",
+        "model_sha256": "783fd83b174a3f7e0c661f08a8511e7eb83419e0950e8732429ee4b91b784019",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "bool"
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "58cd7ffab6a3499dee52c6690170a1d60094a486fc7fda80aa89cb2a3fe8ff4d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "902926c23ab31015ce3f7be57513b65b040d7f697fdbc36ace3c335d042a674a",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/6",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/6",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(NULL,-1)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "e07c953c79ec9e51425e4f98b2327eb74d888a8f58a357d4b2e1104c9f6fa09d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/6",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "68736f9ed6186e3efdce06b606a4ac0422820cd4766d786bfd4e73d8f4134692",
+        "mode": "compare",
+        "model_sha256": "783fd83b174a3f7e0c661f08a8511e7eb83419e0950e8732429ee4b91b784019",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "bool"
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "2e911aa5c0d9dd5ebab284fd33fdda9770713eb5d0b9d2655260c788850339e5",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "902926c23ab31015ce3f7be57513b65b040d7f697fdbc36ace3c335d042a674a",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/7",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/7",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(true)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "44a67c8865939d0a5e957747d2b20a2fa8f5b72ef8aec42376649b82b929fcfd",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/7",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "ded4b8e56330a9596fd12dee2aafd08a3e22a17c75181647ba343dbaf577c70a",
+        "mode": "compare",
+        "model_sha256": "fe86bb900fae84f51a2368826917377e49a73fed41d30f28087f20be4ea25446",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "e9473e9ef0d016d0b4513d6c861c7f12a95ccf8cdd39f79fde35faad8a4d033d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "7cdf6e3af70f80779a1088bb3fe204a9b48101050c539fb958af3407ffae7f47",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/8",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/8",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(0::bigint)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "8c1f4268fefe9aa8194fae218d3671e2eb802febdc352a6cbeadac3344d162b1",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/8",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "ded4b8e56330a9596fd12dee2aafd08a3e22a17c75181647ba343dbaf577c70a",
+        "mode": "compare",
+        "model_sha256": "fe86bb900fae84f51a2368826917377e49a73fed41d30f28087f20be4ea25446",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "63bdfdd9cd16512c9669f16333bda24ff9ecd77fb38c48b1fc1f0bd3de64299e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "7cdf6e3af70f80779a1088bb3fe204a9b48101050c539fb958af3407ffae7f47",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/scalar/9",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 22276,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 22276,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/scalar/9",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(0,0::bigint)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "b7af84cc276561bfadccacae157c918df74e308181b0ad713b162e9d36b8af84",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "4eefe181c9ea49bd817b6602d1681e494da8f2eb7946715a5e1d0bbad5a31212",
+        "id": "backend/scalar/9",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "89a7024e5468ffc7dec27bdbc3988db57aef7b1c852e24ede9105956c47e18f9",
+        "mode": "compare",
+        "model_sha256": "8d52322845f7930b1b9419a50e2f9382d6efe51e91e192882e6b8516bb446d9f",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [
+                {
+                  "kind": "sql_warning",
+                  "message": "PID 0 is not a PostgreSQL backend process",
+                  "sqlstate": "01000"
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e6a33e1307d4ef37dfe354cfbf676acb09acd3496c5933773614f4b18ead6ec5",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d62a98c0c99fbdc28a91f60125ac0cf7001ac7ec77240264b885a7abdd7f7c95",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/owned_worker",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 31352,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 31352,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 31976,
+                "signal_capability": true,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/owned_worker",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(31976)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "befc594758840a59d7cae859892cd02da2a974d3a1a7a59576cd5b79e3c1cf9b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "a53dadb2fc7f3fcfc423e4160a9c83ffaafe8c20c30f3ff8f1606457551a31bd",
+        "id": "backend/owned_worker",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "7f4380033f2a950099c5f96d9bcaaf1e7336d1e0b74344b9ffdf9560bfb8e306",
+        "mode": "compare",
+        "model_sha256": "16dd0c2e35ac27f68870e824dc6718e6e131aa89da65022b09569d76caf22709",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [
+                {
+                  "kind": "backend_termination_requested",
+                  "pid": 31976
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "bool",
+                    "value": true
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "f152e0e6edab5c8b63b85cceb52c88d085e792b6d7ca751f1baaa80a83d883ee",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "6318e0022afecc2e5015efe139073cb4ac4b64a46a768e0abd11f65db4204ae3",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/permission",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {}
+        },
+        "database": {},
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 30956,
+            "actor_signal_role": false,
+            "actor_superuser": false,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 21960,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30956,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/permission",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(21960)"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "ffaa8ab5f02e69b7d1544ee3e6ba56a8cbe1cd3d9bd795494206349ec3916981",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "bbc529aa0ae97a74e7e6408b829f1ee00b7f5aa79cabbaac47899972e033308e",
+        "id": "backend/permission",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "77f72fbe6647b6d655dbc3bb7b37f1b30dbc4da37034c5318d6313aa67e2058c",
+        "mode": "compare",
+        "model_sha256": "ad1c28440c183187dd42559dd57d16c6f3dc9c2456f1f28760ee0f9e72e066fc",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "42501"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "f5381e46ff79f601cae93e3f49373eb19b41e8bd79c124a2f63f6765580f1357",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "650ee2320af83388a30c7b0e90cb083fa6d25175396b048d2488ff2bcf6e3b36",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/worker_statement_error",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {
+            "public.backend_divisor": {
+              "columns": [
+                {
+                  "name": "x",
+                  "nullable": true,
+                  "qualifier": null,
+                  "schema": null,
+                  "ty": "int32"
+                }
+              ],
+              "name": "backend_divisor",
+              "schema": "public"
+            }
+          }
+        },
+        "database": {
+          "public.backend_divisor": [
+            [
+              {
+                "type": "int32",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 32668,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 27668,
+                "signal_capability": true,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 32668,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/worker_statement_error",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(27668),1/x FROM backend_divisor"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "0ab0743f835fd1264ba1440329d0d9c9c41763df1968d920841502bd5e541e40",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "af96d357e8b97d7c50f54a087d25ef0b0e2ae21ec94085d650426b4fcdc77669",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "861921417e57e205647058a07519420c06ae6a9db3c638b7b4f1ecd5bce82a43",
+        "id": "backend/worker_statement_error",
+        "input_sha256": "64ddc7304eaffcfd345f50b39e44a4621a073f54b48fd141f5457fccfa50b267",
+        "ir_sha256": "78ecf64abf42b80e6cf980c792ba3879e21478e488daaa3d018c612f4378566a",
+        "mode": "compare",
+        "model_sha256": "58bf4eff558a9f35af3bb6f61f2f38084d6f4c2dabf8c6a428a3dd267285d9da",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [
+                {
+                  "kind": "backend_termination_requested",
+                  "pid": 27668
+                }
+              ],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "22012"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          },
+          {
+            "name": "?column?",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "410a1a37a0d45f3ef5e7e385021268636c8539c3fbb5da4c7288b36dc3c3ba93",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "cfe0f25d6dda4a1e5a3b6e1a91cecb534000a0bc2cd70e7de7687a26d2f6dc4f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "backend/warning_statement_error",
+      "request": {
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {
+            "public.backend_divisor": {
+              "columns": [
+                {
+                  "name": "x",
+                  "nullable": true,
+                  "qualifier": null,
+                  "schema": null,
+                  "ty": "int32"
+                }
+              ],
+              "name": "backend_divisor",
+              "schema": "public"
+            }
+          }
+        },
+        "database": {
+          "public.backend_divisor": [
+            [
+              {
+                "type": "int32",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "execution": {
+          "backend_signals": {
+            "actor_pid": 16736,
+            "actor_signal_role": true,
+            "actor_superuser": true,
+            "complete": true,
+            "stable_snapshot": true,
+            "targets": [
+              {
+                "actor_has_role": false,
+                "pid": 8628,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 16736,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": true,
+                "pid": 29464,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 30632,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31144,
+                "signal_capability": false,
+                "superuser": true
+              },
+              {
+                "actor_has_role": false,
+                "pid": 31996,
+                "signal_capability": false,
+                "superuser": true
+              }
+            ]
+          },
+          "max_outcomes": 256,
+          "max_rows": 256,
+          "settings": {},
+          "table_metadata": {}
+        },
+        "id": "backend/warning_statement_error",
+        "mode": "compare",
+        "parameters": {},
+        "sql": "SELECT pg_terminate_backend(0),1/x FROM backend_divisor"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "0ab0743f835fd1264ba1440329d0d9c9c41763df1968d920841502bd5e541e40",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "37b37746852881f56481224450bd72e34f5691f35c6dd0fa1353a9d9c7954ee6",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "aae34fd325f1d8c244f90991f7d8a94c0888d646b709a0d8a6b952547d6a9a45",
+        "id": "backend/warning_statement_error",
+        "input_sha256": "64ddc7304eaffcfd345f50b39e44a4621a073f54b48fd141f5457fccfa50b267",
+        "ir_sha256": "d0bb550bbab8dd50c0902f3d1ca7c828fe3b292042e4e335ed1bf7fcdd1c3923",
+        "mode": "compare",
+        "model_sha256": "36e2d60dd59563ee95bc46b6542166dbe50d9dbe9a2aac30adba1c8ae7c3f184",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [
+                {
+                  "kind": "sql_warning",
+                  "message": "PID 0 is not a PostgreSQL backend process",
+                  "sqlstate": "01000"
+                }
+              ],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "22012"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "pg_terminate_backend",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          },
+          {
+            "name": "?column?",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6e408eae986287354e440864b833f269d9060942b3c0ae92c14f3998307400c9",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "59bee372d69da5378adc309de4505eacc4e8c70f8603e6b3d7deb9c2139ba56d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "status": "passed"
+    },
+    {
+      "claim": "Coverage refusal, not a PostgreSQL semantic comparison.",
+      "id": "backend/refusal/self",
+      "response": {
+        "code": "unsupported.backend_self_termination",
+        "id": "backend/refusal/self",
+        "message": "Self-termination closes the result connection",
+        "status": "error"
+      },
+      "status": "passed"
+    },
+    {
+      "claim": "Coverage refusal, not a PostgreSQL semantic comparison.",
+      "id": "backend/refusal/wait",
+      "response": {
+        "code": "unsupported.backend_wait",
+        "id": "backend/refusal/wait",
+        "message": "Positive timeout requires an explicit exit schedule",
+        "status": "error"
+      },
+      "status": "passed"
+    },
+    {
+      "claim": "Coverage refusal, not a PostgreSQL semantic comparison.",
+      "id": "backend/refusal/repeat",
+      "response": {
+        "code": "unsupported.backend_repeat_schedule",
+        "id": "backend/refusal/repeat",
+        "message": "Repeated target needs an explicit process-lifecycle schedule",
+        "status": "error"
+      },
+      "status": "passed"
+    },
+    {
+      "claim": "Coverage refusal, not a PostgreSQL semantic comparison.",
+      "id": "backend/refusal/width",
+      "response": {
+        "code": "unsupported.backend_timeout_width",
+        "id": "backend/refusal/width",
+        "message": "Only portable signed32 timeout values are modeled",
+        "status": "error"
+      },
+      "status": "passed"
+    },
+    {
+      "claim": "Coverage refusal, not a PostgreSQL semantic comparison.",
+      "id": "backend/refusal/capability",
+      "response": {
+        "code": "unsupported.backend_signal_capability",
+        "id": "backend/refusal/capability",
+        "message": "Signal delivery capability is not supplied",
+        "status": "error"
+      },
+      "status": "passed"
+    }
+  ],
+  "failures": [],
+  "harness_sha256": "7fd91b95a5875f0042a26e16d201a28b7ed756952b285cebf9d38bdac59bbe72",
+  "postgres_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "results": [
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/0",
+      "notices": [
+        {
+          "message": "PID 0 is not a PostgreSQL backend process",
+          "severity": "WARNING",
+          "sqlstate": "01000"
+        }
+      ],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "f"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(0)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/1",
+      "notices": [
+        {
+          "message": "PID -1 is not a PostgreSQL backend process",
+          "severity": "WARNING",
+          "sqlstate": "01000"
+        }
+      ],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "f"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(-1)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/2",
+      "notices": [
+        {
+          "message": "PID 0 is not a PostgreSQL backend process",
+          "severity": "WARNING",
+          "sqlstate": "01000"
+        }
+      ],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "f"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(0,1)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/3",
+      "notices": [],
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "\"timeout\" must not be negative",
+        "sqlstate": "22003",
+        "status": "error",
+        "table_name": null
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(0,-1)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/4",
+      "notices": [],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            null
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(NULL)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/5",
+      "notices": [],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            null
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(0,NULL)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/6",
+      "notices": [],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            null
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(NULL,-1)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/7",
+      "notices": [],
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "function pg_terminate_backend(boolean) does not exist",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(true)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/8",
+      "notices": [],
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "function pg_terminate_backend(bigint) does not exist",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(0::bigint)"
+    },
+    {
+      "context": {
+        "actor_pid": 22276,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 22276,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/scalar/9",
+      "notices": [
+        {
+          "message": "PID 0 is not a PostgreSQL backend process",
+          "severity": "WARNING",
+          "sqlstate": "01000"
+        }
+      ],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "f"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(0,0::bigint)"
+    },
+    {
+      "assumption": "Private owned idle worker, fixed target lifetime until this call, ordinary same-server OS signal capability.",
+      "context": {
+        "actor_pid": 31352,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 31352,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 31976,
+            "signal_capability": true,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/owned_worker",
+      "notices": [],
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "pg_terminate_backend",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "t"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "signal_requested": 31976,
+      "sql": "SELECT pg_terminate_backend(31976)",
+      "target_present_after_rollback": false,
+      "worker_after_rollback": {
+        "closed": true,
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": null,
+          "sqlstate": null,
+          "status": "error",
+          "table_name": null
+        }
+      }
+    },
+    {
+      "assumption": "Private owned idle worker, fixed target lifetime until this call, ordinary same-server OS signal capability.",
+      "context": {
+        "actor_pid": 30956,
+        "actor_signal_role": false,
+        "actor_superuser": false,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 21960,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30956,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "id": "backend/permission",
+      "notices": [],
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": "Only roles with the SUPERUSER attribute may terminate processes of roles with the SUPERUSER attribute.",
+        "exposed_rows": [],
+        "message": "permission denied to terminate process",
+        "sqlstate": "42501",
+        "status": "error",
+        "table_name": null
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(21960)",
+      "target_present_after_rollback": true,
+      "worker_after_rollback": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "?column?",
+            "type_oid": 23
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "1"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      }
+    },
+    {
+      "assumption": "Private owned idle worker, fixed target lifetime until this call, ordinary same-server OS signal capability.",
+      "catalog": {
+        "search_path": [
+          "public"
+        ],
+        "tables": {
+          "public.backend_divisor": {
+            "columns": [
+              {
+                "name": "x",
+                "nullable": true,
+                "qualifier": null,
+                "schema": null,
+                "ty": "int32"
+              }
+            ],
+            "name": "backend_divisor",
+            "schema": "public"
+          }
+        }
+      },
+      "context": {
+        "actor_pid": 32668,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 27668,
+            "signal_capability": true,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 32668,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "database": {
+        "public.backend_divisor": [
+          [
+            {
+              "type": "int32",
+              "value": 0
+            }
+          ]
+        ]
+      },
+      "id": "backend/worker_statement_error",
+      "notices": [],
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "division by zero",
+        "sqlstate": "22012",
+        "status": "error",
+        "table_name": null
+      },
+      "signal_requested": 27668,
+      "sql": "SELECT pg_terminate_backend(27668),1/x FROM backend_divisor",
+      "target_present_after_rollback": false,
+      "worker_after_rollback": {
+        "closed": true,
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": null,
+          "sqlstate": null,
+          "status": "error",
+          "table_name": null
+        }
+      }
+    },
+    {
+      "catalog": {
+        "search_path": [
+          "public"
+        ],
+        "tables": {
+          "public.backend_divisor": {
+            "columns": [
+              {
+                "name": "x",
+                "nullable": true,
+                "qualifier": null,
+                "schema": null,
+                "ty": "int32"
+              }
+            ],
+            "name": "backend_divisor",
+            "schema": "public"
+          }
+        }
+      },
+      "context": {
+        "actor_pid": 16736,
+        "actor_signal_role": true,
+        "actor_superuser": true,
+        "complete": true,
+        "stable_snapshot": true,
+        "targets": [
+          {
+            "actor_has_role": false,
+            "pid": 8628,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 16736,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": true,
+            "pid": 29464,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 30632,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31144,
+            "signal_capability": false,
+            "superuser": true
+          },
+          {
+            "actor_has_role": false,
+            "pid": 31996,
+            "signal_capability": false,
+            "superuser": true
+          }
+        ]
+      },
+      "database": {
+        "public.backend_divisor": [
+          [
+            {
+              "type": "int32",
+              "value": 0
+            }
+          ]
+        ]
+      },
+      "id": "backend/warning_statement_error",
+      "notices": [
+        {
+          "message": "PID 0 is not a PostgreSQL backend process",
+          "severity": "WARNING",
+          "sqlstate": "01000"
+        }
+      ],
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "division by zero",
+        "sqlstate": "22012",
+        "status": "error",
+        "table_name": null
+      },
+      "signal_requested": null,
+      "sql": "SELECT pg_terminate_backend(0),1/x FROM backend_divisor"
+    }
+  ],
+  "source": "https://github.com/postgres/postgres/blob/REL_16_16/src/backend/storage/ipc/signalfuncs.c",
+  "status": "passed"
+}

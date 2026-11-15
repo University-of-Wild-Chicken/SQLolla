@@ -1,0 +1,110 @@
+{"id" : "symbolic-oracle/scan/0", "rows" : []}
+{"id" : "symbolic-oracle/scan/1", "rows" : [[null]]}
+{"id" : "symbolic-oracle/scan/2", "rows" : [[0]]}
+{"id" : "symbolic-oracle/scan/3", "rows" : [[1]]}
+{"id" : "symbolic-oracle/scan/4", "rows" : [[null], [null]]}
+{"id" : "symbolic-oracle/scan/5", "rows" : [[null], [0]]}
+{"id" : "symbolic-oracle/scan/6", "rows" : [[null], [1]]}
+{"id" : "symbolic-oracle/scan/7", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/scan/8", "rows" : [[0], [1]]}
+{"id" : "symbolic-oracle/scan/9", "rows" : [[1], [1]]}
+{"id" : "symbolic-oracle/equal_zero/0", "rows" : []}
+{"id" : "symbolic-oracle/equal_zero/1", "rows" : []}
+{"id" : "symbolic-oracle/equal_zero/2", "rows" : [[0]]}
+{"id" : "symbolic-oracle/equal_zero/3", "rows" : []}
+{"id" : "symbolic-oracle/equal_zero/4", "rows" : []}
+{"id" : "symbolic-oracle/equal_zero/5", "rows" : [[0]]}
+{"id" : "symbolic-oracle/equal_zero/6", "rows" : []}
+{"id" : "symbolic-oracle/equal_zero/7", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/equal_zero/8", "rows" : [[0]]}
+{"id" : "symbolic-oracle/equal_zero/9", "rows" : []}
+{"id" : "symbolic-oracle/is_null/0", "rows" : []}
+{"id" : "symbolic-oracle/is_null/1", "rows" : [[null]]}
+{"id" : "symbolic-oracle/is_null/2", "rows" : []}
+{"id" : "symbolic-oracle/is_null/3", "rows" : []}
+{"id" : "symbolic-oracle/is_null/4", "rows" : [[null], [null]]}
+{"id" : "symbolic-oracle/is_null/5", "rows" : [[null]]}
+{"id" : "symbolic-oracle/is_null/6", "rows" : [[null]]}
+{"id" : "symbolic-oracle/is_null/7", "rows" : []}
+{"id" : "symbolic-oracle/is_null/8", "rows" : []}
+{"id" : "symbolic-oracle/is_null/9", "rows" : []}
+{"id" : "symbolic-oracle/nonnull/0", "rows" : []}
+{"id" : "symbolic-oracle/nonnull/1", "rows" : []}
+{"id" : "symbolic-oracle/nonnull/2", "rows" : [[0]]}
+{"id" : "symbolic-oracle/nonnull/3", "rows" : [[1]]}
+{"id" : "symbolic-oracle/nonnull/4", "rows" : []}
+{"id" : "symbolic-oracle/nonnull/5", "rows" : [[0]]}
+{"id" : "symbolic-oracle/nonnull/6", "rows" : [[1]]}
+{"id" : "symbolic-oracle/nonnull/7", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/nonnull/8", "rows" : [[0], [1]]}
+{"id" : "symbolic-oracle/nonnull/9", "rows" : [[1], [1]]}
+{"id" : "symbolic-oracle/not_zero/0", "rows" : []}
+{"id" : "symbolic-oracle/not_zero/1", "rows" : []}
+{"id" : "symbolic-oracle/not_zero/2", "rows" : []}
+{"id" : "symbolic-oracle/not_zero/3", "rows" : [[1]]}
+{"id" : "symbolic-oracle/not_zero/4", "rows" : []}
+{"id" : "symbolic-oracle/not_zero/5", "rows" : []}
+{"id" : "symbolic-oracle/not_zero/6", "rows" : [[1]]}
+{"id" : "symbolic-oracle/not_zero/7", "rows" : []}
+{"id" : "symbolic-oracle/not_zero/8", "rows" : [[1]]}
+{"id" : "symbolic-oracle/not_zero/9", "rows" : [[1], [1]]}
+{"id" : "symbolic-oracle/distinct/0", "rows" : []}
+{"id" : "symbolic-oracle/distinct/1", "rows" : [[null]]}
+{"id" : "symbolic-oracle/distinct/2", "rows" : [[0]]}
+{"id" : "symbolic-oracle/distinct/3", "rows" : [[1]]}
+{"id" : "symbolic-oracle/distinct/4", "rows" : [[null]]}
+{"id" : "symbolic-oracle/distinct/5", "rows" : [[null], [0]]}
+{"id" : "symbolic-oracle/distinct/6", "rows" : [[null], [1]]}
+{"id" : "symbolic-oracle/distinct/7", "rows" : [[0]]}
+{"id" : "symbolic-oracle/distinct/8", "rows" : [[0], [1]]}
+{"id" : "symbolic-oracle/distinct/9", "rows" : [[1]]}
+{"id" : "symbolic-oracle/constant/0", "rows" : []}
+{"id" : "symbolic-oracle/constant/1", "rows" : [[0]]}
+{"id" : "symbolic-oracle/constant/2", "rows" : [[0]]}
+{"id" : "symbolic-oracle/constant/3", "rows" : [[0]]}
+{"id" : "symbolic-oracle/constant/4", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/constant/5", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/constant/6", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/constant/7", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/constant/8", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/constant/9", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/not_equal/0", "rows" : []}
+{"id" : "symbolic-oracle/not_equal/1", "rows" : []}
+{"id" : "symbolic-oracle/not_equal/2", "rows" : []}
+{"id" : "symbolic-oracle/not_equal/3", "rows" : [[1]]}
+{"id" : "symbolic-oracle/not_equal/4", "rows" : []}
+{"id" : "symbolic-oracle/not_equal/5", "rows" : []}
+{"id" : "symbolic-oracle/not_equal/6", "rows" : [[1]]}
+{"id" : "symbolic-oracle/not_equal/7", "rows" : []}
+{"id" : "symbolic-oracle/not_equal/8", "rows" : [[1]]}
+{"id" : "symbolic-oracle/not_equal/9", "rows" : [[1], [1]]}
+{"id" : "symbolic-oracle/logic/0", "rows" : []}
+{"id" : "symbolic-oracle/logic/1", "rows" : []}
+{"id" : "symbolic-oracle/logic/2", "rows" : [[0]]}
+{"id" : "symbolic-oracle/logic/3", "rows" : [[1]]}
+{"id" : "symbolic-oracle/logic/4", "rows" : []}
+{"id" : "symbolic-oracle/logic/5", "rows" : [[0]]}
+{"id" : "symbolic-oracle/logic/6", "rows" : [[1]]}
+{"id" : "symbolic-oracle/logic/7", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/logic/8", "rows" : [[0], [1]]}
+{"id" : "symbolic-oracle/logic/9", "rows" : [[1], [1]]}
+{"id" : "symbolic-oracle/union_all/0", "rows" : []}
+{"id" : "symbolic-oracle/union_all/1", "rows" : [[null], [null]]}
+{"id" : "symbolic-oracle/union_all/2", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/union_all/3", "rows" : [[1], [1]]}
+{"id" : "symbolic-oracle/union_all/4", "rows" : [[null], [null], [null], [null]]}
+{"id" : "symbolic-oracle/union_all/5", "rows" : [[null], [0], [null], [0]]}
+{"id" : "symbolic-oracle/union_all/6", "rows" : [[null], [1], [null], [1]]}
+{"id" : "symbolic-oracle/union_all/7", "rows" : [[0], [0], [0], [0]]}
+{"id" : "symbolic-oracle/union_all/8", "rows" : [[0], [1], [0], [1]]}
+{"id" : "symbolic-oracle/union_all/9", "rows" : [[1], [1], [1], [1]]}
+{"id" : "symbolic-oracle/unused_catalog/0", "rows" : []}
+{"id" : "symbolic-oracle/unused_catalog/1", "rows" : [[null]]}
+{"id" : "symbolic-oracle/unused_catalog/2", "rows" : [[0]]}
+{"id" : "symbolic-oracle/unused_catalog/3", "rows" : [[1]]}
+{"id" : "symbolic-oracle/unused_catalog/4", "rows" : [[null], [null]]}
+{"id" : "symbolic-oracle/unused_catalog/5", "rows" : [[null], [0]]}
+{"id" : "symbolic-oracle/unused_catalog/6", "rows" : [[null], [1]]}
+{"id" : "symbolic-oracle/unused_catalog/7", "rows" : [[0], [0]]}
+{"id" : "symbolic-oracle/unused_catalog/8", "rows" : [[0], [1]]}
+{"id" : "symbolic-oracle/unused_catalog/9", "rows" : [[1], [1]]}

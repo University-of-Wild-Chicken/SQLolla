@@ -1,0 +1,41 @@
+{
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "corruption": {
+    "bundle_damage": {
+      "code": "store.corrupt"
+    },
+    "digest_damage": {
+      "code": "store.corrupt"
+    },
+    "gap_refused": true,
+    "rehashed_semantic_tamper": {
+      "code": "resume.prefix_changed"
+    }
+  },
+  "extended": {
+    "examples": 3,
+    "sql_error_counterexamples": 1
+  },
+  "fresh_process_per_command": true,
+  "grounding": {
+    "context_revision_changes": true,
+    "initial_check_unsat": true,
+    "unicode_duplicate_facts": 2
+  },
+  "hashes_are_not_authentication": true,
+  "limits": {
+    "limit_distinct_from_exhaustion": true,
+    "protocol_refusals": 5
+  },
+  "native": {
+    "counterexamples": 1,
+    "distinct_semantic_worlds": 3,
+    "examples": 3
+  },
+  "restart_stability": {
+    "identical_committed_records": true,
+    "independent_restarts": 8
+  },
+  "status": "passed",
+  "temporary_store_removed": true
+}

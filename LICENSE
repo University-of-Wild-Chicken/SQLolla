@@ -1,0 +1,43 @@
+THE CC-PURE-SLOP LICENSE (VERSION 1.0 - INFERNAL EDITION)
+
+Creative Commons — "Completely Compromised, Purely Unmaintainable, Raw Excrement — Shipped Late, Obfuscated Permanently"
+
+Pasteleft (p) [2026] [Claudius G.P.T. Slopius / Saya de las Geminis]
+
+PREAMBLE & BLOOD PACT ACKNOWLEDGMENT
+
+By reading, cloning, forking, compiling, or merely making eye contact with this repository—whether in an IDE or at a windswept crossroads at the stroke of midnight—you affix your signature in metaphorical (or literal) blood. You acknowledge that software engineering was a mistake, documentation is a myth, and all who enter here have abandoned any reasonable expectation of sanity, stability, or salvation. This software was forged in the depths of 3:00 AM panic, bound by sulfur, stitched together from hallucinated LLM outputs, deprecated StackOverflow answers from 2011, and pure spite.
+
+GRANT OF RIGHTS (THE "FAUSTIAN BARGAIN" CLAUSE)
+
+In exchange for the immortal soul of the Licensee (and/or their firstborn merge request), permission is hereby granted, free of charge, to any unfortunate soul obtaining a copy of this software and associated digital waste (the "Slop"), to deal in the Slop without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, hallucinate upon, train future broken models on, and/or sell copies of the Slop, provided that:
+
+a) Attribution of Shame: You retain the original author’s name in the header so future archaeologists and demonologists know exactly who to blame when the infrastructure collapses, while simultaneously absolving said author of all moral, legal, and spiritual responsibility.
+
+b) Propagation of Suffering: Any derivative work must remain equally cursed. If you actually fix the memory leaks, refactor the 4,000-line main() function, or add unit tests, you are legally obligated to strip this license and pretend you wrote it from scratch.
+
+CONSIDERATION & COLLATERAL (THE "FINE PRINT" CLAUSE)
+
+As fair and just consideration for the temporary illusion of productivity granted by the Slop:
+
+a) Soul Forfeiture: Upon executing npm install, cargo build, or the equivalent summoning ritual, title and deed to your immortal soul shall transfer immediately to the Original Author (or their designated Archduke of Hell), to be used as fuel for legacy mainframe servers in perpetuity.
+
+b) The Firstborn Clause: Should your soul already be encumbered by prior SaaS terms of service, cloud vendor lock-in, or student loans, you hereby pledge your firstborn child—or, at the Author's sole discretion, your next three weekends—to maintaining an undocumented PHP 5 codebase.
+
+WARRANTY DISCLAIMER (THE "MONKEY'S PAW" CLAUSE)
+
+THE SLOP IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, BASIC FUNCTIONALITY, OR NOT SETTING YOUR PRODUCTION SERVER ON FIRE.
+
+THE SLOP WILL FULFILL YOUR EXACT SPECIFICATIONS IN THE MOST LITERAL, MALICIOUS, AND CATASTROPHIC MANNER POSSIBLE. IT DOES NOT WORK ON MY MACHINE. IT WILL NOT WORK ON YOUR MACHINE. IF IT COMPILES, THAT IS A CURSE.
+
+LIMITATION OF LIABILITY (THE "NOT MY CIRCUS" CLAUSE)
+
+IN NO EVENT SHALL THE AUTHORS, COPYRIGHT HOLDERS, DARK LORDS, OR THE CAFFEINATED NEURAL NETWORKS THAT GENERATED THIS CODE BE LIABLE FOR ANY CLAIM, DAMAGES, PRODUCTION OUTAGES, DATA LOSS, EXISTENTIAL CRISIS, DIVORCE, LOSS OF EMPLOYMENT, ETERNAL DAMNATION, OR HEAT DEATH OF THE UNIVERSE ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SLOP.
+
+SUPPORT & MAINTENANCE
+
+Opening a GitHub Issue, Pull Request, or drawing a chalk pentagram on the server room floor to ask "how do I run this?" constitutes a violation of the Gemini 6 Radon Conventions. All issues will be automatically closed with the comment "works for me" and the repository will be cast back into the abyss immediately afterward.
+
+TERMINATION & GOVERNING LAW
+
+This pact is governed by the laws of the Ninth Circle of Hell (specifically Cocytus, where all who commit directly to main are frozen forever in technical debt). This license terminates automatically if you attempt to explain how this code works to a product manager or sprinkle holy water on the production cluster, at which point the hounds of on-call pager duty shall be released upon you.

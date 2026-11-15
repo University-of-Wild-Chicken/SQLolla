@@ -1,0 +1,906 @@
+{
+  "kind": "m0-native-parser-feasibility",
+  "semantic_proof": false,
+  "cases": [
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "name": "id",
+                  "qualifier": null,
+                  "schema": null,
+                  "tag": "column"
+                }
+              }
+            ],
+            "source": {
+              "alias": null,
+              "columns": [],
+              "name": "accounts",
+              "schema": null,
+              "tag": "table"
+            },
+            "tag": "select",
+            "where": {
+              "left": {
+                "name": "tenant_id",
+                "qualifier": null,
+                "schema": null,
+                "tag": "column"
+              },
+              "op": "eq",
+              "right": {
+                "index": 1,
+                "tag": "numbered_parameter"
+              },
+              "tag": "binary"
+            }
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT \"id\" FROM \"accounts\" WHERE (\"tenant_id\" = $1);",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "select_base",
+      "passed": true,
+      "sql": "SELECT id FROM accounts WHERE tenant_id = $1;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "alias": null,
+            "assignments": [
+              {
+                "column": "balance",
+                "tag": "assignment",
+                "value": {
+                  "left": {
+                    "name": "balance",
+                    "qualifier": null,
+                    "schema": null,
+                    "tag": "column"
+                  },
+                  "op": "sub",
+                  "right": {
+                    "index": 1,
+                    "tag": "numbered_parameter"
+                  },
+                  "tag": "binary"
+                }
+              }
+            ],
+            "returning": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "name": "id",
+                  "qualifier": null,
+                  "schema": null,
+                  "tag": "column"
+                }
+              }
+            ],
+            "table": "accounts",
+            "tag": "update",
+            "where": {
+              "left": {
+                "name": "id",
+                "qualifier": null,
+                "schema": null,
+                "tag": "column"
+              },
+              "op": "eq",
+              "right": {
+                "index": 2,
+                "tag": "numbered_parameter"
+              },
+              "tag": "binary"
+            }
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "UPDATE \"accounts\" SET \"balance\" = (\"balance\" - $1) WHERE (\"id\" = $2) RETURNING \"id\";",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "update_base",
+      "passed": true,
+      "sql": "UPDATE accounts SET balance = balance - $1 WHERE id = $2 RETURNING id;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": "missing",
+                "tag": "expression",
+                "value": {
+                  "tag": "sql_null"
+                }
+              }
+            ],
+            "source": null,
+            "tag": "select",
+            "where": null
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT NULL AS \"missing\";",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "sql_null",
+      "passed": true,
+      "sql": "SELECT NULL AS missing;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "name": "id",
+                  "qualifier": null,
+                  "schema": null,
+                  "tag": "column"
+                }
+              }
+            ],
+            "source": {
+              "alias": null,
+              "columns": [],
+              "name": "accounts",
+              "schema": null,
+              "tag": "table"
+            },
+            "tag": "select",
+            "where": {
+              "arg": {
+                "name": "owner_id",
+                "qualifier": null,
+                "schema": null,
+                "tag": "column"
+              },
+              "negated": false,
+              "tag": "is_null"
+            }
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT \"id\" FROM \"accounts\" WHERE (\"owner_id\" IS NULL);",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "null_predicate",
+      "passed": true,
+      "sql": "SELECT id FROM accounts WHERE owner_id IS NULL;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "rows": [
+              [
+                {
+                  "magnitude": "1",
+                  "tag": "integer"
+                }
+              ],
+              [
+                {
+                  "magnitude": "1",
+                  "tag": "integer"
+                }
+              ],
+              [
+                {
+                  "magnitude": "2",
+                  "tag": "integer"
+                }
+              ]
+            ],
+            "tag": "values"
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "VALUES (1), (1), (2);",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "values_duplicates",
+      "passed": true,
+      "sql": "VALUES (1),(1),(2);"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "all": true,
+            "left": {
+              "distinct": false,
+              "items": [
+                {
+                  "alias": null,
+                  "tag": "expression",
+                  "value": {
+                    "magnitude": "1",
+                    "tag": "integer"
+                  }
+                }
+              ],
+              "source": null,
+              "tag": "select",
+              "where": null
+            },
+            "op": "union",
+            "right": {
+              "distinct": false,
+              "items": [
+                {
+                  "alias": null,
+                  "tag": "expression",
+                  "value": {
+                    "magnitude": "1",
+                    "tag": "integer"
+                  }
+                }
+              ],
+              "source": null,
+              "tag": "select",
+              "where": null
+            },
+            "tag": "set_operation"
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "(SELECT 1) UNION ALL (SELECT 1);",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "union_all",
+      "passed": true,
+      "sql": "SELECT 1 UNION ALL SELECT 1;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "all": false,
+            "left": {
+              "distinct": false,
+              "items": [
+                {
+                  "alias": null,
+                  "tag": "expression",
+                  "value": {
+                    "magnitude": "1",
+                    "tag": "integer"
+                  }
+                }
+              ],
+              "source": null,
+              "tag": "select",
+              "where": null
+            },
+            "op": "union",
+            "right": {
+              "distinct": false,
+              "items": [
+                {
+                  "alias": null,
+                  "tag": "expression",
+                  "value": {
+                    "magnitude": "1",
+                    "tag": "integer"
+                  }
+                }
+              ],
+              "source": null,
+              "tag": "select",
+              "where": null
+            },
+            "tag": "set_operation"
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "(SELECT 1) UNION (SELECT 1);",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "union_distinct",
+      "passed": true,
+      "sql": "SELECT 1 UNION SELECT 1;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": true,
+            "items": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "name": "tenant_id",
+                  "qualifier": null,
+                  "schema": null,
+                  "tag": "column"
+                }
+              }
+            ],
+            "source": {
+              "alias": null,
+              "columns": [],
+              "name": "accounts",
+              "schema": null,
+              "tag": "table"
+            },
+            "tag": "select",
+            "where": null
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT DISTINCT \"tenant_id\" FROM \"accounts\";",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "projection_distinct",
+      "passed": true,
+      "sql": "SELECT DISTINCT tenant_id FROM accounts;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "name": "MiXeD",
+                  "qualifier": "a",
+                  "schema": null,
+                  "tag": "column"
+                }
+              }
+            ],
+            "source": {
+              "alias": "a",
+              "columns": [],
+              "name": "Accounts",
+              "schema": "Sales",
+              "tag": "table"
+            },
+            "tag": "select",
+            "where": null
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT \"a\".\"MiXeD\" FROM \"Sales\".\"Accounts\" AS \"a\";",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "qualified_identifiers",
+      "passed": true,
+      "sql": "SELECT a.\"MiXeD\" FROM \"Sales\".\"Accounts\" AS a;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": "label",
+                "tag": "expression",
+                "value": {
+                  "tag": "text",
+                  "value": "café 雪; -- data"
+                }
+              }
+            ],
+            "source": null,
+            "tag": "select",
+            "where": null
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT 'café 雪; -- data' AS \"label\";",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "unicode_literal",
+      "passed": true,
+      "sql": "SELECT 'café 雪; -- data' AS label;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "magnitude": "9007199254740993",
+                  "tag": "integer"
+                }
+              }
+            ],
+            "source": null,
+            "tag": "select",
+            "where": null
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT 9007199254740993;",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "large_integer",
+      "passed": true,
+      "sql": "SELECT 9007199254740993;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "lexeme": "1.2300e-3",
+                  "tag": "decimal"
+                }
+              }
+            ],
+            "source": null,
+            "tag": "select",
+            "where": null
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT 1.2300e-3;",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "exact_decimal",
+      "passed": true,
+      "sql": "SELECT 1.2300e-3;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "alias": null,
+            "assignments": [
+              {
+                "column": "balance",
+                "tag": "assignment",
+                "value": {
+                  "ordinal": 1,
+                  "tag": "anonymous_parameter"
+                }
+              }
+            ],
+            "returning": [],
+            "table": "accounts",
+            "tag": "update",
+            "where": {
+              "left": {
+                "name": "id",
+                "qualifier": null,
+                "schema": null,
+                "tag": "column"
+              },
+              "op": "eq",
+              "right": {
+                "ordinal": 2,
+                "tag": "anonymous_parameter"
+              },
+              "tag": "binary"
+            }
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "UPDATE \"accounts\" SET \"balance\" = ? WHERE (\"id\" = ?);",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "anonymous_order",
+      "passed": true,
+      "sql": "UPDATE accounts SET balance = ? WHERE id = ?;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "ast": {
+            "distinct": false,
+            "items": [
+              {
+                "alias": null,
+                "tag": "expression",
+                "value": {
+                  "name": "missing",
+                  "qualifier": null,
+                  "schema": null,
+                  "tag": "column"
+                }
+              }
+            ],
+            "source": {
+              "alias": null,
+              "columns": [],
+              "name": "absent",
+              "schema": null,
+              "tag": "table"
+            },
+            "tag": "select",
+            "where": null
+          },
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT \"missing\" FROM \"absent\";",
+          "export_status": "exported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "missing_catalog_objects",
+      "passed": true,
+      "sql": "SELECT missing FROM absent;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT \"pg_notify\"('channel', 'payload');",
+          "diagnostic": "probe.unsupported_expression",
+          "export_status": "unsupported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "unsupported_export_function",
+      "passed": true,
+      "sql": "SELECT pg_notify('channel', 'payload');"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT \"id\" FROM \"accounts\" ORDER BY \"id\" ASC LIMIT 1;",
+          "diagnostic": "probe.unsupported_query_modifier",
+          "export_status": "unsupported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "unsupported_export_order",
+      "passed": true,
+      "sql": "SELECT id FROM accounts ORDER BY id LIMIT 1;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "canonical_ast_roundtrip": true,
+          "canonical_sql": "SELECT \"a\".\"id\" FROM (\"accounts\" AS \"a\" LEFT JOIN \"owners\" AS \"o\" ON (\"a\".\"owner_id\" = \"o\".\"id\"));",
+          "diagnostic": "probe.unsupported_source",
+          "export_status": "unsupported",
+          "parse_status": "parsed"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "unsupported_export_join",
+      "passed": true,
+      "sql": "SELECT a.id FROM accounts a LEFT JOIN owners o ON a.owner_id = o.id;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 1,
+          "diagnostic": "expected select",
+          "line": 1,
+          "offset": 0,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "transaction_command",
+      "passed": true,
+      "sql": "BEGIN;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 46,
+          "diagnostic": "unexpected trailing SQL input",
+          "line": 1,
+          "offset": 45,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "update_from",
+      "passed": true,
+      "sql": "UPDATE accounts SET balance = source.balance FROM source WHERE accounts.id = source.id;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 21,
+          "diagnostic": "unexpected trailing SQL input",
+          "line": 1,
+          "offset": 20,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "window_function",
+      "passed": true,
+      "sql": "SELECT row_number() OVER () FROM accounts;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 18,
+          "diagnostic": "expected select",
+          "line": 1,
+          "offset": 17,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "dml_cte",
+      "passed": true,
+      "sql": "WITH changed AS (UPDATE accounts SET balance = 0 RETURNING id) SELECT id FROM changed;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 11,
+          "diagnostic": "unexpected trailing SQL input",
+          "line": 1,
+          "offset": 10,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "multiple_statements",
+      "passed": true,
+      "sql": "SELECT 1; SELECT 2;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 13,
+          "diagnostic": "expected identifier",
+          "line": 1,
+          "offset": 12,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "mixed_parameters",
+      "passed": true,
+      "sql": "SELECT $1, ?;"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 31,
+          "diagnostic": "expected )",
+          "line": 1,
+          "offset": 30,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "foreign_key_ddl",
+      "passed": true,
+      "sql": "CREATE TABLE children (id INT REFERENCES parents(id));"
+    },
+    {
+      "deterministic_repeat": true,
+      "exit_code": 0,
+      "report": {
+        "assurance": "syntax-only",
+        "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+        "protocol": "sqlolla.m0.parser.specimen.v0",
+        "result": {
+          "column": 14,
+          "diagnostic": "expected set",
+          "line": 1,
+          "offset": 13,
+          "parse_status": "rejected"
+        },
+        "semantic_preservation": false
+      },
+      "errors": [],
+      "id": "qualified_update_target",
+      "passed": true,
+      "sql": "UPDATE public.accounts SET balance = 0;"
+    }
+  ],
+  "total": 25,
+  "passed": 25,
+  "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+  "executable_sha256": "f9558a510c92fc1d2dcd1ae5dbd82d33158dfaee7b6fb717ccc4997fb9f7bdc6",
+  "probe_source_sha256": "bb830cd20c9bf227dce75f604fd59e9726deca78b2fb0ee1c02cc0c4970b0783",
+  "cases_sha256": "96a22d1e08015e528869e4b8e5d77eccbfacd9a4e656ddc92f17252367ede594"
+}

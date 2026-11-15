@@ -1,0 +1,7 @@
+{
+  "source": "https://raw.githubusercontent.com/postgres/postgres/REL_16_16/src/include/catalog/pg_proc.dat",
+  "source_sha256": "a96a25488c7d6606385d06545bac8c969e355cfc2fdf2b7a5d1d1d0420f851b5",
+  "extraction": "sorted unique proname => 'name' fields; no function implementations",
+  "names": 2690,
+  "scope": "PostgreSQL16.16 bootstrap catalog; extensions and subsequent catalog mutation require separately complete declared context"
+}

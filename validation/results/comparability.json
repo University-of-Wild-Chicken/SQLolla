@@ -1,0 +1,4071 @@
+{
+  "cases": 47,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "failures": [],
+  "postgres_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "results": [
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/0",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "59b89788d5c9860c84ddeb4656fafd3ecf63ace2cbafc6aa6445a31105bf5341",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/0",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "23d44f992e606d7ab9b0908578b44bd8595fd2f67abc0db9244b628601cd788b",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT x FROM (SELECT NULL::json x WHERE false)t",
+      "sql_sha256": "23d44f992e606d7ab9b0908578b44bd8595fd2f67abc0db9244b628601cd788b",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/1",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "064b069121c8bbf4c1b55ccc9f24d56c6f4cfc3545aa41e0ba3182859c6fcf2d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/1",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "f8c5889ac6eeadfd1ec7d98026e55ae0309d6d12fbd999e5410ce516cf8e9d44",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::json x WHERE false)t ORDER BY x",
+      "sql_sha256": "f8c5889ac6eeadfd1ec7d98026e55ae0309d6d12fbd999e5410ce516cf8e9d44",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/2",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "fd32c32c0aa3ee2cf1e6ef8c5b3988efa50b4341aa59a6c28bb7307ce50956f2",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/2",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "15232b25c7e8c8a7a6726c1ae030ab1e99beb1cf433c170a0515800ab7d83fc6",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::json x WHERE false)t GROUP BY x",
+      "sql_sha256": "15232b25c7e8c8a7a6726c1ae030ab1e99beb1cf433c170a0515800ab7d83fc6",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/3",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "df207d40acf6a3344e4735a88a774a905a30e9bc4bd0e1317b8ad59dee96ac01",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/3",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "e6699c0cc5c987538fc71e7cea71acb25cfff43004ab8e196ed0a616f875a3c4",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT count(DISTINCT x) FROM (SELECT NULL::json x WHERE false)t",
+      "sql_sha256": "e6699c0cc5c987538fc71e7cea71acb25cfff43004ab8e196ed0a616f875a3c4",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/4",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "f27a664ae60eddf69178304ed0d1d2ec3921a56f4c778312eeb3e21d8343fc69",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/4",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "93f27f7bf3b593f90eb3dddf924a96ec3838ee06a6d538092c18fabe82beec4a",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (x) x FROM (SELECT NULL::json x WHERE false)t",
+      "sql_sha256": "93f27f7bf3b593f90eb3dddf924a96ec3838ee06a6d538092c18fabe82beec4a",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/5",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "0a59f5ec49e57d35df1438b463e0a2dd691c17fd1fa2f720fe94a6eceb67d079",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/5",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "ec2aab3303b6778c6c02a6c329945368606b6d7a95c14776f5c166b7720ad439",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number() OVER(PARTITION BY x ORDER BY x) FROM (SELECT NULL::json x WHERE false)t",
+      "sql_sha256": "ec2aab3303b6778c6c02a6c329945368606b6d7a95c14776f5c166b7720ad439",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/6",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "405c31a2f407a11ba7987426b18837e03a66c2dcc371d93ec35e70af9480d322",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/6",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "27c8334a90f6f6479882329ce2d09027e1ea5fdb9577c1b1cbdc6fc849adc07c",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json WHERE false UNION SELECT NULL::json WHERE false",
+      "sql_sha256": "27c8334a90f6f6479882329ce2d09027e1ea5fdb9577c1b1cbdc6fc849adc07c",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Append  (cost=0.00..0.03 rows=2 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/7",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "json",
+            "type": "json",
+            "type_oid": 114
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "4dd643ac6992ca81688d5932b518f4f9b915a694ba7b4ad49ac18d3785227bab",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/7",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "58e43038c04fc16753f3f872e97b9939d0ddea21dd00cab253e138c57e09c5a9",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "json",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "json"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "5a604aea2fabf590d68bf5fa8dc0ece7aa2ede939c627e7cfd183aeb58c7a8ab",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json WHERE false UNION ALL SELECT NULL::json WHERE false",
+      "sql_sha256": "5a604aea2fabf590d68bf5fa8dc0ece7aa2ede939c627e7cfd183aeb58c7a8ab",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/8",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "14aa03c8896f55ce70d51486c8620de4f295a26809477970be8a04c8c33f97bd",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/8",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "324ef404d0d9b12c132913abc83ab0bd28e98de2fc92762edea062583e275edd",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json WHERE false INTERSECT ALL SELECT NULL::json WHERE false",
+      "sql_sha256": "324ef404d0d9b12c132913abc83ab0bd28e98de2fc92762edea062583e275edd",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/9",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "75ae49a8fbf2a730593608c4c227f2eac929beeaba9a37f289d26eec7aeb233b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/9",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "682099e7bd74ae8177a0c048022dba88673689379554714b974ebbaeaaea14ca",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json WHERE false EXCEPT ALL SELECT NULL::json WHERE false",
+      "sql_sha256": "682099e7bd74ae8177a0c048022dba88673689379554714b974ebbaeaaea14ca",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/10",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "adfe96508e237494973861200378ba8c496f4bb9d7a545de141b354921db47f4",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/10",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "ccd46dd5d74ddd8dbd8eb2807e67a8f3713e5d2adc0b90df878b10af31905e57",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT x FROM (SELECT NULL::json[] x WHERE false)t",
+      "sql_sha256": "ccd46dd5d74ddd8dbd8eb2807e67a8f3713e5d2adc0b90df878b10af31905e57",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/11",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "be2cdcefb111e699437b33fe2888e2bbf22705a77c90f299590ee23ff8e1c163",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/11",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "88e305390efabecb0cca4119d0945d5799c62f483dad2f389514012a3a53f744",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::json[] x WHERE false)t ORDER BY x",
+      "sql_sha256": "88e305390efabecb0cca4119d0945d5799c62f483dad2f389514012a3a53f744",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/12",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "7b894e63563bab9548c94a13aba8a0019d775af2cbca653c197fab3db6667602",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/12",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "2cc158524c95cbf25c67068e24646d9b03f55d43faf1742e464f7288df9ea05e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::json[] x WHERE false)t GROUP BY x",
+      "sql_sha256": "2cc158524c95cbf25c67068e24646d9b03f55d43faf1742e464f7288df9ea05e",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/13",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a410cffca8831b3b4f041e44c64f200e1a704e8b396b8680a81348612fe36109",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/13",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "b3fdf1c66a249f832d65666a953eb244a24ad53a0e6fbd0651187a965da8b9c8",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT count(DISTINCT x) FROM (SELECT NULL::json[] x WHERE false)t",
+      "sql_sha256": "b3fdf1c66a249f832d65666a953eb244a24ad53a0e6fbd0651187a965da8b9c8",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/14",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "71da88e056ce115c7a88ae58f0807b936d42b2ceb741bcf6fd1e9c7c9bf9ee5c",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/14",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "c6463afae04bdb9037665dfcd3da537c2f512756872e118d53c230218095e354",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (x) x FROM (SELECT NULL::json[] x WHERE false)t",
+      "sql_sha256": "c6463afae04bdb9037665dfcd3da537c2f512756872e118d53c230218095e354",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/15",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an ordering operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "7d28c7372a9307d59190b583931b1e02c789ea0e2d4bb28c25525b8596ae8371",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/15",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "43bf76c7abb964c8560e901065e8fbf9fd5141ba358505d207ae145a9886e1cb",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number() OVER(PARTITION BY x ORDER BY x) FROM (SELECT NULL::json[] x WHERE false)t",
+      "sql_sha256": "43bf76c7abb964c8560e901065e8fbf9fd5141ba358505d207ae145a9886e1cb",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/16",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "acd2e68eecea985b26196939eca4dd161b74bd06cee9379e2c2d2c2b1e9af00c",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/16",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "a4aedd9bbede658ef4e5063825c3e98c59d044f82ae0fb87e571d2275254b739",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json[] WHERE false UNION SELECT NULL::json[] WHERE false",
+      "sql_sha256": "a4aedd9bbede658ef4e5063825c3e98c59d044f82ae0fb87e571d2275254b739",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Append  (cost=0.00..0.03 rows=2 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/17",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "json",
+            "type": "json[]",
+            "type_oid": 199
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "ba52036f2de94a4f4f65b4fa267a743b335a9821fc905d7c7b0852cbeaf362eb",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/17",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "bafeea5ec0243ea9b05308390c208a8ed3a3aa5a096d6952a7348bc1b7b67554",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "json",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "json"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "699fb269f845fb8f74f6f029d84bfa86b7bc07d7c690e685b5ff133b6ffb54d4",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json[] WHERE false UNION ALL SELECT NULL::json[] WHERE false",
+      "sql_sha256": "699fb269f845fb8f74f6f029d84bfa86b7bc07d7c690e685b5ff133b6ffb54d4",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/18",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "e68a2b3d4046012acd8d0ab5ce71743c516a7d9395beb8a00dc0f56c35cc0890",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/18",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "acc955f28585a72ad5898aab18703d81db8c9a9bb81bca09de29c551ecb345cb",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json[] WHERE false INTERSECT ALL SELECT NULL::json[] WHERE false",
+      "sql_sha256": "acc955f28585a72ad5898aab18703d81db8c9a9bb81bca09de29c551ecb345cb",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/19",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json[]",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "4a78235b0d5e6839e4f10909bd2e3efa70bfe4fe61a030e0ae6f8d3d853f76d8",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/19",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "9458f9525ae49cfdf49a7840b337a9b2b23afab6141f1258304dcf7406da847d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json[] WHERE false EXCEPT ALL SELECT NULL::json[] WHERE false",
+      "sql_sha256": "9458f9525ae49cfdf49a7840b337a9b2b23afab6141f1258304dcf7406da847d",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Limit  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/20",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a6c88835da78ab842c21b3b9d98311ac894386b66bcf80fa9160c89fb8cfdd3b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/20",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "83d183fa500ce48d79aff1f636d36198949e93c4e64e3612c2d67be5aec2b2d6",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6c49da7878aa71b0e66b6b26e47c9ab4e8d6b4975efb8d1076190d12e51c295f",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT x FROM (SELECT NULL::jsonb x WHERE false)t",
+      "sql_sha256": "6c49da7878aa71b0e66b6b26e47c9ab4e8d6b4975efb8d1076190d12e51c295f",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/21",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "9bfd83fdabc1677490563b5aa44f1bee45b5a3dff2fa6be55bdf5522e8c8a41b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/21",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "695b0692a041a9bcabfe00e5ee3112a0ea8af51a71790e4bf34c9d6ea5b27740",
+        "mode": "compare",
+        "model_sha256": "3caf7f3148c46891b0648cea11e282740735cfe9b4938096325cda5b56489b46",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "ordered",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "5c96ac2f3b28344bbd5ffcef386773dc1167ec849d13f6f4f1fe633313a53f7d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "744ca21837a9948c3b1b55c3964fcac356df240a49561268e2e16b9af368a9d8",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::jsonb x WHERE false)t ORDER BY x",
+      "sql_sha256": "5c96ac2f3b28344bbd5ffcef386773dc1167ec849d13f6f4f1fe633313a53f7d",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Group  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=0)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/22",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "7c2acf01555ae0fbb50a32e41e057486d23de313768baeccfd0e32d898540aa1",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/22",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "59d7f5f2a9c23e8889df84b6b2f979ae9d87b9e7fe6f4992da700b3e6ad18931",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "0ef5c938c035676c9fa3312e07c4a78578ab8fd2a0b1986b57179dbe59e9c813",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::jsonb x WHERE false)t GROUP BY x",
+      "sql_sha256": "0ef5c938c035676c9fa3312e07c4a78578ab8fd2a0b1986b57179dbe59e9c813",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Aggregate  (cost=0.01..0.02 rows=1 width=8)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=0)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/23",
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "count",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "0"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "6a1a117efa2497f6ffe7089239f1a5ee809b8fc67d16dae58e51684edb392971",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/23",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "716211bd485684c7d446ac0a7bf97f665e95cbab440a214e6076411c334788e7",
+        "mode": "compare",
+        "model_sha256": "0bbb6c865e9726dec3fd582ca271687eb9ea803869f3cc57871fe5077bd6ddd3",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int64",
+                    "value": 0
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "count",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "b6b1f542a8bea4337ead654384317926d8924747e332a55357ede30dd206d9ca",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "3585f774e6245a87034b5f923c801b93d5ccdca98c959bfd4a0f4ad48678f254",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT count(DISTINCT x) FROM (SELECT NULL::jsonb x WHERE false)t",
+      "sql_sha256": "b6b1f542a8bea4337ead654384317926d8924747e332a55357ede30dd206d9ca",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Limit  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/24",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "88d99c1f1f29e8446c01571476424625a12e6ffd95159cceebfd4de6990391dc",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/24",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "38011d52462291a5ffa26e3969451df208a45137c55d8a5271a4570f1e9d35d5",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "86274036c08c9734b67c2fb7eda73d940d04e086eb90ecdddde76f54584285e0",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (x) x FROM (SELECT NULL::jsonb x WHERE false)t",
+      "sql_sha256": "86274036c08c9734b67c2fb7eda73d940d04e086eb90ecdddde76f54584285e0",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "WindowAgg  (cost=0.00..0.03 rows=1 width=40)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/25",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "618f50cab6120912ed51abc5fdc2500cace37acc90b3361ebd85927869f3c96b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/25",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "bc62801098fe16702df2a1839c48030326297a68210695374e197cf8fe2c8370",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "row_number",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "d504be64b46e16f3d23a6749f45f57a7198201445135dd46bcdb8cb6a06a45f2",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number() OVER(PARTITION BY x ORDER BY x) FROM (SELECT NULL::jsonb x WHERE false)t",
+      "sql_sha256": "d504be64b46e16f3d23a6749f45f57a7198201445135dd46bcdb8cb6a06a45f2",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Unique  (cost=0.04..0.05 rows=2 width=32)"
+          ],
+          [
+            "  ->  Sort  (cost=0.04..0.05 rows=2 width=32)"
+          ],
+          [
+            "        Sort Key: (NULL::jsonb)"
+          ],
+          [
+            "        ->  Append  (cost=0.00..0.03 rows=2 width=32)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/26",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "c605605e307113cb9b0f1f581e9d8dcef41e0be3d5c16f2d410d21208421559a",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/26",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "d2d7225d27a5df27c219373953d249d08dfeb6767129db01bebac595d34c5b3e",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "8cbd8e07c45c3dff7e2597db054e875db32e8dd5dad536e40bb57a0781531e1c",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb WHERE false UNION SELECT NULL::jsonb WHERE false",
+      "sql_sha256": "8cbd8e07c45c3dff7e2597db054e875db32e8dd5dad536e40bb57a0781531e1c",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Append  (cost=0.00..0.03 rows=2 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/27",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "db6999bbd070807f0f3c93d9749c85f6ec8914e1f714f14042ac1af36f8c0295",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/27",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "1b6d597191bea2b6d7047825554e3a03dbafa2a0bafba97c33723061e3d85d02",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "db060862ef6d27df11e1bf025d49bab148fdbb00d5635a076cdba192416cf9cb",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb WHERE false UNION ALL SELECT NULL::jsonb WHERE false",
+      "sql_sha256": "db060862ef6d27df11e1bf025d49bab148fdbb00d5635a076cdba192416cf9cb",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "HashSetOp Intersect All  (cost=0.00..0.06 rows=1 width=36)"
+          ],
+          [
+            "  ->  Append  (cost=0.00..0.05 rows=2 width=36)"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 1\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 2\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/28",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "141e64951633d7bcdc7356f146948e673f0251923e97bd4bac7281046d8f3f48",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/28",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "5af7262cf6aef6c2b07d34fec1c3c48c5028ae8e790e6ffd99fd1ab7c68bdabb",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6f1293ff1f9cbc74a12c0c31cf441df0cf749a6f148bbb9d9dafb67564546745",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb WHERE false INTERSECT ALL SELECT NULL::jsonb WHERE false",
+      "sql_sha256": "6f1293ff1f9cbc74a12c0c31cf441df0cf749a6f148bbb9d9dafb67564546745",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "HashSetOp Except All  (cost=0.00..0.06 rows=1 width=36)"
+          ],
+          [
+            "  ->  Append  (cost=0.00..0.05 rows=2 width=36)"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 1\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 2\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/29",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb",
+            "type_oid": 3802
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "cdc946866c30e8fe51534cf905d82bc82f3a57e28541056a29ee09f7ff2baabb",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/29",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "e143da83fd994afd0377e68bdd422a5bb171b7f932767e4189207a928cb94e32",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "jsonb"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "049464c66d25065ea4671be226591cb1f70533f0043591fa29c3bd5ae9d13763",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb WHERE false EXCEPT ALL SELECT NULL::jsonb WHERE false",
+      "sql_sha256": "049464c66d25065ea4671be226591cb1f70533f0043591fa29c3bd5ae9d13763",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Limit  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/30",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "ceedf729d3f5fdf8fe04ef5b5eb588e88150178e32afcb81d8a765f900fdb517",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/30",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "d1d473daa1b20bfbc762e25ba803e5fb4721b606e037ad572a09fb57ae60972c",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a53702e522d64af8743fed1525cf69d1dccf4543dd01802c60a2e53bda9f1d89",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT x FROM (SELECT NULL::jsonb[] x WHERE false)t",
+      "sql_sha256": "a53702e522d64af8743fed1525cf69d1dccf4543dd01802c60a2e53bda9f1d89",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/31",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "79a9f0a1cce0c97655250555342c59ba859503d16efe889fb047829b1bcb06eb",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/31",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "6f300f3e50c7a49bd25380b193c3ae6fa570f982a3ae153d9ff900ba576fbea0",
+        "mode": "compare",
+        "model_sha256": "3caf7f3148c46891b0648cea11e282740735cfe9b4938096325cda5b56489b46",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "ordered",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "4995fa6d5503a074eb2328015a4f35d3c3fe7cddd6080a533a2966c16d3c16b8",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "744ca21837a9948c3b1b55c3964fcac356df240a49561268e2e16b9af368a9d8",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::jsonb[] x WHERE false)t ORDER BY x",
+      "sql_sha256": "4995fa6d5503a074eb2328015a4f35d3c3fe7cddd6080a533a2966c16d3c16b8",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Group  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=0)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/32",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "f74964cad3a9f9d9067095effbbd1483ab39747df5ed8a68de17834e37b7fa5b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/32",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "94e1831fa265208d822f64ce8d77177fd446a9f0179624d1cd048e51e30ab70b",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "be138f7536504e245399d8d9de973e0b35df7112df6befdf7fd7aab3d41f7b0b",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x FROM (SELECT NULL::jsonb[] x WHERE false)t GROUP BY x",
+      "sql_sha256": "be138f7536504e245399d8d9de973e0b35df7112df6befdf7fd7aab3d41f7b0b",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Aggregate  (cost=0.01..0.02 rows=1 width=8)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=0)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/33",
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "count",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "0"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "9f9d67bf4e71c14fb0934e0b0089eab63bd1edf4be5188f4b05a2143cbb4b568",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/33",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "dd00f16b24a4f4e93d03b180df1502dcafb300be13aad086c2843cb32bae9ed8",
+        "mode": "compare",
+        "model_sha256": "0bbb6c865e9726dec3fd582ca271687eb9ea803869f3cc57871fe5077bd6ddd3",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int64",
+                    "value": 0
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "count",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "999bdb33fab83aa17757a25f68cb32ade1cb3cc68fc662946f732752f376a312",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "3585f774e6245a87034b5f923c801b93d5ccdca98c959bfd4a0f4ad48678f254",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT count(DISTINCT x) FROM (SELECT NULL::jsonb[] x WHERE false)t",
+      "sql_sha256": "999bdb33fab83aa17757a25f68cb32ade1cb3cc68fc662946f732752f376a312",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Limit  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/34",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "d738a3773984e543d6622e0de34a6282695b14b7a6cd5610c74b598fcdd8c6e8",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/34",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "166b9b2fa048dfb5cf39653c807acd4ba9a26193be72a7e6323dcf8d177b9dfc",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "44d2e7b09647ba37a67d00204e43c3793fadb42e14b548ebb0294ff3f305d73d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (x) x FROM (SELECT NULL::jsonb[] x WHERE false)t",
+      "sql_sha256": "44d2e7b09647ba37a67d00204e43c3793fadb42e14b548ebb0294ff3f305d73d",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "WindowAgg  (cost=0.00..0.03 rows=1 width=40)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/35",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "row_number",
+            "type": "bigint",
+            "type_oid": 20
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "1942c82ae1f1e7cf7e76446c48c34546ea4bb9f6b924a7e96984881f7adde5e9",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/35",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "2113244e3b87644b1155fe62928c8fa33a38b55aad8a5807a04ebdd8f5a7de82",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "row_number",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "fc7d21194184721d07d83f70af13329761c810d79cefbd2fcdb14c8f8f3b2d10",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT row_number() OVER(PARTITION BY x ORDER BY x) FROM (SELECT NULL::jsonb[] x WHERE false)t",
+      "sql_sha256": "fc7d21194184721d07d83f70af13329761c810d79cefbd2fcdb14c8f8f3b2d10",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Unique  (cost=0.04..0.05 rows=2 width=32)"
+          ],
+          [
+            "  ->  Sort  (cost=0.04..0.05 rows=2 width=32)"
+          ],
+          [
+            "        Sort Key: (NULL::jsonb[])"
+          ],
+          [
+            "        ->  Append  (cost=0.00..0.03 rows=2 width=32)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/36",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "c84898652d6dec873211923445a430a1ea30a5bdc660d0521920ab4741507492",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/36",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "ba269f05cf6fa11e4a1790248c0b3dc7942ef9a1715744e8f0f664424b40d09c",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "eeebe78255939f8793417bf8ab297e10b9a0775316c2b5dd66d8ff79c8fcbcd3",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb[] WHERE false UNION SELECT NULL::jsonb[] WHERE false",
+      "sql_sha256": "eeebe78255939f8793417bf8ab297e10b9a0775316c2b5dd66d8ff79c8fcbcd3",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Append  (cost=0.00..0.03 rows=2 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/37",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "b262d4e7dce47d31f01ffc2e04a306cd55d1a4b6b106998388c0ff9dc2a74b5d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/37",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "fe20928ac60828d947a580ceaf9361baab96ef0f17891bcfcc9027986538cf69",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "9196841150ff75356b4c4de4fa828969016e8d2333fbbff1ec22ee207a15ff5a",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb[] WHERE false UNION ALL SELECT NULL::jsonb[] WHERE false",
+      "sql_sha256": "9196841150ff75356b4c4de4fa828969016e8d2333fbbff1ec22ee207a15ff5a",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "HashSetOp Intersect All  (cost=0.00..0.06 rows=1 width=36)"
+          ],
+          [
+            "  ->  Append  (cost=0.00..0.05 rows=2 width=36)"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 1\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 2\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/38",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "cdb388ac39742aa9aced9ff17d55148273265ed6bc6e63730d94dcd326215edf",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/38",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "8598a6104ba47fd0e72b831a6d32b172cd1139d4d00b6863e563c9db7cc55b2d",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6133fbf5bbf55d48574c80f15444199e7a354713b902983780c90e7795ca9678",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb[] WHERE false INTERSECT ALL SELECT NULL::jsonb[] WHERE false",
+      "sql_sha256": "6133fbf5bbf55d48574c80f15444199e7a354713b902983780c90e7795ca9678",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "HashSetOp Except All  (cost=0.00..0.06 rows=1 width=36)"
+          ],
+          [
+            "  ->  Append  (cost=0.00..0.05 rows=2 width=36)"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 1\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ],
+          [
+            "        ->  Subquery Scan on \"*SELECT* 2\"  (cost=0.00..0.02 rows=1 width=36)"
+          ],
+          [
+            "              ->  Result  (cost=0.00..0.01 rows=1 width=32)"
+          ],
+          [
+            "                    One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/39",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "jsonb",
+            "type": "jsonb[]",
+            "type_oid": 3807
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "6cfb2525ebf8e9acf75c0c442bc0dc2bb2c6b9eb2b77a12e6049f8d310fa2c95",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/39",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "189db5b545a5b947fe78905a660e413c782e210152d768802759b061810a8ead",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "jsonb",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": {
+              "array": "jsonb"
+            }
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6660b27b9d9efe3bdc5812a798e2f30742cc515475ae28b203cf74de0452d5d8",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::jsonb[] WHERE false EXCEPT ALL SELECT NULL::jsonb[] WHERE false",
+      "sql_sha256": "6660b27b9d9efe3bdc5812a798e2f30742cc515475ae28b203cf74de0452d5d8",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Result  (cost=0.00..0.01 rows=1 width=1)"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/40",
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "?column?",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            null
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "5767e772077665c5e09665e579b6897908050b9eddfecb9bf4db4839fed89f7c",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/40",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "a169d401ce8c1c942ed84a46167f80ecd57d7f498241b6c2230f201fa794083b",
+        "mode": "compare",
+        "model_sha256": "783fd83b174a3f7e0c661f08a8511e7eb83419e0950e8732429ee4b91b784019",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "bool"
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "?column?",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "0ee458a27d25a4182fd4204660d208cf18fe86608da2e1193b88a0c6381cf115",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "902926c23ab31015ce3f7be57513b65b040d7f697fdbc36ace3c335d042a674a",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json[] = NULL::json[]",
+      "sql_sha256": "0ee458a27d25a4182fd4204660d208cf18fe86608da2e1193b88a0c6381cf115",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/41",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify an equality operator for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "10aae6c5a75622d466491fe8c03340ec31351b8ce83a0cb624091f7f983d0acf",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/41",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "5bc773cd81a833a7b2f4e4f832af0590b122b73f45a3f8e6777c573dc232221d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT '{}'::json[] = '{}'::json[]",
+      "sql_sha256": "5bc773cd81a833a7b2f4e4f832af0590b122b73f45a3f8e6777c573dc232221d",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Result  (cost=0.00..0.01 rows=1 width=1)"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/42",
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "?column?",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            null
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "0ca5671294c2f9d27595e7e148b722dd0019d58e296b59623259d64583ce5788",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/42",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "a169d401ce8c1c942ed84a46167f80ecd57d7f498241b6c2230f201fa794083b",
+        "mode": "compare",
+        "model_sha256": "783fd83b174a3f7e0c661f08a8511e7eb83419e0950e8732429ee4b91b784019",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 1",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "bool"
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "?column?",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "407db5aa76658af2f5a283bf1ef51cc9fcb232415a9b2f0b43c27418b17a4a11",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "902926c23ab31015ce3f7be57513b65b040d7f697fdbc36ace3c335d042a674a",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT NULL::json[] < NULL::json[]",
+      "sql_sha256": "407db5aa76658af2f5a283bf1ef51cc9fcb232415a9b2f0b43c27418b17a4a11",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify a comparison function for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/43",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify a comparison function for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "15b5a4b6a5f78b3b2d51108114f608c8929ab360e2081e5dbda7362a05131953",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/43",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "666763e85bcff20e9af1964df2b88af34b0f669ccf6a74faf4e4d0d0ec32b95c",
+        "mode": "compare",
+        "model_sha256": "ff3ee827428e0fc3ad0f0c69d7c1b8465a5092d7647e094d67dcf36621deaf14",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "planning",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "34a16a87a3d9e02320228c4be7c51aa5ecf84b6a27eec1f76085d146ea80e1b8",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "179a36423378f87443c33da99c0bc2c4fac6caef26bc31dadc1f5a5bedf24f66",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT '{}'::json[] < '{}'::json[]",
+      "sql_sha256": "34a16a87a3d9e02320228c4be7c51aa5ecf84b6a27eec1f76085d146ea80e1b8",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Result  (cost=0.00..0.01 rows=1 width=1)"
+          ],
+          [
+            "  One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "id": "comparability/44",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "?column?",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "0a276d188603bf5aa0136096a32379845ea02017313e443f9008b73f4f307d4f",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/44",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "c70f363b98b3e8912835cc45bee38fc463c17365b73e1e8d1d7671fdc8d93fd8",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "?column?",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "3e1bb042e5f8fa773afd6664dc1ed4ec464b438a02c84ed40c7cc7612962886f",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT x=x FROM (SELECT NULL::json[] x WHERE false)t",
+      "sql_sha256": "3e1bb042e5f8fa773afd6664dc1ed4ec464b438a02c84ed40c7cc7612962886f",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "function min(json) does not exist",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/45",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "function min(json) does not exist",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "666a794063075dd60ce373a650b4a85f66b3446657b5ff2fe86053de4256fab4",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/45",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "ded4b8e56330a9596fd12dee2aafd08a3e22a17c75181647ba343dbaf577c70a",
+        "mode": "compare",
+        "model_sha256": "fe86bb900fae84f51a2368826917377e49a73fed41d30f28087f20be4ea25446",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "27a8ce409ab8a4f70e18e74e0a697255c9d227913732fad483321299bc330984",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "7cdf6e3af70f80779a1088bb3fe204a9b48101050c539fb958af3407ffae7f47",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT min(x) FROM (SELECT NULL::json x WHERE false)t",
+      "sql_sha256": "27a8ce409ab8a4f70e18e74e0a697255c9d227913732fad483321299bc330984",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "explain": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "function max(json) does not exist",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "id": "comparability/46",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "function max(json) does not exist",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "cea8a6d4ad1394812087a01d70721bf138e6ee53d3fb607735ae27169b1e5df5",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "comparability/46",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "ded4b8e56330a9596fd12dee2aafd08a3e22a17c75181647ba343dbaf577c70a",
+        "mode": "compare",
+        "model_sha256": "fe86bb900fae84f51a2368826917377e49a73fed41d30f28087f20be4ea25446",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42883"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "3a0d1e57cb74d0e67458a12a4d8acae1a8de2bd3c3ab9dc8a77ff524ba899a69",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "7cdf6e3af70f80779a1088bb3fe204a9b48101050c539fb958af3407ffae7f47",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT max(x) FROM (SELECT NULL::json x WHERE false)t",
+      "sql_sha256": "3a0d1e57cb74d0e67458a12a4d8acae1a8de2bd3c3ab9dc8a77ff524ba899a69",
+      "status": "passed"
+    }
+  ],
+  "status": "passed",
+  "uncovered_boundaries": [
+    {
+      "core_coverage": "uncovered_generic_array_extremum_not_credited",
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Aggregate  (cost=0.01..0.02 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=0)"
+          ],
+          [
+            "        One-Time Filter: false"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "min",
+            "type": "json[]",
+            "type_oid": 199
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            null
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "SELECT min(x) FROM (SELECT NULL::json[] x WHERE false)t"
+    },
+    {
+      "core_coverage": "uncovered_generic_array_extremum_not_credited",
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Aggregate  (cost=0.01..0.02 rows=1 width=32)"
+          ],
+          [
+            "  ->  Result  (cost=0.00..0.01 rows=1 width=0)"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "postgres": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "min",
+            "type": "json[]",
+            "type_oid": 199
+          }
+        ],
+        "command": "SELECT 1",
+        "rows": [
+          [
+            "{}"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "SELECT min(x) FROM (VALUES('{}'::json[]))t(x)"
+    },
+    {
+      "core_coverage": "uncovered_generic_array_extremum_not_credited",
+      "explain": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "QUERY PLAN",
+            "type_oid": 25
+          }
+        ],
+        "command": "EXPLAIN",
+        "rows": [
+          [
+            "Aggregate  (cost=0.03..0.04 rows=1 width=32)"
+          ],
+          [
+            "  ->  Values Scan on \"*VALUES*\"  (cost=0.00..0.03 rows=2 width=32)"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "could not identify a comparison function for type json",
+        "sqlstate": "42883",
+        "status": "error",
+        "table_name": null
+      },
+      "sql": "SELECT min(x) FROM (VALUES('{}'::json[]),('{}'::json[]))t(x)"
+    }
+  ]
+}

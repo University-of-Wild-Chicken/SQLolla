@@ -1,0 +1,11 @@
+name = "sqlolla_parser_probe"
+version = "0.0.0"
+defaultTargets = ["parser_probe"]
+
+[[require]]
+name = "sqlean"
+path = "../../../dependencies/SQLeanParser"
+
+[[lean_exe]]
+name = "parser_probe"
+root = "ParserProbe"

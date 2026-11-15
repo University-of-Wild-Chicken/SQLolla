@@ -1,0 +1,13 @@
+name = "sqlolla_m2_draft"
+version = "0.0.0"
+defaultTargets = ["SQLollaM2", "M2TrustAudit"]
+
+[[require]]
+name = "sqlolla_formal"
+path = "../../formal"
+
+[[lean_lib]]
+name = "SQLollaM2"
+
+[[lean_lib]]
+name = "M2TrustAudit"

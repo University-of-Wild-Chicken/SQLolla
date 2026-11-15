@@ -1,0 +1,834 @@
+{
+  "actual_pg_inputs": 110,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "failures": [],
+  "input_bags_per_query": 10,
+  "outcomes": [
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/max_0",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/max_1",
+      "minimal_pg_input": [
+        null,
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/scan/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/scan/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/no_value_zero",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/only_value_zero",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/only_value_one",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/no_value_null",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/scan/only_value_null",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/equal_zero/max_0",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/equal_zero/max_1",
+      "minimal_pg_input": [
+        0,
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/equal_zero/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/equal_zero/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/equal_zero/no_value_zero",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/equal_zero/only_value_zero",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/equal_zero/no_value_one",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/equal_zero/only_value_one",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/equal_zero/no_value_null",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/equal_zero/only_value_null",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/is_null/max_0",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/is_null/max_1",
+      "minimal_pg_input": [
+        null,
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/is_null/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/is_null/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/is_null/no_value_zero",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/is_null/only_value_zero",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/is_null/no_value_one",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/is_null/only_value_one",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/is_null/no_value_null",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/is_null/only_value_null",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/nonnull/max_0",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/nonnull/max_1",
+      "minimal_pg_input": [
+        0,
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/nonnull/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/nonnull/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/nonnull/no_value_zero",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/nonnull/only_value_zero",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/nonnull/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/nonnull/only_value_one",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/nonnull/no_value_null",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/nonnull/only_value_null",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_zero/max_0",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_zero/max_1",
+      "minimal_pg_input": [
+        1,
+        1
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_zero/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_zero/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_zero/no_value_zero",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_zero/only_value_zero",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_zero/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_zero/only_value_one",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_zero/no_value_null",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_zero/only_value_null",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/max_0",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/max_1",
+      "minimal_pg_input": [
+        null,
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/distinct/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/distinct/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/no_value_zero",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/only_value_zero",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/only_value_one",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/no_value_null",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/distinct/only_value_null",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/constant/max_0",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/constant/max_1",
+      "minimal_pg_input": [
+        null,
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/constant/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/constant/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/constant/no_value_zero",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/constant/only_value_zero",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/constant/no_value_one",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/constant/only_value_one",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/constant/no_value_null",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/constant/only_value_null",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_equal/max_0",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_equal/max_1",
+      "minimal_pg_input": [
+        1,
+        1
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_equal/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_equal/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_equal/no_value_zero",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_equal/only_value_zero",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_equal/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_equal/only_value_one",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/not_equal/no_value_null",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/not_equal/only_value_null",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/logic/max_0",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/logic/max_1",
+      "minimal_pg_input": [
+        0,
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/logic/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/logic/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/logic/no_value_zero",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/logic/only_value_zero",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/logic/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/logic/only_value_one",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/logic/no_value_null",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/logic/only_value_null",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/max_0",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/max_1",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/max_2",
+      "minimal_pg_input": [
+        null,
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/union_all/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/no_value_zero",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/only_value_zero",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/only_value_one",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/no_value_null",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/union_all/only_value_null",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/max_0",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/max_1",
+      "minimal_pg_input": [
+        null,
+        null
+      ]
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/unused_catalog/max_2",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "expected": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+      "id": "symbolic/unused_catalog/max_4",
+      "minimal_pg_input": null
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/no_value_zero",
+      "minimal_pg_input": [
+        0
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/only_value_zero",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/no_value_one",
+      "minimal_pg_input": [
+        1
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/only_value_one",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/no_value_null",
+      "minimal_pg_input": [
+        null
+      ]
+    },
+    {
+      "actual": "COUNTEREXAMPLE",
+      "expected": "COUNTEREXAMPLE",
+      "id": "symbolic/unused_catalog/only_value_null",
+      "minimal_pg_input": [
+        0
+      ]
+    }
+  ],
+  "queries": 11,
+  "runtime": {
+    "collation": "C",
+    "encoding": "UTF8",
+    "listen": "127.0.0.1",
+    "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit"
+  },
+  "status": "passed",
+  "symbolic_properties": 110,
+  "witnesses_replayed_in_pg": 72
+}

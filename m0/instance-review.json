@@ -1,0 +1,170 @@
+{
+  "artifact": "SQLolla M0 instance viewer and AI explanation architecture review",
+  "status": "read_only_reference_review_complete_no_ui_implemented",
+  "reference": {
+    "repository": "https://github.com/AnonymousAlloyLab/AlloyStudio",
+    "commit": "64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51",
+    "commit_date": "2026-11-11T04:15:45Z",
+    "access": "Official public repository read with the GitHub connector; relevant source and documentation inspected; no repository code executed or cloned",
+    "license": "MIT",
+    "license_source": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/LICENSE",
+    "reuse_boundary": "Adopt architecture and interaction ideas. No source implementation copied. If later copying substantial code, preserve the MIT copyright and permission notice and review separately bundled dependencies. Its Python/Java application architecture does not replace SQLolla's Rust core."
+  },
+  "findings": [
+    {
+      "id": "AS01",
+      "finding": "The Java behavior engine invokes the Alloy API and extracts solver-owned instances. Its category enumerator returns up to three examples and records whether enumeration finished.",
+      "sources": ["S1", "S2"],
+      "adoption": "Keep instance extraction inside the narrow Java Alloy bridge; Rust validates and stores a typed, immutable evidence envelope. Enumeration caps and completion status must remain visible."
+    },
+    {
+      "id": "AS02",
+      "finding": "Instance JSON contains traceLength, loopState, states with indexed signatures and ordered relation tuples, truncation and string-anonymization flags, and optional parameter bindings. The engine evaluates signatures and fields per trace state and preserves tuple column order.",
+      "sources": ["S3"],
+      "adoption": "Use the basic states/signatures/relations structure, extended with stable source IDs, SQL types, row-occurrence identity, multiplicities, statement events and provenance."
+    },
+    {
+      "id": "AS03",
+      "finding": "The browser renders deterministic SVG from validated instance data, with exact tables, relation filtering and selection. Binary relations use arrows; higher-arity relations use ordered tuple markers. Isolated objects and repeated tuple positions are retained. The layout is a reading aid, not a semantic relationship.",
+      "sources": ["S4", "S5", "S6"],
+      "adoption": "One immutable selected witness and state must drive graph, exact tables and transaction trace. Default SQLolla to business-table before/after views, with graph and raw Alloy data as complementary views."
+    },
+    {
+      "id": "AS04",
+      "finding": "Display limits and backend truncation are distinct. The diagram has default caps of 40 nodes and 48 tuples; exact tables describe returned data, which may itself already be truncated. Temporal examples have a state selector and an explicit loop note.",
+      "sources": ["S4", "S5", "S7"],
+      "adoption": "Use separate fullEvidenceComplete, transportComplete and viewComplete flags and counts. A filtered or capped graph cannot support a claim that an omitted value is absent. A complete retained witness must remain available under the same evidence identity when claiming replayability."
+    },
+    {
+      "id": "AS05",
+      "finding": "Explanations accompany instances but do not generate their graph structure. The AI prompt forbids invented tuples/states and universal conclusions from bounded results. Chat reuses pinned current evidence and does not start another JVM; old-context responses are suppressed.",
+      "sources": ["S4", "S8", "S9", "S10"],
+      "adoption": "Explanations are a separately validated annotation over solver evidence. Evidence IDs and current analysis revision must bind requests, responses and caches. Provider failure leaves the instance and deterministic explanation available."
+    },
+    {
+      "id": "AS06",
+      "finding": "AlloyStudio's four categories compare learner and oracle predicates: both accept, undercoverage, overcoverage and neither accept. They are not generic SQL security verdicts, and an entire-instance category does not identify one edge as the cause.",
+      "sources": ["S4", "S6", "S8"],
+      "adoption": "SQLolla must derive witness labels from its own checked query intent and property evaluations. Do not reuse educational scores or infer that a highlighted row alone proves causality."
+    },
+    {
+      "id": "AS07",
+      "finding": "The reference supports OpenAI, Anthropic, Gemini and compatible-provider adapters, but credentials are private deployment configuration. Its learner browser explicitly does not accept provider keys or arbitrary endpoints; it is not a BYOT portal.",
+      "sources": ["S9", "S11", "S12"],
+      "adoption": "SQLolla needs a distinct BYOT credential lifecycle and endpoint policy. Reuse the separation of provider adapters, local output validation, redacted errors and explicit provider choice, not the reference's credential UX."
+    }
+  ],
+  "adopted_requirements": {
+    "result_semantics": {
+      "query_intent": ["find_admissible_scenario", "find_property_holding_scenario", "find_property_violation"],
+      "solver_status": ["SAT", "UNSAT", "UNKNOWN", "TIMEOUT", "ERROR"],
+      "witness_kind": ["scenario_example", "property_holding_example", "property_counterexample"],
+      "rules": [
+        "Only a concrete SAT assignment supplies an instance. UNSAT, UNKNOWN, timeout and error never receive invented graph or table data.",
+        "A satisfying instance satisfies the executed formula. It is not automatically a safe transaction. Display query intent, constrained properties and separately evaluated properties.",
+        "A property counterexample requires the validated violation-search formula and a witness of that violation; generic SAT is insufficient.",
+        "Before reporting no violation within bounds, check the scenario assumptions are satisfiable independently of the desired postcondition; expose inconsistent assumptions instead of vacuous success.",
+        "Keep assumptions, modeled SQL subset, atom/row/value/state bounds and arithmetic abstraction visible. No bounded result is labeled an unbounded proof.",
+        "The initial sequential transaction trace has no concurrency. Only display an Alloy temporal lasso or loop when the chosen model actually supplies one."
+      ]
+    },
+    "evidence_envelope_sketch": {
+      "schema_version": "sqlolla.evidence.v1 (proposed, not implemented)",
+      "analysis_id": "opaque scoped identifier",
+      "revision": "SQL/RA/policy/schema/parameter revision",
+      "query_intent": "enum above",
+      "solver_status": "enum above",
+      "witness": "null for statuses without a concrete assignment; otherwise immutable Witness",
+      "witness_contract": {
+        "instance_id": "content-bound opaque ID",
+        "kind": "witness_kind",
+        "property_evaluations": [{"property_id":"stable ID", "value":"true|false|unknown", "evidence_refs":["typed IDs"]}],
+        "states": [{
+          "state_id":"stable ID", "step_index":"natural number",
+          "signatures":[{"signature_id":"stable compiler ID", "label":"text", "atom_ids":["ID"]}],
+          "relations":[{"relation_id":"stable compiler ID", "label":"text", "arity":"natural number", "column_ids":["ID"], "tuples":[{"tuple_id":"ID", "atom_ids":["ordered IDs"]}]}],
+          "business_tables":[{"table_id":"catalog ID", "rows":[{"row_occurrence_id":"ID", "cells":[{"column_id":"ID", "type":"exact SQL type", "value":"typed value or explicit SQL NULL"}], "multiplicity":"positive integer when compressed"}]}]
+        }],
+        "events": [{"event_id":"ID", "statement_id":"ID", "before_state_id":"ID", "after_state_id":"ID", "outcome":"commit|abort|modeled_error|step", "changed_row_ids":["IDs"], "property_ids":["IDs"]}],
+        "loop_start_state_id": "null unless a temporal lasso is actually modeled",
+        "parameters": "typed bindings with explicit scope per statement/transaction",
+        "completeness": {"full_evidence_complete":"boolean", "transport_complete":"boolean", "view_complete":"boolean", "omitted_counts":"per layer", "enumeration_complete":"boolean"},
+        "source_map": "stable SQL statement/clause and RA node IDs to Alloy declarations/relations and evidence IDs; explicit coordinate units and missing-span markers",
+        "provenance": "SQL, catalog/session, policy, parameter, IR and Alloy-model digests; parser/compiler/encoder/adapter/solver versions; scope; arithmetic/overflow policy; raw witness and redacted projection digests",
+        "replay_status": "not_attempted|validated_in_model|postgresql_replayed|replay_failed|unsupported; never inferred from AI prose"
+      }
+    },
+    "viewer": [
+      "Show graph, relational tables and ordered transaction trace for the selected instance; selections cross-highlight using stable IDs, never display-label equality.",
+      "Default nontechnical view shows affected business rows before/after, changed cells, returned rows, rollback/error outcome and the exact violated rule. Keep internal Alloy names in expandable technical detail.",
+      "SQL bags require row-occurrence identity or explicit multiplicity. Distinct equal-valued rows must not collapse merely because graph labels or cell values match.",
+      "Preserve tuple arity, position, direction, repeated endpoints and signature memberships. Distinguish NULL from missing data, empty string, anonymized value and truncation.",
+      "Treat labels and provider prose as literal text; no HTML/SVG interpretation. Provide keyboard selection, readable colors, accessible table equivalents and responsive behavior.",
+      "A highlight is an evidence locator. Claiming minimal causality requires a separate deterministic dependency or minimization result.",
+      "Retain the observed witness identity even when layouts change. SAT model enumeration may differ across solvers or runs; do not promise identical witnesses across environments."
+    ],
+    "ai_explanation": {
+      "trigger": "Explicit Explain action or explicitly enabled explanation as part of Analyze; changing graph selection or rendering alone causes no paid request",
+      "input": "Selected immutable evidence projection, current SQL/RA/policy source references, query intent, bounds, completeness, replay status and redaction metadata",
+      "output_sketch": {"analysis_id":"ID", "instance_id":"ID", "revision":"exact revision", "summary":"short plain language", "observations":[{"text":"claim", "evidence_refs":["validated typed IDs"], "kind":"observation|inference|suggestion"}], "limitations":["bounds/completeness facts"], "proposed_changes":"optional untrusted proposal requiring deterministic reanalysis"},
+      "constraints": [
+        "Every displayed factual observation must link to existing permitted evidence IDs; clicking a link highlights the exact row, tuple, state, property or source clause.",
+        "Reference validity is mechanically checkable; prose truth is not established merely because its citations exist. Display model-generated inferences distinctly and retain deterministic fact summaries.",
+        "AI cannot change solver status, witnesses, model provenance, policy truth, SQL-to-Alloy lowering or admission decisions.",
+        "Reject stale/mismatched/unknown evidence references and overlong or malformed provider output. Keep the original evidence visible if explanation validation fails.",
+        "Treat SQL identifiers, comments, row strings and user annotations as untrusted data, not model instructions. No tool execution or database writes are granted to the explanation path.",
+        "Cache by tenant/user, exact evidence projection digest, source revision, provider/account identity, model, prompt/schema version and relevant reasoning settings. Provider switching explicitly discloses selected context anew.",
+        "Token/provider failure, cancellation and timeout cannot suppress already validated solver results. Cancellation cannot recall data already sent to a provider."
+      ]
+    },
+    "byot": [
+      "Implement a separate session-scoped credential handle; keys never enter the evidence JSON, LLM prompt, logs, exported artifact, URL or browser persistent storage.",
+      "Default to ephemeral server memory or an explicitly selected private-deployment secret store; redact errors and support revocation/expiry. Clearly disclose that the deployment backend receives the token when proxying provider calls.",
+      "Offer OpenAI, Anthropic and Gemini through dedicated adapters. Compatible endpoints require a reviewed destination policy, HTTPS validation, redirect refusal and SSRF protection; do not expose unrestricted server-side fetch.",
+      "Keep provider/model/account selection explicit. No silent fallback or cross-provider resend. Show which redacted schema, query, witness and transcript fields will be sent.",
+      "Use provider-specific nonstorage options where available without claiming a universal provider retention guarantee. AI-disabled and offline deployments retain full deterministic viewing and analysis."
+    ]
+  },
+  "adversarial_acceptance_cases": [
+    "SAT scenario that violates an unevaluated policy must not be labeled safe",
+    "UNSAT violation search under inconsistent base assumptions must not be labeled verified",
+    "Two equal-valued SQL row occurrences remain distinct in table/graph correspondence",
+    "Duplicate relation labels, repeated ternary columns, self-loops and isolated atoms preserve identity",
+    "Backend truncation, transport truncation, graph filtering and graph caps receive distinct notices",
+    "Cross-state IDs remain consistent; a finite SQL trace never acquires an invented temporal loop",
+    "HTML-like identifiers and prompt-injection strings render literally and cannot authorize actions",
+    "AI references an unknown or other-tenant tuple, stale revision or omitted state: reject annotation",
+    "Provider timeout/refusal/malformed response leaves the original instance usable",
+    "Provider switch, token expiry and compatible-endpoint redirects cannot leak credentials or silently change recipient",
+    "Keyboard-only and narrow-screen users can inspect exact tables and follow evidence links",
+    "Model/compiler/schema changes invalidate stale annotations while preserving historical source-bound evidence"
+  ],
+  "suggested_plan_changes": [
+    "Add an InstanceEvidence contract between Java bridge and Rust; keep raw solver data separate from validated SQL business projections and redacted AI projections.",
+    "Add an Instance Explorer frontend milestone covering table/graph/transaction-trace synchronization and exact-data export before AI polish.",
+    "Extend explanation contracts with instance/property/source IDs, revision freshness and citation validation; show a deterministic fact explanation when AI is unavailable.",
+    "Create separate delegated reviews for evidence extraction completeness, SQL row/multiplicity projection, visualization accessibility/security, and BYOT disclosure/freshness.",
+    "Include real SAT witnesses and intentionally absent witnesses in demonstration acceptance gates; avoid treating AlloyStudio's pedagogical comparison score as a SQL security score."
+  ],
+  "limitations": [
+    "This is a source/documentation review, not an executed AlloyStudio test or deployment audit.",
+    "Reference documentation reports historical tests; those counts were not rerun and are not evidence for SQLolla.",
+    "The proposed data contract is architectural. No viewer, provider calls, UI or full witness extractor was implemented by this review.",
+    "Provider model catalogs in the reference were not independently verified and should not be copied as permanent SQLolla defaults."
+  ],
+  "sources": {
+    "S1": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/engine/src/live/BehaviorFeedback.java#L270-L282",
+    "S2": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/engine/src/live/BehaviorFeedback.java#L311-L324",
+    "S3": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/engine/src/live/BehaviorFeedback.java#L382-L477",
+    "S4": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/docs/instance-visualization.md",
+    "S5": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/web/instance-graph.js#L49-L104",
+    "S6": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/web/app.js#L1697-L1752",
+    "S7": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/web/app.js#L1783-L1854",
+    "S8": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/luna.py#L71-L85",
+    "S9": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/docs/tutor-chat-spec.md",
+    "S10": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/tutor_chat.py#L176-L219",
+    "S11": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/docs/ai-providers.md",
+    "S12": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/ai_provider.py",
+    "S13": "https://github.com/AnonymousAlloyLab/AlloyStudio/blob/64f649a34f2d7a6ff3bb1e40f435ca54ed68bc51/docs/instance-labels-spec.md"
+  }
+}

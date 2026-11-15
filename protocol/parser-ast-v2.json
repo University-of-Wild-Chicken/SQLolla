@@ -1,0 +1,4498 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sqlolla.us/protocol/parser-ast-v2.json",
+  "title": "SQLolla complete typed syntax protocol v2",
+  "description": "Syntax-only structural export. Fields describe the pinned SQLeanParser typed AST, not PostgreSQL semantic admission. Previously v1-admitted SQL still returns v1.",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "const": "sqlolla.parser.v2"
+    },
+    "parser_commit": {
+      "const": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb"
+    },
+    "assurance": {
+      "const": "syntax-only"
+    },
+    "semantic_preservation": {
+      "const": false
+    },
+    "result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "parse_status": {
+              "const": "parsed"
+            },
+            "export_status": {
+              "const": "exported"
+            },
+            "ast": {
+              "$ref": "#/$defs/statement"
+            }
+          },
+          "required": [
+            "parse_status",
+            "export_status",
+            "ast"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "parse_status": {
+              "const": "parsed"
+            },
+            "export_status": {
+              "const": "unsupported"
+            },
+            "diagnostic": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "parse_status",
+            "export_status",
+            "diagnostic"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "required": [
+    "protocol",
+    "parser_commit",
+    "assurance",
+    "semantic_preservation",
+    "result"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "integer": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "integer"
+        },
+        "magnitude": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        }
+      },
+      "required": [
+        "tag",
+        "magnitude"
+      ],
+      "additionalProperties": false
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "text"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "boolean": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "boolean"
+        },
+        "value": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "sql_null": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "sql_null"
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "decimal": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "decimal"
+        },
+        "lexeme": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "lexeme"
+      ],
+      "additionalProperties": false
+    },
+    "context_value": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "context_value"
+        },
+        "value": {
+          "enum": [
+            "current_schema",
+            "current_catalog",
+            "current_user",
+            "user",
+            "current_role",
+            "session_user",
+            "system_user",
+            "current_timestamp"
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "numbered_parameter": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "numbered_parameter"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "tag",
+        "index"
+      ],
+      "additionalProperties": false
+    },
+    "anonymous_parameter": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "anonymous_parameter"
+        },
+        "ordinal": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "tag",
+        "ordinal"
+      ],
+      "additionalProperties": false
+    },
+    "column": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "column"
+        },
+        "name": {
+          "type": "string"
+        },
+        "qualifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "qualifier",
+        "schema"
+      ],
+      "additionalProperties": false
+    },
+    "binary": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "binary"
+        },
+        "op": {
+          "enum": [
+            "eq",
+            "ne",
+            "lt",
+            "le",
+            "gt",
+            "ge",
+            "and",
+            "or",
+            "add",
+            "subtract",
+            "multiply",
+            "divide",
+            "concat"
+          ]
+        },
+        "left": {
+          "$ref": "#/$defs/expression"
+        },
+        "right": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "op",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false
+    },
+    "unary": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "unary"
+        },
+        "op": {
+          "enum": [
+            "positive",
+            "negative",
+            "not"
+          ]
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "op",
+        "arg"
+      ],
+      "additionalProperties": false
+    },
+    "count_all": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "count_all"
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "aggregate": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "aggregate"
+        },
+        "fn": {
+          "enum": [
+            "count",
+            "sum",
+            "avg",
+            "min",
+            "max"
+          ]
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "distinct": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "fn",
+        "arg",
+        "distinct"
+      ],
+      "additionalProperties": false
+    },
+    "is_null": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "is_null"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "negated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "negated"
+      ],
+      "additionalProperties": false
+    },
+    "distinct_from": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "distinct_from"
+        },
+        "left": {
+          "$ref": "#/$defs/expression"
+        },
+        "right": {
+          "$ref": "#/$defs/expression"
+        },
+        "negated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "left",
+        "right",
+        "negated"
+      ],
+      "additionalProperties": false
+    },
+    "pattern": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "pattern"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "pattern": {
+          "$ref": "#/$defs/expression"
+        },
+        "insensitive": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "pattern",
+        "insensitive"
+      ],
+      "additionalProperties": false
+    },
+    "regex": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "regex"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "pattern": {
+          "$ref": "#/$defs/expression"
+        },
+        "insensitive": {
+          "type": "boolean"
+        },
+        "negated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "pattern",
+        "insensitive",
+        "negated"
+      ],
+      "additionalProperties": false
+    },
+    "json_access": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "json_access"
+        },
+        "op": {
+          "enum": [
+            "field",
+            "field_text",
+            "path",
+            "path_text"
+          ]
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "key": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "op",
+        "arg",
+        "key"
+      ],
+      "additionalProperties": false
+    },
+    "json_existence": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "json_existence"
+        },
+        "op": {
+          "enum": [
+            "key",
+            "any",
+            "all"
+          ]
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "keys": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "op",
+        "arg",
+        "keys"
+      ],
+      "additionalProperties": false
+    },
+    "containment": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "containment"
+        },
+        "left": {
+          "$ref": "#/$defs/expression"
+        },
+        "right": {
+          "$ref": "#/$defs/expression"
+        },
+        "contained_by": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "left",
+        "right",
+        "contained_by"
+      ],
+      "additionalProperties": false
+    },
+    "overlap": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "overlap"
+        },
+        "left": {
+          "$ref": "#/$defs/expression"
+        },
+        "right": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false
+    },
+    "extract": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "extract"
+        },
+        "field": {
+          "type": "string"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "field",
+        "arg"
+      ],
+      "additionalProperties": false
+    },
+    "substring": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "substring"
+        },
+        "form": {
+          "enum": [
+            "from",
+            "from_for",
+            "for_from",
+            "for_only",
+            "similar"
+          ]
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "form",
+        "args"
+      ],
+      "additionalProperties": false
+    },
+    "cast": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "cast"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "type": {
+          "$ref": "#/$defs/data_type"
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "collate": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "collate"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "name": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "array": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "array"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "elements"
+      ],
+      "additionalProperties": false
+    },
+    "row": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "row"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "elements"
+      ],
+      "additionalProperties": false
+    },
+    "quantified_comparison": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "quantified_comparison"
+        },
+        "op": {
+          "enum": [
+            "eq",
+            "ne",
+            "lt",
+            "le",
+            "gt",
+            "ge"
+          ]
+        },
+        "quantifier": {
+          "enum": [
+            "any",
+            "some",
+            "all"
+          ]
+        },
+        "left": {
+          "$ref": "#/$defs/expression"
+        },
+        "right": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "op",
+        "quantifier",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false
+    },
+    "subscript": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "subscript"
+        },
+        "base": {
+          "$ref": "#/$defs/expression"
+        },
+        "indices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subscript_part"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "base",
+        "indices"
+      ],
+      "additionalProperties": false
+    },
+    "call": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "call"
+        },
+        "name": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "args"
+      ],
+      "additionalProperties": false
+    },
+    "named_call": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "named_call"
+        },
+        "name": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/call_argument"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "args"
+      ],
+      "additionalProperties": false
+    },
+    "case": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "case"
+        },
+        "operand": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "when": {
+                "$ref": "#/$defs/expression"
+              },
+              "then": {
+                "$ref": "#/$defs/expression"
+              }
+            },
+            "required": [
+              "when",
+              "then"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "else": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "operand",
+        "branches",
+        "else"
+      ],
+      "additionalProperties": false
+    },
+    "coalesce": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "coalesce"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "args"
+      ],
+      "additionalProperties": false
+    },
+    "greatest": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "greatest"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "args"
+      ],
+      "additionalProperties": false
+    },
+    "least": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "least"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "args"
+      ],
+      "additionalProperties": false
+    },
+    "null_if": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "null_if"
+        },
+        "left": {
+          "$ref": "#/$defs/expression"
+        },
+        "right": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false
+    },
+    "filtered_aggregate": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "filtered_aggregate"
+        },
+        "aggregate": {
+          "$ref": "#/$defs/expression"
+        },
+        "predicate": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "aggregate",
+        "predicate"
+      ],
+      "additionalProperties": false
+    },
+    "in_list": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "in_list"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "values"
+      ],
+      "additionalProperties": false
+    },
+    "between": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "between"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "lower": {
+          "$ref": "#/$defs/expression"
+        },
+        "upper": {
+          "$ref": "#/$defs/expression"
+        },
+        "negated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "lower",
+        "upper",
+        "negated"
+      ],
+      "additionalProperties": false
+    },
+    "quantified_query": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "quantified_query"
+        },
+        "op": {
+          "enum": [
+            "eq",
+            "ne",
+            "lt",
+            "le",
+            "gt",
+            "ge"
+          ]
+        },
+        "quantifier": {
+          "enum": [
+            "any",
+            "some",
+            "all"
+          ]
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        }
+      },
+      "required": [
+        "tag",
+        "op",
+        "quantifier",
+        "arg",
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "in_query": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "in_query"
+        },
+        "arg": {
+          "$ref": "#/$defs/expression"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        }
+      },
+      "required": [
+        "tag",
+        "arg",
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "exists": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "exists"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        }
+      },
+      "required": [
+        "tag",
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "scalar_subquery": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "scalar_subquery"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        }
+      },
+      "required": [
+        "tag",
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "expression": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "integer",
+            "text",
+            "boolean",
+            "sql_null",
+            "decimal",
+            "context_value",
+            "numbered_parameter",
+            "anonymous_parameter",
+            "column",
+            "binary",
+            "unary",
+            "count_all",
+            "aggregate",
+            "is_null",
+            "distinct_from",
+            "pattern",
+            "regex",
+            "json_access",
+            "json_existence",
+            "containment",
+            "overlap",
+            "extract",
+            "substring",
+            "cast",
+            "collate",
+            "array",
+            "row",
+            "quantified_comparison",
+            "subscript",
+            "call",
+            "named_call",
+            "case",
+            "coalesce",
+            "greatest",
+            "least",
+            "null_if",
+            "filtered_aggregate",
+            "in_list",
+            "between",
+            "quantified_query",
+            "in_query",
+            "exists",
+            "scalar_subquery",
+            "default_value",
+            "array_query",
+            "window_call"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "integer"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/integer"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "text"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "boolean"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/boolean"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "sql_null"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/sql_null"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "decimal"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/decimal"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "context_value"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/context_value"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "numbered_parameter"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/numbered_parameter"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "anonymous_parameter"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/anonymous_parameter"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "column"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/column"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "binary"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/binary"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "unary"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/unary"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "count_all"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/count_all"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "aggregate"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/aggregate"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "is_null"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/is_null"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "distinct_from"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/distinct_from"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "pattern"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/pattern"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "regex"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/regex"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "json_access"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/json_access"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "json_existence"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/json_existence"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "containment"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/containment"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "overlap"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/overlap"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "extract"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/extract"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "substring"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/substring"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "cast"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/cast"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "collate"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/collate"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "array"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/array"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "row"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "quantified_comparison"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/quantified_comparison"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "subscript"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/subscript"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "call"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/call"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "named_call"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/named_call"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "case"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/case"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "coalesce"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/coalesce"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "greatest"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/greatest"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "least"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/least"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "null_if"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/null_if"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "filtered_aggregate"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/filtered_aggregate"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "in_list"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/in_list"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "between"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/between"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "quantified_query"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/quantified_query"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "in_query"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/in_query"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "exists"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/exists"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "scalar_subquery"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/scalar_subquery"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "default_value"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/default_value"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "array_query"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/array_query"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "window_call"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/window_call"
+          }
+        }
+      ]
+    },
+    "positional_argument": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "positional_argument"
+        },
+        "value": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "named_argument": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "named_argument"
+        },
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/expression"
+        },
+        "spelling": {
+          "enum": [
+            "arrow",
+            "assignment"
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "value",
+        "spelling"
+      ],
+      "additionalProperties": false
+    },
+    "call_argument": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "positional_argument",
+            "named_argument"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "positional_argument"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/positional_argument"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "named_argument"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/named_argument"
+          }
+        }
+      ]
+    },
+    "index": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "index"
+        },
+        "expression": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "expression"
+      ],
+      "additionalProperties": false
+    },
+    "slice": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "slice"
+        },
+        "lower": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "lower",
+        "upper"
+      ],
+      "additionalProperties": false
+    },
+    "subscript_part": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "index",
+            "slice"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "index"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/index"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "slice"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/slice"
+          }
+        }
+      ]
+    },
+    "scalar_type": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "scalar_type"
+        },
+        "name": {
+          "enum": [
+            "int",
+            "bigint",
+            "text",
+            "varchar",
+            "bool",
+            "real",
+            "double_precision",
+            "numeric",
+            "smallint",
+            "char",
+            "date",
+            "time",
+            "timetz",
+            "timestamp",
+            "timestamptz",
+            "interval",
+            "uuid",
+            "json",
+            "jsonb",
+            "bytea",
+            "name",
+            "bit",
+            "varbit"
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "array_type": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "array_type"
+        },
+        "element": {
+          "$ref": "#/$defs/type_name"
+        }
+      },
+      "required": [
+        "tag",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "interval_range_type": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "interval_range_type"
+        },
+        "fields": {
+          "enum": [
+            "year",
+            "month",
+            "day",
+            "hour",
+            "minute",
+            "second",
+            "year_to_month",
+            "day_to_hour",
+            "day_to_minute",
+            "day_to_second",
+            "hour_to_minute",
+            "hour_to_second",
+            "minute_to_second"
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "type_name": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "scalar_type",
+            "array_type",
+            "interval_range_type",
+            "named_type"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "scalar_type"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/scalar_type"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "array_type"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/array_type"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "interval_range_type"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/interval_range_type"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "named_type"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/named_type"
+          }
+        }
+      ]
+    },
+    "data_type": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/type_name"
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "required": [
+        "name",
+        "modifiers"
+      ],
+      "additionalProperties": false
+    },
+    "wildcard": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "wildcard"
+        },
+        "qualifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "qualifier",
+        "schema"
+      ],
+      "additionalProperties": false
+    },
+    "expression_item": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "expression"
+        },
+        "value": {
+          "$ref": "#/$defs/expression"
+        },
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "value",
+        "alias"
+      ],
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "wildcard",
+            "expression"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "wildcard"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/wildcard"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "expression"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/expression_item"
+          }
+        }
+      ]
+    },
+    "table": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "table"
+        },
+        "name": {
+          "type": "string"
+        },
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "alias",
+        "columns",
+        "schema"
+      ],
+      "additionalProperties": false
+    },
+    "derived": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "derived"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lateral": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "query",
+        "alias",
+        "columns",
+        "lateral"
+      ],
+      "additionalProperties": false
+    },
+    "derived_anonymous": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "derived_anonymous"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        },
+        "lateral": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "query",
+        "lateral"
+      ],
+      "additionalProperties": false
+    },
+    "join": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "join"
+        },
+        "kind": {
+          "enum": [
+            "inner",
+            "left",
+            "right",
+            "full",
+            "cross"
+          ]
+        },
+        "left": {
+          "$ref": "#/$defs/source"
+        },
+        "right": {
+          "$ref": "#/$defs/source"
+        },
+        "condition": {
+          "$ref": "#/$defs/condition"
+        }
+      },
+      "required": [
+        "tag",
+        "kind",
+        "left",
+        "right",
+        "condition"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "table",
+            "derived",
+            "derived_anonymous",
+            "join"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "table"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/table"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "derived"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/derived"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "derived_anonymous"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/derived_anonymous"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "join"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/join"
+          }
+        }
+      ]
+    },
+    "none": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "none"
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "natural": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "natural"
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "using": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "using"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "columns"
+      ],
+      "additionalProperties": false
+    },
+    "on": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "on"
+        },
+        "expression": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "expression"
+      ],
+      "additionalProperties": false
+    },
+    "condition": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "none",
+            "natural",
+            "using",
+            "on"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "none"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/none"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "natural"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/natural"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "using"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/using"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "on"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/on"
+          }
+        }
+      ]
+    },
+    "select": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "select"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "where": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distinct": {
+          "type": "boolean"
+        },
+        "group_by": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        },
+        "having": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distinct_on": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "items",
+        "source",
+        "where",
+        "distinct",
+        "group_by",
+        "having",
+        "distinct_on"
+      ],
+      "additionalProperties": false
+    },
+    "values": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "values"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/expression"
+            }
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "rows"
+      ],
+      "additionalProperties": false
+    },
+    "set_operation": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "set_operation"
+        },
+        "op": {
+          "enum": [
+            "union",
+            "intersect",
+            "except"
+          ]
+        },
+        "all": {
+          "type": "boolean"
+        },
+        "left": {
+          "$ref": "#/$defs/query_value"
+        },
+        "right": {
+          "$ref": "#/$defs/query_value"
+        }
+      },
+      "required": [
+        "tag",
+        "op",
+        "all",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false
+    },
+    "query_body": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "select",
+            "values",
+            "set_operation"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "select"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/select"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "values"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/values"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "set_operation"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/set_operation"
+          }
+        }
+      ]
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "query"
+        },
+        "body": {
+          "$ref": "#/$defs/query_body"
+        },
+        "ctes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "query": {
+                "$ref": "#/$defs/query_value"
+              }
+            },
+            "required": [
+              "name",
+              "columns",
+              "query"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "recursive": {
+          "type": "boolean"
+        },
+        "order_by": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/expression"
+              },
+              "direction": {
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              },
+              "nulls": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "first",
+                      "last"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "expression",
+              "direction",
+              "nulls"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "offset_first": {
+          "type": "boolean"
+        },
+        "locking": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "strength": {
+                "enum": [
+                  "update",
+                  "no_key_update",
+                  "share",
+                  "key_share"
+                ]
+              },
+              "targets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "wait_policy": {
+                "enum": [
+                  "block",
+                  "nowait",
+                  "skip_locked"
+                ]
+              }
+            },
+            "required": [
+              "strength",
+              "targets",
+              "wait_policy"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "body",
+        "ctes",
+        "recursive",
+        "order_by",
+        "limit",
+        "offset",
+        "offset_first",
+        "locking"
+      ],
+      "additionalProperties": false
+    },
+    "assignment": {
+      "type": "object",
+      "properties": {
+        "column": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "column",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "query_source": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "query_source"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        }
+      },
+      "required": [
+        "tag",
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "default_values": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "default_values"
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "insert_source": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "values",
+            "query_source",
+            "default_values"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "values"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/values"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "query_source"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/query_source"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "default_values"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/default_values"
+          }
+        }
+      ]
+    },
+    "conflict_columns": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "columns"
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "where": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "names"
+      ],
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "constraint"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "conflict_target": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "columns",
+            "constraint"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "columns"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/conflict_columns"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "constraint"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/constraint"
+          }
+        }
+      ]
+    },
+    "nothing": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "nothing"
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "conflict_update": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "update"
+        },
+        "assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/assignment"
+          }
+        },
+        "where": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "assignments",
+        "where"
+      ],
+      "additionalProperties": false
+    },
+    "conflict_action": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "nothing",
+            "update"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "nothing"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/nothing"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "update"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/conflict_update"
+          }
+        }
+      ]
+    },
+    "conflict": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/conflict_target"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action": {
+          "$ref": "#/$defs/conflict_action"
+        }
+      },
+      "required": [
+        "target",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "insert": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "insert"
+        },
+        "table": {
+          "type": "string"
+        },
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/insert_source"
+        },
+        "on_conflict": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/conflict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returning": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "table",
+        "alias",
+        "columns",
+        "source",
+        "on_conflict",
+        "returning"
+      ],
+      "additionalProperties": false
+    },
+    "update": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "update"
+        },
+        "table": {
+          "type": "string"
+        },
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/assignment"
+          }
+        },
+        "where": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returning": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        },
+        "from": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "table",
+        "alias",
+        "assignments",
+        "where",
+        "returning"
+      ],
+      "additionalProperties": false
+    },
+    "delete": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "delete"
+        },
+        "table": {
+          "type": "string"
+        },
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "where": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returning": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        },
+        "using": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tag",
+        "table",
+        "alias",
+        "where",
+        "returning"
+      ],
+      "additionalProperties": false
+    },
+    "column_declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/data_type"
+        },
+        "nullable": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "primary_key": {
+          "type": "boolean"
+        },
+        "unique": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "nullable",
+        "default",
+        "primary_key",
+        "unique"
+      ],
+      "additionalProperties": false
+    },
+    "primary_key": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "primary_key"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "columns"
+      ],
+      "additionalProperties": false
+    },
+    "unique": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "unique"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "columns"
+      ],
+      "additionalProperties": false
+    },
+    "table_constraint": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "primary_key",
+            "unique"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "primary_key"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/primary_key"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "unique"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/unique"
+          }
+        }
+      ]
+    },
+    "create_table": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "create_table"
+        },
+        "name": {
+          "type": "string"
+        },
+        "if_not_exists": {
+          "type": "boolean"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/column_declaration"
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/table_constraint"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "if_not_exists",
+        "columns",
+        "constraints"
+      ],
+      "additionalProperties": false
+    },
+    "add_column": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "add_column"
+        },
+        "column": {
+          "$ref": "#/$defs/column_declaration"
+        },
+        "if_not_exists": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "column",
+        "if_not_exists"
+      ],
+      "additionalProperties": false
+    },
+    "drop_column": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "drop_column"
+        },
+        "name": {
+          "type": "string"
+        },
+        "if_exists": {
+          "type": "boolean"
+        },
+        "cascade": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "if_exists",
+        "cascade"
+      ],
+      "additionalProperties": false
+    },
+    "rename_column": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "rename_column"
+        },
+        "name": {
+          "type": "string"
+        },
+        "new_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "new_name"
+      ],
+      "additionalProperties": false
+    },
+    "rename_table": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "rename_table"
+        },
+        "new_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "new_name"
+      ],
+      "additionalProperties": false
+    },
+    "set_type": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "set_type"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/data_type"
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "set_not_null": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "set_not_null"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "drop_not_null": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "drop_not_null"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "drop_default": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "drop_default"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "set_default": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "set_default"
+        },
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "alter_action": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "add_column",
+            "drop_column",
+            "rename_column",
+            "rename_table",
+            "set_type",
+            "set_not_null",
+            "drop_not_null",
+            "set_default",
+            "drop_default"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "add_column"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/add_column"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "drop_column"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/drop_column"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "rename_column"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/rename_column"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "rename_table"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/rename_table"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "set_type"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/set_type"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "set_not_null"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/set_not_null"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "drop_not_null"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/drop_not_null"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "set_default"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/set_default"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "drop_default"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/drop_default"
+          }
+        }
+      ]
+    },
+    "alter_table": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "alter_table"
+        },
+        "name": {
+          "type": "string"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/alter_action"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "actions"
+      ],
+      "additionalProperties": false
+    },
+    "drop_table": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "drop_table"
+        },
+        "name": {
+          "type": "string"
+        },
+        "if_exists": {
+          "type": "boolean"
+        },
+        "cascade": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "if_exists",
+        "cascade"
+      ],
+      "additionalProperties": false
+    },
+    "statement": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "query",
+            "with_statement",
+            "insert",
+            "update",
+            "delete",
+            "create_table",
+            "alter_table",
+            "drop_table",
+            "create_view",
+            "drop_view"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "query"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/query"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "with_statement"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/with_statement"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "insert"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/insert"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "update"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/update"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "delete"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/delete"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "create_table"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/create_table"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "alter_table"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/alter_table"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "drop_table"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/drop_table"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "create_view"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/create_view"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "drop_view"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/drop_view"
+          }
+        }
+      ]
+    },
+    "query_value": {
+      "type": "object",
+      "required": [
+        "tag"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "query",
+            "with_statement"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "query"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/query"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "tag": {
+                "const": "with_statement"
+              }
+            },
+            "required": [
+              "tag"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/with_statement"
+          }
+        }
+      ]
+    },
+    "named_type": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "named_type"
+        },
+        "name": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "tag",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "default_value": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "default_value"
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "array_query": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "array_query"
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        }
+      },
+      "required": [
+        "tag",
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "window_call": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "window_call"
+        },
+        "function": {
+          "$ref": "#/$defs/expression"
+        },
+        "window": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "partition_by": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expression"
+              }
+            },
+            "order_by": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "expression": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "direction": {
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  },
+                  "nulls": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "first",
+                          "last"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "expression",
+                  "direction",
+                  "nulls"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "frame": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "name",
+            "partition_by",
+            "order_by",
+            "frame"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "tag",
+        "function",
+        "window"
+      ],
+      "additionalProperties": false
+    },
+    "with_statement": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "with_statement"
+        },
+        "recursive": {
+          "type": "boolean"
+        },
+        "ctes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "materialized": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "statement": {
+                "$ref": "#/$defs/statement"
+              }
+            },
+            "required": [
+              "name",
+              "columns",
+              "materialized",
+              "statement"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "body": {
+          "$ref": "#/$defs/statement"
+        }
+      },
+      "required": [
+        "tag",
+        "recursive",
+        "ctes",
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    "create_view": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "create_view"
+        },
+        "name": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "query": {
+          "$ref": "#/$defs/query_value"
+        },
+        "replace": {
+          "type": "boolean"
+        },
+        "temporary": {
+          "type": "boolean"
+        },
+        "recursive": {
+          "type": "boolean"
+        },
+        "options": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "check_option": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "tag",
+        "name",
+        "columns",
+        "query",
+        "replace",
+        "temporary",
+        "recursive",
+        "options",
+        "check_option"
+      ],
+      "additionalProperties": false
+    },
+    "drop_view": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "const": "drop_view"
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "if_exists": {
+          "type": "boolean"
+        },
+        "cascade": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tag",
+        "names",
+        "if_exists",
+        "cascade"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,6 @@
+.lake/
+test-results.json
+build.log
+census-results.json
+.tools/
+__pycache__/

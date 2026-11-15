@@ -1,0 +1,26 @@
+{
+  "cluster_removed": true,
+  "outcomes": [
+    {
+      "diagnostic": "ERROR:  UNION types text and integer cannot be matched",
+      "id": "values_local_unknown",
+      "rejected": true
+    },
+    {
+      "diagnostic": "ERROR:  UNION types text and integer cannot be matched\nLINE 1: (SELECT NULL UNION SELECT NULL) UNION SELECT 1;\n                                                     ^",
+      "id": "nested_unknown",
+      "rejected": true
+    },
+    {
+      "diagnostic": "ERROR:  invalid input syntax for type integer: \" 1 \"\nLINE 1: SELECT 1 = ' 1 ';\n                   ^",
+      "id": "unicode_integer_whitespace",
+      "rejected": true
+    },
+    {
+      "diagnostic": "ERROR:  invalid input syntax for type boolean: \" true \"\nLINE 1: SELECT TRUE = ' true ';\n                      ^",
+      "id": "unicode_boolean_whitespace",
+      "rejected": true
+    }
+  ],
+  "status": "passed"
+}

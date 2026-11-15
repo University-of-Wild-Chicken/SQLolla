@@ -1,0 +1,5717 @@
+{
+  "cases": 32,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "failures": [],
+  "postgres_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "results": [
+    {
+      "errors": [],
+      "id": "unique_indexes/0",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 4,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 4",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ],
+                [
+                  "1",
+                  "5",
+                  "f"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "1",
+              "5",
+              "f"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "4d1cbaf769bd5217a2dc0522bdc05143cf2c9c561935db494a1302f3639c9b0f",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/0",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "f8c178007391f8145f8d2718f2c43b14160dd779c2ee701fcb2524376bc79253",
+        "mode": "compare",
+        "model_sha256": "8cdd15c61dfbf747d90a43e30e7707a08717cea4b55a0acafe4fc05d77c7256b",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 5
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 5
+                  },
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "f2a5918b8853f258fd8f6cb22c1ead64efacac74e13bfbd01d862177b48c2554",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "5ebefe9c6282150a47d48a5adb2a4ac82e74a68379031ec4f7d0c210bee97bad",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,false) RETURNING *",
+      "sql_sha256": "f2a5918b8853f258fd8f6cb22c1ead64efacac74e13bfbd01d862177b48c2554",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/1",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "idx",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"idx\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "f236bcfcb4cba37112ccc1a7a6e3c330f79eaac47d7c915f3a4e9f46011610a9",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/1",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "1c7b3dd384b0356bcabc79541800fa7ca8e606bd5a75cf968d47d53a551ef9a3",
+        "mode": "compare",
+        "model_sha256": "34e2a7c41f0a985d7cc25bd040a69a032667eade12bce57123fcd5a072687d4f",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "idx",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "2e477afca25d79529c82c0fb4712d01c6855c917faa887984d6937ce12932a11",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "3d0fb83199804d3e64dd91f0e45930b013fd679ed70e9483fd8409e3ee523950",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,true) RETURNING *",
+      "sql_sha256": "2e477afca25d79529c82c0fb4712d01c6855c917faa887984d6937ce12932a11",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/2",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 4,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 4",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ],
+                [
+                  "1",
+                  "5",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "1",
+              "5",
+              null
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "cb900338e6606f2407e0e64b982e718214a8bfd0fea9561c22bf711ca7f40216",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/2",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "dd18ddff45700d06ee85079ad0243783b6492c16882b0f5ef0ccf68c8f6424a3",
+        "mode": "compare",
+        "model_sha256": "757c93e944afc49380929626cdd37d773566759ca8d9176c31cbc335bee3cc41",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 5
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 5
+                  },
+                  {
+                    "type": "null",
+                    "value": "bool"
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "f8c5ac5f4f973498c9188207ff5f9a8d93dc7bd1a3e5799679c0f9eff49f0ef8",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "215b820a5bfec8b155f12d5ceccbc1e93f5eb5a4e19f2e3e4c43d6461f9ffd17",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,NULL) RETURNING *",
+      "sql_sha256": "f8c5ac5f4f973498c9188207ff5f9a8d93dc7bd1a3e5799679c0f9eff49f0ef8",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/3",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: NOTHING"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "58c778f04c35fa57429c77e3eae886c885d626106b50d433015369c04f53c148",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/3",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "0ac3975f88e69e2ac376e0aa45c47273e24ff0726ff74d559c7b7284e54a0f0b",
+        "mode": "compare",
+        "model_sha256": "a7b17b543367bf45ae029e5f64d8ae879cc0ee1ca200c823d6fd8b8f3b5271ab",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 0",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a5fa0809acd56fe25d357f8d44b6b3c5e64b5b594a6fb720b60d90eee5d52063",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "36038d69a2a9fd750fe0a958ade4bad8f78fcc3deaa931c3c16c082a6e0a41b4",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,true) ON CONFLICT DO NOTHING RETURNING *",
+      "sql_sha256": "a5fa0809acd56fe25d357f8d44b6b3c5e64b5b594a6fb720b60d90eee5d52063",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/4",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: NOTHING"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "1b47c93b13f657f92a175569b88aa0324e68e79eb113e82dc4b59782e82d9d6d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/4",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "ad5454f7405344adec7ee2da69bcb7e8c59120919524429f53ac9cc824beea9b",
+        "mode": "compare",
+        "model_sha256": "a7b17b543367bf45ae029e5f64d8ae879cc0ee1ca200c823d6fd8b8f3b5271ab",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 0",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7d4e233a7de6675c43f4ee67cf113dca44387fb5eb3a00eeead635d5001c26c5",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "36038d69a2a9fd750fe0a958ade4bad8f78fcc3deaa931c3c16c082a6e0a41b4",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,true) ON CONFLICT(x) WHERE b DO NOTHING RETURNING *",
+      "sql_sha256": "7d4e233a7de6675c43f4ee67cf113dca44387fb5eb3a00eeead635d5001c26c5",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/5",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ],
+                [
+                  "1",
+                  "5",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: UPDATE"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "1",
+              "5",
+              "t"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "86fb5814b0fdc69772c78c621f9cbcb82529218ecb0621e45e56b86d2e962a55",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/5",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "cc22f6160a22c7428002cd3c29ee7bdb0728ffd7cdd6478e733964b577349532",
+        "mode": "compare",
+        "model_sha256": "6e503e315e6264d7d2e6f68f7efbfe562c3e17c83c1f9dfb102b4b312e1aa4ea",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 5
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 5
+                  },
+                  {
+                    "type": "bool",
+                    "value": true
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "52522cf1ea7f3b1b6531c02c99c9a25262ba6a651b1b3b51ec2fa0e50631c8c1",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "8e96a5834943cbddc04afd4f6576e26c6ce159ad244f5753513e1dd0570f6631",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,true) ON CONFLICT(x) WHERE b DO UPDATE SET y=excluded.y RETURNING *",
+      "sql_sha256": "52522cf1ea7f3b1b6531c02c99c9a25262ba6a651b1b3b51ec2fa0e50631c8c1",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/6",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 4,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 4",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ],
+                [
+                  "1",
+                  "5",
+                  "f"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: UPDATE"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "1",
+              "5",
+              "f"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "6808f9f3ca12a83a785f69c6172790e6aba1faceaf0c7b471c7e1a8e8cce4d26",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/6",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "1e542a906ff8c71dac8fd520e8adb631794a3e1928bf4d2cdb30a3525d882709",
+        "mode": "compare",
+        "model_sha256": "8cdd15c61dfbf747d90a43e30e7707a08717cea4b55a0acafe4fc05d77c7256b",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 5
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 5
+                  },
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "9928c60a20e11166a32bb5fa2196490f6fa02bd0ba7f906c926e682b8b1c465e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "5ebefe9c6282150a47d48a5adb2a4ac82e74a68379031ec4f7d0c210bee97bad",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,false) ON CONFLICT(x) WHERE b DO UPDATE SET y=excluded.y RETURNING *",
+      "sql_sha256": "9928c60a20e11166a32bb5fa2196490f6fa02bd0ba7f906c926e682b8b1c465e",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/7",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: NOTHING"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "82d09f8e7ed854ec4c09bca0fe5a03d9804d0fc18c9ed86ac77fb6958cb9c146",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/7",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "320de8e804a5c9bae8e42d515c854fdc87224abe2e7b95da2c5ecf9cf1003ebd",
+        "mode": "compare",
+        "model_sha256": "a7b17b543367bf45ae029e5f64d8ae879cc0ee1ca200c823d6fd8b8f3b5271ab",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 0",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "89a79c7021a171eec6305124210ac8ca8875bd5ec6ca84f01b79b958289ff21a",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "36038d69a2a9fd750fe0a958ade4bad8f78fcc3deaa931c3c16c082a6e0a41b4",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,true) ON CONFLICT(x) WHERE b AND y>0 DO NOTHING RETURNING *",
+      "sql_sha256": "89a79c7021a171eec6305124210ac8ca8875bd5ec6ca84f01b79b958289ff21a",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/8",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 4,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 4",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ],
+                [
+                  "1",
+                  "5",
+                  "f"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: NOTHING"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "1",
+              "5",
+              "f"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "4a46f4d07050f93f1447a1cba2733ef5afb7fd388ab6f179bdb50f028afdc939",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/8",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "70052f73e1fec103ebc230c24e21a0b34ac1ad22aecb8e2535d9a58ff609e319",
+        "mode": "compare",
+        "model_sha256": "8cdd15c61dfbf747d90a43e30e7707a08717cea4b55a0acafe4fc05d77c7256b",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 5
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 5
+                  },
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6ee8944201295b2f2dcb8511df331c101fdd49d7e4d3022f2bcf78daf0ed59d1",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "5ebefe9c6282150a47d48a5adb2a4ac82e74a68379031ec4f7d0c210bee97bad",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,false) ON CONFLICT(x) WHERE b AND y>0 DO NOTHING RETURNING *",
+      "sql_sha256": "6ee8944201295b2f2dcb8511df331c101fdd49d7e4d3022f2bcf78daf0ed59d1",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/9",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "there is no unique or exclusion constraint matching the ON CONFLICT specification",
+          "sqlstate": "42P10",
+          "status": "error",
+          "table_name": null
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "planning",
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "there is no unique or exclusion constraint matching the ON CONFLICT specification",
+          "sqlstate": "42P10",
+          "status": "error",
+          "table_name": null
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "698a6898d43e75baf68b298f265407b549313ee5a76e5bd70f48d1f77b67f063",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/9",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "ec2ba9fb25c5f650c9e518549f5ae5da0e0ed9ea579f328f40bf3725c856c0e4",
+        "mode": "compare",
+        "model_sha256": "eb43c90e543cae5b2283a5160604693fc199a68dd5843860b79b94dfda4fbebf",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42P10"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e020bdb9737c251763cd8813b0243e838116bad4c3356aa2b534e94c230464da",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "581f3f5e879ff5b5d13277d3278b072b8fbecb05a2605a620ed7287d528e3341",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,true) ON CONFLICT(x) DO NOTHING RETURNING *",
+      "sql_sha256": "e020bdb9737c251763cd8813b0243e838116bad4c3356aa2b534e94c230464da",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/10",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "constraint \"idx\" for table \"t\" does not exist",
+          "sqlstate": "42704",
+          "status": "error",
+          "table_name": null
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "planning",
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "constraint \"idx\" for table \"t\" does not exist",
+          "sqlstate": "42704",
+          "status": "error",
+          "table_name": null
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "956c0d6c3f21db8200539268914af572b0e0d44fc856ec02884e12fbb3bf04ed",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/10",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "13ac510e71e232410f0981a742b4fe968b9274bb3db36270e4df02c9ea087ada",
+        "mode": "compare",
+        "model_sha256": "1b6cf95c4c9f29bd6e774c7c8eb54caf9416c8c504c0647ecc1faf2b77f09f70",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42704"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "475085a9718205fc18c7961513033aa1643bce41bc74e42e2a7fe3a0bf9533b0",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "671bd8242313eaaf2c9861558e539533d385b8e2e6dfb44953dffff605af0b77",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,true) ON CONFLICT ON CONSTRAINT idx DO NOTHING RETURNING *",
+      "sql_sha256": "475085a9718205fc18c7961513033aa1643bce41bc74e42e2a7fe3a0bf9533b0",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/11",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Update on t  (cost=0.00..37.50 rows=11 width=7)"
+            ],
+            [
+              "  ->  Seq Scan on t  (cost=0.00..37.50 rows=11 width=7)"
+            ],
+            [
+              "        Filter: (y = 3)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "idx",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"idx\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "c613f09e5cf35d772b9c1e4b6dd581a3da26c97c19b656b8d745511cde229600",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/11",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "bce5cd7cd38b709b5b0e36fde75566d03d58ea2c13db88456fda3a48f3ddfada",
+        "mode": "compare",
+        "model_sha256": "34e2a7c41f0a985d7cc25bd040a69a032667eade12bce57123fcd5a072687d4f",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "idx",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "10b2c99bdf23b469b3191a290c708c3782cfdd379e206504209b4d46a8d9e121",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "3d0fb83199804d3e64dd91f0e45930b013fd679ed70e9483fd8409e3ee523950",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "UPDATE t SET b=true WHERE y=3 RETURNING *",
+      "sql_sha256": "10b2c99bdf23b469b3191a290c708c3782cfdd379e206504209b4d46a8d9e121",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/12",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 2,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 2",
+              "rows": [
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Delete on t  (cost=9.70..30.70 rows=1100 width=6)"
+            ],
+            [
+              "  ->  Bitmap Heap Scan on t  (cost=9.70..30.70 rows=1100 width=6)"
+            ],
+            [
+              "        Recheck Cond: b"
+            ],
+            [
+              "        ->  Bitmap Index Scan on idx  (cost=0.00..9.42 rows=1100 width=0)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "DELETE 1",
+          "rows": [
+            [
+              "1",
+              "2",
+              "t"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "23470d8bde59046659cefa0bb70884c9c415ed894fe8f55b2e7ab80b209c945c",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/12",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "515ee028baf1133a4e5cd0e2d9c280d2fa493fc1b5ffe7757900383fedd5479d",
+        "mode": "compare",
+        "model_sha256": "d25263b754ba01e671dbb64da83ccb78f5ff2cdb5bd8c04b6ac34b8ca832937a",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "DELETE 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 4
+                    },
+                    {
+                      "type": "null",
+                      "value": "bool"
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "bool",
+                    "value": true
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "f49ec757d83329d4654ae1027d7113a12b415f2e68c99f2987070c2a7b736082",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "59de8ec2990a1eb0be1e28b3fa929a09346043131ef30b03734aafa71dd0048c",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "DELETE FROM t WHERE b RETURNING *",
+      "sql_sha256": "f49ec757d83329d4654ae1027d7113a12b415f2e68c99f2987070c2a7b736082",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/13",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 3,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 3",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "1",
+                  "3",
+                  "f"
+                ],
+                [
+                  "1",
+                  "4",
+                  null
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "there is no unique or exclusion constraint matching the ON CONFLICT specification",
+          "sqlstate": "42P10",
+          "status": "error",
+          "table_name": null
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "planning",
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "there is no unique or exclusion constraint matching the ON CONFLICT specification",
+          "sqlstate": "42P10",
+          "status": "error",
+          "table_name": null
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "91d6aa4bde7b250a47d83d652c78e536b95c5a056fc55f093b9355cffdacd098",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "da1df1884050c388b892f6b7ec7195300f84008e59fc051c57a2845ee8b87450",
+        "id": "unique_indexes/13",
+        "input_sha256": "f35097ddcbf2b1b51941e019c0b208c51c13d8283290caafc9e932856d336c39",
+        "ir_sha256": "ded797a971d50df69143444f536c9199cddd98806f44c9273034a4a0e3aea7cd",
+        "mode": "compare",
+        "model_sha256": "c30f11b0845b8c8975760c58c48f6f4f2e43981c3f79dae39e9ad42c4973b0f6",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42P10"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "9c64373dbba44217cf5678b73b5415e4f7df3b6668029290ba7a7bfde31c7937",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "581f3f5e879ff5b5d13277d3278b072b8fbecb05a2605a620ed7287d528e3341",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t SELECT 2,5,true WHERE false ON CONFLICT(x) DO NOTHING",
+      "sql_sha256": "9c64373dbba44217cf5678b73b5415e4f7df3b6668029290ba7a7bfde31c7937",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/14",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "5",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: UPDATE"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x)",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": null,
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "1",
+              "5",
+              "t"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "6981c71d0d1643a018742a8084e6e9b381777e0d8df2b872330a7729ce52c680",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "8f2b293a3ec56cfed7661b2b3c7a6a47611450994bf855c19a83b2798ff33fee",
+        "id": "unique_indexes/14",
+        "input_sha256": "7b0a64d6b88d14ef002813bc743e0c16009d2212e9ce94126f282646ce37dc65",
+        "ir_sha256": "d93d883d6bc51127a34fe7ae709361efe65bf095df3207c44fe030b9427026b7",
+        "mode": "compare",
+        "model_sha256": "121528e5c2a1a453696353b8aaeda6150458139febd462b9fe03fa3ae98e03ee",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 5
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 5
+                  },
+                  {
+                    "type": "bool",
+                    "value": true
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e5bf9d0ce89f03ae5e72185af4e0eb916488daf7cdf67e68b71b0177034e1c67",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "6da659636fd6207666f983f816dba1e4e3fb62c0b749f87a78a23b84b92d44ec",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,false) ON CONFLICT(x) DO UPDATE SET y=excluded.y RETURNING *",
+      "sql_sha256": "e5bf9d0ce89f03ae5e72185af4e0eb916488daf7cdf67e68b71b0177034e1c67",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/15",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: NOTHING"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x)",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": null,
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "29e0478dbe2e87517268b87d047df27b7d3eef12198712030275604b35688e75",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "8f2b293a3ec56cfed7661b2b3c7a6a47611450994bf855c19a83b2798ff33fee",
+        "id": "unique_indexes/15",
+        "input_sha256": "7b0a64d6b88d14ef002813bc743e0c16009d2212e9ce94126f282646ce37dc65",
+        "ir_sha256": "6648657e21fad9dff697c82bb0c6036710aceef6eb0ab47c3a6bb3bdb3b1a8c4",
+        "mode": "compare",
+        "model_sha256": "21b3662079bf358d1b29d6db8511d84a62681b7e7e98844dff74bfe75c0ead69",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 0",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "0d8d27b2a880461192fcb5c698c2026e8c269265fe03e91ae02a8df77d1a5022",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "a6e7525b7e63e20d008d8d81dad7f761d69dccca8438af1e173d9a12405bd245",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,false) ON CONFLICT(x) WHERE b DO NOTHING RETURNING *",
+      "sql_sha256": "0d8d27b2a880461192fcb5c698c2026e8c269265fe03e91ae02a8df77d1a5022",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/16",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "constraint \"idx\" for table \"t\" does not exist",
+          "sqlstate": "42704",
+          "status": "error",
+          "table_name": null
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x)",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": null,
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "planning",
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "constraint \"idx\" for table \"t\" does not exist",
+          "sqlstate": "42704",
+          "status": "error",
+          "table_name": null
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "955c7a3da0ab1f2c09bf7cafe73d968df3b430d152b873b572918ab659945db3",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "8f2b293a3ec56cfed7661b2b3c7a6a47611450994bf855c19a83b2798ff33fee",
+        "id": "unique_indexes/16",
+        "input_sha256": "7b0a64d6b88d14ef002813bc743e0c16009d2212e9ce94126f282646ce37dc65",
+        "ir_sha256": "d6cdc0fda6afed4e7ef9ca5db5f5f9d001d2906f1464347acec468def52a140d",
+        "mode": "compare",
+        "model_sha256": "b0fc9436e29b9bb2d5e5fe76b94c01b4f09a80c532aa59d24f494f09135abf6b",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42704"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "f9cc1d50e9c8b7fb787b18854e3fa93d0e13dbb86a9fa47af933a4bb21b124c1",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "cfb7166f645a1662ffbfbbb9a712a6e13596c04bf6e9be0fa459287e32d58e3c",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,5,false) ON CONFLICT ON CONSTRAINT idx DO NOTHING",
+      "sql_sha256": "f9cc1d50e9c8b7fb787b18854e3fa93d0e13dbb86a9fa47af933a4bb21b124c1",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/17",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 2,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 2",
+              "rows": [
+                [
+                  null,
+                  "2",
+                  "t"
+                ],
+                [
+                  null,
+                  "3",
+                  "f"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: NOTHING"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x)",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": false,
+            "predicate": null,
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              null,
+              "3",
+              "f"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "085c164ea2ae88d381b462b0f895b6250baffa660ed843a0498e11e27880389b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "8f2b293a3ec56cfed7661b2b3c7a6a47611450994bf855c19a83b2798ff33fee",
+        "id": "unique_indexes/17",
+        "input_sha256": "7796dd870f9a69bd828105f7a897a1ebb5b1cb33cfc7db34a2b5729f16818214",
+        "ir_sha256": "699718a8f4e7e7cddd0d95d05e1890cc878796110483aea328a78778d4b51619",
+        "mode": "compare",
+        "model_sha256": "6f3fb1ab2a9e749f94ec7c604a77f64f393882b24f47f662a73438365b1b695f",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "null",
+                      "value": "int32"
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "null",
+                      "value": "int32"
+                    },
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "bool",
+                      "value": false
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "null",
+                    "value": "int32"
+                  },
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "4480fd69292dd091582727ec23d8a94be64021da5e4de1e633624174f00f22ac",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "f6560555119c9b710174625def446bb775516f25f5e4162635a4d92e4f3d2554",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(NULL,3,false) ON CONFLICT(x) DO NOTHING RETURNING *",
+      "sql_sha256": "4480fd69292dd091582727ec23d8a94be64021da5e4de1e633624174f00f22ac",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/18",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  null,
+                  "2",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  Conflict Resolution: NOTHING"
+            ],
+            [
+              "  Conflict Arbiter Indexes: idx"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX idx ON public.t USING btree (x) NULLS NOT DISTINCT",
+            "expressions": false,
+            "immediate": true,
+            "name": "idx",
+            "nulls_not_distinct": true,
+            "predicate": null,
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "x",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "y",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "b",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "60967f1939ca2088beddcdd9d45bc796c837de310547658cb894c54cdb5bee52",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "f6adc8fb66a5f5510929d3744737d9145b1a3e4b9bba286dfeacd9279a032287",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "3fdf345cfa6ed91cba8ed9861f569bee5008b400c46c634afaf126cd871b950e",
+        "id": "unique_indexes/18",
+        "input_sha256": "7796dd870f9a69bd828105f7a897a1ebb5b1cb33cfc7db34a2b5729f16818214",
+        "ir_sha256": "699718a8f4e7e7cddd0d95d05e1890cc878796110483aea328a78778d4b51619",
+        "mode": "compare",
+        "model_sha256": "90e11ddb24c9ae699fd72cbe358864865dbdbbf0c7c1c05cd352bf57dcfd7b63",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "public.t": {
+                    "columns": [
+                      {
+                        "name": "x",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "y",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "b",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "bool"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 0",
+              "database": {
+                "public.t": [
+                  [
+                    {
+                      "type": "null",
+                      "value": "int32"
+                    },
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "bool",
+                      "value": true
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "4480fd69292dd091582727ec23d8a94be64021da5e4de1e633624174f00f22ac",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "4830b4d6102de50c74e91b8b571cebc6db2ad7d5f7eea6c998787799e6c34481",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(NULL,3,false) ON CONFLICT(x) DO NOTHING RETURNING *",
+      "sql_sha256": "4480fd69292dd091582727ec23d8a94be64021da5e4de1e633624174f00f22ac",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/19",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "t_x_key",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"t_x_key\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "5c592ac502140452dfdcf313b9b4e439355d4066313f11e3d3406ddde8382813",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "93b14a1cfa87d37f8cea241dc765c94ea9d192aa9de5b0a5ec33cb6030ec2ed6",
+        "id": "unique_indexes/19",
+        "input_sha256": "7b0a64d6b88d14ef002813bc743e0c16009d2212e9ce94126f282646ce37dc65",
+        "ir_sha256": "ee31f6616f2576f6c69387d32d0137f9c979dcfb37f8a5499743ab93e139ee92",
+        "mode": "compare",
+        "model_sha256": "0780a57fa8f1766679973866777db49a66a497194a3de9e68ae24a414213fbcf",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "t_x_key",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "f6a784978fddce9806fc4d556f5cf71e800da5aaeb17a9715455bb90617c8890",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,2,true) RETURNING *",
+      "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/20",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 2,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 2",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "3",
+                  "4",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Update on t  (cost=0.15..8.17 rows=1 width=14)"
+            ],
+            [
+              "  ->  Index Scan using t_x_key on t  (cost=0.15..8.17 rows=1 width=14)"
+            ],
+            [
+              "        Index Cond: (x = 3)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "t_x_key",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"t_x_key\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "ccc4f8b55bd401643b0c3b72557e97542bfa5469f10bee2bf57fe5631113e708",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "93b14a1cfa87d37f8cea241dc765c94ea9d192aa9de5b0a5ec33cb6030ec2ed6",
+        "id": "unique_indexes/20",
+        "input_sha256": "563084af9a4fe6b7143b78a2839d993dacd4ebee72f6243b8d3144e39bf0fa1d",
+        "ir_sha256": "97450ca3bc0709b3300f7557bab0315873bf20720f6c3451c75c6a5b179b7b9e",
+        "mode": "compare",
+        "model_sha256": "d5920ef08e3bed59f522c49873a6c41123450297db771abb628caa688e199952",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "t_x_key",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "0ee758fb6b0a88e457e0dec05bd32c62e8831f65dafc7fd1ff34a040ec86e775",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "UPDATE t SET x=1,y=2 WHERE x=3 RETURNING *",
+      "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/21",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "t_pkey",
+          "detail": "Key (y)=(2) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"t_pkey\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "47aa5bfd3be7708254a639a916a7c4387b1c53331f933ab36e012b7464f7a990",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "7ad5dee1f75bbd909a604a9d1a803e741cc93dcc05170d1b52f1a8f845ca5002",
+        "id": "unique_indexes/21",
+        "input_sha256": "7b0a64d6b88d14ef002813bc743e0c16009d2212e9ce94126f282646ce37dc65",
+        "ir_sha256": "ee31f6616f2576f6c69387d32d0137f9c979dcfb37f8a5499743ab93e139ee92",
+        "mode": "compare",
+        "model_sha256": "60028faa8f5925edc72407fcccb84817bfa41ed119bb8e5afca9343df1ad098a",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "t_pkey",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "999cf44bf14f9d547311a3d2e6faa058215c11c6111f786525b10fb3fa16fea0",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,2,true) RETURNING *",
+      "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/22",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 2,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 2",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "3",
+                  "4",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Update on t  (cost=0.15..8.17 rows=1 width=14)"
+            ],
+            [
+              "  ->  Index Scan using t_x_key on t  (cost=0.15..8.17 rows=1 width=14)"
+            ],
+            [
+              "        Index Cond: (x = 3)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "t_pkey",
+          "detail": "Key (y)=(2) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"t_pkey\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "5e41341c126880ea6c7a3db897243cbb48a26e9c1db3985a549060e2cf9195be",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "7ad5dee1f75bbd909a604a9d1a803e741cc93dcc05170d1b52f1a8f845ca5002",
+        "id": "unique_indexes/22",
+        "input_sha256": "563084af9a4fe6b7143b78a2839d993dacd4ebee72f6243b8d3144e39bf0fa1d",
+        "ir_sha256": "97450ca3bc0709b3300f7557bab0315873bf20720f6c3451c75c6a5b179b7b9e",
+        "mode": "compare",
+        "model_sha256": "0d6c0ab5d92dd7dd3ff830dc5d28e5d4cb31f3bc3dc9a067a6dac0a17941c719",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "t_pkey",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "0af801c615bf74162b7b504052c4f2f66f1168d86edbf3a13f6671dfc956384a",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "UPDATE t SET x=1,y=2 WHERE x=3 RETURNING *",
+      "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/23",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX early_idx ON public.t USING btree (x)",
+            "expressions": false,
+            "immediate": true,
+            "name": "early_idx",
+            "nulls_not_distinct": false,
+            "predicate": null,
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "early_idx",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"early_idx\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "86efdc17759465ca01dbe012610cffabd9d40158a4917ad484fc1e4a79024bd4",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "ac8ab136757f7ad1f87b8c9436ff25ac8a4272842230174b6b6642a5dfd3066d",
+        "id": "unique_indexes/23",
+        "input_sha256": "7b0a64d6b88d14ef002813bc743e0c16009d2212e9ce94126f282646ce37dc65",
+        "ir_sha256": "ee31f6616f2576f6c69387d32d0137f9c979dcfb37f8a5499743ab93e139ee92",
+        "mode": "compare",
+        "model_sha256": "c660393637211346b318847d06063710b1f6bcb94367ee44256a1cfc5d970892",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "early_idx",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "9add13e4876d8fa52d4c885b0b94ca420565b6307a7473ed54b66fd65464e01d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,2,true) RETURNING *",
+      "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/24",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 2,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 2",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "3",
+                  "4",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Update on t  (cost=0.15..8.17 rows=1 width=14)"
+            ],
+            [
+              "  ->  Index Scan using early_idx on t  (cost=0.15..8.17 rows=1 width=14)"
+            ],
+            [
+              "        Index Cond: (x = 3)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX early_idx ON public.t USING btree (x)",
+            "expressions": false,
+            "immediate": true,
+            "name": "early_idx",
+            "nulls_not_distinct": false,
+            "predicate": null,
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "early_idx",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"early_idx\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "37b43f3a59b1e4d505783c76fa628beaeb54081575cb38737e9dfabb7be2be2a",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "ac8ab136757f7ad1f87b8c9436ff25ac8a4272842230174b6b6642a5dfd3066d",
+        "id": "unique_indexes/24",
+        "input_sha256": "563084af9a4fe6b7143b78a2839d993dacd4ebee72f6243b8d3144e39bf0fa1d",
+        "ir_sha256": "97450ca3bc0709b3300f7557bab0315873bf20720f6c3451c75c6a5b179b7b9e",
+        "mode": "compare",
+        "model_sha256": "6651bf0f6a7f144aff2413a7bfd9704c38314c1ad4b2489bd69d935fbe2536ab",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "early_idx",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "11717f00920231bb5d23df1ac2020f0a8149e5714f9ad8afe59de02a6b62a5c2",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "UPDATE t SET x=1,y=2 WHERE x=3 RETURNING *",
+      "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/25",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+            ],
+            [
+              "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX early_idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "early_idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "early_idx",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"early_idx\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "d96e43b6e88301b7e6906a149b79be98a1c9f43db9842cbec4b02f4795717979",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "89a1fef2bee1a6e4aba6cfd911fb36a80c3c451ed1bebd49e24338ad6238b69d",
+        "id": "unique_indexes/25",
+        "input_sha256": "7b0a64d6b88d14ef002813bc743e0c16009d2212e9ce94126f282646ce37dc65",
+        "ir_sha256": "ee31f6616f2576f6c69387d32d0137f9c979dcfb37f8a5499743ab93e139ee92",
+        "mode": "compare",
+        "model_sha256": "c660393637211346b318847d06063710b1f6bcb94367ee44256a1cfc5d970892",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "early_idx",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "9add13e4876d8fa52d4c885b0b94ca420565b6307a7473ed54b66fd65464e01d",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,2,true) RETURNING *",
+      "sql_sha256": "e6c0b99bd956979eb25196463f7168976e5556a71d53f25aef6304ee9f7e21e5",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "unique_indexes/26",
+      "postgres": {
+        "after": {
+          "database": {
+            "public.t": {
+              "affected_rows": 2,
+              "columns": [
+                {
+                  "name": "x",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "y",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "b",
+                  "type": "boolean",
+                  "type_oid": 16
+                }
+              ],
+              "command": "SELECT 2",
+              "rows": [
+                [
+                  "1",
+                  "2",
+                  "t"
+                ],
+                [
+                  "3",
+                  "4",
+                  "t"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "explain": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Update on t  (cost=0.00..37.50 rows=11 width=14)"
+            ],
+            [
+              "  ->  Seq Scan on t  (cost=0.00..37.50 rows=11 width=14)"
+            ],
+            [
+              "        Filter: (x = 3)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "index_observations": [
+          {
+            "btree": true,
+            "column_collations": true,
+            "columns": [
+              1
+            ],
+            "default_operators": true,
+            "definition": "CREATE UNIQUE INDEX early_idx ON public.t USING btree (x) WHERE b",
+            "expressions": false,
+            "immediate": true,
+            "name": "early_idx",
+            "nulls_not_distinct": false,
+            "predicate": "b",
+            "table": "t",
+            "valid": true
+          }
+        ],
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "early_idx",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"early_idx\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "30c1d4a7210396e609d99075b0a706e35de261b12d944757def53a537bc8a3c0",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "0ab842b05fd0d5b21d41b2b41fed14762206b5805dec761b50c5fb67a95b4437",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "89a1fef2bee1a6e4aba6cfd911fb36a80c3c451ed1bebd49e24338ad6238b69d",
+        "id": "unique_indexes/26",
+        "input_sha256": "563084af9a4fe6b7143b78a2839d993dacd4ebee72f6243b8d3144e39bf0fa1d",
+        "ir_sha256": "97450ca3bc0709b3300f7557bab0315873bf20720f6c3451c75c6a5b179b7b9e",
+        "mode": "compare",
+        "model_sha256": "6651bf0f6a7f144aff2413a7bfd9704c38314c1ad4b2489bd69d935fbe2536ab",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "early_idx",
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23505"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "b",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "11717f00920231bb5d23df1ac2020f0a8149e5714f9ad8afe59de02a6b62a5c2",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "UPDATE t SET x=1,y=2 WHERE x=3 RETURNING *",
+      "sql_sha256": "6f53acae0c1420e6715fa922a3652d17e1e209df239ada4c35773493c400f903",
+      "status": "passed"
+    },
+    {
+      "id": "unique_indexes/immutability_0",
+      "postgres_observation": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "functions in index predicate must be marked IMMUTABLE",
+        "sqlstate": "42P17",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "code": "unsupported.index_immutability",
+        "id": "unique_indexes/immutability_0",
+        "message": "Expression is not an admitted immutable local scalar",
+        "status": "error"
+      },
+      "scope": "Metadata admission refusal; not a comparison of query outcomes against a nonexistent index.",
+      "status": "passed"
+    },
+    {
+      "id": "unique_indexes/immutability_1",
+      "postgres_observation": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "functions in index predicate must be marked IMMUTABLE",
+        "sqlstate": "42P17",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "code": "unsupported.index_immutability",
+        "id": "unique_indexes/immutability_1",
+        "message": "Expression is not an admitted immutable local scalar",
+        "status": "error"
+      },
+      "scope": "Metadata admission refusal; not a comparison of query outcomes against a nonexistent index.",
+      "status": "passed"
+    },
+    {
+      "id": "unique_indexes/immutability_2",
+      "postgres_observation": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "functions in index predicate must be marked IMMUTABLE",
+        "sqlstate": "42P17",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "code": "unsupported.index_immutability",
+        "id": "unique_indexes/immutability_2",
+        "message": "Expression is not an admitted immutable local scalar",
+        "status": "error"
+      },
+      "scope": "Metadata admission refusal; not a comparison of query outcomes against a nonexistent index.",
+      "status": "passed"
+    },
+    {
+      "id": "unique_indexes/immutability_3",
+      "postgres_observation": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "functions in index predicate must be marked IMMUTABLE",
+        "sqlstate": "42P17",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "code": "unsupported.index_immutability",
+        "id": "unique_indexes/immutability_3",
+        "message": "Expression is not an admitted immutable local scalar",
+        "status": "error"
+      },
+      "scope": "Metadata admission refusal; not a comparison of query outcomes against a nonexistent index.",
+      "status": "passed"
+    },
+    {
+      "id": "unique_indexes/deferred",
+      "postgres_observation": {
+        "commit": {
+          "column_name": null,
+          "constraint_name": "deferred_key",
+          "detail": "Key (x)=(1) already exists.",
+          "exposed_rows": [],
+          "message": "duplicate key value violates unique constraint \"deferred_key\"",
+          "sqlstate": "23505",
+          "status": "error",
+          "table_name": "t"
+        },
+        "expected_refusal": "unsupported.deferred_constraints",
+        "scope": "Statement success is distinct from transaction-end rejection.",
+        "statement": {
+          "after": {
+            "database": {
+              "public.t": {
+                "affected_rows": 2,
+                "columns": [
+                  {
+                    "name": "x",
+                    "type": "integer",
+                    "type_oid": 23
+                  },
+                  {
+                    "name": "y",
+                    "type": "integer",
+                    "type_oid": 23
+                  },
+                  {
+                    "name": "b",
+                    "type": "boolean",
+                    "type_oid": 16
+                  }
+                ],
+                "command": "SELECT 2",
+                "rows": [
+                  [
+                    "1",
+                    "2",
+                    "t"
+                  ],
+                  [
+                    "1",
+                    "3",
+                    "t"
+                  ]
+                ],
+                "sqlstate": "00000",
+                "status": "ok"
+              }
+            }
+          },
+          "explain": {
+            "affected_rows": 0,
+            "columns": [
+              {
+                "name": "QUERY PLAN",
+                "type_oid": 25
+              }
+            ],
+            "command": "EXPLAIN",
+            "rows": [
+              [
+                "Insert on t  (cost=0.00..0.01 rows=1 width=9)"
+              ],
+              [
+                "  ->  Result  (cost=0.00..0.01 rows=1 width=9)"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          },
+          "index_observations": [],
+          "observed_phase": "statement",
+          "result": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "x",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "y",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "b",
+                "type": "boolean",
+                "type_oid": 16
+              }
+            ],
+            "command": "INSERT 0 1",
+            "rows": [
+              [
+                "1",
+                "3",
+                "t"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "response": {
+        "code": "unsupported.deferred_constraints",
+        "id": "unique_indexes/deferred",
+        "message": "Initially deferred checks require an explicit transaction boundary",
+        "status": "error"
+      },
+      "scope": "Statement success is distinct from transaction-end rejection.",
+      "status": "passed"
+    }
+  ],
+  "scope": "Ordinary column btree indexes, optional deterministic partial predicates, exact/conjunction inference; no expression indexes or arbitrary implication completeness.",
+  "status": "passed"
+}

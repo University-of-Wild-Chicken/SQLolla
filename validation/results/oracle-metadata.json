@@ -1,0 +1,7 @@
+{
+  "case_sha256": "6295a98e71573f9a850a4831ad3aa8d23eaac85e99fdc80717ac3adcaaae055c",
+  "cases": 3511,
+  "cluster_removed": true,
+  "output_sha256": "7104b94b4bb61f6174cc13d22dfc024c74489e625af9efe1a3803a1240312e7f",
+  "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit"
+}

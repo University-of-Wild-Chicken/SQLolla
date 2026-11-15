@@ -1,0 +1,1024 @@
+{
+  "cases": 40,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "failures": [],
+  "postgres_executions": 180,
+  "postgres_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "results": [
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/0",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "non-integer constant in DISTINCT ON",
+        "sqlstate": "42601",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "56149b060d1e1cf6f50e6e71295c545c5b32010d9644fe4a3faecff5a5fa5989",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/0",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "0af1d4a4ffa7f54e81596eed463581bfcc983dd21df77461ad3023a3e9fcaaaf",
+        "mode": "compare",
+        "model_sha256": "aa9e04e36b7fa18e9506f63d09bfb9b7e8c20361be6902314268652e98dc74a1",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42601"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "dce4b643974f7cd7b882e1817bf59162e0b2c9526174d7f57e175626b5c3544e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "748947a2b9ac7cbc8b0375b13dc29ef053e97774328eb8731ed1f6acf863444f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (true) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "dce4b643974f7cd7b882e1817bf59162e0b2c9526174d7f57e175626b5c3544e",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/1",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "non-integer constant in DISTINCT ON",
+        "sqlstate": "42601",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "e1be9e06ecfe93fac5c8984b5967112bcb29792cb004fbad4e2e020b0779ba5a",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/1",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "0af1d4a4ffa7f54e81596eed463581bfcc983dd21df77461ad3023a3e9fcaaaf",
+        "mode": "compare",
+        "model_sha256": "aa9e04e36b7fa18e9506f63d09bfb9b7e8c20361be6902314268652e98dc74a1",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42601"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "5e4140eb87636da5935e14892eb707df8370e1d12cc6339859e5e0cdec3fa2d8",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "748947a2b9ac7cbc8b0375b13dc29ef053e97774328eb8731ed1f6acf863444f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON ('x') x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "5e4140eb87636da5935e14892eb707df8370e1d12cc6339859e5e0cdec3fa2d8",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/2",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "non-integer constant in DISTINCT ON",
+        "sqlstate": "42601",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "bbe5b8f21ffcbbc280ace75ad6f9c4ced0cf2594f24c92821247f3e91cfa1fa2",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/2",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "0af1d4a4ffa7f54e81596eed463581bfcc983dd21df77461ad3023a3e9fcaaaf",
+        "mode": "compare",
+        "model_sha256": "aa9e04e36b7fa18e9506f63d09bfb9b7e8c20361be6902314268652e98dc74a1",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42601"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "5ff5222657558e7ad3d8aef56d93519b95459ba5cd5b10d2d66e68fc0df60d7e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "748947a2b9ac7cbc8b0375b13dc29ef053e97774328eb8731ed1f6acf863444f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (NULL) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "5ff5222657558e7ad3d8aef56d93519b95459ba5cd5b10d2d66e68fc0df60d7e",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/3",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "non-integer constant in DISTINCT ON",
+        "sqlstate": "42601",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "2616ebb8f8e2d0c71e590afe591c9cca8109c58c53b77796891573aefb8ebfbb",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/3",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "0af1d4a4ffa7f54e81596eed463581bfcc983dd21df77461ad3023a3e9fcaaaf",
+        "mode": "compare",
+        "model_sha256": "aa9e04e36b7fa18e9506f63d09bfb9b7e8c20361be6902314268652e98dc74a1",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42601"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "da0570d0f8a19f6574a08ab40495f1af9c350eb8004e2654ca920dd2002b5b7c",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "748947a2b9ac7cbc8b0375b13dc29ef053e97774328eb8731ed1f6acf863444f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (1.0) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "da0570d0f8a19f6574a08ab40495f1af9c350eb8004e2654ca920dd2002b5b7c",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/4",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "DISTINCT ON position -1 is not in select list",
+        "sqlstate": "42P10",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "10e2a847052afaa082de4431652ee8ec948b57166d61247e0b305898fe63933d",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/4",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "d4d4bfd1b13b2043b321eb0e555e41c8d9467d445d87c34212200ea67cd2deec",
+        "mode": "compare",
+        "model_sha256": "79cc96469dba36db5120de948febcfd81a4ac92b7bc51f69ff71cfbdc6ec27da",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42P10"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "2e7ebab65a26b8edf4db6c621d5d58ab36afb8978f21fbb691ebf6acc28450e4",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "929b4512eb294164609722fcff63c3dbef3652f3d214368ce8a45e07a86fec8e",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (-1) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "2e7ebab65a26b8edf4db6c621d5d58ab36afb8978f21fbb691ebf6acc28450e4",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/5",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "DISTINCT ON position 0 is not in select list",
+        "sqlstate": "42P10",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "a619cc8f282f81812080e48f9b14e84853ba6a13f4e2548294da218243a38066",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/5",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "d4d4bfd1b13b2043b321eb0e555e41c8d9467d445d87c34212200ea67cd2deec",
+        "mode": "compare",
+        "model_sha256": "79cc96469dba36db5120de948febcfd81a4ac92b7bc51f69ff71cfbdc6ec27da",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42P10"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "41bac539591c035d1e4d75987984db48b0875e1b438915504ee0c91c2f48c268",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "929b4512eb294164609722fcff63c3dbef3652f3d214368ce8a45e07a86fec8e",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (0) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "41bac539591c035d1e4d75987984db48b0875e1b438915504ee0c91c2f48c268",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/6",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "DISTINCT ON position 2 is not in select list",
+        "sqlstate": "42P10",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "34c4f445d574db86caad6ddb31d6e5a67eec2b161c655eb817f3f1cc51aba323",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/6",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "d4d4bfd1b13b2043b321eb0e555e41c8d9467d445d87c34212200ea67cd2deec",
+        "mode": "compare",
+        "model_sha256": "79cc96469dba36db5120de948febcfd81a4ac92b7bc51f69ff71cfbdc6ec27da",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42P10"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "7453d7119c85bfbda0c11fa6439e33d99914afac5d6772880171770791e4bf3c",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "929b4512eb294164609722fcff63c3dbef3652f3d214368ce8a45e07a86fec8e",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (2) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "7453d7119c85bfbda0c11fa6439e33d99914afac5d6772880171770791e4bf3c",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/7",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "non-integer constant in DISTINCT ON",
+        "sqlstate": "42601",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "29eaf4db935fa0e65bca7c1f92b810cbee43ee1ec19a52d6208963c7cb66f7d4",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/7",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "0af1d4a4ffa7f54e81596eed463581bfcc983dd21df77461ad3023a3e9fcaaaf",
+        "mode": "compare",
+        "model_sha256": "aa9e04e36b7fa18e9506f63d09bfb9b7e8c20361be6902314268652e98dc74a1",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42601"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "0dc5acdc3ff87733ac4d55f04405b154668e5bf5d6920fa9aa1b3ab06d4c2546",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "748947a2b9ac7cbc8b0375b13dc29ef053e97774328eb8731ed1f6acf863444f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (2147483648) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "0dc5acdc3ff87733ac4d55f04405b154668e5bf5d6920fa9aa1b3ab06d4c2546",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/8",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "non-integer constant in DISTINCT ON",
+        "sqlstate": "42601",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "24d4e0beee523fe38fcb58faf49836cdc2aed44cb153d82dacb1869b47b0b710",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/8",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "0af1d4a4ffa7f54e81596eed463581bfcc983dd21df77461ad3023a3e9fcaaaf",
+        "mode": "compare",
+        "model_sha256": "aa9e04e36b7fa18e9506f63d09bfb9b7e8c20361be6902314268652e98dc74a1",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42601"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "96cbbfee36e21ab8fa86b1cd4bced3cf1ff6521fa5c7b8b570648db384cb471e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "748947a2b9ac7cbc8b0375b13dc29ef053e97774328eb8731ed1f6acf863444f",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (-2147483649) x FROM (VALUES(1),(2))r(x)",
+      "sql_sha256": "96cbbfee36e21ab8fa86b1cd4bced3cf1ff6521fa5c7b8b570648db384cb471e",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/9",
+      "postgres": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "SELECT DISTINCT ON expressions must match initial ORDER BY expressions",
+        "sqlstate": "42P10",
+        "status": "error",
+        "table_name": null
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "39a27346570c365ade7f8092f00018fa635693801c2c24436a8b2aa983d21da4",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/9",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "d4d4bfd1b13b2043b321eb0e555e41c8d9467d445d87c34212200ea67cd2deec",
+        "mode": "compare",
+        "model_sha256": "79cc96469dba36db5120de948febcfd81a4ac92b7bc51f69ff71cfbdc6ec27da",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [],
+              "exposed_rows": [],
+              "phase": "unspecified",
+              "sqlstate": "42P10"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [],
+        "selected_transition": 0,
+        "sql_sha256": "9b43192fb6cd7cb1e380334c3c9fb4a22e707659d9e79ac5118b25a74b90c77e",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "929b4512eb294164609722fcff63c3dbef3652f3d214368ce8a45e07a86fec8e",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (x) x,label FROM (VALUES(1,'a'),(1,'b'))r(x,label) ORDER BY label,x",
+      "sql_sha256": "9b43192fb6cd7cb1e380334c3c9fb4a22e707659d9e79ac5118b25a74b90c77e",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/10",
+      "postgres": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          }
+        ],
+        "command": "SELECT 2",
+        "rows": [
+          [
+            "1"
+          ],
+          [
+            "2"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "92eb5af64a1bb158e5f0a8b191ea0934920d11371e9dcf468b8f5e159d1f8df7",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/10",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "b45a7c0c73981f5ba2575b5a84ed224d523eb877ae008605893d5d94fa651a3f",
+        "mode": "compare",
+        "model_sha256": "8824c2650e5a45d116a821654422194f2ce05fb3619c6e2cfae246a03ee8bc8e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 2",
+              "database": {},
+              "effects": [],
+              "ordering": "ordered",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "3f1ac7a24ba0d41227e6bcd467dc6f25ad3eee3a4d88bfa8ad26bfd51f0e5e75",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "d0d6991676518db74b38ca8c6968db3d78daee84676e0b6b1322d4479d908794",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (x) x FROM (VALUES(1),(1),(2))r(x) ORDER BY x",
+      "sql_sha256": "3f1ac7a24ba0d41227e6bcd467dc6f25ad3eee3a4d88bfa8ad26bfd51f0e5e75",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "distinct_on/scalar/11",
+      "postgres": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "x",
+            "type": "integer",
+            "type_oid": 23
+          }
+        ],
+        "command": "SELECT 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "07a19faf262e3db0dce9de9a0a5862a02f618e88c1dfdd365a3d5a14120687fd",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "679c992d9e3561ee6d5786f76a17b000e96cc09c23063a69b6422c30615762b9",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "distinct_on/scalar/11",
+        "input_sha256": "c312ae60f7d79666fccfbae5a8b27f3b1521a669c042dbb20bb7a1ddd7180fd7",
+        "ir_sha256": "270e8b7b7d1f4f37400eb7bd0bb45f21c71d6ffb931664a705a2a322c9ea36ed",
+        "mode": "compare",
+        "model_sha256": "d298381cc5b8d04a3585bb296c6401db6fbe326199787da49cc8a4cd8dced43e",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {}
+              },
+              "command_tag": "SELECT 0",
+              "database": {},
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "x",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7fc7a34faf2d2a28bc4d88e845145cd92882baf242b146a2f605e087488a5b89",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "ac45e96cf469a1af4760dece5ad80ffaf7e4c0c92a9c8d2312c16d015a7b4513",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "SELECT DISTINCT ON (x) x FROM (SELECT 1 AS x WHERE false)r",
+      "sql_sha256": "7fc7a34faf2d2a28bc4d88e845145cd92882baf242b146a2f605e087488a5b89",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/unordered",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/hidden",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]",
+        "[\"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/ties",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[1, \\\"b\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/winner",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"c\\\"]\", \"[\\\"a\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"c\\\"]\", \"[\\\"a\\\"]\"]"
+      ],
+      "id": "distinct_on/0/null_first",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/alias",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[1, \\\"a\\\"]\", \"[null, \\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/ordinal",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/keys",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/duplicate_key",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/expression",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]",
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]",
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/positive_constant",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "id": "distinct_on/0/limit",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/offset",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/0/nested",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]",
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]",
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"b\\\"]\"]"
+      ],
+      "id": "distinct_on/1/unordered",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/1/hidden",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]",
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]",
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"b\\\"]\"]"
+      ],
+      "id": "distinct_on/1/ties",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"b\\\"]\"]"
+      ],
+      "id": "distinct_on/1/winner",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/1/null_first",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]"
+      ],
+      "id": "distinct_on/1/alias",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[2, \\\"c\\\"]\", \"[null, \\\"a\\\"]\"]"
+      ],
+      "id": "distinct_on/1/ordinal",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/1/keys",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"c\\\"]\", \"[\\\"a\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"c\\\"]\", \"[\\\"a\\\"]\"]"
+      ],
+      "id": "distinct_on/1/duplicate_key",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"c\\\"]\", \"[\\\"a\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"c\\\"]\", \"[\\\"a\\\"]\"]"
+      ],
+      "id": "distinct_on/1/expression",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]",
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]",
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/1/positive_constant",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/1/limit",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\"]",
+        "[\"[\\\"b\\\"]\"]"
+      ],
+      "id": "distinct_on/1/offset",
+      "status": "passed"
+    },
+    {
+      "actual": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "expected": [
+        "[\"[\\\"a\\\"]\", \"[\\\"c\\\"]\"]",
+        "[\"[\\\"b\\\"]\", \"[\\\"c\\\"]\"]"
+      ],
+      "id": "distinct_on/1/nested",
+      "status": "passed"
+    }
+  ],
+  "scope": "Exact alternatives over all physical permutations of two tiny bags; deterministic literal errors; not universal completeness.",
+  "status": "passed"
+}

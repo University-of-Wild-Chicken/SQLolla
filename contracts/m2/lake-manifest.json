@@ -1,0 +1,13 @@
+{"version": "1.2.0",
+ "packagesDir": ".lake/packages",
+ "packages":
+ [{"type": "path",
+   "scope": "",
+   "name": "sqlolla_formal",
+   "manifestFile": "lake-manifest.json",
+   "inherited": false,
+   "dir": "../../formal",
+   "configFile": "lakefile.toml"}],
+ "name": "sqlolla_m2_draft",
+ "lakeDir": ".lake",
+ "fixedToolchain": false}

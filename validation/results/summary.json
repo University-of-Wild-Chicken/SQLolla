@@ -1,0 +1,31 @@
+{
+  "cases": 3511,
+  "cli_output_sha256": "6f0b35ec231542b576f01c405cd53b885bc19b1d093828ecf08ad2b0f5c80149",
+  "cli_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
+  "compared": 3511,
+  "failures": 0,
+  "families": {
+    "composition": 4,
+    "cte_and_binding": 9,
+    "integer_boundaries": 6,
+    "join": 1200,
+    "literal": 6,
+    "multicolumn": 8,
+    "product": 300,
+    "set": 1800,
+    "text_exact": 2,
+    "three_valued_logic": 18,
+    "unary": 150,
+    "unknown_literal_context": 8
+  },
+  "oracle": {
+    "case_sha256": "6295a98e71573f9a850a4831ad3aa8d23eaac85e99fdc80717ac3adcaaae055c",
+    "cases": 3511,
+    "cluster_removed": true,
+    "output_sha256": "7104b94b4bb61f6174cc13d22dfc024c74489e625af9efe1a3803a1240312e7f",
+    "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit"
+  },
+  "seconds": 108.179,
+  "skipped": 0,
+  "status": "passed"
+}

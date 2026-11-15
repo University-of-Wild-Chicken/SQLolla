@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "non_production": true,
+  "platform": "Microsoft Windows 10.0.26200",
+  "jdk_path": "C:\\HackUTA26\\SQLolla\\m0\\alloy\\.tools\\jdk-17.0.21+9",
+  "utf8_file_roundtrip": true,
+  "utf8_file_has_bom": false,
+  "javac": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "echo": {
+    "exit_code": 0,
+    "stdout": "{\"protocol\":\"m0-probe/1\",\"text\":\"tenant_ü_数据_😀\\nescaped newline\",\"path\":\"C:\\\\HackUTA26\\\\SQLolla\\\\m0\\\\portability\\\\space ü 数据\"}\r\n",
+    "stderr": "argument with spaces ü 数据\r\n"
+  },
+  "stdout_json_frame_roundtrip": true,
+  "stderr_separate_and_argument_intact": true,
+  "direct_cancellation": {
+    "ready": "ready",
+    "exited": true,
+    "elapsed_ms": 23,
+    "exit_code": -1,
+    "descendants_tested": false
+  },
+  "not_tested": [
+    "descendant process cleanup",
+    "large-pipe backpressure",
+    "resource limits",
+    "Linux execution",
+    "macOS execution",
+    "read-only install",
+    "long paths",
+    "Alloy protocol"
+  ]
+}

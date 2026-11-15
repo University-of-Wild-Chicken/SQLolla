@@ -1,0 +1,84 @@
+{
+  "schema_version": "sqlolla.m0.acceptance/1",
+  "status": "M0_DECISIONS_FINALIZED_WITH_OPEN_GATES",
+  "scope": "Lean formalization and disposable technology feasibility; not production implementation or cross-platform certification",
+  "completed": [
+    {
+      "area": "Lean specification",
+      "result": "PASS",
+      "evidence": "formal/report.json",
+      "details": "35 explicitly authored theorems; module-owned trust audit covers 1038 declarations and 285 theorem declarations including generated declarations."
+    },
+    {
+      "area": "Proof hygiene",
+      "result": "PASS",
+      "evidence": [
+        "../formal/verify.ps1",
+        "../formal/TrustAudit.lean",
+        "formal/trust.log"
+      ],
+      "details": "No proof placeholders/custom or unapproved axioms; only propext, Classical.choice, Quot.sound occur transitively. Public/private/generated declarations are included by source module ownership."
+    },
+    {
+      "area": "SQLeanParser native integration",
+      "result": "PASS_LIMITED_SPECIMEN",
+      "evidence": "parser/report.json",
+      "details": "25/25 authored cases;26/26 upstream samples parsed,9 exported by restricted adapter; repeat-output equality observed in these cases."
+    },
+    {
+      "area": "Java17/Alloy6.2/SAT4J",
+      "result": "PASS_FEASIBILITY",
+      "evidence": "alloy/report.json",
+      "details": "Six SAT/UNSAT/numeric cases plus bounded instance enumeration. Two distinct instances and ordered ternary tuples observed before exhaustion."
+    },
+    {
+      "area": "Windows native toolchain/IPC",
+      "result": "PASS_SMOKE",
+      "evidence": "portability/report.json",
+      "details": "Verified portable Rust1.100.0/Java17/Lean4.34; native compile/run, UTF8, Unicode/spaces, separate pipes, direct-child cancellation. No global installs."
+    },
+    {
+      "area": "AlloyStudio instance design",
+      "result": "REVIEWED_AND_ADOPTED_AS_PATTERN",
+      "evidence": "instance-review.json",
+      "details": "Solver-derived graph/table/trace plus separate grounded AI explanations; browser BYOT remains SQLolla-specific design."
+    },
+    {
+      "area": "Independent semantic review",
+      "result": "PASS_FOR_STATED_M0_SCOPE",
+      "evidence": "alloy/formal-review.json",
+      "details": "Decoded-witness correspondence, explicit abort outcome and classifier/claim boundary findings resolved."
+    }
+  ],
+  "not_validated": [
+    "Linux/macOS/WSL execution",
+    "Clean-machine packaging",
+    "PostgreSQL16 behavior",
+    "Complete AST/binder/source-map protocol",
+    "Concrete RA/SQL/Alloy encoding completeness",
+    "Hosted job sandbox/resource enforcement",
+    "Provider/BYOT/instance UI implementation"
+  ],
+  "unresolved_gates": [
+    "M0-G01",
+    "M0-G02",
+    "M0-G03",
+    "M0-G04",
+    "M0-G05",
+    "M0-G06",
+    "M0-G07",
+    "M0-G08"
+  ],
+  "architecture": "architecture.json",
+  "human_readable_architecture": "../ARCHITECTURE.md",
+  "production_files_created": false,
+  "actual_artifacts_created": "Lean contract library, build/trust checker, disposable Lean/Java/Rust host probes, evidence logs and design documents",
+  "dependency_changes": "No tracked SQLeanParser or Alloy source/artifact changes. SQLeanParser .lake build output created. Portable tool archives/extractions retained in ignored .tools folders.",
+  "release_decision": "No production readiness or cross-platform support claim. Future M1 work follows the frozen component/interface design and resolves the relevant open gates.",
+  "user_steering_covered": [
+    "Use subagents for M0 validation",
+    "Begin Lean formalization",
+    "No sorry/sorryAx/rogue axioms",
+    "Show instances with AI explanations following AlloyStudio's separation of evidence and explanation"
+  ]
+}

@@ -1,0 +1,952 @@
+{
+  "schema": "sqlolla.m2.gameplan.v1",
+  "status": "AUTHORIZED_IMPLEMENTATION_IN_PROGRESS",
+  "location": "contracts/m2",
+  "production_changes": true,
+  "objective": "Extend SQLolla's verified-by-testing M1 relational foundation toward single-table CRUD and sequential transactions, while retaining the full pinned SQLeanParser typed-AST surface as the MVP goal.",
+  "implementation_authorization": "User authorized expansion to all 276 corpus records with explicit application contexts and expected PostgreSQL errors; unsupported and resource refusals are not coverage.",
+  "baseline": {
+    "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+    "formal_dependency": "../../formal",
+    "toolchain": "Lean 4.34.0",
+    "oracle": "PostgreSQL 16.16",
+    "m1_final_gates_reported_by_integrator": {
+      "rust_tests": 35,
+      "parser_tests": 64,
+      "postgres_differential": 3511,
+      "symbolic_cases": 110,
+      "postgres_witness_replays": 72,
+      "negative_cases": 36,
+      "mutants": 10,
+      "scope_gate": "PASS"
+    },
+    "preserve": "Re-run current canonical M0/M1 gates unchanged. These counts describe the baseline and are not M2 evidence.",
+    "industrial_census": {
+      "artifact": "../../parser/census-results.json",
+      "records": 276,
+      "distinct_sql_texts": 260,
+      "exported": 57,
+      "parsed_unsupported": 200,
+      "syntax_rejected": 19,
+      "diagnostic_counts": {
+        "unsupported_statement": 96,
+        "unsupported_order_by": 60,
+        "unsupported_locking": 18,
+        "unsupported_expression": 17,
+        "unsupported_pagination": 6,
+        "unsupported_arithmetic": 2,
+        "unsupported_grouping": 1
+      },
+      "interpretation": "Syntax/export census only. Diagnostics report the first blocker, overlap across capabilities, and cannot be added to predict future execution coverage.",
+      "populations": [
+        "BenchBase 104",
+        "River 56",
+        "Temporal 116"
+      ],
+      "acquisition": "Keep original corpus hashes, source URLs, commits and declared transformations. New actual-PG runs must retain exact SQL and label synthetic catalog/data/session context; never relabel an extracted or adapted case as a complete production workload."
+    },
+    "industrial_runtime": {
+      "artifact": "../../validation/results/industrial.json",
+      "unchanged_corpus_queries": 8,
+      "comparisons": 24,
+      "passed": 24,
+      "catalog_kind": "explicit synthetic test catalogs; no production-DDL claim",
+      "unreplayed_exported_records": 49,
+      "coverage": "7 BenchBase queries and 1 Temporal query; additional source/context coverage remains an M2 gate"
+    }
+  },
+  "first_deliverable": {
+    "order": "Lean contracts before any M2 implementation slice",
+    "modules": {
+      "Outcome": "SQLSTATE/phase and distinct column/constraint diagnostics, completed versus refused attempts, atomic candidate rejection, CHECK/NOT NULL and unique-NULL distinctions.",
+      "Scalar": "Mathematical Int32 arithmetic with checked result range, zero division and signed division overflow/truncation.",
+      "Crud": "Occurrence identity, UPDATE/DELETE/INSERT and nontarget table frames, old-row simultaneous assignment example.",
+      "Transaction": "Structured sequential execution, original abort cause, subsequent 25P02, distinct logical termination versus COMMIT/ROLLBACK command tags, commit-time rejection and retained observations.",
+      "Coverage": "Reference/model admission and bad-behavior agreement; separate outcome soundness/completeness; transfer of all inherited bounded-claim obligations; a countermodel to input coverage alone.",
+      "Extensions": "COUNT/SUM NULL and duplicate behavior, empty global aggregate, ordered ties and different LIMIT pages.",
+      "Witnesses": "Kernel-checked tenant mutation, stock rejection/rollback and retained RETURNING examples."
+    },
+    "verification": "Run pwsh -File contracts/m2/verify.ps1; retain verification.json only after a successful build and module-owned transitive trust audit.",
+    "trust": "No proof placeholders, custom or unapproved assumptions, privileged shortcuts or native proof evaluation. Only inherited propext, Classical.choice and Quot.sound foundations are allowed. Audit includes generated/private declarations by owner module.",
+    "proof_scope": "Abstract contracts, selected executable mathematical operations and conditional lemmas. There is no proven PostgreSQL semantics, parser preservation, Rust refinement or Alloy encoding equivalence.",
+    "open_obligations": [
+      "Reference execution relation and finite domain completeness must be supplied for each admitted feature.",
+      "The generic final-state validator does not establish PostgreSQL's constraint enforcement order.",
+      "The scalar functions consume already available operands; planner folding and evaluation order are not implemented.",
+      "Aggregate counts/sums are mathematical. PostgreSQL bigint/numeric result types and overflow remain explicit implementation obligations.",
+      "AllowedOrder is an abstract ordering contract; the concrete comparator, collation, null placement and all permitted tie outcomes remain to be instantiated."
+    ]
+  },
+  "compatibility_contract": {
+    "deterministic_boundary": "SQLeanParser typed AST -> versioned Rust binding -> typed RA/effect IR -> deterministic Alloy source; AI never supplies executable semantics or a safety verdict.",
+    "m1": "Existing pure relational nodes, duplicate/NULL behavior, context fingerprints, strict rejection of unknown fields, timeouts, complete occurrence capacities and replay labels remain regression invariants.",
+    "extension_protocol": "Introduce explicit statement/effect/error/ordered-result variants; version incompatible envelopes. Keep M1 compatibility intentional, tested and documented rather than silently reinterpreting its schema.",
+    "transaction_input": "Use an explicit sequential transaction envelope with an ordered list of individually parsed SQL statements and a requested commit/rollback action. Do not claim SQLeanParser parses BEGIN/COMMIT until its actual AST supports them.",
+    "architecture": "Rust owns types, arithmetic, state transitions, evaluation, bounds and encoding. Java 17 remains an isolated Alloy API bridge. Lean is a specification/trust gate.",
+    "style": "Each authored method/declaration is at most 30 physical lines; purpose documentation and Rustdoc/Javadoc accompany implementation. Pure transformations return typed errors; I/O remains at controlled process boundaries.",
+    "deployment": "M2 stays offline and local during semantic promotion. Preserve Windows behavior and prepare native Linux/macOS CI; do not claim unexecuted platforms or sqlolla.us deployment are validated."
+  },
+  "workstreams": [
+    {
+      "id": "M2.0",
+      "maps_to": [
+        "all S1..S6"
+      ],
+      "depends_on": [],
+      "deliverable": "Freeze the contracts, capability matrix, source inventory and baseline regression evidence.",
+      "acceptance": [
+        "Independent review of every conditional guarantee and missing reference semantics.",
+        "Kernel/source/style audit passes; inherited M0 source hashes are unchanged.",
+        "Every proposed feature lists parse/export/bind/evaluate/encode/replay/PG/adversarial stages separately."
+      ]
+    },
+    {
+      "id": "M2.1",
+      "maps_to": [
+        "S1 minimum required slice"
+      ],
+      "depends_on": [
+        "M2.0"
+      ],
+      "deliverable": "Admit required Int32 arithmetic, comparisons and explicit error outcomes for business updates.",
+      "scope": [
+        "Checked + and -; add division only with zero and MIN/-1 branches.",
+        "Typed NULL propagation after operand evaluation; cast/input and planning failures remain distinct.",
+        "Pure CASE/COALESCE or other short-circuit constructs need dedicated PostgreSQL evaluation obligations before admission."
+      ],
+      "acceptance": [
+        "Actual-PG signed range, zero, NULL and parameter cases.",
+        "No host wrapping or Alloy finite-integer wrapping is used as SQL arithmetic.",
+        "Reference error branches survive into the failure query; planner/eager evaluation cases are refused until justified."
+      ]
+    },
+    {
+      "id": "M2.2",
+      "maps_to": [
+        "S5 early CRUD",
+        "S6 sequential envelope"
+      ],
+      "depends_on": [
+        "M2.1"
+      ],
+      "deliverable": "Single-target INSERT VALUES/SELECT, UPDATE and DELETE with explicit before/after frames, affected counts and RETURNING, followed by sequential commit/abort/rollback.",
+      "scope": [
+        "Start with ordinary tables, explicit known schema and total admitted assignments; update each selected occurrence from the old row.",
+        "DELETE RETURNING uses deleted values; INSERT/UPDATE RETURNING uses the appropriate new values.",
+        "Single-table statements may compose across tables inside one sequential transaction; nontarget tables remain framed.",
+        "No need to finish all S3/S4 capabilities before starting this workstream."
+      ],
+      "acceptance": [
+        "Failed statement cannot publish a partial candidate; later statements do not resume mutation after failure.",
+        "Prior client-visible results, and any admitted streaming emission before an error, remain observable despite rollback.",
+        "A zero-row mutation succeeds with affected count zero; unchanged matched UPDATE rows still count.",
+        "All admitted constructors preserve duplicates and exact occurrence lineage without turning internal occurrence IDs into SQL keys."
+      ]
+    },
+    {
+      "id": "M2.3",
+      "maps_to": [
+        "S5 constraints"
+      ],
+      "depends_on": [
+        "M2.2"
+      ],
+      "deliverable": "Catalog-declared NOT NULL, pure row CHECK, and a carefully admitted UNIQUE/PRIMARY KEY profile; extend foreign keys and deferred timing through explicit subsequent slices.",
+      "scope": [
+        "Validate prestate admissibility separately from candidate execution.",
+        "CHECK UNKNOWN passes; NOT NULL is independent; default UNIQUE and NULLS NOT DISTINCT differ.",
+        "Immediate uniqueness needs intermediate enforcement semantics: a valid final key permutation can still fail. Do not approve key-changing multirow UPDATE from a final-state check alone.",
+        "Commit validator is explicit even while deferred constraints are refused by the initial executable profile."
+      ],
+      "acceptance": [
+        "Violations produce named SQLSTATE outcomes; no constraint is merely asserted as a poststate fact.",
+        "Multi-constraint failures require exact admitted timing or a clearly labeled conservative error abstraction.",
+        "Self/intra-batch unique collisions, unchanged duplicates, key swaps and deferred failures have actual-PG fixtures.",
+        "Defaults, identity/sequence, generated columns, triggers, RLS, FK actions, inheritance/partitioning and unsupported metadata fail closed until their effects are modeled."
+      ]
+    },
+    {
+      "id": "M2.4",
+      "maps_to": [
+        "S2"
+      ],
+      "depends_on": [
+        "M2.1"
+      ],
+      "deliverable": "High-corpus-impact ORDER BY/LIMIT/OFFSET and selected COUNT/SUM/MIN/MAX grouping/derived compositions in parallel with CRUD where staffing permits.",
+      "scope": [
+        "Separate ordered results from bags; encode every permitted tie outcome or require a proven unique ordering key for the admitted pagination profile.",
+        "Pin ASC/DESC, NULL placement, exact text/collation profile, parameterized LIMIT/OFFSET errors and empty/global/grouped results.",
+        "Add bigint output typing for COUNT and SUM(integer) before implementation; AVG/numeric needs its own type slice.",
+        "Aggregate DISTINCT/FILTER, HAVING, derived results and CTE composition are capability increments, not syntactic passthrough."
+      ],
+      "acceptance": [
+        "Compare ordered results as sequences and unordered results as bags.",
+        "Enumerate tie cases independently; one observed PostgreSQL plan is not evidence that other allowed outcomes do not exist.",
+        "Grouped empty input versus global empty aggregation, NULL grouping keys, duplicate occurrences and aggregate overflow are tested.",
+        "Track exact unchanged industrial SQL that advances beyond its first ORDER BY blocker."
+      ]
+    },
+    {
+      "id": "M2.follow_on",
+      "maps_to": [
+        "S3",
+        "S4",
+        "remaining S5/S6"
+      ],
+      "depends_on": [
+        "capability-specific prerequisites only"
+      ],
+      "deliverable": "Continue the complete typed-AST MVP through subqueries/correlation, USING/NATURAL, functions/types, upsert/defaults/catalog changes and a separately specified concurrency model.",
+      "rule": "S1..S6 are workstream labels, not a mandatory serial pipeline. Dependencies follow semantic prerequisites. Any still-refused family remains in the MVP ledger with a concrete next obligation.",
+      "deferred_guarantees": [
+        "No lost-update, write-skew, isolation-level or locking guarantees follow from the sequential M2 model.",
+        "No arbitrary Alloy-to-SQL inverse: only recognized typed IR/effect patterns can be pretty-printed and round-trip checked.",
+        "Full triggers/RLS/UDF behavior cannot be replaced by uninterpreted functions under a database-security claim."
+      ]
+    }
+  ],
+  "failure_and_scope_policy": {
+    "modeled_outcomes": [
+      "Successful results and committed poststate",
+      "Statement SQL errors and original cause",
+      "Subsequent 25P02 errors",
+      "Commit-time failure",
+      "Explicit rollback",
+      "Returned/exposed observations"
+    ],
+    "property_examples": [
+      {
+        "name": "tenant_write_scope",
+        "bad": "A row outside the authorized tenant changes at an admitted observation/state boundary."
+      },
+      {
+        "name": "tenant_disclosure",
+        "bad": "An output event exposes unauthorized tenant data, even when the transaction later aborts."
+      },
+      {
+        "name": "stock_nonnegative",
+        "bad": "A specifically chosen committed or intermediate observation contains negative stock; the property must name which boundary matters."
+      },
+      {
+        "name": "unexpected_rejection",
+        "bad": "A policy requiring success encounters a modeled SQL error; expected validation rejection is not automatically a security flaw."
+      }
+    ],
+    "coverage_equation": "forall admitted input and every reference outcome: reference_exec(input,outcome) -> modeled_exec(input,outcome); witness soundness requires the reverse direction on the admitted domain.",
+    "no_counterexample_gate": [
+      "Consistent assumptions",
+      "Reachable execution",
+      "Every input represented",
+      "Every admitted outcome represented",
+      "Property correspondence",
+      "Complete finite scopes and arithmetic/result domains",
+      "Completed UNSAT failure query"
+    ],
+    "bounds": [
+      "Count every intermediate state/row occurrence, insert capacity, affected/returning occurrence and ordered permutation branch.",
+      "Cover arithmetic result values and error branches, not just prestate input literals; compute closed finite result domains or refuse.",
+      "Cardinality SAT bitwidth is independent of SQL Int32/Int64 width; forbid overflow at either layer.",
+      "Resource limits, unsupported effects, incomplete context, timeout and solver errors yield refusal/inconclusive, never a safety label."
+    ],
+    "abstraction_rule": "A conservative overapproximation may support an appropriately qualified absence claim with completeness evidence, but SAT then yields a candidate until reference replay validates it. Underapproximation cannot justify UNSAT.",
+    "observations": "Buffered atomic is a specific constructor, not a universal client/server behavior guarantee. The general failed-statement outcome retains already exposed rows; model or explicitly exclude network/driver streaming profiles.",
+    "result_integrity": "Evidence fingerprints bind complete SQL, parameters, catalog/constraints, session and transaction settings, bounds/domain, property, tool versions and all before/after/error/observation data. A replay bundle must include all required catalog tables and context."
+  },
+  "validation": {
+    "semantic_matrix": [
+      "INSERT duplicates/empty source/default omission; UPDATE no matches/same value/old-row column swap; DELETE TRUE/FALSE/UNKNOWN.",
+      "Multirow candidate expression failure rolls back all rows; a later statement failure rolls back earlier writes.",
+      "RETURNING old/new values, prior successful observations and admitted same-statement emission before error.",
+      "NOT NULL versus CHECK UNKNOWN; unique NULL modes; multirow key swaps; commit-time rejection.",
+      "Int32 MIN/MAX, signed division/truncation, divide by zero, NULL operands, constant folding and error phase.",
+      "AND/OR/CASE and aggregate expressions with error-producing branches; do not assume lexical short-circuiting.",
+      "GROUP BY empty/global distinction, NULL groups, duplicate aggregates, HAVING and COUNT/SUM output types.",
+      "Ordering ties, NULL placement, LIMIT/OFFSET zero/NULL/negative/out of range and composition with DISTINCT.",
+      "Tenant predicate omission, tenant changes in assignments, shared stock depletion and rollback disclosure."
+    ],
+    "oracle": "Extend the actual PostgreSQL 16 harness to capture prestate, typed results, affected counts, SQLSTATE plus separate column/constraint/phase diagnostics, command completion tags, logical transaction termination, observations and final committed state. COMMIT after an already failed transaction can complete with ROLLBACK; do not invent a new SQL error. Reset schema and state per case; record role, search_path, collation, timezone, constraints and driver buffering mode.",
+    "symbolic": "Independently enumerate tiny input bags, parameter domains, statement sequences and permitted outcome choices. Compare Rust and decoded Alloy outcomes with the reference set, not merely SAT witness existence.",
+    "industrial": "Rerun all 276 records at every stage and retain denominators, unchanged SQL hashes and per-stage first failures. Separate corpus syntax/export progress from cases actually executed with an adequate catalog and from verified transaction properties.",
+    "industrial_promotion": "Select genuine multi-statement business procedures only when grouping, parameter flow and catalog metadata are known; record synthetic scaffolding explicitly. Never construct invented transaction boundaries and label them original industrial transactions.",
+    "mutations": [
+      "Drop tenant filter",
+      "Skip overflow branch",
+      "Treat CHECK UNKNOWN as failure",
+      "Treat UNIQUE NULL as equal by default",
+      "Evaluate assignments sequentially",
+      "Publish partial multirow candidate",
+      "Continue after abort",
+      "Erase returned observations",
+      "Omit a tie outcome",
+      "Drop deferred failure",
+      "Reuse too-small insert/result scope"
+    ],
+    "regression": "Current M0 trust gate and all M1 parser/Rust/PG/symbolic/negative/mutant/style/capacity gates remain mandatory; M2 adds tests rather than replacing their meaning.",
+    "promotion": "Freeze sources, independently review semantics and evidence, run final gates once, update the canonical capability ledger, and remove failed temporary probes/duplicate reports before proposing any production promotion."
+  },
+  "delegation": [
+    {
+      "role": "formal_semantics_agent",
+      "owns": "M2 Lean contracts and reference/encoding obligations",
+      "handoff": "Kernel-checked definitions, visible assumptions and finite counterexamples; cannot certify implementation by declaration alone."
+    },
+    {
+      "role": "parser_binding_agent",
+      "owns": "Complete typed-AST field preservation, catalog/parameter/error binding and explicit capability refusals",
+      "handoff": "Versioned protocol changes and supported/unsupported constructor census; no handwritten SQL parser."
+    },
+    {
+      "role": "rust_encoder_agent",
+      "owns": "Pure effect interpreter, bounds, deterministic state/observation encoding and witness reconstruction",
+      "handoff": "Per-operator semantic correspondence tests and exact capacity accounting."
+    },
+    {
+      "role": "postgres_adversarial_agent",
+      "owns": "Independent actual-PG oracle, unchanged industrial SQL replays, finite exhaustive outcome checks and mutants",
+      "handoff": "Concrete divergences, coverage gaps and reproducible complete replay bundles."
+    },
+    {
+      "role": "integrator_reviewer",
+      "owns": "Cross-agent contract reconciliation, provenance, platform boundaries, source freeze and promotion decision",
+      "handoff": "Review closed on exact source hashes; unresolved gaps remain explicit."
+    }
+  ],
+  "ranked_review_risks": [
+    {
+      "priority": "P0",
+      "risk": "A bad/error outcome is eliminated by assuming constraints or success.",
+      "review": "Separate input assumptions from transition errors; use complete-outcome countermodel and targeted mutants."
+    },
+    {
+      "priority": "P0",
+      "risk": "Final-state-only UNIQUE checks or lexical expression order invent PostgreSQL behavior.",
+      "review": "Require actual enforcement timing and reference outcome coverage; refuse unresolved combinations."
+    },
+    {
+      "priority": "P0",
+      "risk": "Intermediate scope/result-domain truncation creates false UNSAT.",
+      "review": "Independent cardinality/state/value closure bounds; overflow and minimum-insufficient-scope mutants."
+    },
+    {
+      "priority": "P0",
+      "risk": "Rollback is incorrectly presented as erasing disclosed rows.",
+      "review": "Preserve statement and transaction observations, including admitted streaming emissions."
+    },
+    {
+      "priority": "P1",
+      "risk": "Ordered pagination drops ties or aggregation narrows the output type.",
+      "review": "All-order outcomes, comparator/context profile and PostgreSQL result-type fixtures."
+    },
+    {
+      "priority": "P1",
+      "risk": "Industrial syntax progress is marketed as transaction verification.",
+      "review": "Publish per-stage denominators and complete known context; label synthetic scaffolding."
+    },
+    {
+      "priority": "P1",
+      "risk": "M2 accidentally changes M1 or blocks CRUD behind unrelated advanced syntax.",
+      "review": "Isolated drafts, unchanged regression gates and prerequisite-based parallel workstreams."
+    }
+  ],
+  "m3_boundary": {
+    "status": "Separate feasibility workstream; not a prerequisite or semantic oracle for M2.",
+    "observed_by_integrator": "Small qualitative M3 experiments covered explanation reference closure, typed-RA candidates checked by the deterministic binder and PG, and blind witness predictions. These do not establish general AI reliability.",
+    "providers": "BYOT adapters may retain OpenAI/Anthropic/Gemini-compatible interfaces, but all authorized production AI flows are pinned to exact gpt-6.1-sol on a verified endpoint. No silent fallback or substitute model; credentials remain ephemeral and live compatibility must be tested.",
+    "contract": "AI may propose typed edits and explain immutable evidence with valid references. The deterministic compiler and verifier accept/reject changes; AI text cannot create a bounded claim or alter constraints.",
+    "ui": "Use AlloyStudio-like instance exploration only with separate full/transport/view completeness and explicit error/commit/rollback/observation timelines."
+  },
+  "references": [
+    {
+      "url": "https://www.postgresql.org/docs/16/errcodes-appendix.html",
+      "supports": "Stable SQLSTATE comparison and initial error-family mapping."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/sql-update.html",
+      "supports": "Old-row assignment input, updated-row RETURNING and affected-row counts."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/ddl-constraints.html",
+      "supports": "Explicit violations and CHECK/NULL/unique semantics."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/sql-set-constraints.html",
+      "supports": "Immediate versus deferred enforcement, including immediate nondeferrable uniqueness."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/sql-expressions.html",
+      "supports": "Expression evaluation and planner/aggregate ordering subtleties."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/functions-aggregate.html",
+      "supports": "Aggregate NULL behavior and PostgreSQL output types."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/queries-limit.html",
+      "supports": "Ordering and pagination nondeterminism."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/tutorial-transactions.html",
+      "supports": "Transactional rollback boundary."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/16/protocol-error-fields.html",
+      "supports": "Separate column-name and constraint-name diagnostic fields."
+    }
+  ],
+  "review_closures": [
+    {
+      "change": "Failure now has separate optional columnName and constraintName fields; requireNonNull populates only columnName, with a checked theorem.",
+      "evidence": "Integrator independently ran PostgreSQL 16.16 GET STACKED DIAGNOSTICS after INSERT NULL into x int NOT NULL: SQLSTATE 23502, column x, empty constraint field. Temporary probe cluster removed.",
+      "finding": "NOT NULL error incorrectly stored column identity in constraintName."
+    },
+    {
+      "change": "Finished records EndProtocol separately from EndReason. failed_commit_protocol proves COMMIT after a failed transaction yields a ROLLBACK completion tag while retaining the original cause.",
+      "evidence": "Independently executed PostgreSQL16.16 BEGIN; SELECT1/0; COMMIT with ON_ERROR_STOP=0. Command tags were BEGIN then ROLLBACK; SQL failure remained on stderr; ephemeral cluster removed. Protocol tags remain separate mandatory fields in the planned transaction oracle.",
+      "finding": "Logical abort could be mistaken for a COMMIT protocol error."
+    }
+  ],
+  "remaining_corpus_patterns": {
+    "status": "DESIGN_REVIEWED_IMPLEMENTATION_AND_INTEGRATED_REPLAY_PENDING",
+    "snapshot": {
+      "ledger": "../../validation/corpus-manifest.json",
+      "binary_sha256": "9cd49ea76060ef5f6592a7c1da0a57b178620d63b4a295018fdc5e350abf17d1",
+      "matched_records": 248,
+      "remaining_records": 28,
+      "remaining_statuses": {
+        "uncovered": 27,
+        "mismatch": 1
+      },
+      "fixtures_per_record": 2,
+      "meaning": "Historical full-run backlog. Later focused passes are component evidence only; refresh contexts and replay all 276 records before changing this count. Historical first-refusal codes are not an exhaustive dependency inventory."
+    },
+    "formalization_first": {
+      "existing_contracts": [
+        "SQLollaM2/SetReturning.lean",
+        "SQLollaM2/Collections.lean",
+        "SQLollaM2/Comparability.lean",
+        "SQLollaM2/UniqueIndex.lean",
+        "SQLollaM2/SqlFunction.lean",
+        "SQLollaM2/RelationalEffects.lean",
+        "SQLollaM2/Locks.lean",
+        "SQLollaM2/Windows.lean",
+        "SQLollaM2/SequenceEffects.lean",
+        "SQLollaM2/SessionEffects.lean"
+      ],
+      "before_new_code": "Extend kernel-checked contracts for function resolution/coercion, scalar effect composition, CTE demand, regex and tuple-version observations before their Rust integration. Existing abstract contracts do not prove PostgreSQL equivalence or Rust refinement.",
+      "trust": "No sorry, sorryAx, custom/unapproved axioms, unsafe proof shortcuts or native_decide; audit transitive declarations. Only propext, Classical.choice and Quot.sound are allowed foundations."
+    },
+    "grouping_rule": "Each record appears in exactly one primary scheduling group. Semantic dependencies overlap; closing one group does not automatically credit its records. Names are exact unique final segments of ledger IDs; population and source SQL remain in the ledger.",
+    "groups": [
+      {
+        "id": "external_effects",
+        "count": 6,
+        "records": [
+          "insertTweet",
+          "pGAdvisoryXactLock",
+          "pGNotifyMany",
+          "jobCancel",
+          "leaderResign",
+          "terminateDatabaseConnectionsQuery"
+        ],
+        "pattern": "Scalar-looking calls change sequence, notification, lock or backend state; some sit inside lazy expressions and materialized CTEs.",
+        "modules": [
+          "branch_effects",
+          "sequences",
+          "session_effects",
+          "cte_flow",
+          "row_locks",
+          "typed_builtins"
+        ],
+        "subgroups": {
+          "sequence_default": 1,
+          "notifications": 3,
+          "advisory_ownership": 1,
+          "backend_signaling": 1
+        }
+      },
+      {
+        "id": "locking_cte_mutations",
+        "count": 4,
+        "records": [
+          "jobDelete",
+          "jobDeleteMany",
+          "jobGetAvailable",
+          "jobRetry"
+        ],
+        "pattern": "Lock a selected prefix or derived relation, mutate matching rows, expose RETURNING and same-snapshot fallback rows.",
+        "modules": [
+          "cte_flow",
+          "row_locks",
+          "branch_effects",
+          "write_rules",
+          "typed_builtins"
+        ]
+      },
+      {
+        "id": "array_bulk_dataflow",
+        "count": 9,
+        "records": [
+          "jobCountByQueueAndState",
+          "jobInsertFastMany",
+          "jobInsertFastManyNoReturning",
+          "jobInsertFullMany",
+          "jobRescueMany",
+          "jobSetStateIfRunningMany",
+          "riverMigrationInsertMany",
+          "riverMigrationInsertManyAssumingMain",
+          "indexesExist"
+        ],
+        "pattern": "Sibling UNNEST expressions form aligned rows feeding aggregation, joins, catalog lookup or bulk mutations.",
+        "modules": [
+          "set_expansion",
+          "typed_builtins",
+          "cte_flow",
+          "write_rules",
+          "sequences",
+          "system_columns"
+        ],
+        "caution": "jobSetStateIfRunningMany has no explicit row-lock clause. Its dependencies are aligned expansion, joined mutation, correlated fallback, UNION ALL and ordering."
+      },
+      {
+        "id": "catalog_backed_mutation",
+        "count": 5,
+        "records": [
+          "jobDeleteBefore",
+          "jobInsertFull",
+          "jobUpdateFull",
+          "templateUpsertActiveClusterMembership",
+          "templatePruneStaleClusterMembership"
+        ],
+        "pattern": "Ordinary writes require complete standalone/partial unique-index metadata, defaults and declared immutable function bodies.",
+        "modules": [
+          "write_rules",
+          "typed_builtins",
+          "sequences"
+        ],
+        "caution": "The old ledger refused incomplete write metadata. This is not evidence that each query needs a new DML operator; default sequence evaluation is additionally required for jobInsertFull."
+      },
+      {
+        "id": "json_predicates_and_updates",
+        "count": 2,
+        "records": [
+          "jobGetCancelRequested",
+          "jobUpdate"
+        ],
+        "pattern": "JSONB key existence and conditional concatenation over typed NULL-aware values.",
+        "modules": [
+          "typed_builtins",
+          "cte_flow",
+          "row_locks",
+          "write_rules"
+        ],
+        "caution": "jobUpdate's old mismatch arose from missing JSONB concatenation returning 42883 with an empty error schema; do not invent an output-label patch from that historical symptom."
+      },
+      {
+        "id": "windowed_scheduling",
+        "count": 1,
+        "records": [
+          "jobSchedule"
+        ],
+        "pattern": "Locked and paginated candidates are partitioned/ranked, checked against uniqueness policy and updated through CTEs.",
+        "modules": [
+          "windows",
+          "cte_flow",
+          "row_locks",
+          "write_rules",
+          "typed_builtins"
+        ]
+      },
+      {
+        "id": "regex_catalog_lookup",
+        "count": 1,
+        "records": [
+          "indexReindexArtifacts"
+        ],
+        "pattern": "Catalog joins and string slicing followed by PostgreSQL regex matching, here ^_cc(new|old)[0-9]*$.",
+        "modules": [
+          "regex",
+          "typed_builtins"
+        ]
+      }
+    ],
+    "shared_execution_contract": {
+      "proposed_types": {
+        "Branch<T>": "Typed value/outcome plus branch-local database, catalog, held ownership, pending notifications, sequence state and ordered external-event trace.",
+        "OutcomeSet<T>": "All admitted bounded alternatives, with explicit completeness and resource status; never silently truncate to one convenient execution.",
+        "ScalarObservation": "Typed Cell plus branch state/events, including distinct non-NULL void and SQL NULL(void).",
+        "Demand": "All | Prefix(offset, limit) | Exists, with planning-time observations separate from execution-time consumption.",
+        "WithFrame": "Original statement snapshot, materialized CTE relation slots, pending write deltas, dependency/demand information and branch-local effects."
+      },
+      "functions": [
+        "eval_scalar(expr, row, branch, context) -> Admission<OutcomeSet<ScalarObservation>>",
+        "flat_map_outcomes(outcomes, continuation) -> Admission<OutcomeSet<T>>",
+        "compose_effects(prior, delta) -> EffectState",
+        "finish_statement(before, candidate, outcome) -> StatementObservation",
+        "finish_transaction(branch, commit_or_rollback) -> TransactionObservation"
+      ],
+      "rules": [
+        "Admission refusal and resource exhaustion remain distinct from modeled PostgreSQL SQLSTATE outcomes.",
+        "Each alternative owns its state; no shared mutable Runtime effect log. Pass inherited state into child execution before it runs: appending prior effects afterward is insufficient for nextval.",
+        "Merge lock ownership by identity/strength; retain ordered event multiplicity. A materialized CTE reference must not append its evaluation events again.",
+        "CASE/COALESCE preserve selected-branch demand; Boolean evaluation follows the admitted PostgreSQL planning/evaluation profile, not an invented universal left-to-right rule.",
+        "On statement-savepoint rollback, restore pre-existing transactional ownership/notification state and table state; retain actual nontransactional sequence allocations. Commit delivery is a separate step.",
+        "Pure operators preserve already-produced effects even when their output is empty; demand analysis determines which upstream operations actually ran.",
+        "Demand transfer is operator-specific: Prefix/Exists cannot pass blindly through sorting, aggregation/windows, DISTINCT or materialization. Validate each transfer and preserve planning-time errors independently of row demand.",
+        "Backend signaling has its own irreversible observation semantics and must not be filtered through a rollback function that currently retains only sequence events."
+      ],
+      "existing_foundation": "crates/sqlolla-core/src/execution/rel_effects.rs; extend its typed composition rather than add a second evaluator or query-name handlers."
+    },
+    "modules": {
+      "branch_effects": {
+        "design": "Shared execution contract above; pure calls retain a fast path, effectful calls return explicit branch observations.",
+        "state": "Branch-local scalar and relational effects, lazy CASE/COALESCE, per-proposal defaults, retained nontransactional errors and CTE inherited prefixes are implemented. Unsupported competing tuple interleavings and effectful scalar subqueries remain explicit refusals."
+      },
+      "typed_builtins": {
+        "functions": [
+          "resolve_function(qualified_name, argument_types, catalog) -> ResolvedFunction",
+          "resolve_operator(symbol, operand_types, catalog) -> ResolvedOperator",
+          "apply_function(specification, arguments, branch) -> ScalarObservation",
+          "validate_immutable_expression(expression, registry) -> Admission<()>",
+          "validate_comparability(type, operation) -> Admission<()>"
+        ],
+        "registry_fields": [
+          "qualified identity",
+          "candidate signatures",
+          "implicit argument-cast rules",
+          "NULL policy",
+          "volatility",
+          "effect family",
+          "planner rules",
+          "Lean contract",
+          "evaluator"
+        ],
+        "reuse": "scalar/arrays.rs, array_functions.rs, json_functions.rs, json_update.rs and comparison.rs",
+        "remaining": "Remaining overload/coercion and locale semantics stay explicit capability work. Known builtin identities use the pinned inventory; declared SQL function bodies, NULL policies and volatility use shared metadata. See capabilities.json for the concrete adversarial signature backlog.",
+        "evidence": "Canonical actual-PG results: validation/results/{collections,comparability,sql_functions,xid-scalars}.json; read current hashes and failures rather than historical per-pass counts."
+      },
+      "set_expansion": {
+        "functions": [
+          "bind_set_expansion(projection, input) -> ExpandSetsPlan",
+          "align_sets(arrays) -> Rows",
+          "expand_input_rows(plan, input, branch) -> OutcomeSet<RelationObservation>"
+        ],
+        "reuse": "binding/set_returning.rs and execution/set_returning.rs",
+        "invariants": "Longest sibling length, typed NULL padding, duplicate preservation and per-input-row element order; enumerate permitted input-row orders before LIMIT. Nested scalar wrappers consume expanded cells, not independently rerun UNNEST.",
+        "evidence": "32 focused cases and 47 actual-PG executions passed; bulk-write composition still needs integrated replay."
+      },
+      "write_rules": {
+        "functions": [
+          "bind_table_rules(catalog, context) -> BoundTableRules",
+          "bind_immutable_body(definition, arguments) -> BoundExpr",
+          "infer_arbiters(target, rules) -> ArbiterSet",
+          "plan_write(input, snapshot, rules) -> OutcomeSet<WriteDelta>",
+          "validate_and_publish(delta, branch) -> StatementObservation"
+        ],
+        "reuse": "unique_index.rs, execution/index_arbiter.rs, expression/sql_function.rs and existing CRUD/constraints modules",
+        "invariants": "Standalone indexes differ from named constraints; partial predicates require a sound implication rule and the registry's immutable-expression gate. Preserve old-row simultaneous assignments, joined-source alternatives, SQLSTATE, nontarget frames and RETURNING lineage. Defaults use the same lazy scalar evaluator. Multiple simultaneously violated constraints require authentic enforcement ordering or an explicit diagnostic-ambiguity refusal.",
+        "evidence": "Actual PostgreSQL uniqueness-order, immutable partial-index and SQL-function resolution probes are maintained in unique_indexes.json and sql_functions.json. Catalog contexts retain real index enforcement order and invalidate stale comparison evidence."
+      },
+      "cte_flow": {
+        "functions": [
+          "prepare_cte_frame(with_plan, snapshot, context) -> WithFrame",
+          "evaluate_cte_once(id, demand, frame) -> OutcomeSet<WithFrame>",
+          "read_cte_slot(id, frame) -> RelationObservation",
+          "publish_cte_writes(frame) -> StatementObservation"
+        ],
+        "reuse": "execution/with_statement.rs, cte_schedule.rs, cte_demand.rs, cte_consumption.rs and cte_lineage/{closure,trace,mutation}.rs",
+        "invariants": "Original base-table reads, materialized RETURNING relations and pending writes remain separate. Shared read CTEs execute according to demand; data-modifying CTEs obey their completion semantics. Reusing a CTE cannot duplicate a sequence allocation or notification. Textual CTE order is not a universal execution order: enumerate admitted dependency-consistent schedules for independent writes/effects, or refuse noncommuting cases until covered.",
+        "remaining": "General streaming consumers, competing multirow effects, ambiguous source matches, error-prefix consumption and correlated membership lineage require further explicit semantics. Successful per-branch certificates preserve occurrence identity and every alternative; refusals never contribute coverage.",
+        "reference": "https://www.postgresql.org/docs/16/queries-with.html#QUERIES-WITH-MODIFYING"
+      },
+      "row_locks": {
+        "functions": [
+          "derive_row_lineage(plan, catalog) -> OriginMap",
+          "plan_lock_demand(plan, consumer) -> LockDemand",
+          "acquire_lock_prefix(candidates, demand, ownership) -> OutcomeSet<LockSelection>"
+        ],
+        "reuse": "effects.rs and execution/lock_{lineage,demand,source,orders,join}.rs",
+        "invariants": "Consumed/locked rows differ from returned rows. Apply SKIP LOCKED, OFFSET and LIMIT at their correct stages; preserve stable occurrence identity, including duplicates. Planning-time relation locks are separate from row acquisition.",
+        "evidence": "Actual PostgreSQL lock ownership probes: locking.json, locking_join.json, cte-locks.json and lock_initialization.json. Stored-view lock inheritance, unspecified waits and ambiguous origins remain refused."
+      },
+      "sequences": {
+        "functions": [
+          "resolve_sequence(regclass, context) -> SequenceId",
+          "allocate_next(specification, branch_state) -> SequenceAllocation",
+          "record_allocation(allocation, branch) -> Branch"
+        ],
+        "reuse": "sequence.rs and SQLollaM2/SequenceEffects.lean",
+        "invariants": "is_called, increment, bounds, cycle, permission, identity and cache ownership are explicit. Allocation is lazy and survives a later failed write/rollback. Each alternative starts from its own prior state.",
+        "state": "Lean-checked allocation contracts and SQL execution are integrated under exclusive cache-one snapshots. Sequence state survives statement failure/rollback; expression order and CTE producer/default competition have actual-PG regressions in sequence-effects.json."
+      },
+      "session_effects": {
+        "functions": [
+          "queue_notification(channel, payload, branch) -> ScalarObservation",
+          "finish_notifications(queue, transaction_result) -> DeliveredEvents",
+          "acquire_advisory(key, owner, context) -> OutcomeSet<ScalarObservation>",
+          "signal_backend(target, permissions, schedule) -> OutcomeSet<BackendObservation>"
+        ],
+        "invariants": "Notification invocation, queue and delivered events differ; duplicate delivery folding occurs at commit and rollback delivers none. Advisory keys retain bigint/int-pair namespace and ownership. Backend signal acceptance is distinct from confirmed termination.",
+        "state": "SessionEffects and BackendSignals contracts, pure runtime transitions and actual PG suites are integrated. Notifications retain invocation order but fold identical commit deliveries; rollback discards pending delivery. Stable owned backend targets test accepted signal requests separately from observed eventual exit; no-target corpus evidence is only the independently proved no-call branch.",
+        "testing": "Use disposable owned PostgreSQL workers for positive backend scenarios; never terminate user/server application sessions."
+      },
+      "windows": {
+        "functions": [
+          "bind_window_slots(expressions, input) -> WindowPlan",
+          "partition_and_rank(rows, specification) -> OutcomeSet<RankedRows>"
+        ],
+        "reuse": "window.rs, binding/window.rs and execution/window.rs",
+        "invariants": "Shared slots for repeated calls, typed partition keys and complete permitted tie alternatives; preserve input effects through ranking and later mutation.",
+        "evidence": "Focused windows.json plus composed jobSchedule fixtures in the full industrial ledger; all permitted tie alternatives remain bounded and explicit."
+      },
+      "regex": {
+        "functions": [
+          "compile_pg_pattern(text, flags, collation) -> Admission<RegexPlan>",
+          "match_pg_pattern(plan, value) -> SqlResult<Boolean>"
+        ],
+        "design": "A checked bounded regex IR for admitted PostgreSQL anchors, alternation, groups, classes and repetition; no query-name or literal-pattern special case and no assumed Rust-regex equivalence.",
+        "remaining": "The admitted bounded regex subset is implemented and differentially tested in regex-subset.json. General ARE extensions, backreferences and locale-sensitive behavior remain refused; bounds never silently truncate matching.",
+        "reference": "https://www.postgresql.org/docs/16/functions-matching.html"
+      },
+      "system_columns": {
+        "functions": [
+          "bind_system_column(name, relation, context) -> SystemColumnRef",
+          "read_tuple_version(origin, version_context) -> TupleVersionObservation",
+          "advance_tuple_version(write, branch) -> OutcomeSet<TupleVersionObservation>"
+        ],
+        "consumer": "jobInsertFastMany RETURNING (xmax != 0)",
+        "invariants": "xmax is tuple-version metadata, not an upsert Boolean. Execution requires checked exclusive top-level transaction/header context; version events retain row lineage, old-header lock state and aborted residuals.",
+        "remaining": "INSERT/ON CONFLICT RETURNING is integrated with actual PG tuple and unchanged River nonempty-array tests. Ordinary UPDATE/DELETE tuple context, MultiXact, external writers, subtransactions and savepoints remain explicit boundaries.",
+        "reference": "https://www.postgresql.org/docs/16/ddl-system-columns.html"
+      },
+      "relation_initialization": {
+        "functions": [
+          "collect_resolved_row_marks(binding) -> RelationFootprint",
+          "initialize_relations(footprint, context) -> Admission<Ownership>"
+        ],
+        "reuse": "binding/initialization.rs, StatementPlan::Initialized, execution/initialization.rs",
+        "invariants": "Capture physical relation opening before unused/dead-query pruning; initialize once before row demand. Never infer tuple locking from relation opening; planner failures and rollback retain their distinct timing.",
+        "specification": "SQLollaM2/RelationInitialization.lean",
+        "evidence": "validation/results/lock_initialization.json"
+      },
+      "consumer_lineage": {
+        "functions": [
+          "trace_original_query(plan, branch) -> Observation",
+          "trace_unambiguous_mutation_sources(plan, observation, prefix) -> OccurrenceCoverage",
+          "close_required_producers(observations) -> Admission<Certificate>"
+        ],
+        "reuse": "execution/cte_lineage.rs and its closure/trace/mutation modules",
+        "invariants": "Trace the original effectful query once; replay only pure materialized inputs under the same branch prefix. Preserve distinct duplicate occurrences, reject uncertified error alternatives, require event closure and do not infer empty demand from eager evaluation.",
+        "specification": "SQLollaM2/ConsumerLineage.lean",
+        "evidence": "validation/results/cte-locks.json and sequence-effects.json"
+      }
+    },
+    "composition_examples": {
+      "jobGetAvailable": [
+        "bind_table_rules",
+        "prepare_cte_frame",
+        "acquire_lock_prefix",
+        "apply_function(array_slice/append)",
+        "plan_write",
+        "validate_and_publish"
+      ],
+      "jobInsertFastMany": [
+        "align_sets",
+        "apply_function(string_to_array)",
+        "allocate_next lazily through COALESCE",
+        "bind_immutable_body",
+        "infer_arbiters",
+        "plan_write",
+        "advance_tuple_version",
+        "RETURNING"
+      ],
+      "jobSchedule": [
+        "acquire_lock_prefix",
+        "partition_and_rank",
+        "bind_immutable_body",
+        "plan_write",
+        "publish_cte_writes",
+        "original-snapshot readback"
+      ]
+    },
+    "delivery_order": [
+      "Complete independent reviews and preserve kernel/source trust gates before semantic edits.",
+      "Finish typed-builtin gaps and comparability checks; refresh index/function contexts together and invalidate stale request-dependent coverage.",
+      "Unify lazy scalar and CTE effect composition; integrate lock-demand paths, then sequence and transactional session effects.",
+      "Implement the independent regex leaf in parallel; start bounded system-column/backend observation contracts early because these are the highest semantic risks.",
+      "Integrate composite bulk/window queries using shared modules; prohibit dispatch by corpus ID or SQL fingerprint.",
+      "Rebuild once for a coordinated validation wave, rerun focused probes and all 276 records with both fixtures, then re-run M0/M1 gates and exact Alloy witness checks."
+    ],
+    "adversarial_acceptance": [
+      "Unequal/empty/NULL arrays, lower bounds and duplicate IDs; arrays cannot become a Cartesian product or lose repeated rows.",
+      "Empty-input planning errors, lazy unreachable calls, JSON versus JSONB equality and builtin-specific NULL rules.",
+      "CTE referenced twice, unused read CTE, data-modifying CTE completion, constant-false consumers and LIMIT 0; separate relation locks from row locks.",
+      "Independent writable CTEs with noncommuting effects cannot inherit lexical source order as execution semantics; test all admitted schedules and demand barriers through sort/group/window/DISTINCT.",
+      "Sequence allocations followed by uniqueness error, ON CONFLICT DO NOTHING and transaction rollback; do not refund allocations.",
+      "Partial-index UNKNOWN predicate, standalone index versus constraint name, schema/function permission and argument identity.",
+      "Notification duplicate invocations versus delivered messages, multibyte limits, NULL channel/payload, savepoint and transaction rollback.",
+      "Competing advisory/row ownership, unresolved blocking schedules and effectful binary evaluation order cannot be erased or guessed.",
+      "Regex invalid patterns, newline/collation boundaries and resource limits; resource refusal never counts as matching SQL behavior.",
+      "xmax on visible locked/updated/aborted tuple versions; backend signal acceptance versus observed process termination.",
+      "Compare schema, output multiplicity/order, exact expected errors, affected counts, complete database/catalog frames and independently observed effects.",
+      "Alloy table roundtrip retains its finite-evaluator assurance label; it is not an independent proof of SQL semantics. Keep assumption SAT runs separate from property checks.",
+      "276/276 means the pinned corpus under declared contexts, not all production PostgreSQL. Add positive fixtures for newly modeled effects instead of earning feature claims only from empty inputs."
+    ],
+    "open_review_findings": [
+      {
+        "id": "function_resolution",
+        "state": "FIXED_WITH_MAINTAINED_POSTGRES_REGRESSION",
+        "observation": "Historical confirmed finding: With public.abs(integer) returning 999 and implicit pg_catalog precedence, SELECT abs(1) returns 1 in PostgreSQL but 999 in CLI 289de0f8. Declared f(integer) called with text/bigint also exposes wrong SQLSTATE/refusal classification.",
+        "resolution": "Shared qualified function/signature resolver, checked call-coercion rules and persistent actual-PG regressions before promotion."
+      },
+      {
+        "id": "index_metadata_admission",
+        "state": "FIXED_WITH_MAINTAINED_POSTGRES_REGRESSION",
+        "observation": "Historical confirmed finding: Partial-index binding currently checks Boolean type without a shared immutable-expression gate.",
+        "resolution": "Registry-backed volatility admission before accepting index metadata."
+      },
+      {
+        "id": "constraint_enforcement_order",
+        "state": "FIXED_WITH_MAINTAINED_POSTGRES_REGRESSION",
+        "setup_sql": [
+          "CREATE TABLE t(a integer UNIQUE, b integer)",
+          "ALTER TABLE t ADD PRIMARY KEY(b)",
+          "INSERT INTO t VALUES (1,1)"
+        ],
+        "probe_sql": "INSERT INTO t VALUES (1,1)",
+        "observation": "Historical confirmed finding: PostgreSQL16 reports 23505/t_a_key; CLI 289de0f8 reports 23505/t_pkey. Creating both constraints in one CREATE can hide this ordering defect.",
+        "resolution": "Preserve authentic uniqueness enforcement identity/order or refuse ambiguous diagnostics until the admitted profile covers them."
+      },
+      {
+        "id": "non_strict_builtin_policy",
+        "state": "FIXED_WITH_MAINTAINED_POSTGRES_REGRESSION",
+        "observation": "Historical confirmed finding: A generic strict-NULL shortcut cannot implement string_to_array(text, NULL), whose delimiter NULL means character splitting; optional NULL markers also need overload-specific handling.",
+        "resolution": "Per-signature NULL policy plus nonempty, empty and NULL PostgreSQL probes.",
+        "reference": "https://www.postgresql.org/docs/16/functions-string.html"
+      },
+      {
+        "id": "evidence_portability",
+        "state": "EXPLICIT_EXISTING_LIMIT",
+        "observation": "Serialized evidence is portable. Solver cursor continuation currently requires matching compiler/parser/JAR/bridge fingerprints and replayed atom prefix; a changed native binary requires a new revision.",
+        "resolution": "Keep archive import/view separate from pinned-tool cursor resume; do not advertise unrestricted cross-platform continuation."
+      }
+    ],
+    "delegation": {
+      "parser_and_relational": "CTE materialization/demand, SRF/window composition, lock lineage and independently probed lock ownership.",
+      "formal_and_state": "Lean composition contracts, sequence/rollback semantics, uniqueness/UDF integration and independent completeness review.",
+      "scalar_and_effects": "Builtin NULL policies, collections/regex, notification/advisory/backend context and actual PostgreSQL oracles.",
+      "integrator": "Shared interface ownership, tuple-version contract, authentic context refresh, stale evidence invalidation, combined corpus gates and deterministic Alloy/evidence serialization."
+    },
+    "maintenance": "Extend these existing modules with documented functions of at most 30 formatted lines. Retain this maintained design and reproducible evidence; do not create per-query handlers, a second evaluator or duplicate per-pass reports."
+  },
+  "instance_review_frontend": {
+    "status": "LOCAL_HOST_GRAPHVIZ_REVIEW_AND_GPT_6_1_SOL_ASSISTANCE_IMPLEMENTED_FULL_FEEDBACK_REPLAY_AGENT_PENDING",
+    "lean_contract": "SQLollaM2/InstanceReview.lean",
+    "flow": [
+      "Open stored analysis revision",
+      "Request next example or counterexample on demand",
+      "Inspect Graphviz instance and grounded AI summary",
+      "Swipe right to accept a use case or left to reject unintended behavior",
+      "Review the next agentic revision against preserved and rejected cases"
+    ],
+    "instance_card": {
+      "identity": [
+        "instance_id",
+        "model_revision_sha256",
+        "semantic_sha256",
+        "command_kind",
+        "assurance_kind"
+      ],
+      "triple": [
+        "Exact SQL and bound parameters",
+        "Canonical typed SQLolla IR",
+        "Exact Alloy source, assertion/run command and bounds"
+      ],
+      "graphviz": "Implemented: deterministic presentation DOT derived in the frontend from typed evidence, rendered by pinned self-hosted Graphviz/WASM and sanitized. Rust-generated DOT and an equivalent server renderer remain future private-deployment options; presentation does not replace SQL semantics.",
+      "graph_semantics": [
+        "Stable occurrence nodes preserve duplicate rows",
+        "Typed NULL is explicit and distinct from absent edges",
+        "Before/after tables and changed cells are distinguished",
+        "Ordered result positions, SQLSTATE and effects remain visible",
+        "Alloy atom/tuple detail can be inspected without treating atom names as business IDs",
+        "Each graph element links to a stable evidence fact reference"
+      ],
+      "ai_summary": {
+        "input": "Versioned instance JSON plus exact SQL/IR/Alloy triple, declared business policy, schema, session context, scope and replay evidence",
+        "output": [
+          "Plain-language observed behavior",
+          "Evidence fact references for each factual claim",
+          "Why it satisfies or violates the selected property",
+          "Assumptions, uncertainty and bounded scope",
+          "Optional proposed business-intent question"
+        ],
+        "trust": "AI text is untrusted explanation; it cannot change solver status, hide effects or create a safety claim. Missing/failed AI leaves the graph and deterministic evidence usable.",
+        "privacy": "BYOT OpenAI/Anthropic/Gemini-compatible portal; explicit provider/context selection and redaction before sending. Provider secrets never enter instance JSON, DOT, cursor or logs."
+      }
+    },
+    "feedback": {
+      "right": {
+        "disposition": "accepted_use_case",
+        "meaning": "Preserve this admissible observation as a positive regression case"
+      },
+      "left": {
+        "disposition": "unintended_behavior",
+        "meaning": "Exclude this unwanted observation in the next candidate revision; infer a general rule only as an explicit reviewable proposal"
+      },
+      "event": [
+        "event_id",
+        "idempotency_key",
+        "instance_id",
+        "model_revision_sha256",
+        "semantic_sha256",
+        "disposition",
+        "optional_rationale",
+        "created_at",
+        "optional_supersedes_event_id"
+      ],
+      "persistence": "Append-only versioned JSON events separate from immutable solver evidence; retry is idempotent, undo appends a superseding event, stale revision labels require explicit revalidation.",
+      "accessibility": "Right/left swipe gestures have labeled Accept use case / Reject side behavior buttons, keyboard actions, screen-reader graph/table descriptions and undo.",
+      "conflicts": "Contradictory live labels for the same contextual semantic observation stop automatic promotion and expose the conflicting intent."
+    },
+    "agentic_pass": {
+      "input": "Prior revision plus active feedback, existing invariants and pinned industrial corpus",
+      "proposal": "AI may propose SQL, RA or policy edits and rationale. Deterministic binding emits a new IR/Alloy revision; old artifacts stay immutable.",
+      "required_gates": [
+        "Kernel-checked Lean specification before any new semantic capability",
+        "Preserve M0/M1 invariants and 30-line/documentation rules",
+        "Accepted instances remain admissible under mapped context",
+        "Rejected instances cannot be reproduced under the proposed policy/query",
+        "Actual Alloy check with independent satisfiable assumptions and exact witness replay",
+        "Fresh PostgreSQL16 industrial corpus checks, including declared contexts and expected errors",
+        "Adversarial check against overfitting one atom labeling, silently shrinking bounds, filtering counterexamples or changing domain/context to manufacture a pass"
+      ],
+      "promotion": "Show SQL/IR/policy diff, affected accepted/rejected cases, new instances and residual bounded limitations. Swipes do not authorize running mutations on a production database or deploying changes."
+    },
+    "security_and_portability": [
+      "Escape all SQL/data labels in DOT; disable externally supplied HTML/URL/file/image attributes",
+      "Do not execute SQL strings or graph hyperlinks as instructions",
+      "Treat database values and AI summaries as untrusted content; isolate Graphviz render resources",
+      "Use portable local/private storage adapters; keep schema-versioned export/import independent of cloud/provider",
+      "No external renderer/CDN required for private deployments"
+    ],
+    "acceptance_tests": [
+      "Serialize/import/reopen preserves instance identity and replay evidence",
+      "Next on demand distinguishes instance/exhaustion/limit/error and cannot skip stored cursor prefix",
+      "Graph retains duplicate occurrences, typed NULLs, ordering and before/after changes",
+      "AI citations resolve only to supplied facts and unsupported claims are flagged",
+      "Repeated swipe/undo is idempotent and revision-bound",
+      "Left-swipe revision rejects unwanted behavior while retaining right-swipe use cases",
+      "Keyboard and button flow equals gesture flow",
+      "Offline/provider failure leaves visualization, review and next-instance navigation functional"
+    ],
+    "delegation": {
+      "formal": "Check feedback/revision/completeness obligations without added axioms",
+      "rust": "Evidence storage, deterministic DOT, identity/fact references, replay and feedback journal",
+      "java17": "Alloy solution enumeration only",
+      "frontend": "Graphviz card, swipe/button/keyboard/undo and accessible relation tables",
+      "ai": "Grounded summary contract and proposal pipeline; baseline GPT-6.1 Sol plus verified production provider availability",
+      "adversarial": "Prompt/data injection, stale labels, graph omission, duplicate loss, overfitting, vacuity and solver-status conflation"
+    },
+    "frontend_prompt": "../frontend-agent.txt"
+  }
+}

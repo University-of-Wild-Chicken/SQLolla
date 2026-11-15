@@ -1,0 +1,3425 @@
+{
+  "cases": 10,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "compared_insert_cases": 8,
+  "comparisons": [
+    {
+      "errors": [],
+      "id": "system_columns/fresh",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "10"
+                ],
+                [
+                  "2",
+                  "20"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "v",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "xmin",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "xmax",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "nonzero_xmax",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "2",
+              "20",
+              "734",
+              "0",
+              "f"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "6488041c45a0e204b2292f2ac8f1c4d25f9fae738214e1a2c339d5a1eb1d8174",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "75590a2484832ab59d1db68aa4dddcb5ce372cfb02dd2ad238f95ffb1784799c",
+        "id": "system_columns/fresh",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "468c865cdc27e47bbc0531a033e0dfd7c7930cff1f6dbd50e60b31d3521a0c2c",
+        "mode": "compare",
+        "model_sha256": "810cae60e69db2cb9961e88f136a3b4898956f70616cc72ba2b79bd781067c43",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "t": {
+                    "columns": [
+                      {
+                        "name": "k",
+                        "nullable": false,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "v",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 2
+                      },
+                      {
+                        "type": "int32",
+                        "value": 20
+                      }
+                    ],
+                    "before_row": null,
+                    "original_row": null,
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 734
+                      },
+                      "before": null,
+                      "occurrence": 1,
+                      "original": null,
+                      "phase": "applied",
+                      "rollback": null,
+                      "table": "t"
+                    }
+                  }
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int32",
+                    "value": 20
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "734"
+                    }
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "0"
+                    }
+                  },
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "k",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "v",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "xmin",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "nonzero_xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "41ec3ac0f32c732bca71771b5e3d4ffb02af5f411f2c712cc53bf3e1488a5715",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "820cb3ded8d088a6dddc02e2cf44f4e69089109fb5443924af77d03b62d082ba",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(2,20) RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "sql_sha256": "41ec3ac0f32c732bca71771b5e3d4ffb02af5f411f2c712cc53bf3e1488a5715",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "system_columns/conflict_update",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "20"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "v",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "xmin",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "xmax",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "nonzero_xmax",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "1",
+              "20",
+              "737",
+              "737",
+              "t"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "108b4665aa22d019dd0ca7350ff8cd81ae1cd49b5ef7791e4e3b675f85c6659f",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "2ac7e1c4d7efbcdf3db752fea7c961013d8a53747c8a5f5c75e68d2587d98efb",
+        "id": "system_columns/conflict_update",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "26705700d47746d8bb223553e298d9e0a27b258b394512baffdbafb76d17edda",
+        "mode": "compare",
+        "model_sha256": "89b8c28f2fb4fb12c04749ee0387c557e80546dc77014a562b9fffea7a5d0684",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "t": {
+                    "columns": [
+                      {
+                        "name": "k",
+                        "nullable": false,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "v",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 737,
+                        "state": "own_lock",
+                        "xmin": 736
+                      },
+                      "before": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 736
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 736
+                      },
+                      "phase": "applied",
+                      "rollback": {
+                        "raw_xmax": 737,
+                        "state": "aborted_updater",
+                        "xmin": 736
+                      },
+                      "table": "t"
+                    }
+                  }
+                },
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 20
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 737,
+                        "state": "own_lock",
+                        "xmin": 737
+                      },
+                      "before": {
+                        "raw_xmax": 737,
+                        "state": "own_lock",
+                        "xmin": 736
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 736
+                      },
+                      "phase": "applied",
+                      "rollback": {
+                        "raw_xmax": 737,
+                        "state": "aborted_updater",
+                        "xmin": 736
+                      },
+                      "table": "t"
+                    }
+                  }
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 20
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "737"
+                    }
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "737"
+                    }
+                  },
+                  {
+                    "type": "bool",
+                    "value": true
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "k",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "v",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "xmin",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "nonzero_xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "76a09f517097404ecde7d72883e10fa4bf0926e6be195b322d214d5a4889655d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "af84f89d021e59a989bc5e7663d7c2781632eaf8174a0e55a9ab2d9df7ddc71e",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET v=excluded.v RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "sql_sha256": "76a09f517097404ecde7d72883e10fa4bf0926e6be195b322d214d5a4889655d",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "system_columns/changed_key",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "3",
+                  "10"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "v",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "xmin",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "xmax",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "nonzero_xmax",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 1",
+          "rows": [
+            [
+              "3",
+              "10",
+              "740",
+              "740",
+              "t"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "9565af8cc10379355c34d28f5bd0f0c5e47b9f6372e60a0bec77719415d4ce32",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "26fd8c1d6957dfec1aa289ff4a0c0029e80c9be4fdc50917c92865d07ca29247",
+        "id": "system_columns/changed_key",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "c3a3153d76cdb8ad36205734c65b2554f7291d195add5aca01d6a330d50f13d0",
+        "mode": "compare",
+        "model_sha256": "2930b7966e868360c9f8613ed19ee680d30f7a4ac34ee125d693d2d51c0be872",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 1,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "t": {
+                    "columns": [
+                      {
+                        "name": "k",
+                        "nullable": false,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "v",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 1",
+              "database": {
+                "t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 3
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 740,
+                        "state": "own_lock",
+                        "xmin": 739
+                      },
+                      "before": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 739
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 739
+                      },
+                      "phase": "applied",
+                      "rollback": {
+                        "raw_xmax": 740,
+                        "state": "aborted_updater",
+                        "xmin": 739
+                      },
+                      "table": "t"
+                    }
+                  }
+                },
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 3
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 740,
+                        "state": "own_lock",
+                        "xmin": 740
+                      },
+                      "before": {
+                        "raw_xmax": 740,
+                        "state": "own_lock",
+                        "xmin": 739
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 739
+                      },
+                      "phase": "applied",
+                      "rollback": {
+                        "raw_xmax": 740,
+                        "state": "aborted_updater",
+                        "xmin": 739
+                      },
+                      "table": "t"
+                    }
+                  }
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 3
+                  },
+                  {
+                    "type": "int32",
+                    "value": 10
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "740"
+                    }
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "740"
+                    }
+                  },
+                  {
+                    "type": "bool",
+                    "value": true
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "k",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "v",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "xmin",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "nonzero_xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7513f587be707ab41653ded25a685d85a3acd3d03218d103480d5ed962330c38",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "0a8406f52d57bd1be46c238ba0524482e6fa4abf31a556114c35f387e9edc043",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET k=3 RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "sql_sha256": "7513f587be707ab41653ded25a685d85a3acd3d03218d103480d5ed962330c38",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "system_columns/skip_update",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "10"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "v",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "xmin",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "xmax",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "nonzero_xmax",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "147fce39fcc133e8395a3489942ebc98a54db549553d16a10109ee5c4af04894",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "8e9599130d96158ba92d2c6835f71e33b1cd1497828daaf0ce2ab4d93ba1a4f5",
+        "id": "system_columns/skip_update",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "88d62f191afd6ebe77cdfc7b43ab7acfe6093347d33735fb45c617d7bd9852fd",
+        "mode": "compare",
+        "model_sha256": "a4de9d3659c4fc075c335554309e9446a588f8982a1e570c2971bdd476474c05",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "t": {
+                    "columns": [
+                      {
+                        "name": "k",
+                        "nullable": false,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "v",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 0",
+              "database": {
+                "t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 749,
+                        "state": "own_lock",
+                        "xmin": 748
+                      },
+                      "before": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 748
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 748
+                      },
+                      "phase": "applied",
+                      "rollback": {
+                        "raw_xmax": 749,
+                        "state": "aborted_updater",
+                        "xmin": 748
+                      },
+                      "table": "t"
+                    }
+                  }
+                }
+              ],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "k",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "v",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "xmin",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "nonzero_xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "655255c94357f00c4f52386da9e05be588db8c90ed7937bd66089100865de762",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "b7078808e444f32b98b37a4d59e89df52f4f1f6e2a16acbcd1d24abefde500ea",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET v=20 WHERE false RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "sql_sha256": "655255c94357f00c4f52386da9e05be588db8c90ed7937bd66089100865de762",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "system_columns/do_nothing",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "10"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "v",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "xmin",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "xmax",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "nonzero_xmax",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "66b26525835393b4cbd15816f29792aa053223d7ffe6bff5f83198314e33377a",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "b5be6b5619320f0ebe809a94324316f57b66100c6e73fbac80dd238ef2c9bdcb",
+        "id": "system_columns/do_nothing",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "0c6b56c6f3d4ff75779c109f9c7ed13c13434f2c92e72185797a81fa9f8d1b3f",
+        "mode": "compare",
+        "model_sha256": "c37d98fd3ae689e938609dddd376e5c88352ee5f32010ac0b6c247ca2fab5769",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 0,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "t": {
+                    "columns": [
+                      {
+                        "name": "k",
+                        "nullable": false,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "v",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 0",
+              "database": {
+                "t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 10
+                    }
+                  ]
+                ]
+              },
+              "effects": [],
+              "ordering": "bag",
+              "rows": []
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "k",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "v",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "xmin",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "nonzero_xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "a0cbca3e8f53e5a6018406dbb7a65c0f5c2774d2afe2a7edc69e37a804d37938",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "7f49eaf4adeb465aed85108b4910e6e31caa4c3cc5bef3d1c6677fd7353d46bd",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO NOTHING RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "sql_sha256": "a0cbca3e8f53e5a6018406dbb7a65c0f5c2774d2afe2a7edc69e37a804d37938",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "system_columns/mixed",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "30"
+                ],
+                [
+                  "2",
+                  "20"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "affected_rows": 2,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "v",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "xmin",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "xmax",
+              "type": "xid",
+              "type_oid": 28
+            },
+            {
+              "name": "nonzero_xmax",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "INSERT 0 2",
+          "rows": [
+            [
+              "2",
+              "20",
+              "755",
+              "0",
+              "f"
+            ],
+            [
+              "1",
+              "30",
+              "755",
+              "755",
+              "t"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "88f4ca2e2b7c814be21555020a3d4192adde9541a72a2603d3f501ebf29538b2",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "bd8a3b18361e17f3257815918dcb3de7d14b48fec6cb9ff929b9c61eef446d56",
+        "id": "system_columns/mixed",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "e029bbf2238037ab0f8124938ea4ad6cdb022f970fb479bb0b0976e44fb37220",
+        "mode": "compare",
+        "model_sha256": "9ab0ac3a43dd566105607ca933bbd5a89c37ce7f11ae5161882d7f42409e6f24",
+        "outcomes": [
+          {
+            "outcome": {
+              "affected": 2,
+              "catalog": {
+                "search_path": [
+                  "public"
+                ],
+                "tables": {
+                  "t": {
+                    "columns": [
+                      {
+                        "name": "k",
+                        "nullable": false,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      },
+                      {
+                        "name": "v",
+                        "nullable": true,
+                        "qualifier": null,
+                        "schema": null,
+                        "ty": "int32"
+                      }
+                    ],
+                    "name": "t",
+                    "schema": "public"
+                  }
+                }
+              },
+              "command_tag": "INSERT 0 2",
+              "database": {
+                "t": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    },
+                    {
+                      "type": "int32",
+                      "value": 30
+                    }
+                  ],
+                  [
+                    {
+                      "type": "int32",
+                      "value": 2
+                    },
+                    {
+                      "type": "int32",
+                      "value": 20
+                    }
+                  ]
+                ]
+              },
+              "effects": [
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 2
+                      },
+                      {
+                        "type": "int32",
+                        "value": 20
+                      }
+                    ],
+                    "before_row": null,
+                    "original_row": null,
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 755
+                      },
+                      "before": null,
+                      "occurrence": 1,
+                      "original": null,
+                      "phase": "applied",
+                      "rollback": null,
+                      "table": "t"
+                    }
+                  }
+                },
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 755,
+                        "state": "own_lock",
+                        "xmin": 754
+                      },
+                      "before": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 754
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 754
+                      },
+                      "phase": "applied",
+                      "rollback": {
+                        "raw_xmax": 755,
+                        "state": "aborted_updater",
+                        "xmin": 754
+                      },
+                      "table": "t"
+                    }
+                  }
+                },
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 30
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 755,
+                        "state": "own_lock",
+                        "xmin": 755
+                      },
+                      "before": {
+                        "raw_xmax": 755,
+                        "state": "own_lock",
+                        "xmin": 754
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 754
+                      },
+                      "phase": "applied",
+                      "rollback": {
+                        "raw_xmax": 755,
+                        "state": "aborted_updater",
+                        "xmin": 754
+                      },
+                      "table": "t"
+                    }
+                  }
+                }
+              ],
+              "ordering": "bag",
+              "rows": [
+                [
+                  {
+                    "type": "int32",
+                    "value": 1
+                  },
+                  {
+                    "type": "int32",
+                    "value": 30
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "755"
+                    }
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "755"
+                    }
+                  },
+                  {
+                    "type": "bool",
+                    "value": true
+                  }
+                ],
+                [
+                  {
+                    "type": "int32",
+                    "value": 2
+                  },
+                  {
+                    "type": "int32",
+                    "value": 20
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "755"
+                    }
+                  },
+                  {
+                    "type": "scalar",
+                    "value": {
+                      "ty": "xid",
+                      "value": "0"
+                    }
+                  },
+                  {
+                    "type": "bool",
+                    "value": false
+                  }
+                ]
+              ]
+            },
+            "status": "succeeded"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "k",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "v",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "xmin",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "nonzero_xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "7065507c8fd056289cd33dd55ab9ebc2fd41ceec7490c21510a264cda4be170d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "c1916623960695979dcb0234a0a4d612eae99c61eb73573b38ecb666ce960073",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(2,20),(1,30) ON CONFLICT(k) DO UPDATE SET v=excluded.v RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "sql_sha256": "7065507c8fd056289cd33dd55ab9ebc2fd41ceec7490c21510a264cda4be170d",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "system_columns/later_check_error",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "10"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": "t_v_check",
+          "detail": "Failing row contains (2, -1).",
+          "exposed_rows": [],
+          "message": "new row for relation \"t\" violates check constraint \"t_v_check\"",
+          "sqlstate": "23514",
+          "status": "error",
+          "table_name": "t"
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "4245d2b05c0e60e84769e212ee2907bea3350babfadb790d5f7bda6c049d3f7b",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "0508c1b8e0d078fb50a6776ae6ce6d21e00ec0ecaaf7f6a6e22cfaaf2069ce0e",
+        "id": "system_columns/later_check_error",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "458d4d3eb3282a40a31f844cc29be107398d46d1267112c22c72e5c26ba4d703",
+        "mode": "compare",
+        "model_sha256": "936d1d30154decb546a817c8ddf2e2f689bfec51c11a1f3f1dc8e185bd561f65",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": "t_v_check",
+              "effects": [
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 758,
+                        "state": "aborted_updater",
+                        "xmin": 757
+                      },
+                      "before": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 757
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 757
+                      },
+                      "phase": "aborted_residual",
+                      "rollback": {
+                        "raw_xmax": 758,
+                        "state": "aborted_updater",
+                        "xmin": 757
+                      },
+                      "table": "t"
+                    }
+                  }
+                }
+              ],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "23514"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "k",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "v",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "xmin",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "xid"
+          },
+          {
+            "name": "nonzero_xmax",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "bool"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "03a11ae5c26b6450628f2104a31f3fc71c9515b2dea298b24427ff8d3f644f12",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "76ad9bcbff79ffa7ec59afe24dc933ce817124526d6d8c1f6150a575e734c0f9",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,20),(2,-1) ON CONFLICT(k) DO UPDATE SET v=excluded.v RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "sql_sha256": "03a11ae5c26b6450628f2104a31f3fc71c9515b2dea298b24427ff8d3f644f12",
+      "status": "passed"
+    },
+    {
+      "errors": [],
+      "id": "system_columns/returning_error",
+      "postgres": {
+        "after": {
+          "database": {
+            "t": {
+              "affected_rows": 1,
+              "columns": [
+                {
+                  "name": "k",
+                  "type": "integer",
+                  "type_oid": 23
+                },
+                {
+                  "name": "v",
+                  "type": "integer",
+                  "type_oid": 23
+                }
+              ],
+              "command": "SELECT 1",
+              "rows": [
+                [
+                  "1",
+                  "10"
+                ]
+              ],
+              "sqlstate": "00000",
+              "status": "ok"
+            }
+          }
+        },
+        "observed_phase": "statement",
+        "result": {
+          "column_name": null,
+          "constraint_name": null,
+          "detail": null,
+          "exposed_rows": [],
+          "message": "division by zero",
+          "sqlstate": "22012",
+          "status": "error",
+          "table_name": null
+        }
+      },
+      "response": {
+        "alloy_status": "SAT",
+        "catalog_sha256": "575701bd0b9fc5f66e40918a2afbd758fc08236983a5d719e2a21ba85315db28",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "d50caf3661f671e72a2250de6602582974cb6cb79a241e82229e3808de0b364e",
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "256145cc1a09e99098d482970d45514aee12b5a90a707811f75dcd05e8578aec",
+        "id": "system_columns/returning_error",
+        "input_sha256": "9242e91a7e78a794887e7b90ab07f8b76fe9ad77928f62f8cfd82acff2af4fff",
+        "ir_sha256": "808d955b6c7fcae1a32ea5f9c9603b751509949c912166f36b6ced070e6548dc",
+        "mode": "compare",
+        "model_sha256": "4188a4e2f99a95e58beb75142b9c91b3ebc9161840a3a8e1c0a17f3c35175055",
+        "outcomes": [
+          {
+            "outcome": {
+              "column_name": null,
+              "constraint_name": null,
+              "effects": [
+                {
+                  "kind": "tuple_version",
+                  "observation": {
+                    "after_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "before_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "original_row": [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      },
+                      {
+                        "type": "int32",
+                        "value": 10
+                      }
+                    ],
+                    "transition": {
+                      "after": {
+                        "raw_xmax": 761,
+                        "state": "aborted_updater",
+                        "xmin": 760
+                      },
+                      "before": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 760
+                      },
+                      "occurrence": 0,
+                      "original": {
+                        "raw_xmax": 0,
+                        "state": "invalid",
+                        "xmin": 760
+                      },
+                      "phase": "aborted_residual",
+                      "rollback": {
+                        "raw_xmax": 761,
+                        "state": "aborted_updater",
+                        "xmin": 760
+                      },
+                      "table": "t"
+                    }
+                  }
+                }
+              ],
+              "exposed_rows": [],
+              "phase": "statement",
+              "sqlstate": "22012"
+            },
+            "status": "sql_error"
+          }
+        ],
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "?column?",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "selected_transition": 0,
+        "sql_sha256": "932d30b4018bacd1db751692f2aae2ac3972f5b13658e9384dab644b0ca1086d",
+        "status": "ok",
+        "transition_count": 1,
+        "transition_payload_sha256": "87102c925f7be9e73c2b85c87d7a32bb56d036af6df7928725df557bf695a9bb",
+        "validation": "ALLOY_TABLE_ROUNDTRIP"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET v=20 RETURNING 1/(v-20)",
+      "sql_sha256": "932d30b4018bacd1db751692f2aae2ac3972f5b13658e9384dab644b0ca1086d",
+      "status": "passed"
+    }
+  ],
+  "engine_execution_coverage": true,
+  "failures": [],
+  "postgres_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "profile": "exclusive top-level writer; no concurrent actors, MultiXact, triggers or xid wraparound",
+  "records": [
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 733
+          },
+          {
+            "raw_xmax": 0,
+            "xmin": 734
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ],
+          [
+            "2",
+            "20"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 733
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 733
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 733
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 734
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "fresh",
+      "own_lock_before": false,
+      "result": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "INSERT 0 1",
+        "rows": [
+          [
+            "2",
+            "20",
+            "734",
+            "0",
+            "f"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "INSERT INTO t VALUES(2,20) RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 734
+    },
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 737,
+            "xmin": 737
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "20"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 737,
+            "xmin": 736
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 736
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 736
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 737
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "conflict_update",
+      "own_lock_before": false,
+      "result": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "INSERT 0 1",
+        "rows": [
+          [
+            "1",
+            "20",
+            "737",
+            "737",
+            "t"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET v=excluded.v RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 737
+    },
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 740,
+            "xmin": 740
+          }
+        ],
+        "rows": [
+          [
+            "3",
+            "10"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 740,
+            "xmin": 739
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 739
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 739
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 740
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "changed_key",
+      "own_lock_before": false,
+      "result": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "INSERT 0 1",
+        "rows": [
+          [
+            "3",
+            "10",
+            "740",
+            "740",
+            "t"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET k=3 RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 740
+    },
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 743
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "20"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 743,
+            "xmin": 742
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 742
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 742
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 743
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "ordinary_update",
+      "own_lock_before": false,
+      "result": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "UPDATE 1",
+        "rows": [
+          [
+            "1",
+            "20",
+            "743",
+            "0",
+            "f"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "UPDATE t SET v=20 WHERE k=1 RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 743
+    },
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 746,
+            "xmin": 746
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "20"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 746,
+            "xmin": 745
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 746,
+            "xmin": 745
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 746,
+                "state": "own_lock",
+                "xmin": 745
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 746
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "own_locked_update",
+      "own_lock_before": true,
+      "result": {
+        "affected_rows": 1,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "UPDATE 1",
+        "rows": [
+          [
+            "1",
+            "20",
+            "746",
+            "746",
+            "t"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "UPDATE t SET v=20 WHERE k=1 RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 746
+    },
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 749,
+            "xmin": 748
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 749,
+            "xmin": 748
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 748
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 748
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 749
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "skip_update",
+      "own_lock_before": false,
+      "result": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "INSERT 0 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET v=20 WHERE false RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 749
+    },
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 751
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 751
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 751
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 751
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 752
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "do_nothing",
+      "own_lock_before": false,
+      "result": {
+        "affected_rows": 0,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "INSERT 0 0",
+        "rows": [],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO NOTHING RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 752
+    },
+    {
+      "after": {
+        "headers": [
+          {
+            "raw_xmax": 755,
+            "xmin": 755
+          },
+          {
+            "raw_xmax": 0,
+            "xmin": 755
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "30"
+          ],
+          [
+            "2",
+            "20"
+          ]
+        ]
+      },
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 755,
+            "xmin": 754
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 754
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 754
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 755
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "mixed",
+      "own_lock_before": false,
+      "result": {
+        "affected_rows": 2,
+        "columns": [
+          {
+            "name": "k",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "v",
+            "type": "integer",
+            "type_oid": 23
+          },
+          {
+            "name": "xmin",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "xmax",
+            "type": "xid",
+            "type_oid": 28
+          },
+          {
+            "name": "nonzero_xmax",
+            "type": "boolean",
+            "type_oid": 16
+          }
+        ],
+        "command": "INSERT 0 2",
+        "rows": [
+          [
+            "2",
+            "20",
+            "755",
+            "0",
+            "f"
+          ],
+          [
+            "1",
+            "30",
+            "755",
+            "755",
+            "t"
+          ]
+        ],
+        "sqlstate": "00000",
+        "status": "ok"
+      },
+      "sql": "INSERT INTO t VALUES(2,20),(1,30) ON CONFLICT(k) DO UPDATE SET v=excluded.v RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 755
+    },
+    {
+      "after": null,
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 758,
+            "xmin": 757
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 757
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 757
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 758
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "later_check_error",
+      "own_lock_before": false,
+      "result": {
+        "column_name": null,
+        "constraint_name": "t_v_check",
+        "detail": "Failing row contains (2, -1).",
+        "exposed_rows": [],
+        "message": "new row for relation \"t\" violates check constraint \"t_v_check\"",
+        "sqlstate": "23514",
+        "status": "error",
+        "table_name": "t"
+      },
+      "sql": "INSERT INTO t VALUES(1,20),(2,-1) ON CONFLICT(k) DO UPDATE SET v=excluded.v RETURNING k,v,xmin,xmax,(xmax<>0) AS nonzero_xmax",
+      "write_xid_before_query": 758
+    },
+    {
+      "after": null,
+      "after_rollback": {
+        "headers": [
+          {
+            "raw_xmax": 761,
+            "xmin": 760
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "before": {
+        "headers": [
+          {
+            "raw_xmax": 0,
+            "xmin": 760
+          }
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ]
+        ]
+      },
+      "captured": {
+        "context": {
+          "complete": true,
+          "exclusive_snapshot": true,
+          "tables": {
+            "t": [
+              {
+                "raw_xmax": 0,
+                "state": "invalid",
+                "xmin": 760
+              }
+            ]
+          },
+          "top_level_no_savepoints": true,
+          "write_xid": 761
+        },
+        "provenance": "Owned isolated PG cluster; BEGIN without SAVEPOINT; writer xid and ctid-aligned headers captured before the analyzed statement.",
+        "relations": {
+          "t": {
+            "affected_rows": 1,
+            "columns": [
+              {
+                "name": "k",
+                "type": "integer",
+                "type_oid": 23
+              },
+              {
+                "name": "v",
+                "type": "integer",
+                "type_oid": 23
+              }
+            ],
+            "command": "SELECT 1",
+            "rows": [
+              [
+                "1",
+                "10"
+              ]
+            ],
+            "sqlstate": "00000",
+            "status": "ok"
+          }
+        }
+      },
+      "id": "returning_error",
+      "own_lock_before": false,
+      "result": {
+        "column_name": null,
+        "constraint_name": null,
+        "detail": null,
+        "exposed_rows": [],
+        "message": "division by zero",
+        "sqlstate": "22012",
+        "status": "error",
+        "table_name": null
+      },
+      "sql": "INSERT INTO t VALUES(1,20) ON CONFLICT(k) DO UPDATE SET v=20 RETURNING 1/(v-20)",
+      "write_xid_before_query": 761
+    }
+  ],
+  "sources": [
+    "https://www.postgresql.org/docs/16/ddl-system-columns.html",
+    "https://github.com/postgres/postgres/blob/REL_16_16/src/backend/access/heap/heapam.c#L3317-L3366",
+    "https://github.com/postgres/postgres/blob/REL_16_16/src/backend/executor/nodeModifyTable.c#L2377"
+  ],
+  "status": "passed",
+  "subtransaction_boundary": {
+    "captured_write_subxid": 764,
+    "returned_xmin": "764",
+    "scope": "Excluded from the initial top-level profile; capture probe is a context setup write, not a query answer lookup.",
+    "top_xid": 763
+  }
+}

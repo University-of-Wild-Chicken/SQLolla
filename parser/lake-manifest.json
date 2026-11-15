@@ -1,0 +1,13 @@
+{"version": "1.2.0",
+ "packagesDir": ".lake/packages",
+ "packages":
+ [{"type": "path",
+   "scope": "",
+   "name": "sqlean",
+   "manifestFile": "lake-manifest.json",
+   "inherited": false,
+   "dir": "../../dependencies/SQLeanParser",
+   "configFile": "lakefile.toml"}],
+ "name": "sqlolla_parser",
+ "lakeDir": ".lake",
+ "fixedToolchain": false}

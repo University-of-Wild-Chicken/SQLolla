@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "scope": "M0 Lean specification; no SQL/PostgreSQL/Alloy equivalence proof",
+  "compiler": "Lean 4.34.0 portable Windows x64",
+  "source_files": [
+    {
+      "path": "SQLolla.lean",
+      "sha256": "1A8328BB44843125F698EFE61A6C6ACD7BE1470D9B1519FA67EFF8141DA56729"
+    },
+    {
+      "path": "TrustAudit.lean",
+      "sha256": "7F27FD4D86479C3D98F56C4F392A0BEBBE289C7752962EFDF4E005CA8216A9FE"
+    },
+    {
+      "path": "SQLolla\\Analysis.lean",
+      "sha256": "A73105CF4941E9D726B8168D305E13A72F04BA77B99A3805D4EA2565092C7CD1"
+    },
+    {
+      "path": "SQLolla\\Encoding.lean",
+      "sha256": "A85EA4712B6213C537328D96D7CB5E58F7F2C79873D30071C3928A1AAC2C760B"
+    },
+    {
+      "path": "SQLolla\\Examples.lean",
+      "sha256": "3A3287D8863EF38D664B6BB04D5452F2098DC75C8FB62859E2680A81FF1BDF29"
+    },
+    {
+      "path": "SQLolla\\Instance.lean",
+      "sha256": "B688DE05B4B29A893853C18F167D426B26ABD021E53CF68B5B7335C3A58D0132"
+    },
+    {
+      "path": "SQLolla\\IR.lean",
+      "sha256": "52676B425E0E4E6C110E5766502264B53638631E0E75089A502B1CA6B68B268D"
+    },
+    {
+      "path": "SQLolla\\Relation.lean",
+      "sha256": "0559B4B22A97456AA1E6825A71CEC2887E8E321E02D395E2C6606BA8BAA3505B"
+    },
+    {
+      "path": "SQLolla\\Transaction.lean",
+      "sha256": "27882B802BE5A654B39CE9DD3E84DF79D751EBDA8F4E5845F7C7E982416347F1"
+    },
+    {
+      "path": "SQLolla\\Truth.lean",
+      "sha256": "AB6B0BE0FAECBDF4B352574F840E6C8411A50DBFBC659E0D6BFD29F869A59B22"
+    }
+  ],
+  "source_shortcut_gate": "PASS",
+  "compiled_declarations": 1038,
+  "compiled_theorems_including_generated": 285,
+  "observed_foundations": "[propext, Classical.choice, Quot.sound]",
+  "custom_or_unapproved_axioms": 0,
+  "namespace_boundary": "All declarations from imported SQLolla modules, including private declarations",
+  "caveat": "Trusts the pinned Lean kernel/toolchain; not a sandbox for hostile metaprograms"
+}

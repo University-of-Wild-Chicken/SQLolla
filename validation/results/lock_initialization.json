@@ -1,0 +1,2173 @@
+{
+  "allowed_boundary_codes": {
+    "cte_limit_zero": [
+      "unsupported.cte_consumer_demand"
+    ],
+    "derived_false": [
+      "unsupported.nested_lock_demand"
+    ],
+    "empty_cross": [
+      "unsupported.cte_consumer_demand"
+    ],
+    "empty_in": [
+      "unsupported.cte_consumer_demand"
+    ],
+    "empty_left": [
+      "unsupported.cte_consumer_demand"
+    ],
+    "exists_false": [
+      "unsupported.exists_shape"
+    ],
+    "locked_outer_select": [
+      "unsupported.lock_origin"
+    ],
+    "unused_materialized": [
+      "unsupported.cte_materialization"
+    ],
+    "unused_not_materialized": [
+      "unsupported.cte_materialization"
+    ],
+    "where_false": [
+      "unsupported.cte_consumer_demand"
+    ]
+  },
+  "cases": 18,
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "cluster_removed": true,
+  "engine_matched": 8,
+  "engine_uncovered": 10,
+  "expected_admitted": [
+    "case_false",
+    "empty_locked_cte",
+    "plain_false",
+    "plain_limit_zero",
+    "unused",
+    "unused_chain",
+    "unused_lock_free",
+    "used_locked_cte"
+  ],
+  "failures": [],
+  "postgres_version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+  "records": [
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "268840e206e4506259d563285eceadd4afa556e1b6a73b0c16f19d26f3904cdc",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/unused",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "37eee26593193c209b35fe2ecfdb9be7fb70f26e8eee081735ce6aea878f8f35",
+          "mode": "compare",
+          "model_sha256": "4a81078c36b509a9e5dcee28507e5dad9a3e8accdb7b633c179465eecaa69e11",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 1,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 1",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [
+                  {
+                    "kind": "table_lock",
+                    "mode": "row_share",
+                    "table": "t"
+                  }
+                ],
+                "ordering": "bag",
+                "rows": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    }
+                  ]
+                ]
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "?column?",
+              "nullable": false,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "4049d7b01b6fd92a2c0790a05271247168502ec60e161439abeb3c2a810d7a65",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "1f7ffead30b5ea01431c87bd181276d4137d9ce8583147466ea1bd2e210c0b0d",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "?column?",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "unused",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.01 rows=1 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS (SELECT * FROM t FOR UPDATE) SELECT 1"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.cte_materialization",
+          "id": "initialization/unused_materialized",
+          "message": "Explicit CTE materialization policy",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "?column?",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "unused_materialized",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.01 rows=1 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS MATERIALIZED (SELECT * FROM t FOR UPDATE) SELECT 1"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.cte_materialization",
+          "id": "initialization/unused_not_materialized",
+          "message": "Explicit CTE materialization policy",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "?column?",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "unused_not_materialized",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.01 rows=1 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS NOT MATERIALIZED (SELECT * FROM t FOR UPDATE) SELECT 1"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.cte_consumer_demand",
+          "id": "initialization/where_false",
+          "message": "Complete producer occurrence/event closure was not certified",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "where_false",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=61.00..61.00 rows=0 width=0)"
+            ],
+            [
+              "  One-Time Filter: false"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS (SELECT * FROM t FOR UPDATE) SELECT * FROM q WHERE false"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.cte_consumer_demand",
+          "id": "initialization/empty_cross",
+          "message": "Complete producer occurrence/event closure was not certified",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "e",
+            "AccessShareLock"
+          ],
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": true
+      },
+      "id": "empty_cross",
+      "planning": {
+        "after": [
+          [
+            "e",
+            "AccessShareLock"
+          ],
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Nested Loop  (cost=61.00..81435.12 rows=6502500 width=8)"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ],
+            [
+              "  ->  CTE Scan on q  (cost=0.00..51.00 rows=2550 width=4)"
+            ],
+            [
+              "  ->  Materialize  (cost=0.00..48.25 rows=2550 width=4)"
+            ],
+            [
+              "        ->  Seq Scan on e  (cost=0.00..35.50 rows=2550 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS (SELECT * FROM t FOR UPDATE) SELECT * FROM e CROSS JOIN q"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.cte_consumer_demand",
+          "id": "initialization/empty_left",
+          "message": "Complete producer occurrence/event closure was not certified",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "e",
+            "AccessShareLock"
+          ],
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            },
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "empty_left",
+      "planning": {
+        "after": [
+          [
+            "e",
+            "AccessShareLock"
+          ],
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Nested Loop Left Join  (cost=61.00..130172.00 rows=6502500 width=8)"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ],
+            [
+              "  ->  Seq Scan on e  (cost=0.00..35.50 rows=2550 width=4)"
+            ],
+            [
+              "  ->  CTE Scan on q  (cost=0.00..51.00 rows=2550 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS (SELECT * FROM t FOR UPDATE) SELECT * FROM e LEFT JOIN q ON true"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.cte_consumer_demand",
+          "id": "initialization/empty_in",
+          "message": "Complete producer occurrence/event closure was not certified",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "e",
+            "AccessShareLock"
+          ],
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "empty_in",
+      "planning": {
+        "after": [
+          [
+            "e",
+            "AccessShareLock"
+          ],
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Hash Join  (cost=122.88..179.25 rows=1275 width=4)"
+            ],
+            [
+              "  Hash Cond: (e.k = q.k)"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ],
+            [
+              "  ->  Seq Scan on e  (cost=0.00..35.50 rows=2550 width=4)"
+            ],
+            [
+              "  ->  Hash  (cost=59.38..59.38 rows=200 width=4)"
+            ],
+            [
+              "        ->  HashAggregate  (cost=57.38..59.38 rows=200 width=4)"
+            ],
+            [
+              "              Group Key: q.k"
+            ],
+            [
+              "              ->  CTE Scan on q  (cost=0.00..51.00 rows=2550 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS (SELECT * FROM t FOR UPDATE) SELECT * FROM e WHERE k IN(SELECT k FROM q)"
+    },
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "3c53950ba7a6c315cac8c22e406b4ab3e04292f03635e7353eae9a356fe774c6",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/unused_chain",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "37eee26593193c209b35fe2ecfdb9be7fb70f26e8eee081735ce6aea878f8f35",
+          "mode": "compare",
+          "model_sha256": "4a81078c36b509a9e5dcee28507e5dad9a3e8accdb7b633c179465eecaa69e11",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 1,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 1",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [
+                  {
+                    "kind": "table_lock",
+                    "mode": "row_share",
+                    "table": "t"
+                  }
+                ],
+                "ordering": "bag",
+                "rows": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    }
+                  ]
+                ]
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "?column?",
+              "nullable": false,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "ed437c675286a502ae92b59707a16a2705ec0122084351f6fb931a0f8774bbdb",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "1f7ffead30b5ea01431c87bd181276d4137d9ce8583147466ea1bd2e210c0b0d",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "?column?",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "unused_chain",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=61.00..61.01 rows=1 width=4)"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS(SELECT * FROM t FOR UPDATE),r AS(SELECT * FROM q) SELECT 1"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.cte_consumer_demand",
+          "id": "initialization/cte_limit_zero",
+          "message": "Complete producer occurrence/event closure was not certified",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "cte_limit_zero",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Limit  (cost=61.00..61.02 rows=1 width=4)"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ],
+            [
+              "  ->  CTE Scan on q  (cost=0.00..51.00 rows=2550 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS (SELECT * FROM t FOR UPDATE) SELECT * FROM q LIMIT 0"
+    },
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "a25cd8304b62228ff2b0b74f86bdeebecaf0f41f6e2c5c3a075b4ceeba688475",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/plain_limit_zero",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "20178c85f78be378a57578ff3ed06a67dda19b0f52f62f0ebd3c102d088dd5f8",
+          "mode": "compare",
+          "model_sha256": "59664d86d74df6fd125d02fdbb700c070ec14deb368b5cbfca3e75738b795f2d",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 0,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 0",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [
+                  {
+                    "kind": "table_lock",
+                    "mode": "row_share",
+                    "table": "t"
+                  }
+                ],
+                "ordering": "bag",
+                "rows": []
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "k",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "22d6c24209205a5198f710140f3a35797b0a085725b89c31d3ab2884fe2d294e",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "0d94b46c80716e2c1a3fb44943d92753c00012e68c234d0436a93e3669f6bbba",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "plain_limit_zero",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Limit  (cost=0.00..0.02 rows=1 width=10)"
+            ],
+            [
+              "  ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "        ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "SELECT * FROM t LIMIT 0 FOR UPDATE"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.nested_lock_demand",
+          "id": "initialization/derived_false",
+          "message": "This consumer needs demand-driven or pushed-down lock evaluation",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "derived_false",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.00 rows=0 width=0)"
+            ],
+            [
+              "  One-Time Filter: false"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "SELECT * FROM(SELECT * FROM t FOR UPDATE)q WHERE false"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.exists_shape",
+          "id": "initialization/exists_false",
+          "message": "EXISTS source needs additional planning semantics",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "exists",
+              "type": "boolean",
+              "type_oid": 16
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "f"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "exists_false",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.01 rows=1 width=1)"
+            ],
+            [
+              "  InitPlan 1 (returns $1)"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..0.00 rows=0 width=0)"
+            ],
+            [
+              "          ->  Result  (cost=0.00..0.00 rows=0 width=0)"
+            ],
+            [
+              "                One-Time Filter: false"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "SELECT EXISTS(SELECT * FROM t WHERE false FOR UPDATE)"
+    },
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "67c89b8f327717558440446507be6899a9440fa1a58b0667316860a330795d92",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/case_false",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "efc7b38a0994cf08f49589adaf59fa822093f755ba034f9df3f773cd46162185",
+          "mode": "compare",
+          "model_sha256": "02a765678d79e691d4cb17eb8fe7602cf2e9977b65eaddcfc2e490ac8c677b2b",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 1,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 1",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [
+                  {
+                    "kind": "table_lock",
+                    "mode": "row_share",
+                    "table": "t"
+                  }
+                ],
+                "ordering": "bag",
+                "rows": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 0
+                    }
+                  ]
+                ]
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "case",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "0221fce67a617d0b1f102f743738220362b481a3c6fa2c1c131bfbdd4e020ed7",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "230f18c8d8587ddd890e681887b47978a622e1886faeba93760b36e3c2573d29",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "case",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "0"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "case_false",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.01 rows=1 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "SELECT CASE WHEN false THEN(SELECT k FROM t FOR UPDATE) ELSE 0 END"
+    },
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "a41a9156f1cd6c5dbe6431cf9fa017e957ed7a4f6567e9fd591eb6d695b00f82",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/unused_lock_free",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "aabf056cde62b8488420975656c2c5b0b9c3b843de8989541a9a4c4a0e8c3bcb",
+          "mode": "compare",
+          "model_sha256": "721c9018fd7c0cb010ab1c573c9f53f98e2f535c19b4a4a4b174cd3e3e3f77bb",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 1,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 1",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [],
+                "ordering": "bag",
+                "rows": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    }
+                  ]
+                ]
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "?column?",
+              "nullable": false,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "567f0a9dd52f0f266477b5d94ac2247353b5e601f9a37fed463ed6fbd148e510",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "4d280357c167b57e40293c9ab49527e42da2b6fc7cb33db07d233d0f0866dbba",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "AccessShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "?column?",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "unused_lock_free",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "AccessShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.01 rows=1 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS(SELECT * FROM t) SELECT 1"
+    },
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "25027e2cadc07ced1e36de05cbaa5c49186643f78344969ebbce6c0a8d9b0264",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/plain_false",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "70f6882eae3b133cfa6374c44a2a8b874001a1555b218c5c3baaab2deb61ae74",
+          "mode": "compare",
+          "model_sha256": "e231b850d4073802ea642bdf2252aa7267c46ff5966cdd1c848f2e3e05bc13da",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 0,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 0",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [],
+                "ordering": "bag",
+                "rows": []
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "k",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "480d964546159290941bfd13f733b08eb02be4e6316e16f5e8999e38091d6c35",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "0a7ff0a21b02b0759a60b2779cacc1435b149556e7aaac048460eb808bf1a961",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "AccessShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "plain_false",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "AccessShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Result  (cost=0.00..0.00 rows=0 width=0)"
+            ],
+            [
+              "  One-Time Filter: false"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "SELECT * FROM t WHERE false"
+    },
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "3ad373a54608a5838e2191890d989319a79a7fe2353dd95a753062f85e27fed1",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/empty_locked_cte",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "1648aacfaee344fa5fcf1c15d7174e650c1a77c51b696dc4c6e1558779fc9713",
+          "mode": "compare",
+          "model_sha256": "3f3843ce567670029d2853b20765862b8595a4b59ac3f35a60912ebab9896e29",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 0,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 0",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [
+                  {
+                    "kind": "table_lock",
+                    "mode": "row_share",
+                    "table": "e"
+                  }
+                ],
+                "ordering": "bag",
+                "rows": []
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "k",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "5766ac0ce9107cdca00901995bc3656bfc2d2efdf40c876afb8df8e8ac9e2614",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "4b8d1916ac5d463f9bd7bd78d3adfc2ff22633405f5a14a8d998a9d3435b8eff",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "e",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 0",
+          "rows": [],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "empty_locked_cte",
+      "planning": {
+        "after": [
+          [
+            "e",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "CTE Scan on q  (cost=61.00..112.00 rows=2550 width=4)"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on e  (cost=0.00..35.50 rows=2550 width=10)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS(SELECT * FROM e FOR UPDATE) SELECT * FROM q"
+    },
+    {
+      "engine": {
+        "response": {
+          "alloy_status": "SAT",
+          "catalog_sha256": "7ebd3a07227ebbb06363a077cd301164288ced65d0438476c5b0e56d425084e8",
+          "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+          "complete": true,
+          "context_sha256": "acfd650c4c2c6bf00d2fb83e85b7ce1a5ce72510a1225f311e444cd9855e323a",
+          "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+          "execution_sha256": "e9c613fb76eaa48f6f917d097b18d43f45c8895650997fbb78c415859e19ca03",
+          "id": "initialization/used_locked_cte",
+          "input_sha256": "4c332f14ee7a16aafefd3ab7c09befd425a36f91b1e3d0f29588ab5b83b69b5e",
+          "ir_sha256": "4a577b52b9e00d20d8e146092a4316f5a170a789f36744f892b110c82321220c",
+          "mode": "compare",
+          "model_sha256": "f8d187b03f242c32bbb7e8b0ed411e06c05c4a64e6255d263bb9080aff2f92bf",
+          "outcomes": [
+            {
+              "outcome": {
+                "affected": 1,
+                "catalog": {
+                  "search_path": [
+                    "public"
+                  ],
+                  "tables": {
+                    "e": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "e",
+                      "schema": "public"
+                    },
+                    "t": {
+                      "columns": [
+                        {
+                          "name": "k",
+                          "nullable": true,
+                          "qualifier": null,
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ],
+                      "name": "t",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "command_tag": "SELECT 1",
+                "database": {
+                  "e": [],
+                  "t": [
+                    [
+                      {
+                        "type": "int32",
+                        "value": 1
+                      }
+                    ]
+                  ]
+                },
+                "effects": [
+                  {
+                    "kind": "table_lock",
+                    "mode": "row_share",
+                    "table": "t"
+                  },
+                  {
+                    "kind": "row_lock",
+                    "occurrence": 0,
+                    "strength": "update",
+                    "table": "t"
+                  }
+                ],
+                "ordering": "bag",
+                "rows": [
+                  [
+                    {
+                      "type": "int32",
+                      "value": 1
+                    }
+                  ]
+                ]
+              },
+              "status": "succeeded"
+            }
+          ],
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "profile": "sqlolla.explicit_outcomes.v2",
+          "runtime_step_limit": 100000,
+          "schema": [
+            {
+              "name": "k",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ],
+          "selected_transition": 0,
+          "sql_sha256": "d254364393dd7b48b7f60665affeeeb799c9a1b483d7f7302427721b50d46e14",
+          "status": "ok",
+          "transition_count": 1,
+          "transition_payload_sha256": "d91bc499c76c337e969f0a19641310f0016149e2fa990c357557a55149639530",
+          "validation": "ALLOY_TABLE_ROUNDTRIP"
+        },
+        "status": "passed"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": true
+      },
+      "id": "used_locked_cte",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "RowShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "CTE Scan on q  (cost=61.00..112.00 rows=2550 width=4)"
+            ],
+            [
+              "  CTE q"
+            ],
+            [
+              "    ->  LockRows  (cost=0.00..61.00 rows=2550 width=10)"
+            ],
+            [
+              "          ->  Seq Scan on t  (cost=0.00..35.50 rows=2550 width=10)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS (SELECT * FROM t FOR UPDATE) SELECT * FROM q"
+    },
+    {
+      "engine": {
+        "errors": [],
+        "response": {
+          "code": "unsupported.lock_origin",
+          "id": "initialization/locked_outer_select",
+          "message": "Locking CTE/set-query origins need an explicit provenance model",
+          "status": "error"
+        },
+        "status": "boundary_verified"
+      },
+      "execution": {
+        "after": [
+          [
+            "t",
+            "AccessShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 1,
+          "columns": [
+            {
+              "name": "k",
+              "type": "integer",
+              "type_oid": 23
+            }
+          ],
+          "command": "SELECT 1",
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "id": "locked_outer_select",
+      "planning": {
+        "after": [
+          [
+            "t",
+            "AccessShareLock"
+          ]
+        ],
+        "before": [],
+        "result": {
+          "affected_rows": 0,
+          "columns": [
+            {
+              "name": "QUERY PLAN",
+              "type": "text",
+              "type_oid": 25
+            }
+          ],
+          "command": "EXPLAIN",
+          "rows": [
+            [
+              "Seq Scan on t  (cost=0.00..35.50 rows=2550 width=4)"
+            ]
+          ],
+          "sqlstate": "00000",
+          "status": "ok"
+        },
+        "row_t_held": false
+      },
+      "sql": "WITH q AS(SELECT * FROM t) SELECT * FROM q FOR UPDATE"
+    }
+  ],
+  "scope": "All admitted outcomes checked; RowShare and tuple ownership only. AccessShare/RowExclusive, wait completion and concurrent changes are not modeled. Separate transactions prevent EXPLAIN contamination.",
+  "status": "passed"
+}

@@ -1,0 +1,6 @@
+dist/
+node_modules/
+.tools/
+e2e/screenshots/
+*.jpg
+*.png

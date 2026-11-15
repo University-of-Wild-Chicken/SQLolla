@@ -1,0 +1,693 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sqlolla.us/protocol/parser-ast.v1.json",
+  "title": "SQLolla parser v1 response (syntax only)",
+  "description": "Input is one UTF-8 SQL statement on stdin followed by EOF, maximum 65536 bytes. No command arguments. This schema specifies the JSON response, not SQL semantics.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "parser_commit",
+    "assurance",
+    "semantic_preservation",
+    "result"
+  ],
+  "properties": {
+    "protocol": {
+      "const": "sqlolla.parser.v1"
+    },
+    "parser_commit": {
+      "const": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb"
+    },
+    "assurance": {
+      "const": "syntax-only"
+    },
+    "semantic_preservation": {
+      "const": false
+    },
+    "result": {
+      "$ref": "#/$defs/result"
+    }
+  },
+  "$defs": {
+    "expression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "magnitude"
+          ],
+          "properties": {
+            "tag": {
+              "const": "integer"
+            },
+            "magnitude": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 65536
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "value"
+          ],
+          "properties": {
+            "tag": {
+              "const": "text"
+            },
+            "value": {
+              "type": "string",
+              "maxLength": 65536
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "value"
+          ],
+          "properties": {
+            "tag": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag"
+          ],
+          "properties": {
+            "tag": {
+              "const": "sql_null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "index"
+          ],
+          "properties": {
+            "tag": {
+              "const": "numbered_parameter"
+            },
+            "index": {
+              "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "name",
+            "qualifier",
+            "schema"
+          ],
+          "properties": {
+            "tag": {
+              "const": "column"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 65536
+            },
+            "qualifier": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 65536
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 65536
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "op",
+            "left",
+            "right"
+          ],
+          "properties": {
+            "tag": {
+              "const": "binary"
+            },
+            "op": {
+              "enum": [
+                "eq",
+                "ne",
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "and",
+                "or"
+              ]
+            },
+            "left": {
+              "$ref": "#/$defs/expression"
+            },
+            "right": {
+              "$ref": "#/$defs/expression"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "op",
+            "arg"
+          ],
+          "properties": {
+            "tag": {
+              "const": "unary"
+            },
+            "op": {
+              "enum": [
+                "not",
+                "positive",
+                "negative"
+              ]
+            },
+            "arg": {
+              "$ref": "#/$defs/expression"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "arg",
+            "negated"
+          ],
+          "properties": {
+            "tag": {
+              "const": "is_null"
+            },
+            "arg": {
+              "$ref": "#/$defs/expression"
+            },
+            "negated": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "item": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "qualifier",
+            "schema"
+          ],
+          "properties": {
+            "tag": {
+              "const": "wildcard"
+            },
+            "qualifier": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 65536
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 65536
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "value",
+            "alias"
+          ],
+          "properties": {
+            "tag": {
+              "const": "expression"
+            },
+            "value": {
+              "$ref": "#/$defs/expression"
+            },
+            "alias": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 65536
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "source": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "name",
+            "alias",
+            "columns",
+            "schema"
+          ],
+          "properties": {
+            "tag": {
+              "const": "table"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 65536
+            },
+            "alias": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 65536
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 65536
+              }
+            },
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 65536
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "query",
+            "alias",
+            "columns"
+          ],
+          "properties": {
+            "tag": {
+              "const": "derived"
+            },
+            "query": {
+              "$ref": "#/$defs/query"
+            },
+            "alias": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 65536
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 65536
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "left",
+            "right"
+          ],
+          "properties": {
+            "tag": {
+              "const": "product"
+            },
+            "left": {
+              "$ref": "#/$defs/source"
+            },
+            "right": {
+              "$ref": "#/$defs/source"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "kind",
+            "left",
+            "right",
+            "on"
+          ],
+          "properties": {
+            "tag": {
+              "const": "join"
+            },
+            "kind": {
+              "enum": [
+                "inner",
+                "left",
+                "right",
+                "full"
+              ]
+            },
+            "left": {
+              "$ref": "#/$defs/source"
+            },
+            "right": {
+              "$ref": "#/$defs/source"
+            },
+            "on": {
+              "$ref": "#/$defs/expression"
+            }
+          }
+        }
+      ]
+    },
+    "cte": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "columns",
+        "query"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 65536
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 65536
+          }
+        },
+        "query": {
+          "$ref": "#/$defs/query"
+        }
+      }
+    },
+    "query": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "items",
+            "source",
+            "where",
+            "distinct"
+          ],
+          "properties": {
+            "tag": {
+              "const": "select"
+            },
+            "items": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/item"
+              }
+            },
+            "source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/source"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "where": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/expression"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "distinct": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "rows"
+          ],
+          "properties": {
+            "tag": {
+              "const": "values"
+            },
+            "rows": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/expression"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "op",
+            "all",
+            "left",
+            "right"
+          ],
+          "properties": {
+            "tag": {
+              "const": "set_operation"
+            },
+            "op": {
+              "enum": [
+                "union",
+                "intersect",
+                "except"
+              ]
+            },
+            "all": {
+              "type": "boolean"
+            },
+            "left": {
+              "$ref": "#/$defs/query"
+            },
+            "right": {
+              "$ref": "#/$defs/query"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tag",
+            "ctes",
+            "body"
+          ],
+          "properties": {
+            "tag": {
+              "const": "with"
+            },
+            "ctes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/cte"
+              }
+            },
+            "body": {
+              "$ref": "#/$defs/query"
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "parse_status",
+            "export_status",
+            "ast"
+          ],
+          "properties": {
+            "parse_status": {
+              "const": "parsed"
+            },
+            "export_status": {
+              "const": "exported"
+            },
+            "ast": {
+              "$ref": "#/$defs/query"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "parse_status",
+            "export_status",
+            "diagnostic"
+          ],
+          "properties": {
+            "parse_status": {
+              "enum": [
+                "parsed",
+                "not_attempted"
+              ]
+            },
+            "export_status": {
+              "const": "unsupported"
+            },
+            "diagnostic": {
+              "type": "string",
+            "pattern": "^(unsupported|resource|input|syntax)\\.[a-z0-9_]+$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "parse_status",
+            "export_status",
+            "diagnostic",
+            "line",
+            "column",
+            "offset"
+          ],
+          "properties": {
+            "parse_status": {
+              "const": "rejected"
+            },
+            "export_status": {
+              "const": "unsupported"
+            },
+            "diagnostic": {
+              "const": "syntax.rejected"
+            },
+            "line": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "column": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "offset": {
+              "type": "integer",
+            "minimum": 0,
+            "description": "Zero-based upstream Unicode source-character offset, not a UTF-8 byte offset."
+            }
+          }
+        }
+      ]
+    }
+  }
+}

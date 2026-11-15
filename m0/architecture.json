@@ -1,0 +1,357 @@
+{
+  "schema_version": "sqlolla.m0.architecture/1",
+  "status": "FINAL_M0_DECISIONS_WITH_EXPLICIT_IMPLEMENTATION_AND_RELEASE_GATES",
+  "prepared_on": "2026-11-14",
+  "authorization_scope": "Lean specification, non-production feasibility probes, architecture and blockers. No production service/frontend or deployment.",
+  "foundations": {
+    "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb",
+    "parser_postgresql_baseline": "16.15",
+    "lean": "4.34.0",
+    "java": "17; M0 executed Temurin 17.0.21+9",
+    "alloy": "6.2.0.202501090817",
+    "alloy_sha256": "6b8c1cb5bc93bedfc7c61435c4e1ab6e688a242dc702a394628d9a9801edb78d",
+    "sat_backend": "SAT4J initially; native backends require separate validation",
+    "rust_m0": "1.100.0 portable rustc/std Windows MSVC; no Cargo dependency/build pipeline established"
+  },
+  "decisions": [
+    {
+      "id": "ADR-01",
+      "decision": "Rust is the algorithmic authority. Compiled Lean is the pinned external parser dependency; Java17 is the Alloy API bridge only.",
+      "evidence": [
+        "parser/report.json",
+        "alloy/report.json",
+        "portability/report.json"
+      ]
+    },
+    {
+      "id": "ADR-02",
+      "decision": "Use typed bag-aware relational IR plus separate effect/transaction IR. Lists in Lean model occurrences; bag equivalence ignores order. Ordered query results require their own contract.",
+      "evidence": [
+        "../formal/SQLolla/Relation.lean",
+        "../formal/SQLolla/IR.lean"
+      ]
+    },
+    {
+      "id": "ADR-03",
+      "decision": "Use separately parsed statements in a transaction envelope. Statement-local typed parameters, explicit actor/session/catalog, no hidden application control flow and no concurrent transactions in the first profile.",
+      "evidence": [
+        "parser/report.json",
+        "../formal/SQLolla/Transaction.lean"
+      ]
+    },
+    {
+      "id": "ADR-04",
+      "decision": "Model commit and abort explicitly; preserve prior observations and exact write frames. Enforced constraints select outcomes rather than erase failing transitions. Unsupported triggers/RLS/default effects block analysis.",
+      "evidence": [
+        "../formal/SQLolla/Transaction.lean"
+      ]
+    },
+    {
+      "id": "ADR-05",
+      "decision": "Require assumptions, execution reachability, semantic coverage and completed failure search. A solver summary is not a Lean proof. SAT witness soundness and UNSAT failure completeness are separate obligations.",
+      "evidence": [
+        "../formal/SQLolla/Analysis.lean",
+        "../formal/SQLolla/Encoding.lean"
+      ]
+    },
+    {
+      "id": "ADR-06",
+      "decision": "Finite-input numeric profile uses enough internal arithmetic range for all admitted intermediate calculations. SQL type-range errors are explicit. noOverflow=true may be used only with an independent adequacy check; it is not a model of SQL overflow.",
+      "evidence": [
+        "alloy/probe-results.json",
+        "../formal/SQLolla/Relation.lean"
+      ]
+    },
+    {
+      "id": "ADR-07",
+      "decision": "Use occurrence-preserving structural output slots, not arbitrary result-atom limits. Projection has one slot per input, product/join allocates all pair candidates, UNION ALL uses tagged disjoint slots; outer joins reserve unmatched slots.",
+      "evidence": [
+        "../formal/SQLolla/Relation.lean"
+      ],
+      "gate": "The complete allocation/activation semantics and its preservation argument remain M1 work; excessive capacities are INCONCLUSIVE, never UNSAT."
+    },
+    {
+      "id": "ADR-08",
+      "decision": "Versioned bounded UTF8 JSON over private child-process pipes; explicit argument APIs, no SQL or keys in command-line arguments. Supervised worker process isolation before untrusted hosting.",
+      "evidence": [
+        "portability/report.json",
+        "parser/report.json"
+      ]
+    },
+    {
+      "id": "ADR-09",
+      "decision": "Deterministic typed-IR-to-SQL and typed-IR-to-Alloy compilation. Reverse decoding accepts only generated packages with intact provenance; arbitrary Alloy has no SQL inverse.",
+      "evidence": [
+        "../SQLolla.gameplan.json"
+      ]
+    },
+    {
+      "id": "ADR-10",
+      "decision": "Render validated solver instances deterministically as tables, graphs and transaction-step views; attach separately validated AI annotations. Show satisfying examples and counterexamples with distinct labels.",
+      "evidence": [
+        "instance-review.json",
+        "../formal/SQLolla/Instance.lean"
+      ]
+    },
+    {
+      "id": "ADR-11",
+      "decision": "Adopt AlloyStudio's separation of solver-derived visualization and AI explanation as a reference pattern. Build SQLolla's browser BYOT and provider adapters separately; do not assume AlloyStudio provides them.",
+      "evidence": [
+        "instance-review.json"
+      ]
+    },
+    {
+      "id": "ADR-12",
+      "decision": "Cloudflare hosts static UI/ingress; a VM/container/native origin hosts Rust, Lean and Java. Private/offline operation uses the same core without required Cloudflare or provider calls.",
+      "evidence": [
+        "portability/report.json"
+      ]
+    },
+    {
+      "id": "ADR-13",
+      "decision": "Every formal module is imported into the aggregate and audited by module ownership. No placeholders, custom axioms, unsafe declarations or compiler-trust shortcuts; only listed Lean foundations may occur transitively.",
+      "evidence": [
+        "../formal/TrustAudit.lean",
+        "../formal/verify.ps1",
+        "formal/report.json"
+      ]
+    }
+  ],
+  "interfaces": {
+    "parser_request": {
+      "version": "parser.v1 proposed",
+      "fields": [
+        "request_id",
+        "parser_commit",
+        "ast_schema_version",
+        "source_utf8",
+        "requested_assurance_profile",
+        "optional exact catalog/type/parameter declarations"
+      ]
+    },
+    "parser_response": {
+      "fields": [
+        "request_id",
+        "parser_build_hash",
+        "ast_schema_version",
+        "parse_status",
+        "export_status",
+        "typed_tagged_ast",
+        "assurance_metadata",
+        "canonical_sql if requested",
+        "diagnostics"
+      ],
+      "rules": [
+        "Unknown node tags fail closed",
+        "Numbers preserve lexemes and magnitudes without float conversion",
+        "NULL differs from missing syntax",
+        "Positional parameters and ALL flags are retained",
+        "Statement-level source map until finer spans are validated",
+        "Process exit zero alone does not imply supported SQL"
+      ]
+    },
+    "analysis_request": {
+      "fields": [
+        "analysis_id",
+        "canonical_ir_hash",
+        "catalog_context_hash",
+        "policy_hash",
+        "generated_model",
+        "command_selector",
+        "scope_manifest",
+        "numeric_profile",
+        "solver_options",
+        "resource_budget"
+      ]
+    },
+    "analysis_response": {
+      "fields": [
+        "analysis_id",
+        "engine_versions",
+        "stage_statuses",
+        "solver_result",
+        "instance_id",
+        "ordered_signature_atoms_and_relation_tuples",
+        "statistics",
+        "diagnostics"
+      ],
+      "rules": [
+        "Only generated Alloy and pinned modules",
+        "No stderr content interpreted as result",
+        "Empty/malformed output is engine failure",
+        "No externally reachable Java port",
+        "Retain raw solver-instance provenance"
+      ]
+    },
+    "instance_envelope": {
+      "version": "instance.v1 proposed",
+      "fields": [
+        "analysis_mode",
+        "goal_formula_id",
+        "property_ids",
+        "analysis_id",
+        "instance_id",
+        "kind",
+        "enumeration_index",
+        "query_ir_model_hashes",
+        "catalog_policy_context_hashes",
+        "bounds",
+        "solver_version_options",
+        "validation_status",
+        "states",
+        "typed_atoms",
+        "ordered_relation_tuples",
+        "row_occurrence_ids",
+        "before_after_deltas",
+        "termination",
+        "property_findings",
+        "source_map",
+        "evidence_fact_ids",
+        "full_evidence_complete",
+        "transport_complete",
+        "view_complete",
+        "retained_artifact_hash"
+      ],
+      "rules": [
+        "Relations retain arity and tuple position; not just binary graph edges",
+        "Duplicate SQL values remain distinct occurrences",
+        "Explicit NULL representation",
+        "Aborted transaction is distinct from no-op commit",
+        "No synthetic graph facts generated by the LLM",
+        "Unvalidated solver models are labeled candidate instances",
+        "A filtered, truncated or redacted projection cannot justify absence of omitted facts; retain completeness flags at each boundary."
+      ]
+    },
+    "explanation": {
+      "fields": [
+        "instance_id",
+        "instance_hash",
+        "provider_model",
+        "finding_ids",
+        "claim_text",
+        "evidence_fact_ids",
+        "suggested_patch",
+        "limitations"
+      ],
+      "rules": [
+        "Separate from immutable instance payload",
+        "All references resolve against that exact instance",
+        "Reference membership does not prove prose truthful",
+        "Show proposed edits and rerun after acceptance",
+        "Never change formal verdict, policy or scope implicitly"
+      ]
+    }
+  },
+  "instance_experience": {
+    "modes": [
+      "Explore a satisfying example of assumptions/execution",
+      "Find a counterexample to a named property"
+    ],
+    "views": [
+      "Exact table view",
+      "Deterministic entity/relation graph",
+      "Before/after row diff",
+      "Statement-step trace",
+      "Explain this instance panel"
+    ],
+    "graph_rules": [
+      "Derive nodes and edges only from validated tuple data",
+      "Use tuple nodes/hyperedges or tables for arity >2",
+      "Surface hidden/filter counts",
+      "Hover or click highlights exact evidence/source references",
+      "Preserve duplicate occurrence IDs",
+      "Escape all identifiers/values; sanitize explanation Markdown",
+      "Keep full-evidence, transport and view completeness independent; require retained complete evidence for replayability claims."
+    ],
+    "enumeration": "Bound number of instances and job lifetime. Continuations are owner-scoped and bound to model/query/policy/bounds hashes; no completeness claim from a finite displayed sample.",
+    "explanations": "Every displayed instance can request a grounded AI explanation when BYOT is configured. Without a token/provider availability, retain the instance with a deterministic summary and a clear optional-AI control.",
+    "privacy": "Preview/redact outbound instance facts and get sharing consent for sensitive content. Tokens stay out of graphs, checkpoints, logs and report exports.",
+    "status_language": [
+      "Satisfying example (does not prove security)",
+      "Counterexample found",
+      "Candidate instance awaiting validation",
+      "No counterexample found within these bounds",
+      "Inconclusive / unsupported / inconsistent assumptions"
+    ],
+    "formal_boundary": "Instance.lean specifies authenticity of selected facts and justification of counterexample labels. It does not prove the visual renderer or natural-language explanation correct."
+  },
+  "trust_policy": {
+    "authored_proof_shortcuts": "forbidden",
+    "transitive_allowlist": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "enforcement": "formal/verify.ps1 source inventory + default Lake target TrustAudit using Lean.collectAxioms and direct axiom/unsafe checks",
+    "scope": "All declarations belonging to imported SQLolla modules, including private/generated declarations; all formal source modules must appear in the aggregate.",
+    "limits": "Not a sandbox for malicious metaprograms; trusts verified toolchain/kernel. Explicit proof premises and contract fields are future obligations, not proved compiler facts."
+  },
+  "open_gates": [
+    {
+      "id": "M0-G01",
+      "blocks": "redistribution/public packaging",
+      "issue": "SQLeanParser root redistribution grant not identified at pinned commit; transitive package/fixture license ledger incomplete",
+      "owner": "maintainer/release owner",
+      "exit": "Record explicit redistribution permission and complete SBOM/notices"
+    },
+    {
+      "id": "M0-G02",
+      "blocks": "cross-platform support claim",
+      "issue": "Linux/WSL/macOS runners unavailable in this session",
+      "owner": "platform specialist",
+      "exit": "Build/run parser+Rust+Java/SAT+protocol+cancel checks on actual advertised OS/CPU"
+    },
+    {
+      "id": "M0-G03",
+      "blocks": "production compiler acceptance",
+      "issue": "No exhaustive stable AST protocol, binder correspondence or complete source map",
+      "owner": "parser/DSL specialist",
+      "exit": "Schema/field inventory, unknown-node rejection, pin handshake and independent binding comparisons"
+    },
+    {
+      "id": "M0-G04",
+      "blocks": "bounded safety claim",
+      "issue": "No concrete SQL-to-IR-to-Alloy refinement or complete numeric/occurrence semantics",
+      "owner": "formal-core specialist and independent reviewer",
+      "exit": "All-outcome tiny-domain comparisons, scope/range arguments and mutation suite for every admitted capability"
+    },
+    {
+      "id": "M0-G05",
+      "blocks": "PostgreSQL behavioral compatibility claim",
+      "issue": "No PostgreSQL16 execution oracle or differential replay in M0",
+      "owner": "semantics validation owner",
+      "exit": "Pinned disposable PG16 oracle; bag/results/errors/commit/abort comparisons"
+    },
+    {
+      "id": "M0-G06",
+      "blocks": "hosted untrusted input",
+      "issue": "Only direct-child cancellation tested; descendants, resource ceilings and malformed/oversized IPC not yet isolated",
+      "owner": "security/platform",
+      "exit": "OS-specific process-group/job-object cleanup, quotas, bounded parsers and no worker egress"
+    },
+    {
+      "id": "M0-G07",
+      "blocks": "AI/BYOT or instance-UI production readiness",
+      "issue": "Provider adapters, secret lifecycle, renderer and explanation linkage are specified but unimplemented",
+      "owner": "security/frontend",
+      "exit": "Tenant auth, XSS/SSRF/token handling, stale-instance refs, truthful labels and novice evaluation pass"
+    },
+    {
+      "id": "M0-G08",
+      "blocks": "Rust dependency/release build reproducibility",
+      "issue": "M0 used rustc+std only; Cargo lockfiles/build packaging remain future work",
+      "owner": "Rust/platform",
+      "exit": "Pinned toolchain/lockfiles, clean CI builds, supply-chain and package checks"
+    }
+  ],
+  "approved_next_step": "A later authorized M1 may implement the narrow admitted compiler/semantics fragment against these contracts. Do not label M0 prototypes as production components.",
+  "artifacts": {
+    "lean_spec": "../formal/SQLolla.lean",
+    "lean_trust_report": "formal/report.json",
+    "parser_report": "parser/report.json",
+    "alloy_report": "alloy/report.json",
+    "portability_report": "portability/report.json",
+    "independent_review": "alloy/formal-review.json",
+    "alloy_studio_review": "instance-review.json"
+  }
+}

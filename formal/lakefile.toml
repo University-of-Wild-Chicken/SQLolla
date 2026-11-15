@@ -1,0 +1,9 @@
+name = "sqlolla_formal"
+version = "0.0.1"
+defaultTargets = ["SQLolla", "TrustAudit"]
+
+[[lean_lib]]
+name = "SQLolla"
+
+[[lean_lib]]
+name = "TrustAudit"

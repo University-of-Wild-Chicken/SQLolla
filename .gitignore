@@ -1,0 +1,29 @@
+# M0 runtime archives, extracted tools, compiled probes and Lean artifacts.
+**/.tools/
+**/.lake/
+**/build/
+*.olean
+*.ilean
+*.class
+target/
+validation/.runs/
+validation/.results/
+bridge/classes/
+**/__pycache__/
+validation/results/requests.jsonl
+validation/results/cli-output.jsonl
+validation/results/cli-stderr.log
+validation/results/mutants/
+.scratch/
+/artifacts/instances/
+# Extracted native solvers and generated probe/debug outputs.
+/m0/alloy/tmp/
+*.exe
+*.pdb
+*.log
+# Credentials and machine-local provider configuration.
+.env
+.env.*
+!.env.example
+*.pem
+*.key

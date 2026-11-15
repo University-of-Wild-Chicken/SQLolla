@@ -1,0 +1,27 @@
+/** Editable input example only; every displayed result must come from a new backend analysis. */
+export const STARTER_REQUEST = {
+  id: "browser-tenant-example",
+  sql: "SELECT id, tenant_id FROM orders",
+  mode: "analyze",
+  catalog: {
+    search_path: ["public"],
+    tables: {
+      orders: {
+        schema: "public",
+        name: "orders",
+        columns: [
+          { name: "id", ty: "int32", nullable: false },
+          { name: "tenant_id", ty: "int32", nullable: false },
+        ],
+      },
+    },
+  },
+  parameters: {},
+  bounds: { orders: 1 },
+  domain: [
+    { type: "int32", value: 0 },
+    { type: "int32", value: 1 },
+  ],
+  property: { kind: "only_value", column: 1, value: { type: "int32", value: 1 } },
+  include_model: true,
+};

@@ -1,0 +1,1578 @@
+{
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "examples": [
+    {
+      "model_file": "tenant-filter.als",
+      "postgres": {
+        "cluster_removed": true,
+        "has_counterexample": false,
+        "observations_sha256": "644458196b29c6a23ef297b535d4679db179aaed1e3e5f7b32b8957b9855c5e4",
+        "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+        "witness_replay": null,
+        "world_count": 10
+      },
+      "request": {
+        "bounds": {
+          "public.orders": 2
+        },
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {
+            "public.orders": {
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nullable": true,
+                  "qualifier": null,
+                  "schema": null,
+                  "ty": "int32"
+                }
+              ],
+              "name": "orders",
+              "schema": "public"
+            }
+          }
+        },
+        "database": {},
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "id": "tenant-filter",
+        "include_model": true,
+        "mode": "analyze",
+        "parameters": {
+          "1": {
+            "type": "int32",
+            "value": 1
+          }
+        },
+        "property": {
+          "column": 0,
+          "kind": "only_value",
+          "value": {
+            "type": "int32",
+            "value": 1
+          }
+        },
+        "sql": "SELECT tenant_id FROM orders WHERE tenant_id = $1"
+      },
+      "result": {
+        "analysis": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+        "assumptions": "SATISFIABLE",
+        "bounds": {
+          "public.orders": 2
+        },
+        "catalog_sha256": "f6e395357fee144422f41ca433a58bf58a491051fa231d0516cf198bfb1b4ba1",
+        "claim": "finite supported profile only",
+        "context_sha256": "cf263742a5b9bb4ab531668549b9deed8268e42d9202e77e435bf7f27577445b",
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "id": "tenant-filter",
+        "input_sha256": "c751ce911e477b8df568151815d440eef359dddfede608851324e3a4d827382a",
+        "ir": {
+          "node": {
+            "Project": {
+              "expressions": [
+                {
+                  "node": {
+                    "Column": 0
+                  },
+                  "nullable": true,
+                  "ty": "int32"
+                }
+              ],
+              "input": {
+                "node": {
+                  "Filter": {
+                    "input": {
+                      "node": {
+                        "Scan": {
+                          "table": "public.orders"
+                        }
+                      },
+                      "schema": [
+                        {
+                          "name": "tenant_id",
+                          "nullable": true,
+                          "qualifier": "orders",
+                          "schema": "public",
+                          "ty": "int32"
+                        }
+                      ]
+                    },
+                    "predicate": {
+                      "node": {
+                        "Binary": {
+                          "left": {
+                            "node": {
+                              "Column": 0
+                            },
+                            "nullable": true,
+                            "ty": "int32"
+                          },
+                          "op": "Eq",
+                          "right": {
+                            "node": {
+                              "Literal": {
+                                "type": "int32",
+                                "value": 1
+                              }
+                            },
+                            "nullable": false,
+                            "ty": "int32"
+                          }
+                        }
+                      },
+                      "nullable": true,
+                      "ty": "bool"
+                    }
+                  }
+                },
+                "schema": [
+                  {
+                    "name": "tenant_id",
+                    "nullable": true,
+                    "qualifier": "orders",
+                    "schema": "public",
+                    "ty": "int32"
+                  }
+                ]
+              }
+            }
+          },
+          "schema": [
+            {
+              "name": "tenant_id",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ]
+        },
+        "ir_sha256": "9d00ee11da105119ac195c861c6702233796be5164627780036416645b093091",
+        "mode": "analyze",
+        "model_sha256": "2a9b85bf51885ab1ef444be283fe77910492f433f57614a8a3c287e867ce81ab",
+        "parameters_sha256": "09b3fec18f7f52dfaa2a554d0b599c1812d80061d00cbdebf3b717179179e787",
+        "profile": "sqlolla.m1.relational.v1",
+        "property": {
+          "column": 0,
+          "kind": "only_value",
+          "value": {
+            "type": "int32",
+            "value": 1
+          }
+        },
+        "property_check": {
+          "assertion": "QueryProperty",
+          "command": "check",
+          "command_index": 1
+        },
+        "schema": [
+          {
+            "name": "tenant_id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "sql_sha256": "6cccfa977b8f979aa21dfe768724c122359734b35638c3376dc1f0ae5bdcccb9",
+        "status": "ok"
+      }
+    },
+    {
+      "model_file": "tenant-missing-filter.als",
+      "postgres": {
+        "cluster_removed": true,
+        "has_counterexample": true,
+        "observations_sha256": "3343888facaeef6240c7a8b4d50eb8ff8590a2ecdc8ad331d3f3f63d5ea8e4fa",
+        "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+        "witness_replay": {
+          "matches": true,
+          "rows": [
+            [
+              null
+            ],
+            [
+              2
+            ]
+          ]
+        },
+        "world_count": 10
+      },
+      "request": {
+        "bounds": {
+          "public.orders": 2
+        },
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {
+            "public.orders": {
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nullable": true,
+                  "qualifier": null,
+                  "schema": null,
+                  "ty": "int32"
+                }
+              ],
+              "name": "orders",
+              "schema": "public"
+            }
+          }
+        },
+        "database": {},
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "id": "tenant-missing-filter",
+        "include_model": true,
+        "mode": "analyze",
+        "parameters": {},
+        "property": {
+          "column": 0,
+          "kind": "only_value",
+          "value": {
+            "type": "int32",
+            "value": 1
+          }
+        },
+        "sql": "SELECT tenant_id FROM orders"
+      },
+      "result": {
+        "analysis": "COUNTEREXAMPLE",
+        "assumptions": "SATISFIABLE",
+        "bounds": {
+          "public.orders": 2
+        },
+        "catalog_sha256": "f6e395357fee144422f41ca433a58bf58a491051fa231d0516cf198bfb1b4ba1",
+        "claim": "finite supported profile only",
+        "context_sha256": "4e6b0cd66942a0c6fe775155be7c4fa6f9f3c800396013ec16d18e4fa63b23f4",
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "id": "tenant-missing-filter",
+        "input_sha256": "c751ce911e477b8df568151815d440eef359dddfede608851324e3a4d827382a",
+        "instance": {
+          "complete": true,
+          "completeness_scope": "encoded relations and complete declared catalog",
+          "database": {
+            "public.orders": [
+              [
+                {
+                  "type": "null",
+                  "value": "int32"
+                }
+              ],
+              [
+                {
+                  "type": "int32",
+                  "value": 2
+                }
+              ]
+            ]
+          },
+          "kind": "counterexample",
+          "output": [
+            [
+              {
+                "type": "null",
+                "value": "int32"
+              }
+            ],
+            [
+              {
+                "type": "int32",
+                "value": 2
+              }
+            ]
+          ],
+          "relations": {
+            "this/N0": [
+              [
+                "N0R0$0"
+              ],
+              [
+                "N0R1$0"
+              ]
+            ],
+            "this/N0.alive": [
+              [
+                "N0R0$0",
+                "V3$0"
+              ],
+              [
+                "N0R1$0",
+                "V3$0"
+              ]
+            ],
+            "this/N0.c0": [
+              [
+                "N0R0$0",
+                "Null$0"
+              ],
+              [
+                "N0R1$0",
+                "V1$0"
+              ]
+            ],
+            "this/N0R0": [
+              [
+                "N0R0$0"
+              ]
+            ],
+            "this/N0R1": [
+              [
+                "N0R1$0"
+              ]
+            ],
+            "this/N1": [
+              [
+                "N1R0$0"
+              ],
+              [
+                "N1R1$0"
+              ]
+            ],
+            "this/N1.alive": [
+              [
+                "N1R0$0",
+                "V3$0"
+              ],
+              [
+                "N1R1$0",
+                "V3$0"
+              ]
+            ],
+            "this/N1.c0": [
+              [
+                "N1R0$0",
+                "Null$0"
+              ],
+              [
+                "N1R1$0",
+                "V1$0"
+              ]
+            ],
+            "this/N1R0": [
+              [
+                "N1R0$0"
+              ]
+            ],
+            "this/N1R1": [
+              [
+                "N1R1$0"
+              ]
+            ],
+            "this/Null": [
+              [
+                "Null$0"
+              ]
+            ],
+            "this/Ordering": [
+              [
+                "Ordering$0"
+              ]
+            ],
+            "this/Ordering.lt": [
+              [
+                "Ordering$0",
+                "V0$0",
+                "V1$0"
+              ]
+            ],
+            "this/V": [
+              [
+                "Null$0"
+              ],
+              [
+                "V0$0"
+              ],
+              [
+                "V1$0"
+              ],
+              [
+                "V2$0"
+              ],
+              [
+                "V3$0"
+              ]
+            ],
+            "this/V0": [
+              [
+                "V0$0"
+              ]
+            ],
+            "this/V1": [
+              [
+                "V1$0"
+              ]
+            ],
+            "this/V2": [
+              [
+                "V2$0"
+              ]
+            ],
+            "this/V3": [
+              [
+                "V3$0"
+              ]
+            ]
+          },
+          "validation": "RUST_REPLAY_CONFIRMED"
+        },
+        "instance_sha256": "a614b7d000455ef9bed79adc9cf7548c1d24ac80baafa3a6c397f782810cf76a",
+        "ir": {
+          "node": {
+            "Project": {
+              "expressions": [
+                {
+                  "node": {
+                    "Column": 0
+                  },
+                  "nullable": true,
+                  "ty": "int32"
+                }
+              ],
+              "input": {
+                "node": {
+                  "Scan": {
+                    "table": "public.orders"
+                  }
+                },
+                "schema": [
+                  {
+                    "name": "tenant_id",
+                    "nullable": true,
+                    "qualifier": "orders",
+                    "schema": "public",
+                    "ty": "int32"
+                  }
+                ]
+              }
+            }
+          },
+          "schema": [
+            {
+              "name": "tenant_id",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ]
+        },
+        "ir_sha256": "99496fe047e9bda5d474b0de983edf1f42a649b8f4748696ba9659aae23798d3",
+        "mode": "analyze",
+        "model_sha256": "ebc4e3898dce5baceb6dba8abb86e03bcf66b4044601524937490f5b96e3d1fb",
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.m1.relational.v1",
+        "property": {
+          "column": 0,
+          "kind": "only_value",
+          "value": {
+            "type": "int32",
+            "value": 1
+          }
+        },
+        "property_check": {
+          "assertion": "QueryProperty",
+          "command": "check",
+          "command_index": 1
+        },
+        "schema": [
+          {
+            "name": "tenant_id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "sql_sha256": "35ca2b4bf259ecadc59b9ca6d9dc3bdc725bfc0da1e1ec817219a8508e0756d6",
+        "status": "ok"
+      }
+    },
+    {
+      "model_file": "left-join.als",
+      "postgres": {
+        "cluster_removed": true,
+        "has_counterexample": true,
+        "observations_sha256": "f79cc60d5f8b7a67614ef8772865174be7c7a0527fe6a2d84329ebe7a8479c5a",
+        "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+        "witness_replay": {
+          "matches": true,
+          "rows": [
+            [
+              2,
+              2
+            ],
+            [
+              null,
+              null
+            ]
+          ]
+        },
+        "world_count": 100
+      },
+      "request": {
+        "bounds": {
+          "public.ledger": 2,
+          "public.rates": 2
+        },
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {
+            "public.ledger": {
+              "columns": [
+                {
+                  "name": "x",
+                  "nullable": true,
+                  "qualifier": null,
+                  "schema": null,
+                  "ty": "int32"
+                }
+              ],
+              "name": "ledger",
+              "schema": "public"
+            },
+            "public.rates": {
+              "columns": [
+                {
+                  "name": "x",
+                  "nullable": true,
+                  "qualifier": null,
+                  "schema": null,
+                  "ty": "int32"
+                }
+              ],
+              "name": "rates",
+              "schema": "public"
+            }
+          }
+        },
+        "database": {},
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "id": "left-join",
+        "include_model": true,
+        "mode": "analyze",
+        "parameters": {},
+        "property": {
+          "column": 1,
+          "kind": "no_value",
+          "value": {
+            "type": "null",
+            "value": "int32"
+          }
+        },
+        "sql": "SELECT l.x AS left_x, r.x AS right_x FROM ledger AS l LEFT JOIN rates AS r ON l.x = r.x"
+      },
+      "result": {
+        "analysis": "COUNTEREXAMPLE",
+        "assumptions": "SATISFIABLE",
+        "bounds": {
+          "public.ledger": 2,
+          "public.rates": 2
+        },
+        "catalog_sha256": "bbca63eedfb131be02140d407f651b0b8badd1786cc785b06fa1ce623ec910ad",
+        "claim": "finite supported profile only",
+        "context_sha256": "2fed595f547b3221f2ac65f8770ac5b61135c182f3e3cc468eddbf792b211137",
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "id": "left-join",
+        "input_sha256": "62bd5f16519ed1a04b9980880c2309230327df683088407445b564abe4935e55",
+        "instance": {
+          "complete": true,
+          "completeness_scope": "encoded relations and complete declared catalog",
+          "database": {
+            "public.ledger": [
+              [
+                {
+                  "type": "null",
+                  "value": "int32"
+                }
+              ],
+              [
+                {
+                  "type": "int32",
+                  "value": 2
+                }
+              ]
+            ],
+            "public.rates": [
+              [
+                {
+                  "type": "int32",
+                  "value": 2
+                }
+              ]
+            ]
+          },
+          "kind": "counterexample",
+          "output": [
+            [
+              {
+                "type": "null",
+                "value": "int32"
+              },
+              {
+                "type": "null",
+                "value": "int32"
+              }
+            ],
+            [
+              {
+                "type": "int32",
+                "value": 2
+              },
+              {
+                "type": "int32",
+                "value": 2
+              }
+            ]
+          ],
+          "relations": {
+            "this/N0": [
+              [
+                "N0R0$0"
+              ],
+              [
+                "N0R1$0"
+              ]
+            ],
+            "this/N0.alive": [
+              [
+                "N0R0$0",
+                "V3$0"
+              ],
+              [
+                "N0R1$0",
+                "V3$0"
+              ]
+            ],
+            "this/N0.c0": [
+              [
+                "N0R0$0",
+                "V1$0"
+              ],
+              [
+                "N0R1$0",
+                "Null$0"
+              ]
+            ],
+            "this/N0R0": [
+              [
+                "N0R0$0"
+              ]
+            ],
+            "this/N0R1": [
+              [
+                "N0R1$0"
+              ]
+            ],
+            "this/N1": [
+              [
+                "N1R0$0"
+              ],
+              [
+                "N1R1$0"
+              ]
+            ],
+            "this/N1.alive": [
+              [
+                "N1R0$0",
+                "V3$0"
+              ],
+              [
+                "N1R1$0",
+                "V2$0"
+              ]
+            ],
+            "this/N1.c0": [
+              [
+                "N1R0$0",
+                "V1$0"
+              ],
+              [
+                "N1R1$0",
+                "Null$0"
+              ]
+            ],
+            "this/N1R0": [
+              [
+                "N1R0$0"
+              ]
+            ],
+            "this/N1R1": [
+              [
+                "N1R1$0"
+              ]
+            ],
+            "this/N2": [
+              [
+                "N2R0$0"
+              ],
+              [
+                "N2R1$0"
+              ],
+              [
+                "N2R2$0"
+              ],
+              [
+                "N2R3$0"
+              ],
+              [
+                "N2R4$0"
+              ],
+              [
+                "N2R5$0"
+              ]
+            ],
+            "this/N2.alive": [
+              [
+                "N2R0$0",
+                "V3$0"
+              ],
+              [
+                "N2R1$0",
+                "V2$0"
+              ],
+              [
+                "N2R2$0",
+                "V2$0"
+              ],
+              [
+                "N2R3$0",
+                "V2$0"
+              ],
+              [
+                "N2R4$0",
+                "V2$0"
+              ],
+              [
+                "N2R5$0",
+                "V3$0"
+              ]
+            ],
+            "this/N2.c0": [
+              [
+                "N2R0$0",
+                "V1$0"
+              ],
+              [
+                "N2R1$0",
+                "V1$0"
+              ],
+              [
+                "N2R2$0",
+                "Null$0"
+              ],
+              [
+                "N2R3$0",
+                "Null$0"
+              ],
+              [
+                "N2R4$0",
+                "V1$0"
+              ],
+              [
+                "N2R5$0",
+                "Null$0"
+              ]
+            ],
+            "this/N2.c1": [
+              [
+                "N2R0$0",
+                "V1$0"
+              ],
+              [
+                "N2R1$0",
+                "Null$0"
+              ],
+              [
+                "N2R2$0",
+                "V1$0"
+              ],
+              [
+                "N2R3$0",
+                "Null$0"
+              ],
+              [
+                "N2R4$0",
+                "Null$0"
+              ],
+              [
+                "N2R5$0",
+                "Null$0"
+              ]
+            ],
+            "this/N2R0": [
+              [
+                "N2R0$0"
+              ]
+            ],
+            "this/N2R1": [
+              [
+                "N2R1$0"
+              ]
+            ],
+            "this/N2R2": [
+              [
+                "N2R2$0"
+              ]
+            ],
+            "this/N2R3": [
+              [
+                "N2R3$0"
+              ]
+            ],
+            "this/N2R4": [
+              [
+                "N2R4$0"
+              ]
+            ],
+            "this/N2R5": [
+              [
+                "N2R5$0"
+              ]
+            ],
+            "this/N3": [
+              [
+                "N3R0$0"
+              ],
+              [
+                "N3R1$0"
+              ],
+              [
+                "N3R2$0"
+              ],
+              [
+                "N3R3$0"
+              ],
+              [
+                "N3R4$0"
+              ],
+              [
+                "N3R5$0"
+              ]
+            ],
+            "this/N3.alive": [
+              [
+                "N3R0$0",
+                "V3$0"
+              ],
+              [
+                "N3R1$0",
+                "V2$0"
+              ],
+              [
+                "N3R2$0",
+                "V2$0"
+              ],
+              [
+                "N3R3$0",
+                "V2$0"
+              ],
+              [
+                "N3R4$0",
+                "V2$0"
+              ],
+              [
+                "N3R5$0",
+                "V3$0"
+              ]
+            ],
+            "this/N3.c0": [
+              [
+                "N3R0$0",
+                "V1$0"
+              ],
+              [
+                "N3R1$0",
+                "V1$0"
+              ],
+              [
+                "N3R2$0",
+                "Null$0"
+              ],
+              [
+                "N3R3$0",
+                "Null$0"
+              ],
+              [
+                "N3R4$0",
+                "V1$0"
+              ],
+              [
+                "N3R5$0",
+                "Null$0"
+              ]
+            ],
+            "this/N3.c1": [
+              [
+                "N3R0$0",
+                "V1$0"
+              ],
+              [
+                "N3R1$0",
+                "Null$0"
+              ],
+              [
+                "N3R2$0",
+                "V1$0"
+              ],
+              [
+                "N3R3$0",
+                "Null$0"
+              ],
+              [
+                "N3R4$0",
+                "Null$0"
+              ],
+              [
+                "N3R5$0",
+                "Null$0"
+              ]
+            ],
+            "this/N3R0": [
+              [
+                "N3R0$0"
+              ]
+            ],
+            "this/N3R1": [
+              [
+                "N3R1$0"
+              ]
+            ],
+            "this/N3R2": [
+              [
+                "N3R2$0"
+              ]
+            ],
+            "this/N3R3": [
+              [
+                "N3R3$0"
+              ]
+            ],
+            "this/N3R4": [
+              [
+                "N3R4$0"
+              ]
+            ],
+            "this/N3R5": [
+              [
+                "N3R5$0"
+              ]
+            ],
+            "this/Null": [
+              [
+                "Null$0"
+              ]
+            ],
+            "this/Ordering": [
+              [
+                "Ordering$0"
+              ]
+            ],
+            "this/Ordering.lt": [
+              [
+                "Ordering$0",
+                "V0$0",
+                "V1$0"
+              ]
+            ],
+            "this/V": [
+              [
+                "Null$0"
+              ],
+              [
+                "V0$0"
+              ],
+              [
+                "V1$0"
+              ],
+              [
+                "V2$0"
+              ],
+              [
+                "V3$0"
+              ]
+            ],
+            "this/V0": [
+              [
+                "V0$0"
+              ]
+            ],
+            "this/V1": [
+              [
+                "V1$0"
+              ]
+            ],
+            "this/V2": [
+              [
+                "V2$0"
+              ]
+            ],
+            "this/V3": [
+              [
+                "V3$0"
+              ]
+            ]
+          },
+          "validation": "RUST_REPLAY_CONFIRMED"
+        },
+        "instance_sha256": "a5b1a2764ffa0ef40a4c2a21a22320a800c0bdc3dae28b653b72715497624476",
+        "ir": {
+          "node": {
+            "Project": {
+              "expressions": [
+                {
+                  "node": {
+                    "Column": 0
+                  },
+                  "nullable": true,
+                  "ty": "int32"
+                },
+                {
+                  "node": {
+                    "Column": 1
+                  },
+                  "nullable": true,
+                  "ty": "int32"
+                }
+              ],
+              "input": {
+                "node": {
+                  "Join": {
+                    "kind": "Left",
+                    "left": {
+                      "node": {
+                        "Scan": {
+                          "table": "public.ledger"
+                        }
+                      },
+                      "schema": [
+                        {
+                          "name": "x",
+                          "nullable": true,
+                          "qualifier": "l",
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ]
+                    },
+                    "on": {
+                      "node": {
+                        "Binary": {
+                          "left": {
+                            "node": {
+                              "Column": 0
+                            },
+                            "nullable": true,
+                            "ty": "int32"
+                          },
+                          "op": "Eq",
+                          "right": {
+                            "node": {
+                              "Column": 1
+                            },
+                            "nullable": true,
+                            "ty": "int32"
+                          }
+                        }
+                      },
+                      "nullable": true,
+                      "ty": "bool"
+                    },
+                    "right": {
+                      "node": {
+                        "Scan": {
+                          "table": "public.rates"
+                        }
+                      },
+                      "schema": [
+                        {
+                          "name": "x",
+                          "nullable": true,
+                          "qualifier": "r",
+                          "schema": null,
+                          "ty": "int32"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": [
+                  {
+                    "name": "x",
+                    "nullable": true,
+                    "qualifier": "l",
+                    "schema": null,
+                    "ty": "int32"
+                  },
+                  {
+                    "name": "x",
+                    "nullable": true,
+                    "qualifier": "r",
+                    "schema": null,
+                    "ty": "int32"
+                  }
+                ]
+              }
+            }
+          },
+          "schema": [
+            {
+              "name": "left_x",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            },
+            {
+              "name": "right_x",
+              "nullable": true,
+              "qualifier": null,
+              "schema": null,
+              "ty": "int32"
+            }
+          ]
+        },
+        "ir_sha256": "c5373c15ae97824c32497c3f2818a8a8100e2efb7825d31e1f9f8087e50143d6",
+        "mode": "analyze",
+        "model_sha256": "248ff95e79054b72e0e516791c00cf5cb59063adfc0c1dbc4bd29f2bab2fd628",
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.m1.relational.v1",
+        "property": {
+          "column": 1,
+          "kind": "no_value",
+          "value": {
+            "type": "null",
+            "value": "int32"
+          }
+        },
+        "property_check": {
+          "assertion": "QueryProperty",
+          "command": "check",
+          "command_index": 1
+        },
+        "schema": [
+          {
+            "name": "left_x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "right_x",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          }
+        ],
+        "sql_sha256": "e5ac80c1976804dccc21922cbdf7a6003944359ebbd180ff4557d1fe7b22e3e0",
+        "status": "ok"
+      }
+    },
+    {
+      "model_file": "group-count.als",
+      "postgres": {
+        "cluster_removed": true,
+        "has_counterexample": false,
+        "observations_sha256": "e1dced122289329d10934a3533386138c60bd522031bfd3bb3373e367564b64e",
+        "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit",
+        "witness_replay": null,
+        "world_count": 20
+      },
+      "request": {
+        "bounds": {
+          "public.orders": 3
+        },
+        "catalog": {
+          "search_path": [
+            "public"
+          ],
+          "tables": {
+            "public.orders": {
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nullable": true,
+                  "qualifier": null,
+                  "schema": null,
+                  "ty": "int32"
+                }
+              ],
+              "name": "orders",
+              "schema": "public"
+            }
+          }
+        },
+        "database": {},
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "id": "group-count",
+        "include_model": true,
+        "mode": "analyze",
+        "parameters": {},
+        "property": {
+          "kind": "max_rows",
+          "max": 1
+        },
+        "sql": "SELECT tenant_id, COUNT(*) AS n FROM orders GROUP BY tenant_id HAVING COUNT(*) > 1 ORDER BY tenant_id"
+      },
+      "result": {
+        "alloy_status": "SAT",
+        "analysis": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS",
+        "assumptions": "SATISFIABLE",
+        "bounds": {
+          "public.orders": 3
+        },
+        "catalog_sha256": "f6e395357fee144422f41ca433a58bf58a491051fa231d0516cf198bfb1b4ba1",
+        "claim": "complete evaluator outcomes within supplied finite context; not independent SQL semantic verification",
+        "complete": true,
+        "context_sha256": "e026fd55d85ff00896efe8c140317e86627472c0050dbe44d22dc75e50153cbd",
+        "domain": [
+          {
+            "type": "null",
+            "value": "int32"
+          },
+          {
+            "type": "int32",
+            "value": 1
+          },
+          {
+            "type": "int32",
+            "value": 2
+          }
+        ],
+        "encoding": "RUST_EVALUATOR_BACKED_FINITE_TABLE",
+        "execution_sha256": "751a97b2bde79691112c37191d38b297b71284201939466dcf754b58343d4144",
+        "id": "group-count",
+        "input_sha256": "d72d4647c0fa0b02cc0135ba0087c9cd1ce572e3c81cee815d799f3cbc188f8a",
+        "ir": {
+          "Query": {
+            "node": {
+              "Project": {
+                "expressions": [
+                  {
+                    "node": {
+                      "Column": 0
+                    },
+                    "nullable": true,
+                    "ty": "int32"
+                  },
+                  {
+                    "node": {
+                      "Column": 1
+                    },
+                    "nullable": false,
+                    "ty": "int64"
+                  }
+                ],
+                "input": {
+                  "node": {
+                    "Order": {
+                      "input": {
+                        "node": {
+                          "Filter": {
+                            "input": {
+                              "node": {
+                                "Aggregate": {
+                                  "aggregates": [
+                                    {
+                                      "argument": null,
+                                      "distinct": false,
+                                      "filter": null,
+                                      "function": "Count",
+                                      "ty": "int64"
+                                    }
+                                  ],
+                                  "groups": [
+                                    {
+                                      "node": {
+                                        "Column": 0
+                                      },
+                                      "nullable": true,
+                                      "ty": "int32"
+                                    }
+                                  ],
+                                  "input": {
+                                    "node": {
+                                      "Unordered": {
+                                        "input": {
+                                          "node": {
+                                            "Scan": {
+                                              "table": "public.orders"
+                                            }
+                                          },
+                                          "schema": [
+                                            {
+                                              "name": "tenant_id",
+                                              "nullable": true,
+                                              "qualifier": "orders",
+                                              "schema": "public",
+                                              "ty": "int32"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    "schema": [
+                                      {
+                                        "name": "tenant_id",
+                                        "nullable": true,
+                                        "qualifier": "orders",
+                                        "schema": "public",
+                                        "ty": "int32"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              "schema": [
+                                {
+                                  "name": "\u0000sqlolla.aggregate.0",
+                                  "nullable": true,
+                                  "qualifier": null,
+                                  "schema": null,
+                                  "ty": "int32"
+                                },
+                                {
+                                  "name": "\u0000sqlolla.aggregate.1",
+                                  "nullable": false,
+                                  "qualifier": null,
+                                  "schema": null,
+                                  "ty": "int64"
+                                }
+                              ]
+                            },
+                            "predicate": {
+                              "node": {
+                                "Binary": {
+                                  "left": {
+                                    "node": {
+                                      "Column": 1
+                                    },
+                                    "nullable": false,
+                                    "ty": "int64"
+                                  },
+                                  "op": "Gt",
+                                  "right": {
+                                    "node": {
+                                      "Literal": {
+                                        "type": "int64",
+                                        "value": 1
+                                      }
+                                    },
+                                    "nullable": false,
+                                    "ty": "int64"
+                                  }
+                                }
+                              },
+                              "nullable": false,
+                              "ty": "bool"
+                            }
+                          }
+                        },
+                        "schema": [
+                          {
+                            "name": "\u0000sqlolla.aggregate.0",
+                            "nullable": true,
+                            "qualifier": null,
+                            "schema": null,
+                            "ty": "int32"
+                          },
+                          {
+                            "name": "\u0000sqlolla.aggregate.1",
+                            "nullable": false,
+                            "qualifier": null,
+                            "schema": null,
+                            "ty": "int64"
+                          }
+                        ]
+                      },
+                      "keys": [
+                        {
+                          "direction": "ascending",
+                          "expression": {
+                            "node": {
+                              "Column": 0
+                            },
+                            "nullable": true,
+                            "ty": "int32"
+                          },
+                          "nulls_first": false
+                        }
+                      ]
+                    }
+                  },
+                  "schema": [
+                    {
+                      "name": "\u0000sqlolla.aggregate.0",
+                      "nullable": true,
+                      "qualifier": null,
+                      "schema": null,
+                      "ty": "int32"
+                    },
+                    {
+                      "name": "\u0000sqlolla.aggregate.1",
+                      "nullable": false,
+                      "qualifier": null,
+                      "schema": null,
+                      "ty": "int64"
+                    }
+                  ]
+                }
+              }
+            },
+            "schema": [
+              {
+                "name": "tenant_id",
+                "nullable": true,
+                "qualifier": null,
+                "schema": null,
+                "ty": "int32"
+              },
+              {
+                "name": "n",
+                "nullable": false,
+                "qualifier": null,
+                "schema": null,
+                "ty": "int64"
+              }
+            ]
+          }
+        },
+        "ir_sha256": "e762bad90f2f82826366773464c3af56beae855dd9eea45654806440fa0d859c",
+        "mode": "analyze",
+        "model_sha256": "8a1a9409426cff0db191a70681deb9367d977f5a2c57009a8ce74a7e30055186",
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "profile": "sqlolla.explicit_outcomes.v2",
+        "property": {
+          "kind": "max_rows",
+          "max": 1
+        },
+        "property_check": {
+          "assertion": "QueryProperty",
+          "command": "check",
+          "command_index": 1
+        },
+        "runtime_step_limit": 100000,
+        "schema": [
+          {
+            "name": "tenant_id",
+            "nullable": true,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int32"
+          },
+          {
+            "name": "n",
+            "nullable": false,
+            "qualifier": null,
+            "schema": null,
+            "ty": "int64"
+          }
+        ],
+        "selected_transition": 19,
+        "sql_sha256": "3cd5b1848e68e29278f4b00db2964e78dea7735db37890b00979c7968548c54a",
+        "status": "ok",
+        "transition_count": 20,
+        "transition_payload_sha256": "cd801286d4d1cce073a0c55070fd6239b95352b7150069b1a7d66fa919830a8f"
+      }
+    }
+  ]
+}

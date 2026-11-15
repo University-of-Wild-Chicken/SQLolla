@@ -1,0 +1,114 @@
+{
+  "cli_sha256": "1cc76dc95c6828e2cdededd2cc3d470722a5383f53ce2d447c35f49825db9b8c",
+  "insufficient_scope": {
+    "meaning": "UNSAT from the base concrete-execution model is an engine/encoding failure, not property safety.",
+    "mutant": "UNSAT",
+    "mutation": "required singleton input versus explicit no-input capacity constraint",
+    "original": "SAT",
+    "rejected_as_inconsistent_execution": true
+  },
+  "mutants": [
+    {
+      "expected_count": 0,
+      "id": "int32/self_equal/b01",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "null_equality",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": null
+    },
+    {
+      "expected_count": 1,
+      "id": "int32/except_all/l09r03",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "except_rank",
+      "original_difference": "UNSAT",
+      "replacements": 2,
+      "true_column": null
+    },
+    {
+      "expected_count": 1,
+      "id": "int32/join_left/l03r00",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "outer_join",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": null
+    },
+    {
+      "expected_count": 2,
+      "id": "int32/project_aliases/b09",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "drop_occurrence",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": null
+    },
+    {
+      "expected_count": 5,
+      "id": "truth/filter_not_and",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "and_dominance",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": null
+    },
+    {
+      "expected_count": 10,
+      "id": "integer/lt",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "integer_order",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": 2
+    },
+    {
+      "expected_count": 4,
+      "id": "multicolumn/distinct",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "whole_row_distinct",
+      "original_difference": "UNSAT",
+      "replacements": 5,
+      "true_column": null
+    },
+    {
+      "expected_count": 0,
+      "id": "int32/is_null/b02",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "drop_filter",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": null
+    },
+    {
+      "expected_count": 5,
+      "id": "truth/filter_not_and",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "unknown_to_false",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": null
+    },
+    {
+      "expected_count": 2,
+      "id": "int32/union_all/l03r03",
+      "killed": true,
+      "mutant_difference": "SAT",
+      "mutation": "union_duplicate",
+      "original_difference": "UNSAT",
+      "replacements": 1,
+      "true_column": null
+    }
+  ],
+  "scope": "Ten generated-model semantic mutations plus inconsistent-scope detection; cardinality-sensitive seeds, not universal mutation completeness.",
+  "status": "passed"
+}
