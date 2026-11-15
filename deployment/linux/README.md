@@ -26,6 +26,8 @@ docker run --rm --name sqlolla --network host \
 
 For local HTTP use omit `SQLolla_PUBLIC_ORIGIN`. Windows Docker Desktop uses a VM and has its own host-networking behavior. The verified reference is native Linux/WSL, with the reverse proxy placed on the same host. Use the non-container launcher if the container cannot reach the intended loopback interface.
 
+The image uses `SIGINT` for `docker stop`, which starts the host's graceful shutdown. Let active analyses finish before stopping the container for migration.
+
 ## Move a private IIS deployment
 
 Pause traffic and back up the Windows instance store and the browser's review journal separately. Keep the prior IIS release with the store. On Linux, launch with its own writable instance directory and run a sample query through the HTTPS proxy. Confirm the SQL, IR and Alloy model appear, test Next, then connect OpenAI with a fresh key and explicitly request an explanation. Move the existing Cloudflare origin only after these checks pass. Preserve the public origin to keep browser-local review history.

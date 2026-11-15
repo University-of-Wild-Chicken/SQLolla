@@ -9,4 +9,5 @@ COPY . /opt/sqlolla
 WORKDIR /opt/sqlolla
 USER 10001:10001
 ENV SQLolla_STATE=/var/lib/sqlolla
+STOPSIGNAL SIGINT
 ENTRYPOINT ["/opt/sqlolla/start-sqlolla.sh"]
