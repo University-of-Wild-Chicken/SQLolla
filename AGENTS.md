@@ -22,9 +22,10 @@ coverage separate from execution coverage. M2 implementation is now authorized;
 maintained contracts are in contracts/m2. AI feasibility artifacts stay in .scratch/m3.
 
 Use explicitly requested GPT-6.1 Sol subagents as the AI feasibility baseline.
-All production AI flows, including SQL proposals and instance summaries, use
-the exact model gpt-6.1-sol. Verify live availability; never silently substitute
-another model or provider. AI outputs are untrusted proposals
+Production AI flows pin the model to the user's selected BYOT provider.
+OpenAI uses gpt-6.1-sol, Anthropic uses claude-sonnet-5-5, and Gemini uses
+gemini-4-hydrogen. Verify live availability; never silently substitute another
+model or provider. AI outputs are untrusted proposals
 or explanations and must never replace deterministic binding, solver verdicts,
 policy checks or replay. A small subagent study is not a provider benchmark.
 

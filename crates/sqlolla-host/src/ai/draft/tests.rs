@@ -22,7 +22,10 @@ fn shares_schema_and_type_only() {
         projected["schema"]["tables"]["shipments"]["columns"][0]["name"],
         "delay"
     );
-    assert_eq!(body(packet, &digest)["model"], MODEL);
+    assert_eq!(
+        body(packet, &digest).encode(Provider::OpenAi)["model"],
+        MODEL
+    );
 }
 
 /// Neither a forged compiler verdict nor a stale digest becomes a valid draft.

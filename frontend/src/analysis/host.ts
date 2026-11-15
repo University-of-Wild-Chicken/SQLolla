@@ -5,7 +5,6 @@ import { parseJson, stringifyJson } from "./json";
 /** Exact public host capability snapshot, independent of provider authentication. */
 export interface HostStatus {
   readonly schema: "sqlolla.host.v1";
-  readonly model: "gpt-6.1-sol";
   readonly csrf_token: string;
 }
 
@@ -33,12 +32,12 @@ const MAX_RESPONSE = 32 * 1024 * 1024;
 /** Validate only the declared local host identity and nonce, without interpreting solver claims. */
 function statusPayload(value: unknown): HostStatus {
   const object = asRecord(value, "host status");
-  if (object["schema"] !== "sqlolla.host.v1" || object["model"] !== "gpt-6.1-sol") {
-    throw new HostError("host.protocol", "This local host uses an unsupported protocol or model");
+  if (object["schema"] !== "sqlolla.host.v1") {
+    throw new HostError("host.protocol", "This local host uses an unsupported protocol");
   }
   const token = stringField(object, "csrf_token", "host status");
   if (!/^[0-9a-f]{64}$/.test(token)) throw new HostError("host.protocol", "Invalid local host nonce");
-  return { schema: "sqlolla.host.v1", model: "gpt-6.1-sol", csrf_token: token };
+  return { schema: "sqlolla.host.v1", csrf_token: token };
 }
 
 /** Read a bounded response without passing JSON numbers through response.json(). */

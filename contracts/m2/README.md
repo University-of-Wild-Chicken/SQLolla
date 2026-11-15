@@ -12,7 +12,7 @@ The contracts cover explicit SQL errors and diagnostics, checked Int32 operation
 
 Admission requires the independent oracle, completeness, adversarial and unchanged M1 regression gates in the gameplan. FiniteSearch specifies exhaustive transition-table selection; this evaluator-backed encoding does not provide independent SQL semantics. Values specifies exact decimal and nominal rich-value contracts. Build caches remain local and ignored.
 
-`AssistanceBoundary` specifies exact `gpt-6.1-sol` identity, revision/context-packet
+`AssistanceBoundary` specifies exact model identity for the selected provider, revision/context-packet
 binding, authentic fact references, and a proposed → bound → replayed → analyzed
 promotion chain with unchanged catalog, typed parameters, domain, execution context,
 property, bounds and ordered output schema. The source query and original instruction

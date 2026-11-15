@@ -165,7 +165,7 @@ describe("review workspace workflows", () => {
     render(<App transport={createFixtureTransport()} />);
     await screen.findByRole("heading", { name: "Orders without a tenant filter" });
     await user.click(screen.getByRole("button", { name: "Open AI provider settings" }));
-    await user.click(screen.getByRole("radio", { name: /OpenAI-compatible/ }));
+    await user.click(screen.getByRole("radio", { name: "OpenAI" }));
     await user.type(screen.getByLabelText(/API key \(memory only\)/i), "sk-live-should-not-persist");
     expect(screen.queryByLabelText(/Model identifier/i)).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Save in this tab/i }));

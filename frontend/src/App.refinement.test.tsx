@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
-import { AI_MODEL } from "./ai/config";
+import { providers } from "./ai/config";
 import type { RefinementBasis } from "./ai/refinement";
 import { scenarioById } from "./analysis/fixtures";
 import { hostJson } from "./analysis/host";
@@ -47,7 +47,7 @@ function generatedResponse(basis: RefinementBasis) {
     status: "ok",
     provider: "openai",
     authority: "untrusted_assistance",
-    model: AI_MODEL,
+    model: providers.openai_compatible.model,
     bundle_id: basis.bundle_id,
     model_revision_sha256: basis.model_revision_sha256,
     feedback_sha256: digest,
@@ -86,7 +86,7 @@ async function openNative() {
 /** Enable explicit unredacted generation using a synthetic tab-only provider token. */
 function connectProvider() {
   fireEvent.click(screen.getByRole("button", { name: "Provider settings" }));
-  fireEvent.click(screen.getByRole("radio", { name: /OpenAI-compatible/ }));
+  fireEvent.click(screen.getByRole("radio", { name: "OpenAI" }));
   fireEvent.change(screen.getByLabelText("API key (memory only)"), { target: { value: "synthetic-refinement-key" } });
   fireEvent.click(screen.getByRole("checkbox", { name: /Redact SQL/ }));
   fireEvent.click(screen.getByRole("button", { name: /Save in this tab/ }));
@@ -181,7 +181,7 @@ describe("feedback-driven SQL refinement", () => {
     fireEvent.click(regenerate);
     const [path, raw, options] = host.mock.calls[0]!;
     const first = raw as RefinementBasis;
-    expect(path).toBe("/api/ai/refine");
+    expect(path).toBe("/api/ai/byot/refine");
     expect(raw).toMatchObject({ instruction, redact_values: false, feedback: [{ disposition: "unintended_behavior" }] });
     expect(JSON.stringify(raw)).not.toContain("synthetic-refinement-key");
     expect(options?.headers?.Authorization).toBe("Bearer synthetic-refinement-key");

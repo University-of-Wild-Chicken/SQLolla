@@ -105,7 +105,7 @@ Build its assets with `npm ci` and `npm run build` inside `frontend`, then start
 Open `http://127.0.0.1:8787` and select **Analyze query** for a stored solver instance.
 
 Regenerate SQL reuses the original prompt and the active review snapshot. At least
-one Yes or No is required. Summaries and regeneration use exact `gpt-6.1-sol`.
+one Yes or No is required. SQLolla supports OpenAI, Anthropic, and Gemini BYOT.
 Regeneration sends unredacted canonical evidence and review notes with consent.
 Keys stay in tab memory and request-lifetime host state. The local candidate
 checker also accepts handwritten SQL without a provider call. [Host API](crates/sqlolla-host/README.md)
@@ -197,8 +197,7 @@ On Unix, provision native Rust, Lean 4.34.0 and Java 17, set
 `LEAN_BIN` and `SQLolla_ALLOY_JAR`, and use `sh scripts/build.sh`. This wrapper is
 provided for the platform-validation increment and has not been executed here.
 
-Additional provider adapters, multi-statement transaction schedules and public
-deployment remain future work.
+Multi-statement transaction schedules and public deployment remain future work.
 Current extensions observe individual mutations, SQL failures and fixed-snapshot
 row locks; these do not establish correctness under concurrent database changes.
 The CLI emits exact instance data; the browser provides its review interface.

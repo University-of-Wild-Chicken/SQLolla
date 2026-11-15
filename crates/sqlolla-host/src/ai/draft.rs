@@ -31,12 +31,12 @@ pub(super) async fn generate(
     Json(input): Json<DraftInput>,
 ) -> Result<Json<Value>> {
     admission(&input)?;
-    let key = credential(&headers)?;
+    let byot = Byot::from_headers(&headers)?;
     let (packet, digest) = packet(&input)?;
-    let result = provider::post_json(key, &body(packet, &digest)).await?;
+    let result = provider::complete(byot, body(packet, &digest)).await?;
     let draft = checked_output(result, &digest)?;
     let result = compile(&state, input.request, &draft.sql).await?;
-    Ok(Json(envelope(draft, result)))
+    Ok(Json(envelope(byot.provider, draft, result)))
 }
 
 /// Require deliberate schema disclosure and a bounded prompt before provider I/O.
@@ -78,16 +78,17 @@ fn packet(input: &DraftInput) -> Result<(String, String)> {
 }
 
 /// Request strict plain SQL and optional assumptions from the already pinned provider and model.
-fn body(packet: String, digest: &str) -> Value {
-    json!({"model":MODEL,"store":false,"tools":[],"tool_choice":"none","max_output_tokens":4096,
-        "reasoning":{"effort":"low"},"instructions":INSTRUCTIONS,
-        "input":[{"role":"user","content":[{"type":"input_text","text":
-            json!({"context_sha256":digest,"context":packet}).to_string()}]}],
-        "text":{"format":{"type":"json_schema","name":"sqlolla_initial_draft_v1","strict":true,
-            "schema":{"type":"object","additionalProperties":false,"required":["context_sha256","sql","assumptions"],
-                "properties":{"context_sha256":{"type":"string","enum":[digest]},
-                    "sql":{"type":"string","minLength":1,"maxLength":16384},
-                    "assumptions":{"type":"array","maxItems":8,"items":{"type":"string","maxLength":512}}}}}}})
+fn body(packet: String, digest: &str) -> provider::Completion {
+    provider::Completion {
+        instructions: INSTRUCTIONS.into(),
+        user: json!({"context_sha256":digest,"context":packet}),
+        schema_name: "sqlolla_initial_draft_v1",
+        schema: json!({"type":"object","additionalProperties":false,
+            "required":["context_sha256","sql","assumptions"],
+            "properties":{"context_sha256":{"type":"string","enum":[digest]},
+                "sql":{"type":"string","minLength":1,"maxLength":16384},
+                "assumptions":{"type":"array","maxItems":8,"items":{"type":"string","maxLength":512}}}}),
+    }
 }
 
 /// Independently validate proposal identity and text, including UTF-8 byte limits.
@@ -133,8 +134,9 @@ pub(super) async fn compile(state: &HostState, request: Request, sql: &str) -> R
 }
 
 /// Treat syntax or binding refusals as diagnostics; compilation is not a property result.
-fn envelope(draft: DraftOutput, compiled: Value) -> Value {
-    json!({"schema":"sqlolla.ai.initial_draft.v1","status":"ok","provider":"openai","model":MODEL,
+fn envelope(provider: Provider, draft: DraftOutput, compiled: Value) -> Value {
+    let (provider, model) = provider.identity();
+    json!({"schema":"sqlolla.ai.initial_draft.v1","status":"ok","provider":provider,"model":model,
         "authority":"untrusted_assistance","sql":draft.sql,"assumptions":draft.assumptions,
         "context_sha256":draft.context_sha256,"validation":assessment(&compiled)})
 }

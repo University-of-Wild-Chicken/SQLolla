@@ -4,7 +4,7 @@ import { mkdir, readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { checkModelDraft, declareTable, openDetails } from "./drafts.mjs";
+import { checkGeminiDraft, checkModelDraft, declareTable, openDetails } from "./drafts.mjs";
 
 const { chromium } = createRequire(import.meta.url)("playwright-core");
 
@@ -51,25 +51,30 @@ async function nextCase(page) {
 }
 
 /** Configure the default redacted explanation; saving settings must not send the key. */
-async function configureAi(page, apiKey) {
+async function configureAi(page, apiKey, provider = "OpenAI") {
   await page.getByRole("button", { name: "AI settings" }).click();
   assert.doesNotMatch(await page.getByRole("dialog").innerText(), /gpt-6\.1-sol/i);
   assert.equal(await page.getByLabel("Model identifier").count(), 0);
-  await page.getByLabel("API key (memory only)", { exact: true }).fill(apiKey);
+  await page.getByRole("radio", { name: provider, exact: true }).check();
+  try {
+    await page.getByLabel("API key (memory only)", { exact: true }).fill(apiKey);
+  } catch {
+    throw new Error("Could not enter the API key in the browser.");
+  }
   assert.equal(await page.getByLabel("Redact SQL and values before sending explanation context").isChecked(), true);
   await page.getByRole("button", { name: "Save in this tab · no send", exact: true }).click();
   await page.getByRole("dialog").waitFor({ state: "detached" });
 }
 
 /** Exercise the actual UI→host→provider request and validate its evidence identity. */
-async function assistance(page, instance) {
-  const response = page.waitForResponse((item) => item.url().endsWith("/api/ai/explain"), { timeout: 180_000 });
+async function assistance(page, instance, model = "gpt-6.1-sol") {
+  const response = page.waitForResponse((item) => item.url().endsWith("/api/ai/byot/explain"), { timeout: 180_000 });
   await page.getByRole("button", { name: "Explain this case", exact: true }).click();
   const received = await response;
   const payload = await received.json();
   assert.equal(received.status(), 200, `Assistance failed: ${payload.code ?? "unknown"}`);
   assert.equal(payload.status, "ok");
-  assert.equal(payload.model, "gpt-6.1-sol");
+  assert.equal(payload.model, model);
   assert.equal(payload.instance_id, instance.instance_id);
   assert.equal(payload.model_revision_sha256, instance.model_revision_sha256);
   assert.match(payload.context_sha256, /^[0-9a-f]{64}$/);
@@ -80,13 +85,16 @@ async function assistance(page, instance) {
 }
 
 /** Optional live explanation stays separate from deterministic refinement checks. */
-async function checkAi(page, apiKey, instance) {
-  await configureAi(page, apiKey);
+async function checkAi(page, apiKey, instance, provider = "OpenAI") {
+  await configureAi(page, apiKey, provider);
   await page
     .getByLabel("Question about this case")
     .fill("Explain why this tenant-isolation counterexample violates the retained rule. Cite supplied row facts and mention finite bounds.");
-  const summary = await assistance(page, instance);
-  return { model: summary.model, explanationClaims: summary.document.claims.length };
+  const summary = await assistance(page, instance, provider === "Gemini" ? "gemini-4-hydrogen" : "gpt-6.1-sol");
+  assert.ok(summary.document.claims.length);
+  const citedResult = summary.document.claims.some((claim) => claim.fact_references.some((ref) => ref.startsWith("/semantic/output/")));
+  if (provider === "Gemini") assert.ok(citedResult, "Gemini did not cite the returned-row witness");
+  return { provider: summary.provider, model: summary.model, explanationClaims: summary.document.claims.length };
 }
 
 /** Return a synthetic model document bound to a real solver case, with no provider traffic. */
@@ -136,12 +144,13 @@ async function checkAccessRedirect(page, explanation, instanceId) {
 async function checkSyntheticAi(page, solved) {
   let sent = 0;
   const key = "synthetic-browser-test-key";
-  const pattern = "**/api/ai/explain";
+  const pattern = "**/api/ai/byot/explain";
   const instance = solved.record.instance;
   await page.route(pattern, (route) => {
     const request = route.request();
     const body = request.postDataJSON();
     assert.equal(request.headers().authorization, "Bearer " + key);
+    assert.equal(request.headers()["x-sqlolla-provider"], "openai");
     assert.equal(body.bundle_id, solved.bundle_id);
     assert.equal(body.instance_id, instance.instance_id);
     assert.equal(body.model_revision_sha256, instance.model_revision_sha256);
@@ -203,6 +212,29 @@ async function checkRefinement(page) {
   return { threeBins: true, unsureOnlyBlocked: true, archiveReopen: true, noRemoved: true, realAlloyCheck: true, promptRetained: true, clipboard: true };
 }
 
+/** Ask Gemini for a candidate and require both archived replay and the unchanged bounded property. */
+async function checkGeminiRefinement(page) {
+  await page.getByRole("button", { name: "AI settings" }).click();
+  await page.getByLabel("Redact SQL and values before sending explanation context").uncheck();
+  await page.getByRole("button", { name: "Save in this tab · no send", exact: true }).click();
+  await page.getByLabel("Original prompt", { exact: true }).fill("Return orders for tenant 1 and preserve the original columns.");
+  const response = page.waitForResponse((item) => item.url().endsWith("/api/ai/byot/refine"), { timeout: 180_000 });
+  await page.getByRole("button", { name: "Regenerate SQL", exact: true }).click();
+  const received = await response;
+  const result = await received.json();
+  assert.equal(received.status(), 200, `Gemini refinement returned ${result.code ?? received.status()}`);
+  assert.equal(result.model, "gemini-4-hydrogen");
+  assert.equal(result.provider, "gemini");
+  assert.equal(result.validation.ready, true);
+  assert.equal(result.validation.cases[0].status, "satisfied");
+  assert.equal(result.validation.property_check.status, "NO_COUNTEREXAMPLE_WITHIN_BOUNDS");
+  const refinement = page.getByRole("region", { name: "Refine the query" });
+  const adoption = refinement.getByRole("button", { name: "Use checked SQL as new draft", exact: true });
+  const diagnostic = refinement.getByRole("alert");
+  await adoption.or(diagnostic).first().waitFor();
+  assert.equal(await adoption.isEnabled(), true, (await diagnostic.allTextContents()).join(" "));
+}
+
 /** Check real browser precision for i64::MAX and a structured SQL NULL through stored examples. */
 async function exactNumbers(page) {
   await openDetails(page, "Schema and rule");
@@ -227,6 +259,7 @@ async function checkDisconnect(page, apiKey) {
   await page.getByRole("button", { name: "AI settings" }).click();
   await page.getByRole("button", { name: "Disconnect & clear", exact: true }).click();
   await page.getByRole("button", { name: "AI settings" }).click();
+  await page.getByRole("radio", { name: "Gemini", exact: true }).check();
   assert.equal(await page.getByLabel("API key (memory only)", { exact: true }).inputValue(), "");
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
 }
@@ -275,9 +308,10 @@ async function checkCustomSql(page) {
 }
 
 /** Return only sanitized verification metadata; no trace, request headers or credential file is produced. */
-export async function verifyHost({ url, chromePath, apiKey }) {
+export async function verifyHost({ url, chromePath, apiKey, provider = "OpenAI" }) {
   const browser = await chromium.launch({ executablePath: chromePath, headless: true });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  page.setDefaultTimeout(15_000);
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: url });
   const errors = [];
   const external = [];
@@ -287,7 +321,7 @@ export async function verifyHost({ url, chromePath, apiKey }) {
   });
   try {
     await page.goto(url, { waitUntil: "networkidle" });
-    const result = await verifyFlows(page, apiKey);
+    const result = await verifyFlows(page, apiKey, provider);
     assert.equal(errors.length, 0, "Uncaught browser error");
     assert.equal(external.length, 0, "Browser requested a nonlocal destination");
     return result;
@@ -297,25 +331,28 @@ export async function verifyHost({ url, chromePath, apiKey }) {
 }
 
 /** Exercise the full review and adoption flow against a host with a fresh test-only store. */
-async function verifyFlows(page, apiKey) {
+async function verifyFlows(page, apiKey, provider) {
   await page.getByRole("heading", { name: "Query workbench" }).waitFor();
   await page.getByRole("button", { name: "Skip for now", exact: true }).click();
   assert.equal(await page.getByTestId("review-card").count(), 0);
   assert.equal(await page.getByLabel("SQL query", { exact: true }).inputValue(), "");
-  await checkModelDraft(page, configureAi, analyze);
+  const gemini = apiKey && provider === "Gemini";
+  const draft = gemini ? await checkGeminiDraft(page, () => configureAi(page, apiKey, provider), analyze) : null;
+  if (!gemini) await checkModelDraft(page, configureAi, analyze);
   await page.reload({ waitUntil: "networkidle" });
   await enterTenantRequest(page);
   const first = await analyze(page);
   if (typeof process !== "undefined" && process.env.SQLLOLLA_SCREENSHOTS) await captureEvidence(page, process.env.SQLLOLLA_SCREENSHOTS);
   const next = await nextCase(page);
-  const ai = apiKey ? await checkAi(page, apiKey, next.record.instance) : await checkSyntheticAi(page, next);
+  const ai = apiKey ? await checkAi(page, apiKey, next.record.instance, provider) : await checkSyntheticAi(page, next);
   await reviewBins(page, next.record.instance);
+  if (gemini) await checkGeminiRefinement(page);
   const refinement = await checkRefinement(page);
   const precision = await exactNumbers(page);
   if (apiKey) await checkDisconnect(page, apiKey);
   assert.doesNotMatch(await page.locator("body").innerText(), /gpt-6\.1-sol/i);
   await checkBuilder(page);
-  return { ...report(first.assurance_kind, precision, ai), refinement, builderCompiledAndStaged: true };
+  return { ...report(first.assurance_kind, precision, ai), ...(draft && { draft, geminiRefinementChecked: true }), refinement, builderCompiledAndStaged: true };
 }
 
 /** Test fixtures enter through the declared model editor, never through production defaults. */
@@ -353,11 +390,15 @@ function report(assurance, precision, ai) {
   };
 }
 
-// The command-line gate is offline with respect to AI; authorized live callers pass a key in memory.
+// CI supplies no key. An explicit local test may read a Gemini key directly into memory.
 if (typeof process !== "undefined" && process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const url = process.env.SQLLOLLA_URL ?? "http://127.0.0.1:8787";
+  const keyFile = process.env.SQLLOLLA_GEMINI_KEY_FILE;
+  if (keyFile) assert.equal(new URL(url).hostname, "127.0.0.1", "Live key-file test requires a local host");
   const result = await verifyHost({
-    url: process.env.SQLLOLLA_URL ?? "http://127.0.0.1:8787",
+    url,
     chromePath: process.env.CHROME_PATH ?? "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    ...(keyFile && { provider: "Gemini", apiKey: (await readFile(keyFile, "utf8")).trim() }),
   });
   console.log(JSON.stringify(result, null, 2));
 }

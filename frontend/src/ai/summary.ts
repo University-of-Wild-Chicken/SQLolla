@@ -3,33 +3,27 @@
  * an AI provider call, and every generated claim cites an existing supplied fact.
  */
 import { canonicalJson, cellText, propertySentence } from "../analysis/format";
-import { AI_ENDPOINT, AI_MODEL } from "./config";
+import { providers, type LiveProviderMode } from "./config";
 import { stringifyJson } from "../analysis/json";
 import type { DemoClaim, DemoSummary, DemoSummarySeed, EvidenceView, FactModel, OccurrenceView, RelationView } from "../analysis/types";
 
 /** A provider's display identity for demo-only explanation runs. */
-export type AiProviderMode = "offline_demo" | "openai_compatible" | "anthropic_compatible" | "gemini_compatible";
+export type AiProviderMode = "offline_demo" | LiveProviderMode;
 
 /** In-memory provider selection; credentials never enter persistence or exports. */
 export interface AiProviderSettings {
   readonly mode: AiProviderMode;
-  readonly model: string;
-  readonly endpoint: string;
   readonly apiKey: string;
   readonly redactValues: boolean;
   readonly simulateFailure: boolean;
-  readonly preparedInMemory: boolean;
 }
 
 /** Safe default: no provider account, no secret and no egress. */
 export const defaultAiSettings: AiProviderSettings = {
   mode: "offline_demo",
-  model: AI_MODEL,
-  endpoint: AI_ENDPOINT,
   apiKey: "",
   redactValues: true,
   simulateFailure: false,
-  preparedInMemory: false,
 };
 
 /** Lookup for a supplied fact by exact JSON Pointer. */
@@ -157,13 +151,7 @@ export function buildDemoSummary(evidence: EvidenceView, seed: DemoSummarySeed):
 
 /** Render a provider label without asserting live availability. */
 export function providerLabel(mode: AiProviderMode): string {
-  const labels: Record<AiProviderMode, string> = {
-    offline_demo: "Offline demo summary",
-    openai_compatible: "OpenAI",
-    anthropic_compatible: "Anthropic unavailable in this host",
-    gemini_compatible: "Gemini unavailable in this host",
-  };
-  return labels[mode];
+  return mode === "offline_demo" ? "Offline demo summary" : providers[mode].label;
 }
 
 /** Build a future-send context preview. It never includes credentials or sends data. */

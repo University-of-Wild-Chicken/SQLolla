@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AI_MODEL } from "../ai/config";
 import { checkRevision, generateRevision, type CheckedRevision, type RefinementBasis, type RefinementLabel } from "../ai/refinement";
 import type { AiProviderSettings } from "../ai/summary";
 import { fixtureHash } from "../analysis/fixtureFactory";
@@ -88,8 +87,8 @@ function useRevisionInputs() {
 function generationIssue(basis: RefinementBasis | null, instruction: string, settings: AiProviderSettings): string | null {
   if (!basis) return null;
   if (basis.feedback.length > 256) return "Regeneration supports up to 256 active labels.";
-  if (settings.mode !== "openai_compatible" || settings.model !== AI_MODEL || !settings.apiKey.trim() || settings.redactValues) {
-    return "Connect OpenAI and allow unredacted context in provider settings to regenerate.";
+  if (settings.mode === "offline_demo" || !settings.apiKey.trim() || settings.redactValues) {
+    return "Connect an AI provider and allow unredacted context in provider settings to regenerate.";
   }
   return instruction.trim() ? null : "Enter the original prompt to regenerate.";
 }

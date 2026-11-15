@@ -212,7 +212,7 @@ export function AiSummaryPanel({ scenario, evidence, settings, onOpenSettings, o
   return (
     <section className="ai-panel" aria-label="Explanation">
       <ExplanationHeader onOpenSettings={onOpenSettings} />
-      {settings.mode === "openai_compatible" && evidence ? (
+      {settings.mode !== "offline_demo" && evidence ? (
         <LiveAssistancePanel bundleId={bundleId ?? null} evidence={evidence} settings={settings} onInspectFact={onInspectFact} />
       ) : (
         <PanelStatus evidence={evidence} outcome={outcome} onOpenSettings={onOpenSettings} onInspectFact={onInspectFact} />

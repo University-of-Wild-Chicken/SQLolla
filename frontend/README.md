@@ -9,7 +9,7 @@ the result, or open **SQL / IR / Alloy** to see the source triple. Yes, No and U
 reviews at the bottom of the page for later reopening, relabeling or withdrawal.
 
 When the host opens a case with its complete SQL/IR/Alloy bundle, **Explain this result**
-offers cited OpenAI assistance. The workbench offers optional AI setup on the first visit.
+offers cited AI assistance. The workbench offers optional AI setup on the first visit.
 Save a key in **AI settings**, then choose **Build with AI** for a first draft or
 **Explain this case** for a saved case. Building a database model shares the description.
 Drafting SQL for an existing catalog shares the description, schema declarations, and
@@ -77,12 +77,13 @@ SQL copying, exact Int64/NULL rendering and the query builder's compile and stag
 test-only instance store. The default AI
 test supplies a synthetic cited response, then checks that an Access-style sign-in redirect
 leaves the solver case visible without following the redirect.
-[`verifyHost({ url, chromePath, apiKey })`](e2e/host.mjs) supports an authorized live explanation
-check with an in-memory key. Test output omits the key and generated prose.
+For a live Gemini check against a local host, set `SQLLOLLA_GEMINI_KEY_FILE` to a file outside the
+repository containing one API key. Run `npm run test:host` to exercise model drafting, SQL drafting,
+cited explanations and feedback-driven refinement. Test output omits the key and generated prose.
 
 ## Local host boundary
 
-`GET /api/status` returns the exact model and a memory-only CSRF capability. `POST /api/command`
+`GET /api/status` returns the host protocol identity and a memory-only CSRF capability. `POST /api/command`
 passes existing strict commands to one serialized Pipeline, preserving the parser and Java Alloy
 worker. Both the browser Origin and `X-SQLolla-CSRF` must match. Requests are capped at two MiB,
 responses at sixteen MiB, and admission is bounded. No browser command selects executable paths.
@@ -114,9 +115,10 @@ case and the original bounded property pass. The editor stages the checked reque
 analysis. The native editor, evidence inspector and candidate result expose Copy SQL and a manual
 selection fallback.
 
-Save an OpenAI key in the tab to request explanations or use Regenerate SQL. Generation reuses
+Choose OpenAI, Anthropic, or Gemini in AI settings and save that provider’s API key in the tab.
+Generation reuses
 the original prompt, requires unredacted context and sends the canonical SQL, cases and notes only
-on that explicit action. The host uses OpenAI Responses with `gpt-6.1-sol` and `store:false`.
+on that explicit action. Each provider has one pinned model.
 The browser invalidates pending results and adoption when the prompt, source or feedback changes.
 Redacted explanations share the verified rule outcome and decisive fact when available.
 SQL, IR, Alloy, scalar values and fact payloads stay local.

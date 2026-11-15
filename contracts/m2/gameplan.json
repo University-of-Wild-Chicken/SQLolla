@@ -352,7 +352,7 @@
   "m3_boundary": {
     "status": "Separate feasibility workstream; not a prerequisite or semantic oracle for M2.",
     "observed_by_integrator": "Small qualitative M3 experiments covered explanation reference closure, typed-RA candidates checked by the deterministic binder and PG, and blind witness predictions. These do not establish general AI reliability.",
-    "providers": "BYOT adapters may retain OpenAI/Anthropic/Gemini-compatible interfaces, but all authorized production AI flows are pinned to exact gpt-6.1-sol on a verified endpoint. No silent fallback or substitute model; credentials remain ephemeral and live compatibility must be tested.",
+    "providers": "BYOT requests pin the selected provider and its model. OpenAI uses gpt-6.1-sol, Anthropic uses claude-sonnet-5-5, and Gemini uses gemini-4-hydrogen. No fallback or model substitution. Credentials remain ephemeral and live compatibility must be tested.",
     "contract": "AI may propose typed edits and explain immutable evidence with valid references. The deterministic compiler and verifier accept/reject changes; AI text cannot create a bounded claim or alter constraints.",
     "ui": "Use AlloyStudio-like instance exploration only with separate full/transport/view completeness and explicit error/commit/rollback/observation timelines."
   },
@@ -882,7 +882,7 @@
           "Optional proposed business-intent question"
         ],
         "trust": "AI text is untrusted explanation; it cannot change solver status, hide effects or create a safety claim. Missing/failed AI leaves the graph and deterministic evidence usable.",
-        "privacy": "Optional OpenAI BYOT with exact gpt-6.1-sol. Show disclosure and redaction before sending. Provider credentials stay in tab and request memory."
+        "privacy": "Optional BYOT using the selected provider's pinned model. Show disclosure and redaction before sending. Provider credentials stay in tab and request memory."
       }
     },
     "feedback": {
@@ -919,7 +919,7 @@
     },
     "agentic_pass": {
       "input": "Pinned source revision, original prompt and complete compatible active review snapshot containing a Yes or No",
-      "proposal": "Exact gpt-6.1-sol may propose SQL and cited rationale after explicit unredacted disclosure. The deterministic checker also accepts manually supplied SQL.",
+      "proposal": "The selected provider's pinned model may propose SQL and cited rationale after explicit unredacted disclosure. The deterministic checker also accepts manually supplied SQL.",
       "required_gates": [
         "Kernel-checked Lean specification before any new semantic capability",
         "Preserve M0/M1 invariants and 30-line/documentation rules",

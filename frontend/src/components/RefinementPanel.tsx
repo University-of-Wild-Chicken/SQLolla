@@ -17,7 +17,7 @@ function GenerateField({ refinement, onOpenSettings }: PanelProps): JSX.Element 
     <div className="refinement-field">
       <label htmlFor={inputId}>Original prompt</label>
       <textarea id={inputId} rows={3} maxLength={4096} value={refinement.instruction} onChange={(event) => refinement.setInstruction(event.target.value)} />
-      <p>Regeneration uses this prompt and sends canonical SQL, review cases and notes to OpenAI.</p>
+      <p>Regeneration uses this prompt and sends canonical SQL, review cases and notes to your AI provider.</p>
       <div className="refinement-actions">
         <button
           type="button"

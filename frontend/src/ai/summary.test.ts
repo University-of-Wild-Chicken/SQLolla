@@ -36,8 +36,6 @@ describe("grounded demo explanations", () => {
       ...defaultAiSettings,
       mode: "openai_compatible" as const,
       apiKey: "sk-secret-not-in-preview",
-      model: "future-model",
-      endpoint: "private.example.invalid",
     };
     const preview = buildContextPreview(evidence, settings);
     expect(preview).toContain("Network request: NONE");
@@ -50,7 +48,7 @@ describe("grounded demo explanations", () => {
     expect(unredacted).not.toContain("sk-secret-not-in-preview");
   });
 
-  it("refuses unconnected providers instead of substituting mock evidence", async () => {
+  it("keeps live providers out of the offline fixture adapter", async () => {
     const { evidence, seed } = evidenceFor("tenant-boundary");
     const failed = await runMockExplanation(evidence, seed, {
       ...defaultAiSettings,
@@ -59,7 +57,7 @@ describe("grounded demo explanations", () => {
     });
     expect(failed.ok).toBe(false);
     if (!failed.ok) {
-      expect(failed.label).toContain("Anthropic unavailable");
+      expect(failed.label).toBe("Anthropic");
       expect(failed.message).toContain("explicit live request");
       expect(failed.message).toContain("No evidence was modified");
     }

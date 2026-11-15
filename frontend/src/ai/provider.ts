@@ -5,7 +5,7 @@
 import { buildDemoSummary, providerLabel, type AiProviderSettings } from "./summary";
 import type { DemoSummary, DemoSummarySeed, EvidenceView } from "../analysis/types";
 import { hostJson } from "../analysis/host";
-import { AI_MODEL } from "./config";
+import { byot } from "./config";
 import { validateAssistance, type Assistance } from "./validation";
 
 /** Result of the mock explanation adapter. */
@@ -47,8 +47,7 @@ export async function requestAssistance(
   prompt: string,
   signal: AbortSignal,
 ): Promise<Assistance> {
-  if (settings.mode !== "openai_compatible" || !settings.apiKey.trim()) throw new Error("Configure an OpenAI key first.");
-  if (settings.model !== AI_MODEL) throw new Error("Open AI settings and save them again.");
+  const { target, headers } = byot(settings);
   const body = {
     bundle_id: bundleId,
     instance_id: evidence.instance.instanceId,
@@ -56,6 +55,6 @@ export async function requestAssistance(
     redact_values: settings.redactValues,
     question: prompt,
   };
-  const response = await hostJson("/api/ai/explain", body, { signal, headers: { Authorization: `Bearer ${settings.apiKey.trim()}` } });
-  return validateAssistance(response, bundleId, evidence, settings.redactValues);
+  const response = await hostJson("/api/ai/byot/explain", body, { signal, headers });
+  return validateAssistance(response, bundleId, evidence, settings.redactValues, target);
 }

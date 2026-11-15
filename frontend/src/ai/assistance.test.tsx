@@ -4,7 +4,7 @@ import { act, fireEvent, render, renderHook, screen } from "@testing-library/rea
 import { parseOpenPayload } from "../analysis/adapter";
 import { scenarioById } from "../analysis/fixtures";
 import { hostJson } from "../analysis/host";
-import { AI_MODEL } from "./config";
+import { providers } from "./config";
 import { LiveAssistancePanel } from "./LiveAssistancePanel";
 import { requestAssistance } from "./provider";
 import { defaultAiSettings } from "./summary";
@@ -15,6 +15,7 @@ vi.mock("../analysis/host", () => ({ hostJson: vi.fn() }));
 const host = vi.mocked(hostJson);
 const bundleId = "b".repeat(64);
 const settings = { ...defaultAiSettings, mode: "openai_compatible" as const, apiKey: "synthetic-test-token", redactValues: false };
+const target = providers[settings.mode];
 
 /** Obtain immutable evidence from a committed fixture, never from provider prose. */
 function evidence() {
@@ -31,7 +32,7 @@ function response() {
     schema: "sqlolla.ai.explanation.v1",
     status: "ok",
     provider: "openai",
-    model: AI_MODEL,
+    model: target.model,
     authority: "untrusted_assistance",
     bundle_id: bundleId,
     redact_values: false,
@@ -66,7 +67,7 @@ describe("explicit fixed-model assistance", () => {
     host.mockResolvedValue(response());
     await requestAssistance(bundleId, evidence(), settings, "Explain rows", new AbortController().signal);
     const [path, body, options] = host.mock.calls[0]!;
-    expect(path).toBe("/api/ai/explain");
+    expect(path).toBe("/api/ai/byot/explain");
     expect(body).toEqual({
       bundle_id: bundleId,
       instance_id: evidence().instance.instanceId,
@@ -76,24 +77,24 @@ describe("explicit fixed-model assistance", () => {
     });
     expect(JSON.stringify(body)).not.toContain(settings.apiKey);
     expect(options?.headers?.Authorization).toBe(`Bearer ${settings.apiKey}`);
+    expect(options?.headers?.["X-SQLolla-Provider"]).toBe(target.id);
   });
 
-  it("refuses other models and unconnected providers before transport", async () => {
-    for (const changed of [
-      { ...settings, model: "other" },
-      { ...settings, mode: "gemini_compatible" as const },
-    ]) {
-      await expect(requestAssistance(bundleId, evidence(), changed, "Explain rows", new AbortController().signal)).rejects.toThrow();
-    }
-    expect(host).not.toHaveBeenCalled();
+  it("refuses a reply from another provider and accepts the exact Gemini target", async () => {
+    const selected = { ...settings, mode: "gemini_compatible" as const };
+    const send = () => requestAssistance(bundleId, evidence(), selected, "Explain rows", new AbortController().signal);
+    host.mockResolvedValueOnce(response()).mockResolvedValueOnce({ ...response(), provider: "gemini", model: providers.gemini_compatible.model });
+    await expect(send()).rejects.toThrow();
+    await expect(send()).resolves.toMatchObject({ title: response().document.title });
+    expect(host.mock.calls.every(([, , options]) => options?.headers?.["X-SQLolla-Provider"] === "gemini")).toBe(true);
   });
 
   it("rejects stale identity and invented citations", () => {
     const changed = response();
     changed.document.claims[0]!.fact_references = ["/invented"];
-    expect(() => validateAssistance(changed, bundleId, evidence(), false)).toThrow();
-    expect(() => validateAssistance({ ...response(), model: "fallback" }, bundleId, evidence(), false)).toThrow();
-    expect(() => validateAssistance({ ...response(), bundle_id: "d".repeat(64) }, bundleId, evidence(), false)).toThrow();
+    expect(() => validateAssistance(changed, bundleId, evidence(), false, target)).toThrow();
+    expect(() => validateAssistance({ ...response(), model: "fallback" }, bundleId, evidence(), false, target)).toThrow();
+    expect(() => validateAssistance({ ...response(), bundle_id: "d".repeat(64) }, bundleId, evidence(), false, target)).toThrow();
   });
 
   it("requires an explicit click and renders generated HTML as inert plain text", async () => {
@@ -129,7 +130,7 @@ describe("explicit fixed-model assistance", () => {
 
   it("rejects SQL in an explanation and offers no unconstrained proposal action", () => {
     const changed = response();
-    expect(() => validateAssistance({ ...changed, document: { ...changed.document, sql: "SELECT 1" } }, bundleId, evidence(), false)).toThrow();
+    expect(() => validateAssistance({ ...changed, document: { ...changed.document, sql: "SELECT 1" } }, bundleId, evidence(), false, target)).toThrow();
     render(<LiveAssistancePanel bundleId={bundleId} evidence={evidence()} settings={settings} onInspectFact={vi.fn()} />);
     expect(screen.queryByRole("button", { name: "Propose SQL" })).toBeNull();
     expect(host).not.toHaveBeenCalled();

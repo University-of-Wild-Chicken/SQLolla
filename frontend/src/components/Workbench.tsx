@@ -30,7 +30,7 @@ function WorkbenchHeader({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.
   );
 }
 
-/** Report browser-to-host capability separately from solver and OpenAI readiness. */
+/** Report browser-to-host capability separately from solver and provider readiness. */
 function HostConnection(): JSX.Element {
   const { connection, retry } = useHostConnection();
   if (connection.state === "unavailable") {
@@ -58,7 +58,7 @@ function AiSetupPrompt({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.El
     <section className="workbench-panel workbench-ai-setup" aria-labelledby="ai-setup-heading">
       <div>
         <h2 id="ai-setup-heading">Set up AI assistance</h2>
-        <p>Add your OpenAI key to draft a model or query and explain solver cases. You can also build and analyze queries yourself.</p>
+        <p>Bring your own OpenAI, Anthropic, or Gemini key to draft models and queries and explain solver cases. You can also work without AI.</p>
       </div>
       <div className="workbench-ai-setup-actions">
         <button type="button" className="primary-button" onClick={openSettings}>
@@ -86,7 +86,7 @@ function WorkbenchAssistance({ workspace }: Pick<WorkbenchProps, "workspace">): 
         <>
           <p>Ask why this result occurred or what to check next.</p>
           <button type="button" className="primary-button" onClick={dialogs.openSettings}>
-            Add an OpenAI key
+            Set up an AI provider
           </button>
         </>
       )}

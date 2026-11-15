@@ -64,8 +64,8 @@ describe("same-origin host boundary", () => {
     expect(request.mock.calls[2]![0]).toBe("/api/status");
   });
 
-  it("refuses another model and nonlocal paths before sending a command", async () => {
-    const request = vi.fn().mockResolvedValue(response({ ...status, model: "fallback-model" }));
+  it("refuses another protocol and nonlocal paths before sending a command", async () => {
+    const request = vi.fn().mockResolvedValue(response({ ...status, schema: "future-protocol" }));
     vi.stubGlobal("fetch", request);
     await expect(hostJson("https://example.com/api/command", {})).rejects.toMatchObject({ code: "host.path" });
     expect(request).not.toHaveBeenCalled();

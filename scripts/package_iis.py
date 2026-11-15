@@ -98,8 +98,9 @@ def write_manifest(output: Path) -> None:
     files = [{"path": p.relative_to(output).as_posix(), "sha256": digest(p), "bytes": p.stat().st_size}
              for p in payload_files(output) if p.relative_to(output).as_posix() not in excluded]
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT).strip())
     manifest = {"schema": "sqlolla.iis_package.v1", "target": "Windows 10 IoT Enterprise LTSC 2021 (21H2), x64",
-                "source_base_commit": revision, "working_tree_changes_included": True,
+                "source_base_commit": revision, "working_tree_changes_included": dirty,
                 "parser_commit": "ad15c585155ff7fc2c5fc4c9746905e4959ff5eb", "files": files,
                 "mutable_configuration": ["deployment.json", "iis/wwwroot/web.config"], "public_origin": "https://sqlolla.us",
                 "deployment_scope": "private trusted-user appliance; no per-user server isolation",

@@ -12,17 +12,17 @@ mod tests;
 use crate::state::HostState;
 use axum::{
     Json, Router,
-    extract::State,
+    extract::{Request, State},
     http::{HeaderMap, StatusCode},
+    middleware::{self, Next},
     response::{IntoResponse, Response},
     routing::post,
 };
+use provider::{Byot, Provider};
 use serde::Deserialize;
 use serde_json::{Value, json};
 
-/// Every live production request uses this exact model with no provider or model fallback.
-pub const MODEL: &str = "gpt-6.1-sol";
-const ENDPOINT: &str = "https://api.openai.com/v1/responses";
+pub use provider::MODEL;
 type Result<T> = std::result::Result<T, AiError>;
 
 /// A provider failure never carries response bodies, authorization headers or credentials outward.
@@ -69,11 +69,31 @@ struct Input {
 /// Expose assistance only behind the host's origin, nonce, body and admission middleware.
 pub fn router() -> Router<HostState> {
     Router::new()
-        .route("/api/ai/draft", post(draft::generate))
-        .route("/api/ai/model-draft", post(model_draft::generate))
-        .route("/api/ai/explain", post(explain))
-        .route("/api/ai/propose", post(proposal_requires_feedback))
-        .route("/api/ai/refine", post(refinement::refine))
+        .nest(
+            "/api/ai",
+            tasks().route("/propose", post(proposal_requires_feedback)),
+        )
+        .nest(
+            "/api/ai/byot",
+            tasks().route_layer(middleware::from_fn(require_selection)),
+        )
+}
+
+/// Separate explicit BYOT routes from legacy endpoints that know only the OpenAI key.
+fn tasks() -> Router<HostState> {
+    Router::new()
+        .route("/draft", post(draft::generate))
+        .route("/model-draft", post(model_draft::generate))
+        .route("/explain", post(explain))
+        .route("/refine", post(refinement::refine))
+}
+
+/// Refuse a missing provider header on the BYOT routes before any credential can be forwarded.
+async fn require_selection(request: Request, next: Next) -> Result<Response> {
+    if !request.headers().contains_key("x-sqlolla-provider") {
+        return Err(failure("ai.provider", "Choose a supported AI provider"));
+    }
+    Ok(next.run(request).await)
 }
 
 /// Explain one exact saved instance without mutating solver evidence or review feedback.
@@ -96,12 +116,18 @@ async fn proposal_requires_feedback() -> AiError {
 /// Release the pipeline worker during network I/O; keys exist only in this invocation's request.
 async fn run(state: HostState, headers: HeaderMap, input: Input) -> Result<Value> {
     validate(&input, false)?;
-    let key = credential(&headers)?;
+    let byot = Byot::from_headers(&headers)?;
     let evidence = context::load(&state, &input).await?;
     let prompt = context::build(&evidence, input.redact_values)?;
-    let document = provider::request(key, &input, &prompt, false).await?;
+    let document = provider::request(byot, &input, &prompt, false).await?;
     let draft = output::validate(document, &input, &prompt, false)?;
-    Ok(output::envelope(&input, &prompt, &draft, false))
+    Ok(output::envelope(
+        byot.provider,
+        &input,
+        &prompt,
+        &draft,
+        false,
+    ))
 }
 
 /// IDs, prompts and redaction are admission inputs, never instructions to change immutable context.
@@ -156,17 +182,22 @@ fn validate_prompt(input: &Input, proposal: bool) -> Result<()> {
 
 /// Read a bounded bearer credential without logging, returning, persisting or deriving evidence from it.
 fn credential(headers: &HeaderMap) -> Result<&str> {
-    let key = headers
-        .get("authorization")
+    let mut values = headers.get_all("authorization").iter();
+    let key = values
+        .next()
         .and_then(|value| value.to_str().ok())
         .and_then(|value| value.strip_prefix("Bearer "))
         .ok_or_else(|| {
             failure(
                 "ai.authorization",
-                "Supply an OpenAI API key for this request",
+                "Supply an API key for the selected provider",
             )
         })?;
-    if key.is_empty() || key.len() > 8192 || !key.bytes().all(|byte| (33..=126).contains(&byte)) {
+    if values.next().is_some()
+        || key.is_empty()
+        || key.len() > 8192
+        || !key.bytes().all(|byte| (33..=126).contains(&byte))
+    {
         return Err(failure(
             "ai.authorization",
             "Invalid bearer credential format",

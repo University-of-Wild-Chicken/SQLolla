@@ -7,8 +7,16 @@ logging, process isolation, or credential erasure. Public-export independence ho
 only for the specified projection with its public request fixed. -/
 namespace SQLollaM2.AssistanceBoundary
 
-/-- Every production assistance flow uses this exact model identifier without substitution. -/
-def pinnedModel : String := "gpt-6.1-sol"
+/-- Assistance can route only to the explicitly selected provider. -/
+inductive Provider where
+  | openai | anthropic | gemini
+  deriving DecidableEq, Repr
+
+/-- Each provider has one approved model identifier. -/
+def pinnedModel : Provider → String
+  | .openai => "gpt-6.1-sol"
+  | .anthropic => "claude-sonnet-5-5"
+  | .gemini => "gemini-4-hydrogen"
 
 /-- An explanation binds both immutable evidence identity and the exact transmitted packet. -/
 structure EvidenceIdentity where
@@ -30,39 +38,43 @@ structure ExplanationPacket (spec : SQLolla.InstanceContract Model Behavior Fact
 /-- Provider prose and citations are untrusted input, separate from canonical evidence. -/
 structure Annotation (Fact : Type) where
   identity : EvidenceIdentity
+  provider : Provider
   requestedModel : String
   servedModel : String
   prose : String
   references : List Fact
 
 /-- Admission checks identities and citation closure; it does not certify the prose. -/
-structure AnnotationAdmission (expected : EvidenceIdentity)
+structure AnnotationAdmission (expected : EvidenceIdentity) (selected : Provider)
     (packet : ExplanationPacket spec witness) (annotation : Annotation Fact) : Prop where
   packetCurrent : packet.identity = expected
   annotationCurrent : annotation.identity = expected
-  requestedPinned : annotation.requestedModel = pinnedModel
-  servedPinned : annotation.servedModel = pinnedModel
+  providerSelected : annotation.provider = selected
+  requestedPinned : annotation.requestedModel = pinnedModel selected
+  servedPinned : annotation.servedModel = pinnedModel selected
   referenceClosed : ∀ fact ∈ annotation.references, fact ∈ packet.view.visibleFacts
 
 variable {expected : EvidenceIdentity} {packet : ExplanationPacket spec witness}
 variable {annotation : Annotation Fact}
+variable {selected : Provider}
 
 /-- A validated annotation cannot switch production model names silently. -/
-theorem annotation_model_exact (valid : AnnotationAdmission expected packet annotation) :
-    annotation.requestedModel = "gpt-6.1-sol" ∧ annotation.servedModel = "gpt-6.1-sol" :=
-  ⟨valid.requestedPinned, valid.servedPinned⟩
+theorem annotation_model_exact (valid : AnnotationAdmission expected selected packet annotation) :
+    annotation.provider = selected ∧ annotation.requestedModel = pinnedModel selected ∧
+      annotation.servedModel = pinnedModel selected :=
+  ⟨valid.providerSelected, valid.requestedPinned, valid.servedPinned⟩
 
 /-- The annotation identifies the same source revision as its current packet. -/
-theorem annotation_revision_current (valid : AnnotationAdmission expected packet annotation) :
+theorem annotation_revision_current (valid : AnnotationAdmission expected selected packet annotation) :
     annotation.identity.revision = expected.revision :=
   congrArg EvidenceIdentity.revision valid.annotationCurrent
 
 /-- A stale packet cannot be accepted by changing only the annotation's identity. -/
 theorem stale_packet_rejected (different : packet.identity ≠ expected) :
-    ¬ AnnotationAdmission expected packet annotation := fun valid => different valid.packetCurrent
+    ¬ AnnotationAdmission expected selected packet annotation := fun valid => different valid.packetCurrent
 
 /-- Every admitted citation belongs to the decoded source, including a selected partial view. -/
-theorem annotation_reference_authentic (valid : AnnotationAdmission expected packet annotation)
+theorem annotation_reference_authentic (valid : AnnotationAdmission expected selected packet annotation)
     (fact : Fact) (cited : fact ∈ annotation.references) :
     fact ∈ spec.facts witness.behavior :=
   packet.view.authentic fact (valid.referenceClosed fact cited)
@@ -199,12 +211,12 @@ structure AnalysisSource (Basis : Type) where
 /-- A provider-generated proposal records both model identities; manual proposals need neither. -/
 inductive ProposalOrigin where
   | manual
-  | provider (requestedModel servedModel : String)
+  | provider (selected : Provider) (requestedModel servedModel : String)
 
-/-- AI refinement uses the same exact model identifier as AI instance summaries. -/
+/-- AI refinement pins the model to the selected provider, just as explanations do. -/
 def ProposalOrigin.pinned : ProposalOrigin → Prop
   | .manual => True
-  | .provider requested served => requested = pinnedModel ∧ served = pinnedModel
+  | .provider selected requested served => requested = pinnedModel selected ∧ served = pinnedModel selected
 
 /-- Provider or low-code output is an unvalidated query tied to its source basis. -/
 structure Proposed (Basis Query : Type) where
@@ -370,10 +382,11 @@ theorem source_instruction_preserved (value : Analyzed checks source snapshot) :
   ⟨value.sourceQueryPreserved, value.instructionPreserved⟩
 
 /-- A provider-generated candidate cannot pass with another requested or served model. -/
-theorem analyzed_model_exact (value : Analyzed checks source snapshot) (requested served : String)
-    (provider : value.replayed.bound.proposed.origin = .provider requested served) :
-    requested = "gpt-6.1-sol" ∧ served = "gpt-6.1-sol" := by
-  simpa [provider, ProposalOrigin.pinned, pinnedModel] using value.modelPinned
+theorem analyzed_model_exact (value : Analyzed checks source snapshot) (selected : Provider)
+    (requested served : String)
+    (provider : value.replayed.bound.proposed.origin = .provider selected requested served) :
+    requested = pinnedModel selected ∧ served = pinnedModel selected := by
+  simpa [provider, ProposalOrigin.pinned] using value.modelPinned
 
 /-- Every accepted exact observation still occurs for its archived input. -/
 theorem accepted_replayed (value : Analyzed checks source snapshot)

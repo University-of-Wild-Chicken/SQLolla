@@ -195,7 +195,10 @@ fn output_rejects_untrusted_authority_and_references() {
 fn provider_identity_and_completion_are_required() {
     let base = json!({"model":MODEL,"status":"completed","error":null,"output":[{"type":"message","role":"assistant",
         "status":"completed","content":[{"type":"output_text","text":"{}"}]}]});
-    assert_eq!(provider::extract(&base).unwrap(), json!({}));
+    assert_eq!(
+        provider::decode(provider::openai_text(&base).unwrap()).unwrap(),
+        json!({})
+    );
     for (field, value) in [
         ("model", json!("other-model")),
         ("status", json!("incomplete")),
@@ -203,12 +206,12 @@ fn provider_identity_and_completion_are_required() {
     ] {
         let mut response = base.clone();
         response[field] = value;
-        assert!(provider::extract(&response).is_err());
+        assert!(provider::openai_text(&response).is_err());
     }
     let mut refusal = base;
     refusal["output"][0]["content"] = json!([{"type":"refusal","refusal":"secret-like body"}]);
     assert_eq!(
-        provider::extract(&refusal).err().unwrap().code,
+        provider::openai_text(&refusal).err().unwrap().code,
         "ai.refused"
     );
 }

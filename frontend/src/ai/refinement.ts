@@ -2,7 +2,7 @@ import { asArray, asRecord, booleanField, stringArray, stringField } from "../an
 import { hostJson } from "../analysis/host";
 import type { AnalysisTransport, DemoClaim } from "../analysis/types";
 import type { ReviewDisposition } from "../feedback/journal";
-import { AI_MODEL } from "./config";
+import { byot, matchesTarget, type ProviderTarget } from "./config";
 import type { AiProviderSettings } from "./summary";
 
 /** The canonical saved case identity and current human decision sent to the local host. */
@@ -116,10 +116,10 @@ function groundedClaims(raw: unknown, allowed: ReadonlySet<string>): readonly De
 }
 
 /** Accept supplemental model text only from the fixed provider and canonical context. */
-function generatedRevision(raw: unknown, basis: RefinementBasis): CheckedRevision {
+function generatedRevision(raw: unknown, basis: RefinementBasis, target: ProviderTarget): CheckedRevision {
   const value = asRecord(raw, "generated revision");
   const digest = checkedBasis(value, basis, "sqlolla.ai.refinement.v1");
-  if (value.model !== AI_MODEL || value.provider !== "openai" || value.authority !== "untrusted_assistance" || value.redact_values !== false) {
+  if (!matchesTarget(value, target) || value.authority !== "untrusted_assistance" || value.redact_values !== false) {
     throw new Error("The refinement provider or disclosure settings changed.");
   }
   const document = asRecord(value.document, "refinement document");
@@ -149,16 +149,15 @@ export async function generateRevision(
   settings: AiProviderSettings,
   signal: AbortSignal,
 ): Promise<CheckedRevision> {
-  if (settings.mode !== "openai_compatible" || settings.model !== AI_MODEL || settings.redactValues || !settings.apiKey.trim()) {
-    throw new Error("Enable unredacted refinement with the fixed model in provider settings.");
-  }
+  if (settings.redactValues) throw new Error("Allow unredacted context in provider settings to regenerate.");
+  const { target, headers } = byot(settings);
   const payload = await hostJson(
-    "/api/ai/refine",
+    "/api/ai/byot/refine",
     { ...basis, instruction, redact_values: false },
     {
       signal,
-      headers: { Authorization: `Bearer ${settings.apiKey.trim()}` },
+      headers,
     },
   );
-  return generatedRevision(payload, basis);
+  return generatedRevision(payload, basis, target);
 }

@@ -1,6 +1,6 @@
 /** Validate the host's AI envelope independently before rendering any generated text or draft. */
 import type { DemoClaim, EvidenceView } from "../analysis/types";
-import { AI_MODEL } from "./config";
+import { matchesTarget, type ProviderTarget } from "./config";
 
 export interface Assistance {
   readonly title: string;
@@ -41,12 +41,11 @@ function claims(value: unknown, evidence: EvidenceView): readonly DemoClaim[] {
 }
 
 /** Validate identities before handling the model-controlled document. */
-function identity(value: Record<string, unknown>, bundleId: string, evidence: EvidenceView, redacted: boolean): void {
+function identity(value: Record<string, unknown>, bundleId: string, evidence: EvidenceView, redacted: boolean, target: ProviderTarget): void {
   if (
     value.schema !== "sqlolla.ai.explanation.v1" ||
     value.status !== "ok" ||
-    value.model !== AI_MODEL ||
-    value.provider !== "openai" ||
+    !matchesTarget(value, target) ||
     value.authority !== "untrusted_assistance" ||
     value.bundle_id !== bundleId ||
     value.redact_values !== redacted ||
@@ -60,9 +59,9 @@ function identity(value: Record<string, unknown>, bundleId: string, evidence: Ev
 }
 
 /** No successful provider reply can replace the authoritative status or immutable evidence object. */
-export function validateAssistance(raw: unknown, bundleId: string, evidence: EvidenceView, redacted: boolean): Assistance {
+export function validateAssistance(raw: unknown, bundleId: string, evidence: EvidenceView, redacted: boolean, target: ProviderTarget): Assistance {
   const value = object(raw);
-  identity(value, bundleId, evidence, redacted);
+  identity(value, bundleId, evidence, redacted, target);
   const doc = object(value.document);
   if (doc.instance_id !== value.instance_id || doc.model_revision_sha256 !== value.model_revision_sha256 || doc.context_sha256 !== value.context_sha256) {
     throw new Error("Assistance document identity changed.");

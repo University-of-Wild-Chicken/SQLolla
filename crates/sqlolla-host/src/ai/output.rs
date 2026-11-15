@@ -118,13 +118,15 @@ pub(super) fn bounded_text(value: &str, limit: usize) -> Result<()> {
 
 /// Fixed host-owned labels keep model prose distinct from deterministic evidence and safety claims.
 pub(super) fn envelope(
+    provider: Provider,
     input: &Input,
     prompt: &context::Prompt,
     draft: &Draft,
     proposal: bool,
 ) -> Value {
+    let (provider, model) = provider.identity();
     json!({"schema":if proposal {"sqlolla.ai.proposal.v1"} else {"sqlolla.ai.explanation.v1"},
-        "status":"ok","provider":"openai","model":MODEL,"bundle_id":input.bundle_id,
+        "status":"ok","provider":provider,"model":model,"bundle_id":input.bundle_id,
         "instance_id":input.instance_id,"model_revision_sha256":input.model_revision_sha256,
         "context_sha256":prompt.hash,"redact_values":input.redact_values,"document":draft,
         "authority":"untrusted_assistance","claim":"Fact references are checked for existence; prose and business intent are not proved. Bounded results do not establish universal safety."})

@@ -250,7 +250,7 @@ function SettingsDialogs({ workspace }: { readonly workspace: Workspace }): JSX.
         onClose={dialogs.closeSettings}
         settings={dialogs.aiSettings}
         evidence={currentEvidence}
-        fixedProvider={!workspace.fixtures.length}
+        showDemo={workspace.fixtures.length > 0}
         onSave={dialogs.saveAiSettings}
         onDisconnect={dialogs.disconnectAi}
       />

@@ -20,6 +20,12 @@ async function checkOnboarding(page, size) {
   } else {
     await prompt.getByRole("button", { name: "Set up AI", exact: true }).click();
     assert.equal(await page.getByLabel("Model identifier").count(), 0);
+    assert.equal(await page.getByRole("dialog").getByRole("radio").count(), 3);
+    await page.getByRole("radio", { name: "OpenAI", exact: true }).check();
+    await page.getByLabel("API key (memory only)").fill("synthetic-browser-input");
+    await page.getByRole("radio", { name: "Anthropic", exact: true }).check();
+    assert.equal(await page.getByLabel("API key (memory only)").inputValue(), "");
+    await page.getByRole("radio", { name: "Gemini", exact: true }).check();
     await page.getByLabel("API key (memory only)").fill("synthetic-browser-input");
     await page.getByRole("button", { name: "Save in this tab · no send" }).click();
     await page.getByRole("dialog").waitFor({ state: "detached" });
@@ -29,6 +35,7 @@ async function checkOnboarding(page, size) {
   assert.equal(await prompt.count(), 0);
   assert.equal(await page.evaluate(() => JSON.stringify(localStorage).includes("synthetic-browser-input")), false);
   await page.getByRole("button", { name: "AI settings" }).click();
+  await page.getByRole("radio", { name: "Gemini", exact: true }).check();
   assert.equal(await page.getByLabel("API key (memory only)").inputValue(), "");
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
 }

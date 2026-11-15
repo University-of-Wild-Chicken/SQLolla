@@ -12,8 +12,7 @@ mod worker;
 
 pub use worker::Worker;
 
-/// Exact production assistance model; provider substitution is never implicit.
-pub const MODEL: &str = "gpt-6.1-sol";
+pub use ai::MODEL;
 /// Maximum complete incoming JSON command; larger requests are refused, not truncated.
 pub const MAX_REQUEST_BYTES: usize = 2_097_152;
 /// Maximum browser response, including complete retained instance records.

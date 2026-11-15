@@ -68,7 +68,7 @@ export function AiDraftPanel(props: Props): JSX.Element {
         </button>
       ) : (
         <button type="button" className="button" onClick={props.openSettings}>
-          Set up OpenAI
+          Set up an AI provider
         </button>
       )}
       {used && !current?.draft ? <p>Use the review bins to refine this prompt after analysis.</p> : null}
@@ -81,7 +81,9 @@ export function AiDraftPanel(props: Props): JSX.Element {
 /** Changing workflow invalidates an earlier sharing decision. */
 function useDraftFields(props: Props) {
   const [prompt, setPrompt] = useState(props.initialPrompt);
-  const [share, setShare] = useState(false);
+  const [sharedWith, setSharedWith] = useState<AiProviderSettings["mode"] | null>(null);
+  const share = sharedWith === props.settings.mode;
+  const setShare = (consent: boolean): void => setSharedWith(consent ? props.settings.mode : null);
   const [mode, changeMode] = useState<DraftMode>(props.validCatalog ? "query" : "model");
   const setMode = (next: DraftMode): void => {
     changeMode(next);
@@ -110,7 +112,7 @@ function DraftFields({ fields, validCatalog }: { readonly fields: ReturnType<typ
       </label>
       <label className="check-row">
         <input type="checkbox" checked={share} onChange={(event) => setShare(event.target.checked)} />
-        {mode === "query" ? "Share my prompt, schema and parameter types with OpenAI." : "Share my description with OpenAI."}
+        {mode === "query" ? "Share my prompt, schema and parameter types with my AI provider." : "Share my description with my AI provider."}
       </label>
     </>
   );

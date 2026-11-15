@@ -30,14 +30,15 @@ pub(super) async fn refine(
     expected_digest(&input, &prepared)?;
     let provider_input = provider_input(&input, &prepared)?;
     let prompt = packet(&input, &prepared)?;
-    let document = provider::request(credential(&headers)?, &provider_input, &prompt, true).await?;
+    let byot = Byot::from_headers(&headers)?;
+    let document = provider::request(byot, &provider_input, &prompt, true).await?;
     let draft = output::validate(document, &provider_input, &prompt, true)?;
     let sql = draft
         .sql
         .as_deref()
         .ok_or_else(|| failure("ai.proposal_sql", "SQL omitted"))?;
     let checked = canonical(&state, &input, Some((sql, &prepared))).await?;
-    let mut result = output::envelope(&provider_input, &prompt, &draft, true);
+    let mut result = output::envelope(byot.provider, &provider_input, &prompt, &draft, true);
     result["schema"] = json!("sqlolla.ai.refinement.v1");
     result["feedback_sha256"] = prepared["feedback_sha256"].clone();
     result["references"] = prepared["references"].clone();

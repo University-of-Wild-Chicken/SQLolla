@@ -3056,7 +3056,7 @@ pre {
 
 .provider-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 7px;
   margin: 0;
   padding: 0;
@@ -3078,7 +3078,7 @@ pre {
   cursor: pointer;
 }
 
-.provider-card.is-selected {
+.provider-card:has(input:checked) {
   border-color: var(--teal);
   background: var(--teal-pale);
 }
@@ -3092,15 +3092,8 @@ pre {
   font-size: 11px;
 }
 
-.provider-card span {
-  color: var(--muted);
-  font-size: 9px;
-  line-height: 1.35;
-}
-
 .credential-fields {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
@@ -3112,7 +3105,6 @@ pre {
   color: var(--ink-soft);
 }
 
-.credential-fields label:nth-child(3),
 .field-note {
   grid-column: 1 / -1;
 }

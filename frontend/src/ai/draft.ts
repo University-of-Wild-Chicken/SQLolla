@@ -3,7 +3,7 @@ import { asRecord, stringArray, stringField } from "../analysis/guards";
 import { parseCatalog } from "../analysis/adapter";
 import { hostJson } from "../analysis/host";
 import { editableRequest } from "../workspace/native";
-import { AI_MODEL } from "./config";
+import { byot, matchesTarget, type ProviderTarget } from "./config";
 import type { AiProviderSettings } from "./summary";
 
 export interface SqlDraft {
@@ -16,10 +16,10 @@ export interface SqlDraft {
 export type DraftMode = "query" | "model";
 
 /** Require the fixed provider and the host-owned compile state before presenting a draft. */
-function result(raw: unknown, mode: DraftMode): SqlDraft {
+function result(raw: unknown, mode: DraftMode, target: ProviderTarget): SqlDraft {
   const value = asRecord(raw, "SQL draft");
   const schema = mode === "query" ? "sqlolla.ai.initial_draft.v1" : "sqlolla.ai.model_draft.v1";
-  if (value.schema !== schema || value.status !== "ok" || value.model !== AI_MODEL || value.provider !== "openai" || value.authority !== "untrusted_assistance")
+  if (value.schema !== schema || value.status !== "ok" || !matchesTarget(value, target) || value.authority !== "untrusted_assistance")
     throw new Error("Unexpected initial draft response.");
   const sql = stringField(value, "sql", "SQL draft");
   if (!sql.trim() || sql.length > 16384) throw new Error("Invalid proposed SQL.");
@@ -43,8 +43,9 @@ function checkedModel(raw: unknown, sql: string): Record<string, unknown> {
 
 /** Only the local host sees the analysis request; the provider gets its declared schema projection. */
 export async function requestDraft(mode: DraftMode, text: string, instruction: string, settings: AiProviderSettings, signal: AbortSignal): Promise<SqlDraft> {
-  const path = mode === "query" ? "/api/ai/draft" : "/api/ai/model-draft";
+  const { target, headers } = byot(settings);
+  const path = mode === "query" ? "/api/ai/byot/draft" : "/api/ai/byot/model-draft";
   const body = mode === "query" ? { instruction, request: { ...editableRequest(text), sql: "" }, share_schema: true } : { instruction, share_prompt: true };
-  const value = await hostJson(path, body, { signal, headers: { Authorization: `Bearer ${settings.apiKey.trim()}` } });
-  return result(value, mode);
+  const value = await hostJson(path, body, { signal, headers });
+  return result(value, mode, target);
 }

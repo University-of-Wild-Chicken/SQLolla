@@ -79,19 +79,21 @@ pub(super) async fn generate(
     Json(input): Json<ModelInput>,
 ) -> Result<Json<Value>> {
     let (body, digest) = packet(&input)?;
-    let output = provider::post_json(credential(&headers)?, &body).await?;
+    let byot = Byot::from_headers(&headers)?;
+    let output = provider::complete(byot, body).await?;
     let proposed = parse(output, &digest)?;
     let request = request(&proposed)?;
     let compiled = draft::compile(&state, request.clone(), &proposed.sql).await?;
+    let (provider, model) = byot.provider.identity();
     Ok(Json(
-        json!({"schema":"sqlolla.ai.model_draft.v1","status":"ok","provider":"openai","model":MODEL,
+        json!({"schema":"sqlolla.ai.model_draft.v1","status":"ok","provider":provider,"model":model,
         "authority":"untrusted_assistance","sql":proposed.sql,"assumptions":proposed.assumptions,
         "context_sha256":digest,"model_request":request,"validation":draft::assessment(&compiled)}),
     ))
 }
 
 /// Carry only the prompt to the provider after explicit consent.
-fn packet(input: &ModelInput) -> Result<(Value, String)> {
+fn packet(input: &ModelInput) -> Result<(provider::Completion, String)> {
     if !input.share_prompt {
         return Err(failure(
             "ai.model_consent",
@@ -100,12 +102,12 @@ fn packet(input: &ModelInput) -> Result<(Value, String)> {
     }
     output::bounded_text(&input.instruction, 4096)?;
     let digest = format!("{:x}", Sha256::digest(input.instruction.as_bytes()));
-    let body = json!({"model":MODEL,"store":false,"tools":[],"tool_choice":"none","max_output_tokens":4096,
-        "reasoning":{"effort":"low"},"instructions":INSTRUCTIONS,
-        "input":[{"role":"user","content":[{"type":"input_text","text":
-            json!({"context_sha256":digest,"instruction":input.instruction}).to_string()}]}],
-        "text":{"format":{"type":"json_schema","name":"sqlolla_model_draft_v1","strict":true,
-            "schema":contract::schema(&digest)}}});
+    let body = provider::Completion {
+        instructions: INSTRUCTIONS.into(),
+        user: json!({"context_sha256":digest,"instruction":input.instruction}),
+        schema_name: "sqlolla_model_draft_v1",
+        schema: contract::schema(&digest),
+    };
     Ok((body, digest))
 }
 

@@ -1,6 +1,6 @@
 /** Explicit BYOT consent with tab-memory credentials and a fixed, reviewed provider destination. */
 import { useState, type JSX } from "react";
-import { AI_ENDPOINT, AI_MODEL } from "../ai/config";
+import { providers, type LiveProviderMode } from "../ai/config";
 import { buildContextPreview, type AiProviderSettings } from "../ai/summary";
 import type { EvidenceView } from "../analysis/types";
 import { Modal } from "./Modal";
@@ -12,41 +12,38 @@ interface Props {
   readonly evidence: EvidenceView | null;
   readonly onSave: (settings: AiProviderSettings) => void;
   readonly onDisconnect: () => void;
-  readonly fixedProvider?: boolean;
+  readonly showDemo?: boolean;
 }
 interface FieldsProps {
   readonly draft: AiProviderSettings;
   readonly patch: (patch: Partial<AiProviderSettings>) => void;
 }
 
-/** Only the implemented fixed OpenAI target can receive live requests. */
-function ProviderFields({ draft, patch }: FieldsProps): JSX.Element {
+/** Choosing a different provider clears the previous provider's key. */
+function ProviderFields({ draft, patch, showDemo }: FieldsProps & Pick<Props, "showDemo">): JSX.Element {
   return (
     <fieldset className="provider-grid">
       <legend className="mono-label">PROVIDER</legend>
-      <label className="provider-card">
-        <input type="radio" name="provider" checked={draft.mode === "offline_demo"} onChange={() => patch({ mode: "offline_demo", apiKey: "" })} />
-        <strong>Offline demo</strong>
-        <span>No network request.</span>
-      </label>
-      <label className="provider-card">
-        <input type="radio" name="provider" checked={draft.mode === "openai_compatible"} onChange={() => patch({ mode: "openai_compatible" })} />
-        <strong>OpenAI-compatible</strong>
-        <span>OpenAI Responses</span>
-      </label>
-      <p className="field-note">Anthropic and Gemini are not connected in this host. No provider or model fallback is used.</p>
+      {(Object.keys(providers) as LiveProviderMode[]).map((mode) => (
+        <label className="provider-card" key={mode}>
+          <input type="radio" name="provider" checked={draft.mode === mode} onChange={() => patch({ mode, apiKey: "" })} />
+          <strong>{providers[mode].label}</strong>
+        </label>
+      ))}
+      {showDemo ? (
+        <label className="provider-card">
+          <input type="radio" name="provider" checked={draft.mode === "offline_demo"} onChange={() => patch({ mode: "offline_demo", apiKey: "" })} />
+          <strong>Offline demo</strong>
+        </label>
+      ) : null}
     </fieldset>
   );
 }
 
-/** Show the immutable destination beside the credential; never offer an arbitrary proxy endpoint. */
+/** Keep the credential in the form until saving or closing it. */
 function CredentialFields({ draft, patch }: FieldsProps): JSX.Element {
   return (
     <div className="credential-fields">
-      <label>
-        Provider destination
-        <input readOnly value={AI_ENDPOINT} />
-      </label>
       <label>
         API key (memory only)
         <input
@@ -59,7 +56,7 @@ function CredentialFields({ draft, patch }: FieldsProps): JSX.Element {
         />
       </label>
       <p className="field-note">
-        Your key goes to the local host for each requested action and then to OpenAI. It is not saved in evidence, browser storage, URLs or exports.
+        Your key stays in this tab until you disconnect or refresh. SQLolla sends it to the selected provider when you request assistance.
       </p>
     </div>
   );
@@ -76,21 +73,18 @@ function SharingFields({ draft, patch }: FieldsProps): JSX.Element {
       <p className="field-note">
         Redacted explanations share schema shape, fact identifiers, counts, scope and verified rule outcomes. Your question is sent as written.
       </p>
-      <p className="field-note">OpenAI requests use store:false. Provider account policies still apply. Saving settings sends nothing.</p>
+      <p className="field-note">Saving settings sends nothing. Your provider’s account policies apply when you request assistance.</p>
     </div>
   );
 }
 
+type ActionProps = Pick<Props, "onSave" | "onClose" | "onDisconnect" | "showDemo"> & { readonly draft: AiProviderSettings };
+
 /** Disconnect removes the in-memory credential; saving cannot trigger a provider call. */
-function Actions({
-  draft,
-  onSave,
-  onClose,
-  onDisconnect,
-}: Omit<Props, "open" | "settings" | "evidence"> & { readonly draft: AiProviderSettings }): JSX.Element {
-  const valid = draft.mode === "offline_demo" || draft.apiKey.trim().length > 0;
+function Actions({ draft, onSave, onClose, onDisconnect, showDemo }: ActionProps): JSX.Element {
+  const valid = draft.mode === "offline_demo" ? showDemo : draft.apiKey.trim().length > 0;
   const save = () => {
-    onSave({ ...draft, model: AI_MODEL, endpoint: AI_ENDPOINT, apiKey: draft.apiKey.trim(), preparedInMemory: draft.mode === "openai_compatible" });
+    onSave({ ...draft, apiKey: draft.apiKey.trim() });
     onClose();
   };
   const disconnect = () => {
@@ -115,12 +109,12 @@ function Actions({
 
 /** The draft credential lives only in this mounted form and the tab's settings state. */
 function Body(props: Omit<Props, "open">): JSX.Element {
-  const [draft, setDraft] = useState<AiProviderSettings>(() => (props.fixedProvider ? { ...props.settings, mode: "openai_compatible" } : props.settings));
+  const [draft, setDraft] = useState<AiProviderSettings>(props.settings);
   const patch = (next: Partial<AiProviderSettings>) => setDraft((current) => ({ ...current, ...next }));
   return (
     <div className="settings-body">
-      {props.fixedProvider ? <p>Connect OpenAI for case explanations and SQL proposals.</p> : <ProviderFields draft={draft} patch={patch} />}
-      {draft.mode === "openai_compatible" ? <CredentialFields draft={draft} patch={patch} /> : null}
+      <ProviderFields draft={draft} patch={patch} showDemo={props.showDemo} />
+      {draft.mode !== "offline_demo" ? <CredentialFields draft={draft} patch={patch} /> : null}
       <SharingFields draft={draft} patch={patch} />
       <details>
         <summary>Preview explanation context</summary>
@@ -128,7 +122,7 @@ function Body(props: Omit<Props, "open">): JSX.Element {
           {props.evidence ? buildContextPreview(props.evidence, draft) : "Open a stored case to preview its context."}
         </pre>
       </details>
-      <Actions draft={draft} onClose={props.onClose} onSave={props.onSave} onDisconnect={props.onDisconnect} />
+      <Actions draft={draft} onClose={props.onClose} onSave={props.onSave} onDisconnect={props.onDisconnect} showDemo={props.showDemo} />
     </div>
   );
 }
@@ -136,7 +130,7 @@ function Body(props: Omit<Props, "open">): JSX.Element {
 /** Render a memory-only BYOT form; live requests remain separate deliberate actions. */
 export function AiSettingsDialog(props: Props): JSX.Element {
   return (
-    <Modal open={props.open} onClose={props.onClose} title="Explanation provider" eyebrow="BRING YOUR OWN TOKEN" className="settings-dialog">
+    <Modal open={props.open} onClose={props.onClose} title="AI provider" eyebrow="BRING YOUR OWN TOKEN" className="settings-dialog">
       {props.open ? <Body {...props} /> : null}
     </Modal>
   );

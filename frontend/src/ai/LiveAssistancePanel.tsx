@@ -98,7 +98,7 @@ function Question({ prompt, edit, explain, disabled, redacted }: QuestionProps):
       <p id={sharingId} className="ai-sharing-note">
         {redacted
           ? "Shares your question as written and the rule outcome when available. Case SQL, IR, Alloy and values stay local."
-          : "Sends your question and the case’s SQL, IR, Alloy and values to OpenAI."}
+          : "Sends your question and the case’s SQL, IR, Alloy and values to your AI provider."}
       </p>
     </div>
   );

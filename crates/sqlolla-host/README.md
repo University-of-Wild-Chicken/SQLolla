@@ -13,8 +13,8 @@ uses those headers for admission and ignores forwarding metadata. The site's
 private perimeter controls who can access its shared evidence store.
 [Private IIS package](../../deployment/iis/README.md)
 
-`GET /api/status` returns `sqlolla.host.v1`, the fixed `gpt-6.1-sol` identifier and
-a memory-only CSRF capability. JSON POST requests require the configured `Host`
+`GET /api/status` returns `sqlolla.host.v1`, the legacy OpenAI model field and a
+memory-only CSRF capability. JSON POST requests require the configured `Host`
 and `Origin` plus `X-SQLolla-CSRF`. `POST /api/command` accepts analysis requests
 and `instances.start`, `instances.next` and `instances.open`. Start yields the
 first record. Open its bundle ID to load the complete context. Use the browser's
@@ -30,11 +30,15 @@ bounded property pass with the original output schema and execution basis.
 The browser compares the result with its current review and prompt before
 staging the checked request as a draft. [Refinement contract](../../contracts/m2/README.md)
 
-`POST /api/ai/explain` summarizes one saved instance. `POST /api/ai/refine`
-regenerates SQL with the retained prompt and complete canonical review packet
-after explicit unredacted disclosure. Both require the exact requested and
-served model `gpt-6.1-sol`. AI SQL goes through `refinement.check`, and the
-legacy `/api/ai/propose` endpoint returns `ai.feedback_required`.
+`POST /api/ai/byot/explain` summarizes a saved instance. `POST /api/ai/byot/refine`
+regenerates SQL with the retained prompt and canonical reviews after explicit
+unredacted disclosure. The `draft` and `model-draft` routes under the same prefix
+compile first drafts. These routes require `X-SQLolla-Provider` and a request-only
+`Authorization: Bearer` credential. The provider is one of `openai` (`gpt-6.1-sol`),
+`anthropic` (`claude-sonnet-5-5`), or `gemini` (`gemini-4-hydrogen`). Each must
+serve its exact pinned model. AI refinements still go through `refinement.check`.
+Older requests on `/api/ai/*` without a provider header retain the OpenAI default.
+The retired `/api/ai/propose` endpoint returns `ai.feedback_required`.
 
 Input is limited to two MiB, canonical output to sixteen MiB, and at most four commands wait
 behind the serialized worker. At most eight API requests, including AI requests,
