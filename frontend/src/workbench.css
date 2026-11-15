@@ -477,7 +477,7 @@
     padding-inline: 12px;
   }
 
-  .workbench-header nav a {
+  .workbench-header nav a:not(.workbench-docs-link) {
     display: none;
   }
 

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Get started with SQLolla. Build a database model, check a PostgreSQL query, and inspect the solver evidence." />
+    <meta name="theme-color" content="#1b203f" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="stylesheet" href="./docs.css" />
+    <title>Quick Start · SQLolla Docs</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead">
+      <div class="site-bar">
+        <a class="brand" href="/">
+          <img src="../src/assets/sqlolla-mark.png" alt="" width="26" height="34" />
+          SQLolla
+        </a>
+        <a class="site-section" href="/docs/" aria-label="SQLolla documentation home">Docs</a>
+        <a class="open-workbench" href="/" target="_blank" rel="noopener">
+          Open workbench <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </div>
+    </header>
+    <div class="docs-layout">
+      <nav class="guide-nav" aria-label="Documentation">
+        <p>Guides</p>
+        <a href="#quick-start" aria-current="location">Quick Start</a>
+        <a href="#build-a-model">Build a model</a>
+        <a href="#read-results">Read results</a>
+        <a href="#review-and-refine">Review and refine</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+      </nav>
+      <main id="main" tabindex="-1">
+        <article aria-labelledby="quick-start">
+          <header class="article-title">
+            <h1 id="quick-start">Quick Start</h1>
+            <p>Start with a blank workbench. Describe a database model, edit its SQL, and see exactly which row breaks your rule.</p>
+            <a class="manual-link" href="#build-a-model">Prefer to build a model by hand?</a>
+          </header>
+          <ol class="steps">
+            <li>
+              <h2 id="set-up-ai">Set up AI</h2>
+              <p>
+                Open the workbench and select <strong>AI settings</strong>. Add your OpenAI API key and choose <strong>Save in this tab · no send</strong>. You
+                can also <a href="#build-a-model">build and analyze a model by hand</a> without a key.
+              </p>
+            </li>
+            <li>
+              <h2 id="draft-a-model">Describe the database and rule</h2>
+              <p>Choose <strong>Build with AI</strong>, then <strong>Build a database model from a description</strong>. Try this inventory check:</p>
+              <div class="snippet">
+                <div class="snippet-bar">
+                  <span>Prompt</span>
+                  <button class="copy-button" type="button" data-copy="inventory-prompt" aria-label="Copy inventory prompt" hidden>Copy</button>
+                </div>
+                <pre><code id="inventory-prompt">Model inventory(item_id int32, units int32) with at most one row and values 0, 1, and 5. Draft SELECT item_id, units FROM inventory and check that at most zero rows are returned.</code></pre>
+              </div>
+              <p>
+                Select <strong>Share my description with OpenAI</strong> and click <strong>Generate database model</strong>. Review the proposed tables, modeled
+                values, rule, and SQL. When it says <strong>Compiled locally</strong>, click <strong>Use this model and query</strong> to put the proposal in
+                the editor.
+              </p>
+            </li>
+            <li>
+              <h2 id="edit-and-analyze">Edit and analyze the SQL</h2>
+              <p>
+                Replace the SQL in the editor with the filtered query below. Choose <strong>Unintended behavior</strong> and click
+                <strong>Analyze query</strong>.
+              </p>
+              <div class="snippet">
+                <div class="snippet-bar">
+                  <span>SQL</span>
+                  <button class="copy-button" type="button" data-copy="inventory-sql" aria-label="Copy inventory SQL" hidden>Copy</button>
+                </div>
+                <pre><code id="inventory-sql"><span class="keyword">SELECT</span> item_id, units
+<span class="keyword">FROM</span> inventory
+<span class="keyword">WHERE</span> units = <span class="literal">5</span></code></pre>
+              </div>
+              <p>
+                For this rule, any returned row is a counterexample. The result shows an input and a returned row with <code>units = 5</code>. Open
+                <strong>Table</strong> for the exact values or <strong>SQL / IR / Alloy</strong> for the underlying artifacts.
+              </p>
+              <table class="witness">
+                <caption>
+                  Counterexample from the inventory demo
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Row</th>
+                    <th scope="col"><code>item_id</code></th>
+                    <th scope="col"><code>units</code></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Inventory input</th>
+                    <td>5</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Query result</th>
+                    <td>5</td>
+                    <td>5</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+          </ol>
+        </article>
+        <section class="guide-article" aria-labelledby="build-a-model">
+          <h2 id="build-a-model">Build a model by hand</h2>
+          <p>Use <strong>Schema and rule</strong> to specify the database and the inputs you want SQLolla to consider.</p>
+          <dl class="entries">
+            <dt>Tables</dt>
+            <dd>
+              Enter a table name and declarations such as <code>item_id:int32, units:int32</code>. Use <code>?</code> after a type for a nullable column, then
+              choose <strong>Declare table</strong>.
+            </dd>
+            <dt>Bounds and values</dt>
+            <dd>Set the maximum number of rows for each table. In <strong>Modeled values</strong>, add the finite values to consider for each column type.</dd>
+            <dt>Output rule</dt>
+            <dd>Choose the behavior to check, such as a maximum row count or a required value in a result column. Output column positions start at 1.</dd>
+          </dl>
+          <p>
+            Type SQL directly or use <strong>Query builder</strong> to select columns, add filters, or join declared tables. In the builder, check the draft
+            with the compiler and click <strong>Review as a new analysis</strong> to stage it.
+          </p>
+          <p>
+            The form covers <code>int32</code>, <code>int64</code>, <code>text</code>, and <code>bool</code>. Use <strong>Advanced request</strong> for
+            additional supported types and context, including numbered parameters.
+          </p>
+        </section>
+        <section class="guide-article" aria-labelledby="read-results">
+          <h2 id="read-results">Read results</h2>
+          <p>
+            The result applies to the query, rule, row bounds, and values in the current request. Use <strong>Next counterexample</strong> or
+            <strong>Next example</strong> to ask for another case.
+          </p>
+          <dl class="entries">
+            <dt>Counterexample found</dt>
+            <dd>A concrete input causes the query to violate the rule within the model.</dd>
+            <dt>Example found</dt>
+            <dd>One modeled execution is available to inspect or preserve as a use case.</dd>
+            <dt>Exhausted within this exact model</dt>
+            <dd>The solver reports no further cases within the supplied context and bounds.</dd>
+            <dt>Configured limit reached</dt>
+            <dd>The search stopped at the case limit. Raise <strong>Maximum review cases</strong> to search for more.</dd>
+          </dl>
+          <p>
+            Use <strong>Explain this case</strong> to ask a follow-up. With redaction enabled, the provider receives the verified rule outcome when available
+            and can cite the evidence. The case SQL and cell values stay local. Your typed question goes through as written.
+          </p>
+        </section>
+        <section class="guide-article" aria-labelledby="review-and-refine">
+          <h2 id="review-and-refine">Review and refine</h2>
+          <p>Label the visible case, then reopen or change your decisions in the bins at the bottom of the workbench.</p>
+          <dl class="entries">
+            <dt>Yes</dt>
+            <dd>Keep this behavior possible on the saved input.</dd>
+            <dt>No</dt>
+            <dd>Exclude this behavior on the saved input.</dd>
+            <dt>Unsure</dt>
+            <dd>Save the case for later review.</dd>
+          </dl>
+          <p>
+            For a second generation from the same prompt, mark at least one case <strong>Yes</strong> or <strong>No</strong>. Use
+            <strong>Regenerate SQL</strong> with AI or enter candidate SQL and select <strong>Check candidate SQL locally</strong>. The check replays the
+            decided cases and tests the original bounded rule before you can stage a revision.
+          </p>
+        </section>
+        <section class="guide-article" aria-labelledby="troubleshooting">
+          <h2 id="troubleshooting">Troubleshooting</h2>
+          <div class="questions">
+            <details>
+              <summary>Why is Add table disabled?</summary>
+              <p>
+                The builder lists declared tables that are still available to add. Declare another table under <strong>Schema and rule</strong>, then select it
+                in the builder.
+              </p>
+            </details>
+            <details>
+              <summary>Why does the compiler reject a table or column?</summary>
+              <p>
+                Check the names, types, and schema in the request. If the table is outside your search path, use its qualified name in SQL, such as
+                <code>public.inventory</code>.
+              </p>
+            </details>
+            <details>
+              <summary>Why did I get no cases?</summary>
+              <p>
+                Check the analysis goal, the rule, and the row bounds. Add modeled values for the types your query uses, then run the analysis again. Exhaustion
+                covers the exact finite model you supplied.
+              </p>
+            </details>
+            <details>
+              <summary>What if AI cannot return a usable draft?</summary>
+              <p>
+                Open <strong>AI settings</strong> to check your key and provider access. If the local compiler rejects the proposal, read its diagnostic, then
+                revise your description or edit the SQL directly.
+              </p>
+            </details>
+          </div>
+        </section>
+        <footer class="article-footer">
+          <a href="#quick-start">Back to Quick Start</a>
+          <a href="https://github.com/University-of-Wild-Chicken/SQLolla">Source on GitHub</a>
+        </footer>
+        <p class="sr-only" role="status" id="clipboard-status"></p>
+      </main>
+      <aside class="page-contents" aria-labelledby="contents-title">
+        <h2 id="contents-title">On this page</h2>
+        <a href="#set-up-ai">Set up AI</a>
+        <a href="#draft-a-model">Describe the model</a>
+        <a href="#edit-and-analyze">Edit and analyze</a>
+      </aside>
+    </div>
+    <script type="module" src="../src/docs.ts"></script>
+  </body>
+</html>

@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
@@ -10,7 +11,15 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [react()],
   worker: { format: "es" },
-  build: { target: "es2022" },
+  build: {
+    target: "es2022",
+    rollupOptions: {
+      input: {
+        workbench: resolve(import.meta.dirname, "index.html"),
+        docs: resolve(import.meta.dirname, "docs/index.html"),
+      },
+    },
+  },
   server: {
     watch: {
       ignored: ["**/.tools/**", "**/e2e/screenshots/**", "**/.*.tmpdir/**", "**/*.tmpdir/**", "**/*.tmp"],

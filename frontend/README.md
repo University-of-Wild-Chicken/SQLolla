@@ -17,6 +17,9 @@ parameter types. Both flows require consent and compile locally before staging. 
 the proposed model and use **Analyze query** to obtain solver evidence. Saving the key
 does not test account access or send data.
 
+The static documentation opens at `/docs/` and ships in the same frontend build.
+The workbench links to it in a separate tab to preserve the current draft and AI settings.
+
 ## Run
 
 Requires Node.js 22.12+ and npm.

@@ -19,6 +19,9 @@ function WorkbenchHeader({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.
       <nav aria-label="Workspace">
         <a href="#query-editor">Query</a>
         <a href="#review-bins">Saved cases</a>
+        <a className="workbench-docs-link" href="/docs/" target="_blank" rel="noopener">
+          Docs<span className="sr-only"> (opens in a new tab)</span>
+        </a>
         <button type="button" className="ghost-button" onClick={workspace.dialogs.openSettings}>
           AI settings {workspace.dialogs.aiSettings.apiKey ? <span className="key-dot" aria-label="Key saved in this tab" /> : null}
         </button>

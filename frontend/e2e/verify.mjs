@@ -55,12 +55,45 @@ async function checkWorkbench(page, size) {
 /** Check accessible names, colors and landmarks on the desktop and mobile starting screen. */
 async function checkAccessibility(page) {
   const axe = fs.readFileSync(path.resolve("node_modules/axe-core/axe.min.js"), "utf8");
-  await page.addScriptTag({ content: axe });
+  await page.evaluate(axe);
   const failures = await page.evaluate(async () => {
     const result = await window.axe.run({ runOnly: ["wcag2a", "wcag2aa", "wcag21aa"] });
     return result.violations.map(({ id, nodes }) => ({ id, targets: nodes.map(({ target }) => target) }));
   });
   assert.deepEqual(failures, []);
+}
+
+/** The workbench opens static docs in a separate tab to preserve the user's draft. */
+async function checkDocs(page, size) {
+  const opened = page.waitForEvent("popup");
+  await page.getByRole("link", { name: /^Docs / }).click();
+  const docs = await opened;
+  await docs.waitForLoadState("networkidle");
+  assert.equal(new URL(docs.url()).pathname, "/docs/");
+  await docs.getByRole("heading", { name: "Quick Start", exact: true }).waitFor();
+  assert.equal(await docs.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, size + " docs overflow");
+  await checkAccessibility(docs);
+  if (output) await docs.screenshot({ path: path.join(output, "docs-" + size + ".png") });
+  if (size === "desktop") await checkDocGuide(docs);
+  await docs.close();
+}
+
+/** Verify the docs' examples, deep links, and expandable troubleshooting. */
+async function checkDocGuide(docs) {
+  await docs.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin });
+  const prompt = docs.locator("#inventory-prompt");
+  await docs.getByRole("button", { name: "Copy inventory prompt", exact: true }).click();
+  assert.equal(await docs.evaluate(() => navigator.clipboard.readText()), await prompt.textContent());
+  await docs.getByRole("button", { name: "Copy inventory SQL", exact: true }).click();
+  const query = await docs.evaluate(() => navigator.clipboard.readText());
+  assert.equal(query.replaceAll("\r\n", "\n"), "SELECT item_id, units\nFROM inventory\nWHERE units = 5");
+  const witness = docs.getByRole("table", { name: "Counterexample from the inventory demo" });
+  assert.deepEqual(await witness.getByRole("row").filter({ hasText: "Query result" }).getByRole("cell").allTextContents(), ["5", "5"]);
+  const troubleshooting = docs.getByRole("navigation", { name: "Documentation" }).getByRole("link", { name: "Troubleshooting" });
+  await troubleshooting.click();
+  await troubleshooting.and(docs.locator('[aria-current="location"]')).waitFor();
+  await docs.getByText("Why is Add table disabled?", { exact: true }).click();
+  await docs.getByText("The builder lists declared tables", { exact: false }).waitFor();
 }
 
 const browser = await chromium.launch({ executablePath: chrome, headless: true });
@@ -75,9 +108,10 @@ try {
     page.on("pageerror", (error) => errors.push(error.message));
     await checkWorkbench(page, size);
     await checkAccessibility(page);
+    await checkDocs(page, size);
     assert.deepEqual(errors, []);
     await page.close();
-    console.log("PASS", size, "workbench, BYOT and accessibility");
+    console.log("PASS", size, "workbench, docs, BYOT and accessibility");
   }
 } finally {
   await browser.close();
