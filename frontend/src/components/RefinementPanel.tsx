@@ -1,5 +1,4 @@
 import { useId, type JSX } from "react";
-import { AI_MODEL } from "../ai/config";
 import type { CheckedRevision } from "../ai/refinement";
 import { shortHash } from "../analysis/format";
 import { REVIEW_LABELS } from "../feedback/journal";
@@ -18,7 +17,7 @@ function GenerateField({ refinement, onOpenSettings }: PanelProps): JSX.Element 
     <div className="refinement-field">
       <label htmlFor={inputId}>Original prompt</label>
       <textarea id={inputId} rows={3} maxLength={4096} value={refinement.instruction} onChange={(event) => refinement.setInstruction(event.target.value)} />
-      <p>Regeneration uses this prompt and sends canonical SQL, review cases and notes to OpenAI ({AI_MODEL}).</p>
+      <p>Regeneration uses this prompt and sends canonical SQL, review cases and notes to OpenAI.</p>
       <div className="refinement-actions">
         <button
           type="button"
@@ -98,7 +97,7 @@ function Checks({ result }: { readonly result: CheckedRevision }): JSX.Element {
 function Explanation({ explanation }: { readonly explanation: NonNullable<CheckedRevision["explanation"]> }): JSX.Element {
   return (
     <details>
-      <summary>AI explanation · {AI_MODEL}</summary>
+      <summary>AI explanation</summary>
       <p>{explanation.title}</p>
       <ul>
         {explanation.claims.map((claim, index) => (

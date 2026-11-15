@@ -48,7 +48,7 @@ export async function requestAssistance(
   signal: AbortSignal,
 ): Promise<Assistance> {
   if (settings.mode !== "openai_compatible" || !settings.apiKey.trim()) throw new Error("Configure an OpenAI key first.");
-  if (settings.model !== AI_MODEL) throw new Error("The model must be gpt-6.1-sol.");
+  if (settings.model !== AI_MODEL) throw new Error("Open AI settings and save them again.");
   const body = {
     bundle_id: bundleId,
     instance_id: evidence.instance.instanceId,

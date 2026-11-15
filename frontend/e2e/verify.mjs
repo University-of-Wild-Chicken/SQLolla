@@ -11,7 +11,29 @@ const chrome = process.env.CHROME_PATH ?? "C:/Program Files/Google/Chrome/Applic
 const output = process.env.SQLLOLLA_SCREENSHOTS;
 if (output) fs.mkdirSync(output, { recursive: true });
 
-/** Verify startup and the fixed-model BYOT form without transmitting even synthetic credentials. */
+/** Check the first-visit choices, private key entry and reload without any assistance request. */
+async function checkOnboarding(page, size) {
+  const prompt = page.getByRole("region", { name: "Set up AI assistance", exact: true });
+  await prompt.waitFor();
+  if (size === "narrow") {
+    await prompt.getByRole("button", { name: "Skip for now", exact: true }).click();
+  } else {
+    await prompt.getByRole("button", { name: "Set up AI", exact: true }).click();
+    assert.equal(await page.getByLabel("Model identifier").count(), 0);
+    await page.getByLabel("API key (memory only)").fill("synthetic-browser-input");
+    await page.getByRole("button", { name: "Save in this tab · no send" }).click();
+    await page.getByRole("dialog").waitFor({ state: "detached" });
+  }
+  await page.reload({ waitUntil: "networkidle" });
+  await page.getByText("Analysis server reachable", { exact: true }).waitFor();
+  assert.equal(await prompt.count(), 0);
+  assert.equal(await page.evaluate(() => JSON.stringify(localStorage).includes("synthetic-browser-input")), false);
+  await page.getByRole("button", { name: "AI settings" }).click();
+  assert.equal(await page.getByLabel("API key (memory only)").inputValue(), "");
+  await page.getByRole("button", { name: "Cancel", exact: true }).click();
+}
+
+/** Verify startup without sending a solver command or provider request. */
 async function checkWorkbench(page, size) {
   const requests = [];
   page.on("request", (request) => requests.push(new URL(request.url()).pathname));
@@ -23,14 +45,11 @@ async function checkWorkbench(page, size) {
   assert.equal(await page.getByRole("button", { name: /scenario|demo terminal/i }).count(), 0);
   assert.equal(await page.getByRole("button", { name: "Analyze query", exact: true }).isEnabled(), true);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, size + " overflow");
+  assert.doesNotMatch(await page.locator("body").innerText(), /gpt-6\.1-sol/i);
   if (output) await page.screenshot({ path: path.join(output, size + ".png") });
-  await page.getByRole("button", { name: "AI settings" }).click();
-  assert.equal(await page.getByLabel("Model identifier").inputValue(), "gpt-6.1-sol");
-  await page.getByLabel("API key (memory only)").fill("synthetic-browser-input");
-  await page.getByRole("button", { name: "Save in this tab · no send" }).click();
-  await page.getByRole("dialog").waitFor({ state: "detached" });
+  await checkAccessibility(page);
+  await checkOnboarding(page, size);
   assert.equal(requests.filter((request) => request.startsWith("/api/ai/") || request === "/api/command").length, 0);
-  assert.equal(await page.evaluate(() => JSON.stringify(localStorage).includes("synthetic-browser-input")), false);
 }
 
 /** Check accessible names, colors and landmarks on the desktop and mobile starting screen. */

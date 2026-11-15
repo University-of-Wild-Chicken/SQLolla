@@ -7,7 +7,8 @@ the result, or open **SQL / IR / Alloy** to see the source triple. Yes, No and U
 reviews at the bottom of the page for later reopening, relabeling or withdrawal.
 
 When the host opens a case with its complete SQL/IR/Alloy bundle, **Explain this result**
-offers cited OpenAI assistance using `gpt-6.1-sol`. Save a key in **AI settings**, then
+offers cited OpenAI assistance. The workbench offers optional AI setup on the first visit.
+Save a key in **AI settings**, then
 choose **Explain this case**. Saving the key does not test account access or send data.
 
 ## Run

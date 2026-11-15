@@ -159,7 +159,7 @@ export function buildDemoSummary(evidence: EvidenceView, seed: DemoSummarySeed):
 export function providerLabel(mode: AiProviderMode): string {
   const labels: Record<AiProviderMode, string> = {
     offline_demo: "Offline demo summary",
-    openai_compatible: `OpenAI · ${AI_MODEL}`,
+    openai_compatible: "OpenAI",
     anthropic_compatible: "Anthropic unavailable in this host",
     gemini_compatible: "Gemini unavailable in this host",
   };

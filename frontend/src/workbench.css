@@ -148,6 +148,32 @@
   padding: 20px;
 }
 
+.workbench .workbench-ai-setup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 16px 20px;
+  border-color: var(--line-strong);
+  background: var(--teal-pale);
+}
+
+.workbench-ai-setup h2 {
+  font-size: 18px;
+}
+
+.workbench-ai-setup p {
+  margin-top: 4px;
+  color: var(--ink-soft);
+}
+
+.workbench-ai-setup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .workbench-tabs {
   display: flex;
   gap: 6px;
@@ -274,8 +300,7 @@
   font-size: clamp(22px, 3vw, 30px);
 }
 
-.result-heading p,
-.workbench-subtle {
+.result-heading p {
   color: var(--ink-soft);
   font-size: 13px;
 }

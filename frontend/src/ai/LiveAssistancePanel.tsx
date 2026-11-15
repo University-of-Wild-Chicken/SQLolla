@@ -4,7 +4,6 @@ import type { EvidenceView } from "../analysis/types";
 import type { AiProviderSettings } from "./summary";
 import type { Assistance } from "./validation";
 import { useAssistance } from "./useAssistance";
-import { AI_MODEL } from "./config";
 
 interface Props {
   readonly bundleId: string | null;
@@ -39,7 +38,6 @@ function Result({ result, onInspectFact }: { readonly result: Assistance } & Pic
     <div className="ai-content">
       <div className="demo-content-tag">
         <span>UNTRUSTED AI TEXT</span>
-        <span>{AI_MODEL}</span>
       </div>
       <h3>{result.title}</h3>
       <Claims result={result} inspect={onInspectFact} />
@@ -63,9 +61,7 @@ export function LiveAssistancePanel(props: Props): JSX.Element {
   const disabled = !props.bundleId || !props.settings.apiKey.trim() || !!state?.busy;
   return (
     <div className="ai-live-controls">
-      <p>
-        {AI_MODEL} · {props.settings.redactValues ? "SQL, IR, Alloy and values omitted." : "Canonical SQL, IR, Alloy and values will be sent to OpenAI."}
-      </p>
+      <p>{props.settings.redactValues ? "SQL, IR, Alloy and values will be omitted." : "Canonical SQL, IR, Alloy and values will be sent to OpenAI."}</p>
       {!props.bundleId ? <p role="status">Open canonical host evidence before requesting live assistance.</p> : null}
       <label className="field-label">
         Question about this case

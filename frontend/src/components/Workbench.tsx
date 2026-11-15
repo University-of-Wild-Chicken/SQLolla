@@ -1,6 +1,5 @@
 import type { JSX, ReactNode } from "react";
 import markUrl from "../assets/sqlolla-mark.png";
-import { AI_MODEL } from "../ai/config";
 import { LiveAssistancePanel } from "../ai/LiveAssistancePanel";
 import { useHostConnection } from "../workspace/hostConnection";
 import type { Workspace } from "../workspace/useWorkspace";
@@ -46,6 +45,28 @@ function HostConnection(): JSX.Element {
     <p className="workbench-connection" role="status">
       {connection.state === "ready" ? "Analysis server reachable" : "Checking analysis server…"}
     </p>
+  );
+}
+
+/** Offer AI setup on the first visit while keeping query analysis available. */
+function AiSetupPrompt({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.Element | null {
+  const { showAiSetup, openSettings, dismissAiSetup } = workspace.dialogs;
+  if (!showAiSetup) return null;
+  return (
+    <section className="workbench-panel workbench-ai-setup" aria-labelledby="ai-setup-heading">
+      <div>
+        <h2 id="ai-setup-heading">Set up AI assistance</h2>
+        <p>Add your OpenAI key to explain solver cases and propose SQL revisions. You can analyze queries without a key.</p>
+      </div>
+      <div className="workbench-ai-setup-actions">
+        <button type="button" className="primary-button" onClick={openSettings}>
+          Set up AI
+        </button>
+        <button type="button" className="ghost-button" onClick={dismissAiSetup}>
+          Skip for now
+        </button>
+      </div>
+    </section>
   );
 }
 
@@ -101,7 +122,6 @@ function WorkbenchAssistance({ workspace }: Pick<WorkbenchProps, "workspace">): 
           <button type="button" className="ghost-button" onClick={dialogs.openSettings}>
             Add an OpenAI key
           </button>
-          <span className="workbench-subtle">{AI_MODEL}</span>
         </>
       )}
     </section>
@@ -135,6 +155,7 @@ export function Workbench({ workspace, results, reviews }: WorkbenchProps): JSX.
           </div>
           <HostConnection />
         </div>
+        <AiSetupPrompt workspace={workspace} />
         <div className="workbench-grid">
           <div className="workbench-side">
             <QueryControls workspace={workspace} />

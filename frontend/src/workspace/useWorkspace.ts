@@ -55,6 +55,8 @@ export interface WorkspaceDialogs {
   readonly details: DetailsState;
   readonly settingsOpen: boolean;
   readonly aiSettings: AiProviderSettings;
+  readonly showAiSetup: boolean;
+  readonly dismissAiSetup: () => void;
   readonly openDetails: (tab?: DetailsTab) => void;
   readonly inspectFact: (reference: string) => void;
   readonly closeDetails: () => void;
@@ -181,17 +183,40 @@ function useDetailsDialog(closeDrawers: () => void) {
   return { details, openDetails, inspectFact, closeDetails };
 }
 
-/** Manage in-memory provider settings and explicit provider selection. */
+const AI_SETUP_PROMPT_KEY = "sqlolla.ai.setup-prompt.v1";
+
+/** Read only the onboarding marker. Browser storage never supplies provider settings. */
+function firstAiVisit(): boolean {
+  try {
+    return window.localStorage.getItem(AI_SETUP_PROMPT_KEY) !== "seen";
+  } catch {
+    return true;
+  }
+}
+
+/** Manage in-memory provider settings and remember only the user's onboarding choice. */
 function useProviderDialog(closeDrawers: () => void) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [aiSettings, setAiSettings] = useState<AiProviderSettings>(defaultAiSettings);
+  const [showAiSetup, setShowAiSetup] = useState(firstAiVisit);
+  const dismissAiSetup = (): void => {
+    setShowAiSetup(false);
+    try {
+      window.localStorage.setItem(AI_SETUP_PROMPT_KEY, "seen");
+    } catch {
+      // The choice still applies to the mounted workspace when storage is unavailable.
+    }
+  };
   const openSettings = (): void => {
     closeDrawers();
+    dismissAiSetup();
     setSettingsOpen(true);
   };
   return {
     settingsOpen,
     aiSettings,
+    showAiSetup,
+    dismissAiSetup,
     openSettings,
     closeSettings: () => setSettingsOpen(false),
     saveAiSettings: setAiSettings,

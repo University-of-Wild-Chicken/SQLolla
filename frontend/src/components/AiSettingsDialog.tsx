@@ -32,7 +32,7 @@ function ProviderFields({ draft, patch }: FieldsProps): JSX.Element {
       <label className="provider-card">
         <input type="radio" name="provider" checked={draft.mode === "openai_compatible"} onChange={() => patch({ mode: "openai_compatible" })} />
         <strong>OpenAI-compatible</strong>
-        <span>OpenAI Responses · {AI_MODEL}</span>
+        <span>OpenAI Responses</span>
       </label>
       <p className="field-note">Anthropic and Gemini are not connected in this host. No provider or model fallback is used.</p>
     </fieldset>
@@ -43,10 +43,6 @@ function ProviderFields({ draft, patch }: FieldsProps): JSX.Element {
 function CredentialFields({ draft, patch }: FieldsProps): JSX.Element {
   return (
     <div className="credential-fields">
-      <label>
-        Model identifier
-        <input readOnly value={AI_MODEL} />
-      </label>
       <label>
         Provider destination
         <input readOnly value={AI_ENDPOINT} />
@@ -123,7 +119,7 @@ function Body(props: Omit<Props, "open">): JSX.Element {
   const patch = (next: Partial<AiProviderSettings>) => setDraft((current) => ({ ...current, ...next }));
   return (
     <div className="settings-body">
-      {props.fixedProvider ? <p>OpenAI · {AI_MODEL}</p> : <ProviderFields draft={draft} patch={patch} />}
+      {props.fixedProvider ? <p>Connect OpenAI for case explanations and SQL proposals.</p> : <ProviderFields draft={draft} patch={patch} />}
       {draft.mode === "openai_compatible" ? <CredentialFields draft={draft} patch={patch} /> : null}
       <SharingFields draft={draft} patch={patch} />
       <details>

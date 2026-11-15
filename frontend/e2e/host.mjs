@@ -52,7 +52,8 @@ async function nextCase(page) {
 /** Configure explicit unredacted synthetic context; saving settings must not send the key. */
 async function configureAi(page, apiKey) {
   await page.getByRole("button", { name: "AI settings" }).click();
-  assert.equal(await page.getByLabel("Model identifier").inputValue(), "gpt-6.1-sol");
+  assert.doesNotMatch(await page.getByRole("dialog").innerText(), /gpt-6\.1-sol/i);
+  assert.equal(await page.getByLabel("Model identifier").count(), 0);
   await page.getByLabel("API key (memory only)", { exact: true }).fill(apiKey);
   await page.getByLabel("Redact SQL and values before sending explanation context").uncheck();
   await page.getByRole("button", { name: "Save in this tab · no send", exact: true }).click();
@@ -267,6 +268,7 @@ export async function verifyHost({ url, chromePath, apiKey }) {
 /** Exercise the full review and adoption flow against a host with a fresh test-only store. */
 async function verifyFlows(page, apiKey) {
   await page.getByRole("heading", { name: "Query workbench" }).waitFor();
+  await page.getByRole("button", { name: "Skip for now", exact: true }).click();
   assert.equal(await page.getByTestId("review-card").count(), 0);
   const first = await analyze(page);
   if (typeof process !== "undefined" && process.env.SQLLOLLA_SCREENSHOTS) await captureEvidence(page, process.env.SQLLOLLA_SCREENSHOTS);
@@ -276,6 +278,7 @@ async function verifyFlows(page, apiKey) {
   const refinement = await checkRefinement(page);
   const precision = await exactNumbers(page);
   if (apiKey) await checkDisconnect(page, apiKey);
+  assert.doesNotMatch(await page.locator("body").innerText(), /gpt-6\.1-sol/i);
   await checkBuilder(page);
   return { ...report(first.assurance_kind, precision, ai), refinement, builderCompiledAndStaged: true };
 }

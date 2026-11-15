@@ -167,7 +167,7 @@ describe("review workspace workflows", () => {
     await user.click(screen.getByRole("button", { name: "Open AI provider settings" }));
     await user.click(screen.getByRole("radio", { name: /OpenAI-compatible/ }));
     await user.type(screen.getByLabelText(/API key \(memory only\)/i), "sk-live-should-not-persist");
-    await user.type(screen.getByLabelText(/Model identifier/i), "future-model");
+    expect(screen.queryByLabelText(/Model identifier/i)).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Save in this tab/i }));
     expect(window.localStorage.getItem("sqlolla.feedback.journal.v1") ?? "").not.toContain("sk-live-should-not-persist");
     for (let index = 0; index < window.localStorage.length; index += 1) {
