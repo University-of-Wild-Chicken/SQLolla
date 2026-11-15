@@ -5,7 +5,7 @@ import { AI_MODEL } from "./ai/config";
 import type { RefinementBasis } from "./ai/refinement";
 import { scenarioById } from "./analysis/fixtures";
 import { hostJson } from "./analysis/host";
-import { STARTER_REQUEST } from "./analysis/starter";
+import demoRequest from "../e2e/tenant-request.json";
 import { createFixtureTransport } from "./analysis/transports";
 import { activeDecisions, JOURNAL_STORAGE_KEY, parseJournal } from "./feedback/journal";
 
@@ -31,7 +31,7 @@ function coreResponse(basis: RefinementBasis, sql?: string) {
       ? {
           ready: true,
           property_check: property,
-          candidate_request: { ...STARTER_REQUEST, sql },
+          candidate_request: { ...demoRequest, sql },
           cases: basis.feedback.map((label) => ({ ...label, status: label.disposition === "unsure" ? "advisory" : "satisfied" })),
         }
       : {}),
@@ -77,6 +77,7 @@ async function openNative() {
   render(<App transport={{ ...createFixtureTransport(), kind: "local-host", command, start: async () => ({ ok: true, payload: fixture.openPayload }) }} />);
   await screen.findByRole("heading", { name: "Orders without a tenant filter" });
   fireEvent.click(screen.getByRole("button", { name: "03 / Analyze" }));
+  fireEvent.change(screen.getByLabelText("SQL query"), { target: { value: demoRequest.sql } });
   fireEvent.click(screen.getByRole("button", { name: "Analyze query" }));
   await screen.findByRole("heading", { name: "Your local SQL analysis" });
   return command;

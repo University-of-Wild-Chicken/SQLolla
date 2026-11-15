@@ -9,7 +9,7 @@ export function NativeAnalysisPanel({ analysis, compact }: { readonly analysis: 
     <div className="rail-scroll builder-panel">
       <SqlInput analysis={analysis} compact={compact} />
       <NativeControls analysis={analysis} />
-      <AdvancedRequest analysis={analysis} />
+      {compact ? null : <AdvancedRequest analysis={analysis} />}
       {analysis.error ? (
         <div role="alert" className="inline-alert inline-alert--danger">
           {analysis.error}
@@ -29,7 +29,7 @@ function SqlInput({ analysis, compact }: { readonly analysis: NativeAnalysis; re
     <>
       <div className="rail-heading">
         <h2>{compact ? "Query and rule" : "Check your query"}</h2>
-        <p>The starter query tests whether orders can be returned for a tenant other than 1.</p>
+        <p>Enter SQL for the current schema. Change the schema and rule before checking queries for your own tables.</p>
       </div>
       <label className="field-label">
         SQL query
@@ -47,7 +47,7 @@ function SqlInput({ analysis, compact }: { readonly analysis: NativeAnalysis; re
 }
 
 /** Advanced context is editable as exact JSON, hidden from the first-run query flow. */
-function AdvancedRequest({ analysis }: { readonly analysis: NativeAnalysis }): JSX.Element {
+export function AdvancedRequest({ analysis }: { readonly analysis: NativeAnalysis }): JSX.Element {
   return (
     <details>
       <summary>Advanced request: schema, values and rule</summary>

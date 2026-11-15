@@ -248,6 +248,43 @@
   font-size: 13px;
 }
 
+.query-schema {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.query-schema summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.query-schema p,
+.ai-draft p {
+  margin-block: 8px;
+}
+
+.schema-fields,
+.ai-draft {
+  display: grid;
+  gap: 8px;
+}
+
+.schema-fields {
+  margin-block: 10px;
+}
+
+.schema-fields label,
+.ai-draft > label:not(.check-row) {
+  display: grid;
+  gap: 4px;
+}
+
+.schema-fields input,
+.schema-fields select,
+.ai-draft select {
+  width: 100%;
+}
+
 .workbench .primary-button {
   min-height: 42px;
   background: var(--teal);

@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import { asRecord } from "../analysis/guards";
 import { parseJson, stringifyJson } from "../analysis/json";
-import { STARTER_REQUEST } from "../analysis/starter";
+import { EMPTY_REQUEST } from "../analysis/starter";
 import type { AnalysisSession } from "../analysis/session";
 import type { FixtureScenario } from "../analysis/types";
 
@@ -23,9 +23,14 @@ export interface NativeAnalysis {
   readonly stage: (request: unknown) => void;
 }
 
-/** Reject malformed editable JSON before any command is sent, without interpreting SQL semantics. */
+/** Read the exact context even before a user supplies SQL. */
+export function editableRequest(text: string): Record<string, unknown> {
+  return asRecord(parseJson(text), "analysis request");
+}
+
+/** Reject malformed requests and missing SQL before analysis. */
 export function requestObject(text: string): Record<string, unknown> {
-  const request = asRecord(parseJson(text), "analysis request");
+  const request = editableRequest(text);
   if (typeof request["sql"] !== "string" || !request["sql"].trim()) throw new Error("Enter a SQL query.");
   return request;
 }
@@ -33,7 +38,8 @@ export function requestObject(text: string): Record<string, unknown> {
 /** Display the SQL editor even when the advanced JSON currently has an incomplete edit. */
 function requestSql(text: string): string {
   try {
-    return String(requestObject(text)["sql"]);
+    const sql = editableRequest(text)["sql"];
+    return typeof sql === "string" ? sql : "";
   } catch {
     return "";
   }
@@ -41,7 +47,7 @@ function requestSql(text: string): string {
 
 /** Manage request text revisions so a late result cannot validate a newer draft. */
 function useEditor() {
-  const [text, setText] = useState(() => stringifyJson(STARTER_REQUEST, 2));
+  const [text, setText] = useState(() => stringifyJson(EMPTY_REQUEST, 2));
   const [dirty, setDirty] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const revision = useRef(0);

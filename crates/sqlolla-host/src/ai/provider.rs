@@ -13,11 +13,16 @@ pub(super) async fn request(
     prompt: &context::Prompt,
     proposal: bool,
 ) -> Result<Value> {
+    post_json(key, &body(input, prompt, proposal)).await
+}
+
+/// Use the same fixed provider transport and strict extraction for every assistance task.
+pub(super) async fn post_json(key: &str, body: &Value) -> Result<Value> {
     let client = client()?;
     let response = client
         .post(ENDPOINT)
         .bearer_auth(key)
-        .json(&body(input, prompt, proposal))
+        .json(body)
         .send()
         .await
         .map_err(|_| {

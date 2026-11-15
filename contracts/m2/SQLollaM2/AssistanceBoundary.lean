@@ -117,6 +117,58 @@ theorem credential_export_noninterference (first second : Credential) (request :
 theorem equal_public_requests_equal_exports (first second : PrivateInvocation Credential PublicRequest)
     (same : first.request = second.request) : publicExport first = publicExport second := same
 
+/-- A first draft sends an explicitly shared schema and prompt before any solver case exists. -/
+structure InitialDraftPacket (Schema Signature : Type) where
+  instruction : String
+  schema : Schema
+  parameterTypes : Signature
+  deriving DecidableEq
+
+/-- The provider receives the approved packet independently of the private analysis context. -/
+def initialDraftExport {Schema Signature Context : Type}
+    (submission : InitialDraftPacket Schema Signature × Context) : InitialDraftPacket Schema Signature :=
+  submission.1
+
+/-- Data, finite domains, properties and existing SQL cannot affect that projection. -/
+theorem initial_draft_export_independent {Schema Signature Context : Type}
+    (packet : InitialDraftPacket Schema Signature) (first second : Context) :
+    initialDraftExport (packet, first) = initialDraftExport (packet, second) := rfl
+
+/-- First-draft staging requires consent, an exact local compiler check and explicit selection. -/
+structure InitialDraftStage {Context : Type} (current checked : Context)
+    (generated staged : String) (compiled consent selected : Bool) : Prop where
+  sameContext : checked = current
+  sameSql : generated = staged
+  compilerAccepted : compiled = true
+  shared : consent = true
+  userSelected : selected = true
+
+/-- Changing the local context invalidates a previous compilation of the proposed SQL. -/
+theorem initial_draft_stale_context_rejected {Context : Type} {current checked : Context}
+    {generated staged : String} {compiled consent selected : Bool} (changed : checked ≠ current) :
+    ¬ InitialDraftStage current checked generated staged compiled consent selected :=
+  fun passed => changed passed.sameContext
+
+/-- A refusal or different statement cannot acquire permission to stage through the AI response. -/
+theorem initial_draft_requires_matching_compilation {Context : Type} {current checked : Context}
+    {generated staged : String} {compiled consent selected : Bool}
+    (valid : InitialDraftStage current checked generated staged compiled consent selected) :
+    (checked = current ∧ generated = staged) ∧ compiled = true :=
+  ⟨⟨valid.sameContext, valid.sameSql⟩, valid.compilerAccepted⟩
+
+/-- Building a fresh database model shares the prompt alone. -/
+def modelDraftExport {Context : Type} (submission : String × Context) : String := submission.1
+
+/-- A model building request does not implicitly send a current catalog or source query. -/
+theorem model_draft_export_independent {Context : Type} (prompt : String) (first second : Context) :
+    modelDraftExport (prompt, first) = modelDraftExport (prompt, second) := rfl
+
+/-- A resulting model becomes the local draft only after its exact context passes the stage gate. -/
+theorem model_draft_requires_confirmation {Context : Type} {current checked : Context}
+    {generated staged : String} {compiled consent : Bool}
+    ( valid : InitialDraftStage current checked generated staged compiled consent false ) : False :=
+  Bool.false_ne_true valid.userSelected
+
 /-- Parts of the recorded analysis context whose exact values must survive proposal binding. -/
 structure AnalysisContext (Catalog Parameters Domain Execution : Type) where
   catalog : Catalog

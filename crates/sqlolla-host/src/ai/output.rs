@@ -101,7 +101,7 @@ fn valid_claim(claim: &Claim, prompt: &context::Prompt) -> Result<()> {
 }
 
 /// Plain text rejects NUL and control characters that could obscure UI or log boundaries.
-fn bounded_text(value: &str, limit: usize) -> Result<()> {
+pub(super) fn bounded_text(value: &str, limit: usize) -> Result<()> {
     if value.trim().is_empty()
         || value.len() > limit
         || value

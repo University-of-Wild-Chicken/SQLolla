@@ -58,7 +58,8 @@ export interface DraftState {
 
 /** Actions that edit only the local draft and invalidation state. */
 export type DraftAction =
-  | { readonly type: "start"; readonly catalog: CatalogModel }
+  | { readonly type: "start"; readonly catalog: CatalogModel; readonly starterDefaults?: boolean }
+  | { readonly type: "extend-catalog"; readonly catalog: CatalogModel }
   | { readonly type: "reset" }
   | { readonly type: "intent"; readonly intent: string }
   | { readonly type: "add-table"; readonly tableId: string }
@@ -142,10 +143,10 @@ function defaultFilter(table: TableModel, tenant: ColumnModel | undefined): read
 }
 
 /** Build the default local draft for an explicit schema context. */
-export function createDraft(catalog: CatalogModel): DraftState {
+export function createDraft(catalog: CatalogModel, starterDefaults = true): DraftState {
   const table = catalog.tables["public.orders"] ?? Object.values(catalog.tables)[0];
   if (!table) return emptyDraft(catalog);
-  const tenant = table.columns.find((column) => column.name === "tenant_id");
+  const tenant = starterDefaults ? table.columns.find((column) => column.name === "tenant_id") : undefined;
   return {
     catalog,
     tables: [
@@ -157,8 +158,8 @@ export function createDraft(catalog: CatalogModel): DraftState {
     ],
     filters: defaultFilter(table, tenant),
     joins: [],
-    parameters: [{ number: 1, type: draftType(tenant), value: "7", nullType: "int32" }],
-    limit: "50",
+    parameters: tenant ? [{ number: 1, type: draftType(tenant), value: "7", nullType: "int32" }] : [],
+    limit: starterDefaults ? "50" : "",
     intent: "",
     nextId: 2,
   };
@@ -282,9 +283,10 @@ function updateParameter(state: DraftState, action: Extract<DraftAction, { type:
 
 /** Pure draft reducer. Every action produces a new unvalidated local draft. */
 export function draftReducer(state: DraftState | null, action: DraftAction): DraftState | null {
-  if (action.type === "start") return createDraft(action.catalog);
+  if (action.type === "start") return createDraft(action.catalog, action.starterDefaults);
   if (action.type === "reset") return null;
   if (!state) return state;
+  if (action.type === "extend-catalog") return { ...state, catalog: action.catalog };
   if (action.type === "intent") return { ...state, intent: action.intent };
   if (action.type === "limit") return { ...state, limit: action.limit };
   switch (action.type) {

@@ -1,15 +1,21 @@
 # SQLolla evidence review frontend
 
-The workbench starts with an editable tenant-filter query and its finite rule. Choose
-**Analyze query** for a real case from the same deterministic Rust and Alloy pipeline.
-The SQL editor and typed query builder share this pipeline. Use Graph or Table to inspect
+The workbench starts with an empty query and catalog. Open **Schema and rule** to declare
+tables, their modeled row limits, finite typed values, and an output rule. The advanced
+request editor supports the full analysis request. Enter SQL directly or use **Query
+builder** to select columns, join declared tables, and add filters. Choose **Analyze query**
+to run the deterministic Rust and Alloy pipeline. Use Graph or Table to inspect
 the result, or open **SQL / IR / Alloy** to see the source triple. Yes, No and Unsure save
 reviews at the bottom of the page for later reopening, relabeling or withdrawal.
 
 When the host opens a case with its complete SQL/IR/Alloy bundle, **Explain this result**
 offers cited OpenAI assistance. The workbench offers optional AI setup on the first visit.
-Save a key in **AI settings**, then
-choose **Explain this case**. Saving the key does not test account access or send data.
+Save a key in **AI settings**, then choose **Build with AI** for a first draft or
+**Explain this case** for a saved case. Building a database model shares the description.
+Drafting SQL for an existing catalog shares the description, schema declarations, and
+parameter types. Both flows require consent and compile locally before staging. Review
+the proposed model and use **Analyze query** to obtain solver evidence. Saving the key
+does not test account access or send data.
 
 ## Run
 

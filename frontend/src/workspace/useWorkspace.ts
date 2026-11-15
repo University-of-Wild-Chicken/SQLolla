@@ -3,7 +3,7 @@
  * review intent. Explicit native actions use the injected local host transport.
  */
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
-import { NATIVE_SCENARIO, STARTER_CATALOG } from "../analysis/starter";
+import { EMPTY_CATALOG, NATIVE_SCENARIO } from "../analysis/starter";
 import { useAnalysisSession, type AnalysisSession } from "../analysis/session";
 import type { AnalysisTransport, EvidenceView, FixtureScenario } from "../analysis/types";
 import { defaultAiSettings, type AiProviderSettings } from "../ai/summary";
@@ -14,7 +14,10 @@ import { activeDecisions, activeDecisionFor, detectConflicts, type FeedbackEvent
 import { useFeedbackJournal, type FeedbackJournal } from "../feedback/useFeedbackJournal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import type { Dispatch } from "react";
-import { nativeScenario, useNativeAnalysis, type NativeAnalysis } from "./native";
+import { editableRequest, nativeScenario, useNativeAnalysis, type NativeAnalysis } from "./native";
+import { currentCatalog } from "./schema";
+import { stringifyJson } from "../analysis/json";
+import { asRecord } from "../analysis/guards";
 import { draftRequest } from "../builder/request";
 import { useArchivedReview } from "./archivedReview";
 import { useRefinement } from "./refinement";
@@ -300,14 +303,19 @@ function useConfirmDiscard(navigation: WorkspaceNavigation, drawers: WorkspaceDr
 function useDraftActions(
   navigation: WorkspaceNavigation,
   dialogs: WorkspaceDialogs,
+  native: NativeAnalysis,
 ): {
   readonly startDraft: () => void;
   readonly discardDraft: () => void;
 } {
   const startDraft = (): void => {
+    const production = navigation.initial.id === NATIVE_SCENARIO.id;
+    const catalog = production ? currentCatalog(native.text) : (navigation.selectedScenario.builderCatalog ?? EMPTY_CATALOG);
+    if (!catalog || !Object.keys(catalog.tables).length) return;
     navigation.dispatchDraft({
       type: "start",
-      catalog: navigation.selectedScenario.builderCatalog ?? STARTER_CATALOG,
+      catalog,
+      starterDefaults: !production,
     });
     navigation.setLeftTab("builder");
     dialogs.closeAll();
@@ -369,7 +377,7 @@ export function useWorkspace(transport: AnalysisTransport, initialScenarioId?: s
   const chooseScenario = useChooseScenario(navigation, drawers, session);
   const confirmDiscard = useConfirmDiscard(navigation, drawers);
   const actions = {
-    ...useDraftActions(navigation, dialogs),
+    ...useDraftActions(navigation, dialogs, native),
     ...useFeedbackActions(journal, selectors),
     ...useNativeActions(transport, session, navigation, native),
     openLedger: useOpenLedger(drawers),
@@ -406,17 +414,33 @@ function useWorkspaceRefinement(frame: ReturnType<typeof useWorkspaceFrame>) {
 
 /** Cards and AI proposals stage explicit requests; only the local backend can create canonical evidence. */
 function useNativeActions(transport: AnalysisTransport, session: AnalysisSession, navigation: WorkspaceNavigation, native: NativeAnalysis) {
+  const production = navigation.initial.id === NATIVE_SCENARIO.id;
   const checkDraft = async (draft: DraftState): Promise<unknown> => {
     if (!transport.command) throw new Error("Connect the analysis server to check this draft.");
-    const result = await transport.command(draftRequest(draft, session.state.evidence));
+    const request = production ? compileBuilder(draft, native.text) : draftRequest(draft, session.state.evidence);
+    const result = await transport.command(request);
     if (!result.ok) throw new Error(result.error.message);
     return result.payload;
   };
   const stageDraft = (draft: DraftState): void => {
-    native.stage(draftRequest(draft, session.state.evidence));
-    native.setKind("example");
+    const context = production ? editableRequest(native.text) : null;
+    const compile = context ? compileBuilder(draft, native.text) : draftRequest(draft, session.state.evidence);
+    native.stage(context ? { ...context, sql: compile.sql, parameters: compile.parameters } : compile);
+    if (context?.mode !== "analyze") native.setKind("example");
     navigation.dispatchDraft({ type: "reset" });
     navigation.setLeftTab("analysis");
   };
   return { checkDraft, stageDraft };
+}
+
+/** Compile against the active catalog and the exact current local database/session context. */
+function compileBuilder(draft: DraftState, text: string): Record<string, unknown> {
+  const context = editableRequest(text);
+  if (stringifyJson(draft.catalog.raw) !== stringifyJson(context.catalog)) throw new Error("The schema changed. Start a draft for the current schema.");
+  const request = draftRequest(draft, null);
+  return {
+    ...request,
+    database: { ...asRecord(request.database, "draft database"), ...asRecord(context.database ?? {}, "current database") },
+    ...(context.execution ? { execution: context.execution } : {}),
+  };
 }

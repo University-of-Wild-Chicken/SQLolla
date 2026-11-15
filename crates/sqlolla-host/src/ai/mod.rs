@@ -1,5 +1,7 @@
 //! Optional untrusted assistance over reloaded canonical evidence; no application database is contacted.
 mod context;
+mod draft;
+mod model_draft;
 mod output;
 mod provider;
 mod refinement;
@@ -67,6 +69,8 @@ struct Input {
 /// Expose assistance only behind the host's origin, nonce, body and admission middleware.
 pub fn router() -> Router<HostState> {
     Router::new()
+        .route("/api/ai/draft", post(draft::generate))
+        .route("/api/ai/model-draft", post(model_draft::generate))
         .route("/api/ai/explain", post(explain))
         .route("/api/ai/propose", post(proposal_requires_feedback))
         .route("/api/ai/refine", post(refinement::refine))

@@ -3,9 +3,8 @@ import markUrl from "../assets/sqlolla-mark.png";
 import { LiveAssistancePanel } from "../ai/LiveAssistancePanel";
 import { useHostConnection } from "../workspace/hostConnection";
 import type { Workspace } from "../workspace/useWorkspace";
-import { BuilderPanel } from "./BuilderPanel";
 import { JournalPanel } from "./JournalPanel";
-import { NativeAnalysisPanel } from "./NativeAnalysisPanel";
+import { QueryWorkbench } from "./QueryWorkbench";
 
 type WorkbenchProps = { readonly workspace: Workspace; readonly results: ReactNode; readonly reviews: ReactNode };
 
@@ -56,7 +55,7 @@ function AiSetupPrompt({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.El
     <section className="workbench-panel workbench-ai-setup" aria-labelledby="ai-setup-heading">
       <div>
         <h2 id="ai-setup-heading">Set up AI assistance</h2>
-        <p>Add your OpenAI key to explain solver cases and propose SQL revisions. You can analyze queries without a key.</p>
+        <p>Add your OpenAI key to draft a model or query and explain solver cases. You can also build and analyze queries yourself.</p>
       </div>
       <div className="workbench-ai-setup-actions">
         <button type="button" className="primary-button" onClick={openSettings}>
@@ -67,42 +66,6 @@ function AiSetupPrompt({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.El
         </button>
       </div>
     </section>
-  );
-}
-
-/** Keep the low-code builder available alongside the direct SQL editor. */
-function QueryControls({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.Element {
-  const { navigation, native } = workspace;
-  const builder = navigation.leftTab === "builder";
-  return (
-    <section className="workbench-panel query-workbench" id="query-editor" aria-label="Query editor">
-      <div className="workbench-tabs" aria-label="Query editor mode">
-        <button type="button" aria-pressed={!builder} onClick={() => navigation.setLeftTab("analysis")}>
-          SQL editor
-        </button>
-        <button type="button" aria-pressed={builder} onClick={() => navigation.setLeftTab("builder")}>
-          Query builder
-        </button>
-      </div>
-      {builder ? <QueryBuilder workspace={workspace} /> : <NativeAnalysisPanel analysis={native} compact />}
-    </section>
-  );
-}
-
-/** Pass the current validated catalog and the same deterministic stage actions to the builder. */
-function QueryBuilder({ workspace }: Pick<WorkbenchProps, "workspace">): JSX.Element {
-  const { navigation } = workspace;
-  return (
-    <BuilderPanel
-      draft={navigation.draft}
-      scenarios={[navigation.selectedScenario]}
-      selectedId={navigation.selectedId}
-      onStartDraft={workspace.startDraft}
-      onDiscardDraft={workspace.discardDraft}
-      dispatchDraft={navigation.dispatchDraft}
-      onCheckDraft={workspace.checkDraft}
-      onStageDraft={workspace.stageDraft}
-    />
   );
 }
 
@@ -158,7 +121,7 @@ export function Workbench({ workspace, results, reviews }: WorkbenchProps): JSX.
         <AiSetupPrompt workspace={workspace} />
         <div className="workbench-grid">
           <div className="workbench-side">
-            <QueryControls workspace={workspace} />
+            <QueryWorkbench workspace={workspace} />
             <WorkbenchAssistance workspace={workspace} />
           </div>
           <div className="workbench-results" id="review-center">

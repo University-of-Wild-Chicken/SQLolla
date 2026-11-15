@@ -201,16 +201,22 @@ function TableCard({
 function AddTable({ draft, dispatch }: { readonly draft: DraftState; readonly dispatch: DispatchDraft }): JSX.Element {
   const [tableId, setTableId] = useState("");
   const available = Object.keys(draft.catalog.tables).filter((id) => !draft.tables.some((table) => table.tableId === id));
+  const selected = available.includes(tableId) ? tableId : (available[0] ?? "");
   return (
     <div className="builder-section__head">
       <span className="mono-label">TABLES</span>
-      <SelectField label="Table to add" value={tableId} options={[{ value: "", label: "Choose schema table…" }, ...options(available)]} onChange={setTableId} />
+      <SelectField
+        label="Table to add"
+        value={selected}
+        options={[{ value: "", label: available.length ? "Choose schema table…" : "Declare another table in Schema and rule" }, ...options(available)]}
+        onChange={setTableId}
+      />
       <button
         type="button"
         className="text-button"
-        disabled={!tableId}
+        disabled={!selected}
         onClick={() => {
-          dispatch({ type: "add-table", tableId });
+          dispatch({ type: "add-table", tableId: selected });
           setTableId("");
         }}
       >

@@ -15,6 +15,7 @@ describe("explicit native workspace actions", () => {
     render(<App transport={{ ...fixtures, open, start }} />);
     await screen.findByRole("heading", { name: "Orders without a tenant filter" });
     await user.click(screen.getByRole("button", { name: "03 / Analyze" }));
+    await user.type(screen.getByLabelText("SQL query"), "SELECT 1");
     await user.click(screen.getByRole("button", { name: "Analyze query" }));
     expect(await screen.findByRole("heading", { name: "Your local SQL analysis" })).toBeInTheDocument();
     expect(screen.getByText("LOCAL SOLVER EVIDENCE")).toBeInTheDocument();

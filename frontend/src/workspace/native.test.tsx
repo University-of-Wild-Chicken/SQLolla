@@ -8,6 +8,8 @@ describe("native request drafts", () => {
   it("keeps goal and limit edits separate from already validated evidence", async () => {
     const startRequest = vi.fn(async () => true);
     const { result } = renderHook(() => useNativeAnalysis({ startRequest } as unknown as AnalysisSession));
+    expect(result.current.sql).toBe("");
+    act(() => result.current.editSql("SELECT 1"));
     await act(async () => {
       await result.current.start();
     });

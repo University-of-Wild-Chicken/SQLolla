@@ -1,9 +1,10 @@
 /** Real browser/host checks; optional provider credentials enter only through an in-memory argument. */
 import assert from "node:assert/strict";
-import { mkdir } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { checkModelDraft, declareTable, openDetails } from "./drafts.mjs";
 
 const { chromium } = createRequire(import.meta.url)("playwright-core");
 
@@ -204,8 +205,8 @@ async function checkRefinement(page) {
 
 /** Check real browser precision for i64::MAX and a structured SQL NULL through stored examples. */
 async function exactNumbers(page) {
-  const advanced = page.locator("details").filter({ has: page.getByLabel("Advanced analysis request") });
-  if ((await advanced.getAttribute("open")) === null) await advanced.locator("summary").click();
+  await openDetails(page, "Schema and rule");
+  await openDetails(page, "Advanced request: schema, values and rule");
   await page
     .getByLabel("Advanced analysis request")
     .fill(
@@ -234,16 +235,43 @@ async function checkDisconnect(page, apiKey) {
 async function checkBuilder(page) {
   await page.reload({ waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Query builder", exact: true }).click();
-  await page.getByRole("button", { name: "Start draft for this schema", exact: true }).click();
+  await declareTable(page, "dispatches", "id:int32, warehouse_id:int32");
+  await declareTable(page, "warehouses", "id:int32");
+  const add = page.getByRole("button", { name: "Add table", exact: true });
+  assert.equal(await add.isEnabled(), true);
+  await add.click();
+  await page.getByLabel("Left column for public.warehouses", { exact: true }).selectOption("warehouse_id");
+  await page.getByLabel("Right column for public.warehouses", { exact: true }).selectOption("id");
   await page.getByText(/Check this draft in the query builder to see the generated IR and Alloy model/).waitFor();
   assert.equal(await page.getByText(/compile bridge is not connected|local JSON-lines CLI/i).count(), 0);
   const sql = await page.locator(".builder-sql pre").textContent();
   assert.match(sql, /^SELECT/);
+  assert.match(sql, /dispatches/);
+  assert.match(sql, /JOIN.*warehouses/);
   await page.getByRole("button", { name: "Check draft with deterministic compiler", exact: true }).click();
   await page.getByText("Compiled by the deterministic backend", { exact: true }).waitFor();
   await page.getByRole("button", { name: "Review as a new analysis", exact: true }).click();
   assert.equal(await page.getByLabel("SQL query", { exact: true }).inputValue(), sql);
   assert.equal(await page.getByTestId("review-card").count(), 0);
+  await checkCustomSql(page);
+}
+
+/** Run edited SQL against the tables, values and rule entered through the manual controls. */
+async function checkCustomSql(page) {
+  await openDetails(page, "Schema and rule");
+  await openDetails(page, "Modeled values (0)");
+  const domain = page.locator(".schema-fields").filter({ has: page.getByText("Modeled values (0)", { exact: true }) });
+  await domain.getByLabel("Value", { exact: true }).fill("7");
+  await domain.getByRole("button", { name: "Add modeled value", exact: true }).click();
+  await openDetails(page, "Output rule");
+  await page.getByLabel("Rule type", { exact: true }).selectOption("max_rows");
+  await page.getByLabel("Maximum returned rows", { exact: true }).fill("0");
+  await page.getByRole("button", { name: "Set output rule", exact: true }).click();
+  const query = "SELECT d.id FROM dispatches AS d JOIN warehouses AS w ON d.warehouse_id = w.id WHERE w.id = 7";
+  await page.getByLabel("SQL query", { exact: true }).fill(query);
+  const solved = await analyze(page);
+  assert.equal(solved.bundle.request.sql, query);
+  assert.deepEqual(Object.keys(solved.bundle.request.catalog.tables), ["public.dispatches", "public.warehouses"]);
 }
 
 /** Return only sanitized verification metadata; no trace, request headers or credential file is produced. */
@@ -273,6 +301,10 @@ async function verifyFlows(page, apiKey) {
   await page.getByRole("heading", { name: "Query workbench" }).waitFor();
   await page.getByRole("button", { name: "Skip for now", exact: true }).click();
   assert.equal(await page.getByTestId("review-card").count(), 0);
+  assert.equal(await page.getByLabel("SQL query", { exact: true }).inputValue(), "");
+  await checkModelDraft(page, configureAi, analyze);
+  await page.reload({ waitUntil: "networkidle" });
+  await enterTenantRequest(page);
   const first = await analyze(page);
   if (typeof process !== "undefined" && process.env.SQLLOLLA_SCREENSHOTS) await captureEvidence(page, process.env.SQLLOLLA_SCREENSHOTS);
   const next = await nextCase(page);
@@ -284,6 +316,14 @@ async function verifyFlows(page, apiKey) {
   assert.doesNotMatch(await page.locator("body").innerText(), /gpt-6\.1-sol/i);
   await checkBuilder(page);
   return { ...report(first.assurance_kind, precision, ai), refinement, builderCompiledAndStaged: true };
+}
+
+/** Test fixtures enter through the declared model editor, never through production defaults. */
+async function enterTenantRequest(page) {
+  await openDetails(page, "Schema and rule");
+  await openDetails(page, "Advanced request: schema, values and rule");
+  const request = await readFile(new URL("./tenant-request.json", import.meta.url), "utf8");
+  await page.getByLabel("Advanced analysis request", { exact: true }).fill(request);
 }
 
 /** Capture actual solver evidence at desktop and mobile widths without including credentials. */

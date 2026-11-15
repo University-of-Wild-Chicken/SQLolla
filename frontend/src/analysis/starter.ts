@@ -1,36 +1,24 @@
 import { parseCatalog } from "./adapter";
 import type { CatalogModel, FixtureScenario } from "./types";
 
-/** Editable input example only; every displayed result must come from a new backend analysis. */
-export const STARTER_REQUEST = {
-  id: "browser-tenant-example",
-  sql: "SELECT id, tenant_id FROM orders",
+/** A blank production workspace holds only the explicit request fields. */
+export const EMPTY_REQUEST = {
+  id: "browser-query",
+  sql: "",
   mode: "analyze",
   catalog: {
     search_path: ["public"],
-    tables: {
-      orders: {
-        schema: "public",
-        name: "orders",
-        columns: [
-          { name: "id", ty: "int32", nullable: false },
-          { name: "tenant_id", ty: "int32", nullable: false },
-        ],
-      },
-    },
+    tables: {},
   },
   parameters: {},
-  bounds: { orders: 1 },
-  domain: [
-    { type: "int32", value: 0 },
-    { type: "int32", value: 1 },
-  ],
-  property: { kind: "only_value", column: 1, value: { type: "int32", value: 1 } },
+  bounds: {},
+  domain: [],
+  property: { kind: "no_sql_error" },
   include_model: true,
 };
 
-/** Use the starter schema for the low-code builder until the user analyzes their own catalog. */
-export const STARTER_CATALOG: CatalogModel = parseCatalog(STARTER_REQUEST.catalog, "starter.catalog");
+/** Start with a valid empty catalog until the user declares or imports their own. */
+export const EMPTY_CATALOG: CatalogModel = parseCatalog(EMPTY_REQUEST.catalog, "request.catalog");
 
 /** Supply presentation metadata before a solver bundle exists, without fabricating evidence. */
 export const NATIVE_SCENARIO: FixtureScenario = {
@@ -45,6 +33,6 @@ export const NATIVE_SCENARIO: FixtureScenario = {
   summarySeed: null,
   openPayload: null,
   nextByCursor: {},
-  builderCatalog: STARTER_CATALOG,
+  builderCatalog: EMPTY_CATALOG,
   transportFailure: null,
 };
