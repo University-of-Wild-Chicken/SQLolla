@@ -7,6 +7,19 @@ from pathlib import Path
 from pg_runtime import PG_BIN
 
 
+def unix_libpq() -> str:
+    """Prefer the selected PostgreSQL installation and reject a missing library explicitly."""
+    folder = PG_BIN.resolve().parent / "lib"
+    for name in ("libpq.so.5", "libpq.5.dylib"):
+        bundled = folder / name
+        if bundled.is_file():
+            return str(bundled)
+    discovered = ctypes.util.find_library("pq")
+    if discovered is None:
+        raise RuntimeError("Install libpq or select a PostgreSQL package with its lib directory")
+    return discovered
+
+
 def load_library():
     """Load the oracle distribution's libpq without adding global PATH entries."""
     if os.name == "nt":
@@ -14,7 +27,7 @@ def load_library():
         library = ctypes.CDLL(str(PG_BIN / "libpq.dll"))
         library.directory_handle = directory
     else:
-        library = ctypes.CDLL(ctypes.util.find_library("pq"))
+        library = ctypes.CDLL(unix_libpq())
     signatures = {"PQconnectdbParams": ([ctypes.POINTER(ctypes.c_char_p), ctypes.POINTER(ctypes.c_char_p), ctypes.c_int], ctypes.c_void_p),
         "PQstatus": ([ctypes.c_void_p], ctypes.c_int), "PQfinish": ([ctypes.c_void_p], None),
         "PQexecParams": ([ctypes.c_void_p, ctypes.c_char_p, ctypes.c_int, ctypes.POINTER(ctypes.c_uint), ctypes.POINTER(ctypes.c_char_p), ctypes.c_void_p, ctypes.c_void_p, ctypes.c_int], ctypes.c_void_p),

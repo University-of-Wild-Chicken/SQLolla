@@ -46,16 +46,18 @@ def copy_artifacts(output: Path) -> None:
 def create_java_runtime(output: Path) -> None:
     """Use the pinned Java17 jlink to build an offline runtime including standard Java APIs."""
     java_home = Path(os.environ["SQLolla_JAVA"]).resolve().parents[1]
-    subprocess.run([str(java_home / "bin/jlink.exe"), "--add-modules", "java.se,jdk.unsupported,jdk.crypto.ec",
+    jlink = java_home / "bin" / ("jlink.exe" if os.name == "nt" else "jlink")
+    subprocess.run([str(jlink), "--add-modules", "java.se,jdk.unsupported,jdk.crypto.ec",
                     "--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2", "--output",
-                    str(output / "runtime/java")], check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                    str(output / "runtime/java")], check=True,
+                   creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
     copy_file(java_home / "NOTICE", output / "runtime/java/NOTICE")
 
 
-def dependency_notices(output: Path) -> None:
+def dependency_notices(output: Path, lean: Path | None = None) -> None:
     """Retain pinned license texts and explicit unresolved parser distribution provenance."""
     copy_file(ROOT / "LICENSE", output / "notices/SQLolla-LICENSE")
-    lean = ROOT / "m0/parser/.tools/lean-4.34.0-windows"
+    lean = lean or ROOT / "m0/parser/.tools/lean-4.34.0-windows"
     for source in lean.glob("LICENSE*"):
         copy_file(source, output / "notices/Lean" / source.name)
     metadata = subprocess.check_output(["cargo", "metadata", "--locked", "--offline", "--format-version=1"], cwd=ROOT)

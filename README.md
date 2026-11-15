@@ -94,12 +94,13 @@ The review workspace pairs Graphviz instance cards with optional AI summaries
 grounded in the SQL/IR/Alloy triple. Swipe right for Yes or left for No, or use the
 review controls to mark Unsure. The three bottom review bins let users reopen,
 move or withdraw saved labels while retaining the original solver evidence.
-The workspace includes an offline fixture demo and connects through the loopback
-Rust `sqlolla-host` to the same Pipeline. [Frontend package](frontend/README.md)
+The query workbench connects through `sqlolla-host` to the same Pipeline. The
+starter provides editable SQL and a rule. The host creates the case and its
+SQL/IR/Alloy bundle when you select **Analyze query**. [Frontend](frontend/README.md)
 
 Build its assets with `npm ci` and `npm run build` inside `frontend`, then start
 `target/debug/sqlolla-host.exe` from the initialized Windows environment above.
-Open `http://127.0.0.1:8787`; use the Analyze tab for a new stored solver instance.
+Open `http://127.0.0.1:8787` and select **Analyze query** for a stored solver instance.
 
 Regenerate SQL reuses the original prompt and the active review snapshot. At least
 one Yes or No is required. Summaries and regeneration use exact `gpt-6.1-sol`.
@@ -186,8 +187,9 @@ The build wrappers check the pinned parser revision and Alloy artifact hash.
 Windows x64 has been executed. The private package targets Windows 10 IoT
 Enterprise LTSC 2021 x64 with IIS and HTTPS in front of the loopback host. Set
 `SQLolla_PUBLIC_ORIGIN` to the canonical browser origin and preserve `Host` and
-`Origin` through IIS. Target-machine deployment and Linux, macOS and WSL
-validation remain release gates. [Private IIS package](deployment/iis/README.md)
+`Origin` through IIS. The same host can be packaged for Ubuntu x86-64 without
+changing the solver or API. Use a new store and retain the original release
+for archives tied to the Windows executable. [IIS](deployment/iis/README.md) · [Ubuntu and WSL](deployment/linux/README.md)
 
 On Unix, provision native Rust, Lean 4.34.0 and Java 17, set
 `LEAN_BIN` and `SQLolla_ALLOY_JAR`, and use `sh scripts/build.sh`. This wrapper is
