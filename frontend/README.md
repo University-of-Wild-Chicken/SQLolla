@@ -63,7 +63,8 @@ The preview test checks the editor, BYOT form and axe at desktop and mobile widt
 `SQLLOLLA_SCREENSHOTS` to save screenshots outside the source tree.
 
 `test:host` runs real analysis, Graphviz, Next, exact case reopening, the review bins, refinement,
-SQL copying and exact Int64/NULL rendering. Use a fresh test-only instance store. The default AI
+SQL copying, exact Int64/NULL rendering and the query builder's compile and stage flow. Use a fresh
+test-only instance store. The default AI
 test supplies a synthetic cited response, then checks that an Access-style sign-in redirect
 leaves the solver case visible without following the redirect.
 [`verifyHost({ url, chromePath, apiKey })`](e2e/host.mjs) supports an authorized live explanation

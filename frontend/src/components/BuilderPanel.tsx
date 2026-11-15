@@ -103,15 +103,10 @@ function BuilderEmpty({
   return (
     <div className="rail-scroll">
       <div className="rail-heading">
-        <span className="mono-label">QUERY STUDIO</span>
-        <h2>Approachable by design</h2>
-        <p>Choose tables, columns, typed filters, joins and a result limit. The preview is a draft—not compiled SQL or canonical IR.</p>
+        <h2>Build a query</h2>
+        <p>Choose tables and columns, then add filters, joins or a row limit. Check the draft with the analysis server before starting a new review.</p>
       </div>
       <EmptyBoundary scenario={scenario} onStartDraft={onStartDraft} />
-      <div className="rail-footnote">
-        <strong>Why no result yet?</strong>
-        <p>The deterministic compiler bridge is not connected to this browser. Draft edits cannot be presented as checked evidence.</p>
-      </div>
     </div>
   );
 }

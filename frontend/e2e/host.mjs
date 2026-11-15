@@ -228,6 +228,20 @@ async function checkDisconnect(page, apiKey) {
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
 }
 
+/** Compile a typed card draft through the host and stage the exact SQL without running a new case. */
+async function checkBuilder(page) {
+  await page.reload({ waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Query builder", exact: true }).click();
+  await page.getByRole("button", { name: "Start draft for this schema", exact: true }).click();
+  const sql = await page.locator(".builder-sql pre").textContent();
+  assert.match(sql, /^SELECT/);
+  await page.getByRole("button", { name: "Check draft with deterministic compiler", exact: true }).click();
+  await page.getByText("Compiled by the deterministic backend", { exact: true }).waitFor();
+  await page.getByRole("button", { name: "Review as a new analysis", exact: true }).click();
+  assert.equal(await page.getByLabel("SQL query", { exact: true }).inputValue(), sql);
+  assert.equal(await page.getByTestId("review-card").count(), 0);
+}
+
 /** Return only sanitized verification metadata; no trace, request headers or credential file is produced. */
 export async function verifyHost({ url, chromePath, apiKey }) {
   const browser = await chromium.launch({ executablePath: chromePath, headless: true });
@@ -262,7 +276,8 @@ async function verifyFlows(page, apiKey) {
   const refinement = await checkRefinement(page);
   const precision = await exactNumbers(page);
   if (apiKey) await checkDisconnect(page, apiKey);
-  return { ...report(first.assurance_kind, precision, ai), refinement };
+  await checkBuilder(page);
+  return { ...report(first.assurance_kind, precision, ai), refinement, builderCompiledAndStaged: true };
 }
 
 /** Capture actual solver evidence at desktop and mobile widths without including credentials. */
