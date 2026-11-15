@@ -64,7 +64,8 @@ The preview test checks the editor, BYOT form and axe at desktop and mobile widt
 
 `test:host` runs real analysis, Graphviz, Next, exact case reopening, the review bins, refinement,
 SQL copying and exact Int64/NULL rendering. Use a fresh test-only instance store. The default AI
-test intercepts the browser's explanation request and supplies a synthetic cited response.
+test supplies a synthetic cited response, then checks that an Access-style sign-in redirect
+leaves the solver case visible without following the redirect.
 [`verifyHost({ url, chromePath, apiKey })`](e2e/host.mjs) supports an authorized live explanation
 check with an in-memory key. Test output omits the key and generated prose.
 

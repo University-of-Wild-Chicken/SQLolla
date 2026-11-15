@@ -110,6 +110,26 @@ function syntheticExplanation(request, instance) {
   };
 }
 
+/** Let Chrome handle an expired session redirect without forwarding the synthetic bearer. */
+async function checkAccessRedirect(page, explanation, instanceId) {
+  const login = "/__sqlolla-test__/access-login";
+  let followed = false;
+  await page.route(`**${login}`, (route) => {
+    followed = true;
+    return route.fulfill({ body: "Synthetic login page" });
+  });
+  await page.unroute(explanation);
+  await page.route(explanation, (route) => route.fulfill({ status: 302, headers: { location: login } }));
+  try {
+    await page.getByRole("button", { name: "Explain this case", exact: true }).click();
+    await page.getByRole("alert").filter({ hasText: "Sign in to SQLolla again" }).waitFor();
+    assert.equal(followed, false, "Chrome followed the login redirect for a provider request");
+    assert.equal(await page.getByTestId("review-card").getAttribute("data-instance-id"), instanceId);
+  } finally {
+    await page.unroute(`**${login}`);
+  }
+}
+
 /** Verify BYOT activation, same-origin transport and citation display without a paid call. */
 async function checkSyntheticAi(page, solved) {
   let sent = 0;
@@ -131,8 +151,9 @@ async function checkSyntheticAi(page, solved) {
     assert.equal(sent, 0, "Saving a key fired a provider request");
     const summary = await assistance(page, instance);
     assert.equal(sent, 1);
+    await checkAccessRedirect(page, pattern, instance.instance_id);
     await checkDisconnect(page, key);
-    return { model: summary.model, browserTransport: "synthetic", explanationClaims: summary.document.claims.length };
+    return { model: summary.model, browserTransport: "synthetic", explanationClaims: summary.document.claims.length, accessRedirectBlocked: true };
   } finally {
     await page.unroute(pattern);
   }
