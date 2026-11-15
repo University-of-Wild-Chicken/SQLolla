@@ -168,24 +168,32 @@ the production transport. Explicit argument APIs avoid shell interpolation.
 
 `sqlolla-host` serves the built frontend and HTTP routes on IPv4 loopback. Exact
 Host/Origin checks and a memory-only CSRF capability protect all POST actions.
+The configured `SQLolla_PUBLIC_ORIGIN` allows a single browser HTTPS origin
+through IIS while retaining the loopback listener. IIS preserves `Host`,
+`Origin` and `X-SQLolla-CSRF`. The host ignores forwarding metadata.
 One Pipeline thread owns the parser and Alloy worker; a bounded command queue
 and API admission limit keep resource failures distinct from solver exhaustion.
 Incoming command bytes preserve integer precision. Browser cancellation discards
 stale responses; active computations retain their existing internal budgets.
 
-The host reloads stored, replayed instances before an AI call. Strict provider
-output schemas, model/revision/context identity and fact-reference checks cannot
-prove prose accuracy. A SQL proposal changes only SQL in the retained request
-and undergoes a new bounded analysis. It does not yet certify all user feedback
-as preservation/exclusion obligations. Canonical evidence, browser feedback and
-AI annotations remain separate. Loopback hosting is not authenticated public
-multi-user deployment.
+The host reloads canonical evidence before an AI call, validates the exact model
+and context identity, and checks citation membership. Prose remains untrusted.
+The browser keeps Yes, No and Unsure labels in an append-only journal. At least
+one Yes or No enables same-prompt regeneration or manual checking. The worker
+checks the submitted snapshot against independently replayed archives on the same finite
+basis, including exact output schema. Each Yes behavior must still occur on its
+archived input. Each No behavior must be absent across complete candidate
+outcomes on its archived input. Unsure adds no obligation. Readiness also
+requires the unchanged bounded property to pass. Browser adoption checks current
+source, prompt and journal identity before staging the candidate for explicit
+analysis.
 
-The proposed public deployment is static UI at `sqlolla.us`, authenticated ingress
-at `api.sqlolla.us`, and a Rust/Lean/JVM origin behind Cloudflare. Ordinary Workers
-are not the JVM/SAT host. Private installations use the same core, loopback defaults,
-optional provider egress and no required Cloudflare connectivity. No DNS, account
-configuration, hosting or deployment has been changed.
+The private IIS package uses the same core and optional provider egress for a
+trusted-user appliance with a shared evidence store. The private perimeter
+controls access. Deployment on the exact Windows 10 IoT Enterprise LTSC 2021
+target remains a release gate. The proposed public architecture adds
+authenticated ingress, a hosted Rust/Lean/JVM origin and worker isolation.
+[Private IIS package](deployment/iis/README.md)
 
 Authored methods stay within 30 lines and document purpose and effects. The Lean
 spec and disposable probes follow that rule. Production work additionally requires
@@ -202,8 +210,8 @@ independent review of every semantic extension.
 | Preservation and future error/effect semantics | Stronger safety claims | Independent semantic checks and formal preservation arguments |
 | PostgreSQL transaction oracle | Transaction compatibility | Extend tested statement errors/writes/effects to transaction commit and abort |
 | Worker descendants, quotas and malformed IPC | Hosted untrusted jobs | Enforce resource/process isolation per OS |
-| Feedback-preserving agent and public BYOT isolation | Product readiness | Replay every labelled case; validate authenticated deployment and provider boundaries |
-| Clean-machine release reproducibility | Distribution | Cargo.lock is retained; run native CI and package pinned runtimes |
+| Authenticated ingress and per-user BYOT isolation | Public deployment | Validate identity, evidence access and provider boundaries |
+| Clean-machine release reproducibility | Distribution | Run native CI and verify the pinned package on the target appliance |
 
 These gates do not invalidate the component split. They prevent a feasibility
 probe or conditional theorem from being presented as a production guarantee.

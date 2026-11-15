@@ -2,6 +2,7 @@
 mod context;
 mod output;
 mod provider;
+mod refinement;
 mod schema;
 #[cfg(test)]
 mod tests;
@@ -66,7 +67,8 @@ struct Input {
 pub fn router() -> Router<HostState> {
     Router::new()
         .route("/api/ai/explain", post(explain))
-        .route("/api/ai/propose", post(propose))
+        .route("/api/ai/propose", post(proposal_requires_feedback))
+        .route("/api/ai/refine", post(refinement::refine))
 }
 
 /// Explain one exact saved instance without mutating solver evidence or review feedback.
@@ -75,34 +77,26 @@ async fn explain(
     headers: HeaderMap,
     Json(input): Json<Input>,
 ) -> Result<Json<Value>> {
-    run(state, headers, input, false).await.map(Json)
+    run(state, headers, input).await.map(Json)
 }
 
-/// Propose SQL as untrusted text and rerun its retained bounded analysis before returning it.
-async fn propose(
-    State(state): State<HostState>,
-    headers: HeaderMap,
-    Json(input): Json<Input>,
-) -> Result<Json<Value>> {
-    run(state, headers, input, true).await.map(Json)
+/// Legacy unlabelled regeneration cannot bypass the decisive-feedback admission gate.
+async fn proposal_requires_feedback() -> AiError {
+    failure(
+        "ai.feedback_required",
+        "Label at least one case Yes or No, then use feedback-driven refinement",
+    )
 }
 
 /// Release the pipeline worker during network I/O; keys exist only in this invocation's request.
-async fn run(state: HostState, headers: HeaderMap, input: Input, proposal: bool) -> Result<Value> {
-    validate(&input, proposal)?;
+async fn run(state: HostState, headers: HeaderMap, input: Input) -> Result<Value> {
+    validate(&input, false)?;
     let key = credential(&headers)?;
     let evidence = context::load(&state, &input).await?;
-    if proposal {
-        context::proposal_basis(&evidence)?;
-    }
     let prompt = context::build(&evidence, input.redact_values)?;
-    let document = provider::request(key, &input, &prompt, proposal).await?;
-    let draft = output::validate(document, &input, &prompt, proposal)?;
-    let mut result = output::envelope(&input, &prompt, &draft, proposal);
-    if proposal {
-        result["validation"] = context::reanalyze(&state, &evidence, &draft.sql).await?;
-    }
-    Ok(result)
+    let document = provider::request(key, &input, &prompt, false).await?;
+    let draft = output::validate(document, &input, &prompt, false)?;
+    Ok(output::envelope(&input, &prompt, &draft, false))
 }
 
 /// IDs, prompts and redaction are admission inputs, never instructions to change immutable context.

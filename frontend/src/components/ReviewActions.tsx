@@ -3,9 +3,7 @@
  * explanations of what a use-case label does (and does not) establish.
  */
 import type { JSX } from "react";
-import type { FeedbackEvent } from "../feedback/journal";
-
-type Decision = "accepted_use_case" | "unintended_behavior";
+import type { FeedbackEvent, ReviewDisposition } from "../feedback/journal";
 
 /** Decision copy shared by gestures, buttons and the journal. */
 export interface ReviewActionsProps {
@@ -13,15 +11,17 @@ export interface ReviewActionsProps {
   readonly conflict: boolean;
   readonly rationale: string;
   readonly onRationaleChange: (rationale: string) => void;
-  readonly onDecision: (disposition: Decision, rationale: string) => void;
+  readonly onDecision: (disposition: ReviewDisposition, rationale: string) => void;
   readonly onUndo: () => void;
   readonly onOpenLedger: () => void;
+  readonly reopened?: boolean;
 }
 
 /** Render the current active label as plain language. */
 function activeLabel(decision: FeedbackEvent | undefined): string {
   if (decision?.disposition === "accepted_use_case") return "Preserved use case";
   if (decision?.disposition === "unintended_behavior") return "Unintended behavior";
+  if (decision?.disposition === "unsure") return "Unsure";
   return "No active label";
 }
 
@@ -91,7 +91,7 @@ function DecisionButton({ variant, shortcut, label, description, disabled, onSel
 interface DecisionButtonsProps {
   readonly conflict: boolean;
   readonly rationale: string;
-  readonly onDecision: (disposition: Decision, rationale: string) => void;
+  readonly onDecision: (disposition: ReviewDisposition, rationale: string) => void;
 }
 
 /** Render the two equally capable labelled intent buttons. */
@@ -148,20 +148,19 @@ export function ReviewActions({
   onDecision,
   onUndo,
   onOpenLedger,
+  reopened,
 }: ReviewActionsProps): JSX.Element {
   return (
     <div className="review-actions">
       <ReviewIntentHead decision={decision} conflict={conflict} onUndo={onUndo} />
-      <p className="review-actions__copy">
-        A right swipe or Accept preserves this observation as a use case. A left swipe or Reject creates an exclusion requirement for a future revision. Neither
-        proves safety or claims a fix.
-      </p>
+      <p className="review-actions__copy">Swipe right for Yes or left for No. Revisit any decision in the review bins below.</p>
       {conflict ? <ConflictAlert onOpenLedger={onOpenLedger} /> : null}
       <RationaleField rationale={rationale} onChange={onRationaleChange} />
       <DecisionButtons conflict={conflict} rationale={rationale} onDecision={onDecision} />
-      <p className="keyboard-hint">
-        Keyboard: A accept · R reject · Ctrl/Cmd+Z undo · N next. Undo appends a withdrawal event; archived evidence is untouched.
-      </p>
+      <button type="button" className="text-button" aria-keyshortcuts="U" disabled={conflict} onClick={() => onDecision("unsure", rationale)}>
+        Mark unsure
+      </button>
+      <p className="keyboard-hint">A accept · R reject · U unsure · Ctrl/Cmd+Z undo{reopened ? "" : " · N next"}</p>
     </div>
   );
 }

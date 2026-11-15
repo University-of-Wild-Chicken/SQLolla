@@ -49,14 +49,24 @@ pub(super) fn next(pipeline: &mut Pipeline, store: &Store, opaque: &str) -> Outc
 /// Load immutable context and already committed evidence without generating an unrequested next model.
 pub(super) fn open(pipeline: &mut Pipeline, store: &Store, id: &str) -> Outcome<Value> {
     let bundle = store.bundle(id)?;
-    let records = store.records(id, bundle.max_instances)?;
-    let prepared = restore(pipeline, &bundle)?;
-    let last = records.len() - 1;
-    let record = advance(pipeline, store, &bundle, id, &prepared, last)?;
-    let mut result = response(store, id, &bundle, record)?;
+    let records = verified_records(pipeline, store, id, &bundle)?;
+    let mut result = response(store, id, &bundle, records.last().unwrap().clone())?;
     result["records"] = json!(records);
     result["bundle"] = json!(bundle);
     Ok(result)
+}
+
+/// Reload and regenerate every committed record without starting a new solver step.
+pub(super) fn verified_records(
+    pipeline: &mut Pipeline,
+    store: &Store,
+    id: &str,
+    bundle: &Bundle,
+) -> Outcome<Vec<Record>> {
+    let records = store.records(id, bundle.max_instances)?;
+    let prepared = restore(pipeline, bundle)?;
+    advance(pipeline, store, bundle, id, &prepared, records.len() - 1)?;
+    Ok(records)
 }
 
 /// The command mode is fixed at creation; examples never acquire counterexample labels by inference.
@@ -89,7 +99,7 @@ fn restore(pipeline: &mut Pipeline, bundle: &Bundle) -> Outcome<Prepared> {
 }
 
 /// Unsatisfiable assumptions are reported separately from an exhausted property check.
-fn assumptions(pipeline: &mut Pipeline, prepared: &Prepared) -> Outcome<Value> {
+pub(super) fn assumptions(pipeline: &mut Pipeline, prepared: &Prepared) -> Outcome<Value> {
     let result = pipeline
         .bridge
         .solve(prepared.source(), 0)

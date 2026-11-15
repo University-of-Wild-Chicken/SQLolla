@@ -26,7 +26,6 @@ interface RightRailProps {
   readonly drawerOpen?: boolean;
   readonly inert?: boolean;
   readonly bundleId?: string | null;
-  readonly onApplyProposal?: (sql: string) => void;
 }
 
 /** Render the scrollable explanation, revision and ledger contents. */
@@ -51,7 +50,6 @@ function RightRailExplain(props: RightRailProps): JSX.Element {
         onOpenSettings={props.onOpenSettings}
         onInspectFact={props.onInspectFact}
         bundleId={props.bundleId}
-        onApplyProposal={props.onApplyProposal}
       />
     </>
   );
@@ -61,7 +59,7 @@ function RightRailExplain(props: RightRailProps): JSX.Element {
 function RightRailRequirements(props: RightRailProps): JSX.Element {
   return (
     <>
-      <RevisionPanel scenario={props.scenario} evidence={props.draftActive ? null : props.evidence} events={props.journal.events} />
+      <RevisionPanel scenario={props.scenario} evidence={props.draftActive ? null : props.evidence} onOpenBins={props.onCloseDrawer} />
       <div id="review-ledger">
         <JournalPanel journal={props.journal} currentRevision={props.evidence?.instance.modelRevisionSha256 ?? null} onWithdraw={props.onWithdraw} />
       </div>

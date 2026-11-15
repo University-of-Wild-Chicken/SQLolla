@@ -6,7 +6,7 @@ import { useId, useState, type JSX } from "react";
 import { propertySentence, shortHash } from "../analysis/format";
 import { classifyAnalysisError, describeAssurance, describeEnumerationStatus, describeEvidence, type StatusDescriptor } from "../analysis/status";
 import type { AdapterFailure, EnumerationError, EnumerationStatus, EvidenceView, FixtureScenario, RequestModel, TransportFailure } from "../analysis/types";
-import type { FeedbackEvent } from "../feedback/journal";
+import type { FeedbackEvent, ReviewDisposition } from "../feedback/journal";
 import { GraphvizView } from "../graph/GraphvizView";
 import { ObservationStrip } from "./ObservationStrip";
 import { RelationTables } from "./RelationTables";
@@ -15,7 +15,6 @@ import { useReviewKeyboard } from "./useReviewKeyboard";
 import { useSwipeReview } from "./useSwipeReview";
 
 type Failure = AdapterFailure | EnumerationError | TransportFailure;
-type Decision = "accepted_use_case" | "unintended_behavior";
 
 /** Props for the central review case. */
 export interface ReviewCardProps {
@@ -28,13 +27,14 @@ export interface ReviewCardProps {
   readonly staleNotice: string | null;
   readonly activeDecision: FeedbackEvent | undefined;
   readonly conflict: boolean;
-  readonly onDecision: (disposition: Decision, rationale: string) => void;
+  readonly onDecision: (disposition: ReviewDisposition, rationale: string) => void;
   readonly onUndo: () => void;
   readonly onNext: () => void;
   readonly onOpenDetails: () => void;
   readonly onOpenJson: () => void;
   readonly onInspectFact: (reference: string) => void;
   readonly onOpenLedger: () => void;
+  readonly reopened?: boolean;
 }
 
 /** Render a concise scope sentence without interpreting the SQL text. */
@@ -284,12 +284,8 @@ function CardAlerts({ status, staleNotice, nextFailure }: CardAlertsProps): JSX.
   );
 }
 
-/** Manage intrinsic card view, rationale, swipe and keyboard actions. */
-function useCardReview(props: ReviewCardProps) {
-  const [view, setView] = useState<"graph" | "table">("graph");
-  const [rationale, setRationale] = useState("");
-  const statusDescriptor = describeEvidence(props.evidence);
-  const statusDescriptionId = useId();
+/** Bind both swipe and keyboard gestures to the same explicit journal actions. */
+function useReviewGestures(props: ReviewCardProps, rationale: string) {
   const swipe = useSwipeReview({
     disabled: props.conflict,
     onAccept: () => props.onDecision("accepted_use_case", rationale),
@@ -299,15 +295,32 @@ function useCardReview(props: ReviewCardProps) {
     enabled: true,
     onAccept: () => !props.conflict && props.onDecision("accepted_use_case", rationale),
     onReject: () => !props.conflict && props.onDecision("unintended_behavior", rationale),
+    onUnsure: () => !props.conflict && props.onDecision("unsure", rationale),
     onUndo: () => !props.conflict && props.onUndo(),
-    onNext: () => !props.pendingNext && props.onNext(),
+    onNext: () => !props.pendingNext && !props.reopened && props.onNext(),
   });
+  return swipe;
+}
+
+/** Keep unsaved rationale edits scoped to the current active label. */
+function useRationale(decision: FeedbackEvent | undefined) {
+  const eventId = decision?.event_id;
+  const [edit, setEdit] = useState<{ eventId: string | undefined; value: string }>();
+  const rationale = edit && edit.eventId === eventId ? edit.value : (decision?.rationale ?? "");
+  return { rationale, setRationale: (value: string) => setEdit({ eventId, value }) };
+}
+
+/** Manage the card view and attach review controls to the exact case. */
+function useCardReview(props: ReviewCardProps) {
+  const [view, setView] = useState<"graph" | "table">("graph");
+  const notes = useRationale(props.activeDecision);
+  const statusDescriptionId = useId();
+  const swipe = useReviewGestures(props, notes.rationale);
   return {
     view,
     setView,
-    rationale,
-    setRationale,
-    statusDescriptor,
+    ...notes,
+    statusDescriptor: describeEvidence(props.evidence),
     statusDescriptionId,
     swipe,
     nextLabel: props.evidence.instance.kind === "counterexample" ? "Next counterexample" : "Next example",
@@ -354,18 +367,26 @@ function CardDecision({ props, review }: { readonly props: ReviewCardProps; read
         onDecision={props.onDecision}
         onUndo={props.onUndo}
         onOpenLedger={props.onOpenLedger}
+        reopened={props.reopened}
       />
-      <NextFooter
-        scenario={props.scenario}
-        status={props.status}
-        pendingNext={props.pendingNext}
-        nextFailure={props.nextFailure}
-        staleNotice={props.staleNotice}
-        nextLabel={review.nextLabel}
-        nextDisabled={review.nextDisabled}
-        onNext={props.onNext}
-      />
+      {props.reopened ? null : <CardNext props={props} review={review} />}
     </>
+  );
+}
+
+/** Render next controls only for the live enumeration. */
+function CardNext({ props, review }: { readonly props: ReviewCardProps; readonly review: ReviewController }): JSX.Element {
+  return (
+    <NextFooter
+      scenario={props.scenario}
+      status={props.status}
+      pendingNext={props.pendingNext}
+      nextFailure={props.nextFailure}
+      staleNotice={props.staleNotice}
+      nextLabel={review.nextLabel}
+      nextDisabled={review.nextDisabled}
+      onNext={props.onNext}
+    />
   );
 }
 

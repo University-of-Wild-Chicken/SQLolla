@@ -16,6 +16,7 @@ interface JournalPanelProps {
 const DISPOSITION_LABEL: Readonly<Record<FeedbackEvent["disposition"], string>> = {
   accepted_use_case: "Use case preserved",
   unintended_behavior: "Unintended behavior",
+  unsure: "Unsure",
   withdrawn: "Withdrawn",
 };
 
@@ -45,6 +46,7 @@ function JournalEvent({ event, active }: JournalEventProps): JSX.Element {
       </div>
       <p>
         Instance {shortHash(event.instance_id)} · revision {shortHash(event.model_revision_sha256)}
+        {event.bundle_id ? ` · bundle ${shortHash(event.bundle_id)}` : " · bundle unknown"}
       </p>
       {event.rationale ? <p className="journal-rationale">“{event.rationale}”</p> : null}
       <code>{event.event_id}</code>
@@ -242,8 +244,8 @@ function StaleFeedback({ count }: { readonly count: number }): JSX.Element | nul
   if (count === 0) return null;
   return (
     <div className="inline-alert">
-      <strong>Stale revision feedback</strong>
-      <span>{count} active label(s) were written for another model revision. They require explicit revalidation and are not applied here.</span>
+      <strong>Earlier revision feedback</strong>
+      <span>{count} active label(s) come from another revision. Refinement checks whether their stored context still applies.</span>
     </div>
   );
 }

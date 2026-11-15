@@ -1,6 +1,7 @@
 //! Durable typed examples/counterexamples with on-demand Alloy enumeration and independent replay.
 mod artifact;
 mod prepared;
+pub(crate) mod refinement;
 mod session;
 mod store;
 use crate::pipeline::{Failure, Outcome, Pipeline, Request, engine, fingerprint};

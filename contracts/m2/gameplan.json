@@ -840,14 +840,15 @@
     "maintenance": "Extend these existing modules with documented functions of at most 30 formatted lines. Retain this maintained design and reproducible evidence; do not create per-query handlers, a second evaluator or duplicate per-pass reports."
   },
   "instance_review_frontend": {
-    "status": "LOCAL_HOST_GRAPHVIZ_REVIEW_AND_GPT_6_1_SOL_ASSISTANCE_IMPLEMENTED_FULL_FEEDBACK_REPLAY_AGENT_PENDING",
-    "lean_contract": "SQLollaM2/InstanceReview.lean",
+    "status": "LOCAL_BOUNDED_FEEDBACK_REFINEMENT_IMPLEMENTED_PUBLIC_DEPLOYMENT_PENDING",
+    "lean_contract": "SQLollaM2/InstanceReview.lean and SQLollaM2/AssistanceBoundary.lean",
     "flow": [
       "Open stored analysis revision",
       "Request next example or counterexample on demand",
       "Inspect Graphviz instance and grounded AI summary",
-      "Swipe right to accept a use case or left to reject unintended behavior",
-      "Review the next agentic revision against preserved and rejected cases"
+      "Save Yes, No or Unsure and reconsider cases in the bottom review bins",
+      "Regenerate with the retained prompt or check a candidate locally",
+      "Review exact case checks and stage a checked request for explicit analysis"
     ],
     "instance_card": {
       "identity": [
@@ -881,21 +882,29 @@
           "Optional proposed business-intent question"
         ],
         "trust": "AI text is untrusted explanation; it cannot change solver status, hide effects or create a safety claim. Missing/failed AI leaves the graph and deterministic evidence usable.",
-        "privacy": "BYOT OpenAI/Anthropic/Gemini-compatible portal; explicit provider/context selection and redaction before sending. Provider secrets never enter instance JSON, DOT, cursor or logs."
+        "privacy": "Optional OpenAI BYOT with exact gpt-6.1-sol. Show disclosure and redaction before sending. Provider credentials stay in tab and request memory."
       }
     },
     "feedback": {
       "right": {
+        "label": "Yes",
         "disposition": "accepted_use_case",
-        "meaning": "Preserve this admissible observation as a positive regression case"
+        "meaning": "Keep this exact behavior possible on its original archived input"
       },
       "left": {
+        "label": "No",
         "disposition": "unintended_behavior",
-        "meaning": "Exclude this unwanted observation in the next candidate revision; infer a general rule only as an explicit reviewable proposal"
+        "meaning": "Exclude this exact behavior from every complete candidate outcome on its original archived input"
+      },
+      "unsure": {
+        "label": "Unsure",
+        "disposition": "unsure",
+        "meaning": "Save this case as advisory context for later reconsideration"
       },
       "event": [
         "event_id",
         "idempotency_key",
+        "bundle_id",
         "instance_id",
         "model_revision_sha256",
         "semantic_sha256",
@@ -904,23 +913,23 @@
         "created_at",
         "optional_supersedes_event_id"
       ],
-      "persistence": "Append-only versioned JSON events separate from immutable solver evidence; retry is idempotent, undo appends a superseding event, stale revision labels require explicit revalidation.",
-      "accessibility": "Right/left swipe gestures have labeled Accept use case / Reject side behavior buttons, keyboard actions, screen-reader graph/table descriptions and undo.",
-      "conflicts": "Contradictory live labels for the same contextual semantic observation stop automatic promotion and expose the conflicting intent."
+      "persistence": "Browser-local append-only events with JSON import/export. Reopen, move or withdraw active labels in the Yes, No and Unsure bins. Cases from different archived queries can carry across revisions when restored on an identical semantic basis.",
+      "accessibility": "Labeled Yes, No, Unsure and Undo buttons, keyboard actions, right and left swipes, and screen-reader graph/table descriptions.",
+      "conflicts": "Contradictory active labels on the same exact input and behavior block certification. Snapshot changes invalidate readiness."
     },
     "agentic_pass": {
-      "input": "Prior revision plus active feedback, existing invariants and pinned industrial corpus",
-      "proposal": "AI may propose SQL, RA or policy edits and rationale. Deterministic binding emits a new IR/Alloy revision; old artifacts stay immutable.",
+      "input": "Pinned source revision, original prompt and complete compatible active review snapshot containing a Yes or No",
+      "proposal": "Exact gpt-6.1-sol may propose SQL and cited rationale after explicit unredacted disclosure. The deterministic checker also accepts manually supplied SQL.",
       "required_gates": [
         "Kernel-checked Lean specification before any new semantic capability",
         "Preserve M0/M1 invariants and 30-line/documentation rules",
-        "Accepted instances remain admissible under mapped context",
-        "Rejected instances cannot be reproduced under the proposed policy/query",
+        "Keep the original catalog, typed parameters, domain, bounds, execution context, property and ordered output schema",
+        "Each Yes remains possible and each No is absent across complete outcomes on its exact archived input",
         "Actual Alloy check with independent satisfiable assumptions and exact witness replay",
-        "Fresh PostgreSQL16 industrial corpus checks, including declared contexts and expected errors",
+        "On semantic implementation changes, run fresh PostgreSQL16 industrial corpus checks including declared contexts and expected errors",
         "Adversarial check against overfitting one atom labeling, silently shrinking bounds, filtering counterexamples or changing domain/context to manufacture a pass"
       ],
-      "promotion": "Show SQL/IR/policy diff, affected accepted/rejected cases, new instances and residual bounded limitations. Swipes do not authorize running mutations on a production database or deploying changes."
+      "promotion": "Display candidate SQL and deterministic case and property results. Stage a checked request only for the live source, prompt and snapshot, then require an explicit new analysis. The guarantee covers exact reviewed observations and the unchanged finite bounds."
     },
     "security_and_portability": [
       "Escape all SQL/data labels in DOT; disable externally supplied HTML/URL/file/image attributes",
@@ -935,13 +944,14 @@
       "Graph retains duplicate occurrences, typed NULLs, ordering and before/after changes",
       "AI citations resolve only to supplied facts and unsupported claims are flagged",
       "Repeated swipe/undo is idempotent and revision-bound",
-      "Left-swipe revision rejects unwanted behavior while retaining right-swipe use cases",
+      "Refinement excludes exact No behavior and retains exact Yes behavior on archived inputs across compatible revisions",
+      "An Unsure-only snapshot and late results for changed prompts or review bins cannot stage candidates",
       "Keyboard and button flow equals gesture flow",
       "Offline/provider failure leaves visualization, review and next-instance navigation functional"
     ],
     "delegation": {
       "formal": "Check feedback/revision/completeness obligations without added axioms",
-      "rust": "Evidence storage, deterministic DOT, identity/fact references, replay and feedback journal",
+      "rust": "Evidence storage, canonical identity and facts, complete replay and active snapshot checks",
       "java17": "Alloy solution enumeration only",
       "frontend": "Graphviz card, swipe/button/keyboard/undo and accessible relation tables",
       "ai": "Grounded summary contract and proposal pipeline; baseline GPT-6.1 Sol plus verified production provider availability",

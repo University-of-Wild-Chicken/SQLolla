@@ -133,7 +133,15 @@ impl Pipeline {
 
     /// Always return explicit request failures, not empty output or a false safety result.
     pub fn handle(&mut self, bytes: &[u8]) -> Value {
-        if serde_json::from_slice::<Value>(bytes).is_ok_and(|value| value.get("action").is_some()) {
+        if let Ok(value) = serde_json::from_slice::<Value>(bytes)
+            && let Some(action) = value.get("action")
+        {
+            if matches!(
+                action.as_str(),
+                Some("refinement.context" | "refinement.check")
+            ) {
+                return crate::instances::refinement::handle(self, &value, bytes);
+            }
             return crate::instances::handle(self, bytes);
         }
         let mut request: Request = match serde_json::from_slice(bytes) {

@@ -57,9 +57,9 @@ async function configureAi(page, apiKey) {
 }
 
 /** Exercise the actual UI→host→provider request and validate its evidence identity. */
-async function assistance(page, kind, instance) {
-  const response = page.waitForResponse((item) => item.url().endsWith(`/api/ai/${kind}`), { timeout: 180_000 });
-  await page.getByRole("button", { name: kind === "explain" ? "Explain this case" : "Propose SQL", exact: true }).click();
+async function assistance(page, instance) {
+  const response = page.waitForResponse((item) => item.url().endsWith("/api/ai/explain"), { timeout: 180_000 });
+  await page.getByRole("button", { name: "Explain this case", exact: true }).click();
   const received = await response;
   const payload = await received.json();
   assert.equal(received.status(), 200, `Assistance failed: ${payload.code ?? "unknown"}`);
@@ -74,26 +74,55 @@ async function assistance(page, kind, instance) {
   return payload;
 }
 
-/** A proposed repair is reanalyzed, then explicitly adopted as an unvalidated editor draft. */
+/** Optional live explanation stays separate from deterministic refinement checks. */
 async function checkAi(page, apiKey, instance) {
   await configureAi(page, apiKey);
   await page
-    .getByLabel("Question or proposed change")
+    .getByLabel("Question about this case")
     .fill("Explain why this tenant-isolation counterexample violates the retained rule. Cite supplied row facts and mention finite bounds.");
-  const summary = await assistance(page, "explain", instance);
-  await page
-    .getByLabel("Question or proposed change")
-    .fill(
-      "Preserve SELECT id, tenant_id FROM orders and add WHERE tenant_id = 1. Keep the original output columns and all context, parameters, property, bounds and domain unchanged.",
-    );
-  const proposal = await assistance(page, "propose", instance);
-  assert.equal(proposal.validation.status, "ok");
-  assert.equal(proposal.validation.analysis, "NO_COUNTEREXAMPLE_WITHIN_BOUNDS");
-  await page.getByRole("button", { name: "Use as SQL draft", exact: true }).click();
+  const summary = await assistance(page, instance);
+  return { model: summary.model, explanationClaims: summary.document.claims.length };
+}
+
+/** Three persisted bins support reconsideration without changing the live enumeration cursor. */
+async function reviewBins(page, instance) {
+  assert.equal(await page.getByRole("button", { name: "Check candidate SQL locally", exact: true }).isEnabled(), false);
+  await page.getByRole("button", { name: "Mark unsure", exact: true }).click();
+  const unsure = page.getByRole("region", { name: "Unsure", exact: true });
+  await unsure.getByRole("button", { name: "Open case", exact: true }).waitFor();
+  assert.equal(await page.getByRole("button", { name: "Regenerate SQL", exact: true }).isEnabled(), false);
+  await unsure.getByRole("button", { name: "Move to No", exact: true }).click();
+  const no = page.getByRole("region", { name: "No", exact: true });
+  const opened = page.waitForResponse(commandResponse("instances.open"));
+  await no.getByRole("button", { name: "Open case", exact: true }).click();
+  assert.equal((await (await opened).json()).status, "ok");
+  await page.locator("#return-to-live-review").waitFor();
+  assert.equal(await page.getByTestId("review-card").getAttribute("data-instance-id"), instance.instance_id);
+  await page.locator("#return-to-live-review").click();
+  assert.equal(await page.getByTestId("review-card").getAttribute("data-instance-id"), instance.instance_id);
+}
+
+/** A real candidate must remove the No outcome and pass the original Alloy assertion before adoption. */
+async function checkRefinement(page) {
+  const sql = "SELECT id, tenant_id FROM orders WHERE tenant_id = 1";
+  const prompt = "Return orders for tenant 1 and preserve the original columns.";
+  await page.getByLabel("Original prompt", { exact: true }).fill(prompt);
+  await page.getByLabel("Candidate SQL", { exact: true }).fill(sql);
+  const checked = page.waitForResponse(commandResponse("refinement.check"), { timeout: 180_000 });
+  await page.getByRole("button", { name: "Check candidate SQL locally", exact: true }).click();
+  const result = await (await checked).json();
+  assert.equal(result.status, "ok", result.message);
+  assert.equal(result.ready, true);
+  assert.equal(result.property_check.status, "NO_COUNTEREXAMPLE_WITHIN_BOUNDS");
+  assert.equal(result.cases[0].status, "satisfied");
+  await page.locator(".refinement-result").getByRole("button", { name: "Copy SQL", exact: true }).click();
+  assert.equal(await page.evaluate(() => navigator.clipboard.readText()), sql);
+  await page.getByRole("button", { name: "Use checked SQL as new draft", exact: true }).click();
   await page.getByRole("heading", { name: "Ready to check a new question" }).waitFor();
-  assert.equal(await page.getByTestId("review-card").count(), 0);
-  assert.equal(await page.getByLabel("SQL query", { exact: true }).inputValue(), proposal.document.sql);
-  return { model: summary.model, explanationClaims: summary.document.claims.length, proposalAnalysis: proposal.validation.analysis };
+  assert.equal(await page.getByLabel("SQL query", { exact: true }).inputValue(), sql);
+  assert.equal(await page.getByLabel("Original prompt", { exact: true }).inputValue(), prompt);
+  assert.equal(await page.getByRole("region", { name: "No", exact: true }).locator("li").count(), 1);
+  return { threeBins: true, unsureOnlyBlocked: true, archiveReopen: true, noRemoved: true, realAlloyCheck: true, promptRetained: true, clipboard: true };
 }
 
 /** Check real browser precision for i64::MAX and a structured SQL NULL through stored examples. */
@@ -130,6 +159,7 @@ async function checkDisconnect(page, apiKey) {
 export async function verifyHost({ url, chromePath, apiKey }) {
   const browser = await chromium.launch({ executablePath: chromePath, headless: true });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  await page.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: url });
   const errors = [];
   const external = [];
   page.on("pageerror", () => errors.push(true));
@@ -138,18 +168,26 @@ export async function verifyHost({ url, chromePath, apiKey }) {
   });
   try {
     await page.goto(url, { waitUntil: "networkidle" });
-    await page.getByRole("button", { name: "03 / Analyze", exact: true }).click();
-    const first = await analyze(page);
-    const next = await nextCase(page);
-    const ai = apiKey ? await checkAi(page, apiKey, next.record.instance) : { skipped: "No in-memory credential supplied" };
-    const precision = await exactNumbers(page);
-    if (apiKey) await checkDisconnect(page, apiKey);
+    const result = await verifyFlows(page, apiKey);
     assert.equal(errors.length, 0, "Uncaught browser error");
     assert.equal(external.length, 0, "Browser requested a nonlocal destination");
-    return report(first.assurance_kind, precision, ai);
+    return result;
   } finally {
     await browser.close();
   }
+}
+
+/** Exercise the full review and adoption flow against a host with a fresh test-only store. */
+async function verifyFlows(page, apiKey) {
+  await page.getByRole("button", { name: "03 / Analyze", exact: true }).click();
+  const first = await analyze(page);
+  const next = await nextCase(page);
+  const ai = apiKey ? await checkAi(page, apiKey, next.record.instance) : { skipped: "No in-memory credential supplied" };
+  await reviewBins(page, next.record.instance);
+  const refinement = await checkRefinement(page);
+  const precision = await exactNumbers(page);
+  if (apiKey) await checkDisconnect(page, apiKey);
+  return { ...report(first.assurance_kind, precision, ai), refinement };
 }
 
 /** Retain reproducible facts without source contents, provider prose or credentials. */

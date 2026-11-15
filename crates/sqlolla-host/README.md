@@ -6,12 +6,35 @@ It contains no second SQL parser or compiler. Java remains the Alloy API bridge.
 Run `scripts/env.ps1`, build the frontend, then `cargo run -p sqlolla-host`.
 `SQLolla_HOST_PORT` may select another local port; zero selects an ephemeral port.
 
-`GET /api/status` returns `sqlolla.host.v1`, the fixed `gpt-6.1-sol` model identifier,
-and a memory-only CSRF capability. JSON POST requests require the exact same Origin
-and `X-SQLolla-CSRF`. `POST /api/command` accepts unchanged analysis requests or
-`instances.start`, `instances.next`, and `instances.open` actions. Start yields the
-first record; open its returned bundle ID to load the complete context. Rust emits
-integer values directly; the browser must use its lossless JSON transport.
+For private IIS publication, set `SQLolla_PUBLIC_ORIGIN` to the canonical HTTPS
+origin without a path or trailing slash. The Rust host still listens on IPv4
+loopback. IIS must preserve the actual `Host` and `Origin` headers. The host
+uses those headers for admission and ignores forwarding metadata. The site's
+private perimeter controls who can access its shared evidence store.
+[Private IIS package](../../deployment/iis/README.md)
+
+`GET /api/status` returns `sqlolla.host.v1`, the fixed `gpt-6.1-sol` identifier and
+a memory-only CSRF capability. JSON POST requests require the configured `Host`
+and `Origin` plus `X-SQLolla-CSRF`. `POST /api/command` accepts analysis requests
+and `instances.start`, `instances.next` and `instances.open`. Start yields the
+first record. Open its bundle ID to load the complete context. Use the browser's
+lossless JSON transport to preserve exact integers.
+
+`refinement.context` validates a saved base and the submitted active review
+snapshot, returning its canonical digest. `refinement.check` takes the same
+snapshot, digest and candidate SQL. Both require at least one Yes or No. A Yes
+requires exact occurrence of the archived behavior on the same input. A No
+requires absence from the complete outcome set on that input. Unsure is
+advisory. The candidate is ready only after those checks and the unchanged
+bounded property pass with the original output schema and execution basis.
+The browser compares the result with its current review and prompt before
+staging the checked request as a draft. [Refinement contract](../../contracts/m2/README.md)
+
+`POST /api/ai/explain` summarizes one saved instance. `POST /api/ai/refine`
+regenerates SQL with the retained prompt and complete canonical review packet
+after explicit unredacted disclosure. Both require the exact requested and
+served model `gpt-6.1-sol`. AI SQL goes through `refinement.check`, and the
+legacy `/api/ai/propose` endpoint returns `ai.feedback_required`.
 
 Input is limited to two MiB, canonical output to sixteen MiB, and at most four commands wait
 behind the serialized worker. At most eight API requests, including AI requests,

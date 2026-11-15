@@ -2,22 +2,23 @@
  * Browser-local feedback journal hook. It stores only feedback events and keeps
  * credentials, provider configuration and evidence outside local storage.
  */
-import { useCallback, useEffect, useMemo, useReducer, type Dispatch } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, type Dispatch, type RefObject } from "react";
 import {
   activeDecisionFor,
   exportJournal,
   mergeJournal,
   parseJournal,
   proposeDecision,
+  proposeRelabel,
   proposeWithdrawals,
   readStoredJournal,
   writeStoredJournal,
   type FeedbackChange,
-  type FeedbackDisposition,
   type FeedbackEvent,
   type FeedbackTarget,
   type ImportResult,
   type JournalStorage,
+  type ReviewDisposition,
 } from "./journal";
 
 interface JournalHookState {
@@ -39,6 +40,8 @@ interface ResolvedStorage {
   readonly storage: JournalStorage;
   readonly error: string | null;
 }
+
+type LiveEvents = RefObject<readonly FeedbackEvent[]>;
 
 /** In-memory fallback used only when browser storage is unavailable. */
 function memoryStorage(): JournalStorage {
@@ -107,54 +110,59 @@ function applyChange(dispatch: Dispatch<JournalHookAction>, change: FeedbackChan
 }
 
 /** Plain-language confirmation for a journaled decision. */
-function decisionMessage(disposition: Exclude<FeedbackDisposition, "withdrawn">): string {
+function decisionMessage(disposition: ReviewDisposition): string {
+  if (disposition === "unsure") return "Case moved to Unsure.";
   return disposition === "accepted_use_case"
     ? "Use case preserved. This is not a safety proof."
     : "Side behavior recorded as an exclusion requirement for a future revision. Nothing was fixed.";
 }
 
 /** Create the append-only decision and undo callbacks. */
-function useDecisionActions(events: readonly FeedbackEvent[], dispatch: Dispatch<JournalHookAction>): Pick<FeedbackJournal, "recordDecision" | "undo"> {
+function useDecisionActions(events: LiveEvents, dispatch: Dispatch<JournalHookAction>): Pick<FeedbackJournal, "recordDecision" | "undo" | "relabel"> {
   return {
     recordDecision: useRecordDecision(events, dispatch),
     undo: useUndoDecision(events, dispatch),
+    relabel: useCallback(
+      (id, disposition) => applyChange(dispatch, proposeRelabel(events.current, id, disposition), decisionMessage(disposition)),
+      [events, dispatch],
+    ),
   };
 }
 
 /** Build the review-decision callback. */
 function useRecordDecision(
-  events: readonly FeedbackEvent[],
+  events: LiveEvents,
   dispatch: Dispatch<JournalHookAction>,
-): (target: FeedbackTarget, disposition: Exclude<FeedbackDisposition, "withdrawn">, rationale: string) => void {
+): (target: FeedbackTarget, disposition: ReviewDisposition, rationale: string) => void {
   return useCallback(
     (target, disposition, rationale): void => {
-      applyChange(dispatch, proposeDecision(events, target, disposition, rationale), decisionMessage(disposition));
+      applyChange(dispatch, proposeDecision(events.current, target, disposition, rationale), decisionMessage(disposition));
     },
     [events, dispatch],
   );
 }
 
 /** Build the superseding-undo callback. */
-function useUndoDecision(events: readonly FeedbackEvent[], dispatch: Dispatch<JournalHookAction>): (target: FeedbackTarget) => void {
+function useUndoDecision(events: LiveEvents, dispatch: Dispatch<JournalHookAction>): (target: FeedbackTarget) => void {
   return useCallback(
     (target): void => {
-      const active = activeDecisionFor(events, target);
+      const active = activeDecisionFor(events.current, target);
       if (!active) {
         dispatch({ type: "notice", message: "There is no active label to undo for this case." });
         return;
       }
-      applyChange(dispatch, proposeWithdrawals(events, [active.event_id]), "Undo appended a superseding withdrawal event. Archived evidence was not changed.");
+      applyChange(dispatch, proposeWithdrawals(events.current, [active.event_id]), "Case label withdrawn.");
     },
     [events, dispatch],
   );
 }
 
 /** Create the validated journal import callback. */
-function useImportText(events: readonly FeedbackEvent[], dispatch: Dispatch<JournalHookAction>): (text: string) => ImportResult {
+function useImportText(events: LiveEvents, dispatch: Dispatch<JournalHookAction>): (text: string) => ImportResult {
   return useCallback(
     (text: string): ImportResult => {
       try {
-        const merged = mergeJournal(events, parseJournal(text));
+        const merged = mergeJournal(events.current, parseJournal(text));
         if (merged.ok) {
           dispatch({
             type: "events/replace",
@@ -176,17 +184,17 @@ function useImportText(events: readonly FeedbackEvent[], dispatch: Dispatch<Jour
 
 /** Create conflict withdrawals and import/export callbacks. */
 function useJournalTransfer(
-  events: readonly FeedbackEvent[],
+  events: LiveEvents,
   dispatch: Dispatch<JournalHookAction>,
 ): Pick<FeedbackJournal, "withdraw" | "importText" | "exportText" | "clearNotice"> {
   const withdraw = useCallback(
     (eventIds: readonly string[]): void => {
-      applyChange(dispatch, proposeWithdrawals(events, eventIds), "Conflicting labels were withdrawn with new journal events.");
+      applyChange(dispatch, proposeWithdrawals(events.current, eventIds), "Case label withdrawn.");
     },
     [events, dispatch],
   );
   const importText = useImportText(events, dispatch);
-  const exportText = useCallback(() => exportJournal(events), [events]);
+  const exportText = useCallback(() => exportJournal(events.current), [events]);
   const clearNotice = useCallback(() => dispatch({ type: "notice", message: null }), [dispatch]);
   return { withdraw, importText, exportText, clearNotice };
 }
@@ -196,7 +204,8 @@ export interface FeedbackJournal {
   readonly events: readonly FeedbackEvent[];
   readonly storageError: string | null;
   readonly notice: string | null;
-  readonly recordDecision: (target: FeedbackTarget, disposition: Exclude<FeedbackDisposition, "withdrawn">, rationale: string) => void;
+  readonly recordDecision: (target: FeedbackTarget, disposition: ReviewDisposition, rationale: string) => void;
+  readonly relabel: (eventId: string, disposition: ReviewDisposition) => void;
   readonly undo: (target: FeedbackTarget) => void;
   readonly withdraw: (eventIds: readonly string[]) => void;
   readonly importText: (text: string) => ImportResult;
@@ -204,12 +213,23 @@ export interface FeedbackJournal {
   readonly clearNotice: () => void;
 }
 
+/** Serialize synchronous mutations before React publishes the next journal render. */
+function useJournalState(resolved: ResolvedStorage) {
+  const [state, update] = useReducer(journalReducer, resolved, initJournal);
+  const events = useRef(state.events);
+  const dispatch = useCallback((action: JournalHookAction) => {
+    if (action.type === "events/replace") events.current = action.events;
+    update(action);
+  }, []);
+  return { state, events, dispatch };
+}
+
 /** Append-only feedback journal backed by browser storage. */
 export function useFeedbackJournal(storageOverride?: JournalStorage): FeedbackJournal {
   const resolved = useMemo(() => resolveStorage(storageOverride), [storageOverride]);
-  const [state, dispatch] = useReducer(journalReducer, resolved, initJournal);
+  const { state, events, dispatch } = useJournalState(resolved);
   useJournalPersistence(state, resolved.storage, dispatch);
-  const decisions = useDecisionActions(state.events, dispatch);
-  const transfer = useJournalTransfer(state.events, dispatch);
+  const decisions = useDecisionActions(events, dispatch);
+  const transfer = useJournalTransfer(events, dispatch);
   return { ...state, ...decisions, ...transfer };
 }

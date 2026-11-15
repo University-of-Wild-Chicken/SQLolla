@@ -1,6 +1,6 @@
 //! Process-isolated HTTP harness owns its assets, archive and graceful worker shutdown.
 use serde_json::Value;
-use sqlolla_host::{Worker, state::HostState};
+use sqlolla_host::{Worker, config::BrowserOrigin, state::HostState};
 use std::path::{Path, PathBuf};
 use tokio::{sync::oneshot, task::JoinHandle};
 
@@ -65,8 +65,9 @@ impl Service {
     /// Bind only an ephemeral loopback port and prepare a tiny task-owned static directory.
     pub async fn start() -> Self {
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
-        let origin = format!("http://{}", listener.local_addr().unwrap());
-        let (state, worker) = HostState::start(origin.clone()).await.unwrap();
+        let browser_origin = BrowserOrigin::loopback(listener.local_addr().unwrap().port());
+        let origin = browser_origin.value().to_owned();
+        let (state, worker) = HostState::start(browser_origin).await.unwrap();
         let csrf = state.csrf_token().to_owned();
         let path = PathBuf::from(std::env::var_os("SQLolla_HOST_TEST_DIRECTORY").unwrap());
         std::fs::write(path.join("index.html"), "SQLolla isolated host test").unwrap();

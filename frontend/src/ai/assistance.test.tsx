@@ -1,6 +1,6 @@
 /** Synthetic provider tests never contact a network service or use a real credential. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { act, fireEvent, render, renderHook, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, renderHook, screen } from "@testing-library/react";
 import { parseOpenPayload } from "../analysis/adapter";
 import { scenarioById } from "../analysis/fixtures";
 import { hostJson } from "../analysis/host";
@@ -24,11 +24,11 @@ function evidence() {
 }
 
 /** Produce one strict, evidence-bound fake provider envelope. */
-function response(kind: "explain" | "propose" = "explain") {
+function response() {
   const current = evidence();
   const identity = { instance_id: current.instance.instanceId, model_revision_sha256: current.instance.modelRevisionSha256, context_sha256: "c".repeat(64) };
   return {
-    schema: kind === "explain" ? "sqlolla.ai.explanation.v1" : "sqlolla.ai.proposal.v1",
+    schema: "sqlolla.ai.explanation.v1",
     status: "ok",
     provider: "openai",
     model: AI_MODEL,
@@ -41,9 +41,8 @@ function response(kind: "explain" | "propose" = "explain") {
       title: "<img src=x onerror=alert(1)>",
       claims: [{ text: "An output exists.", fact_references: [current.facts[0]!.reference] }],
       assumptions: ["Finite declared bounds only."],
-      sql: kind === "propose" ? "SELECT 1" : null,
+      sql: null,
     },
-    ...(kind === "propose" ? { validation: { status: "ok", analysis: "COUNTEREXAMPLE" } } : {}),
   };
 }
 
@@ -56,7 +55,7 @@ describe("explicit fixed-model assistance", () => {
     host.mockResolvedValue(response());
     const current = evidence();
     const hook = renderHook(({ config }) => useAssistance(bundleId, current, config), { initialProps: { config: settings } });
-    await act(async () => hook.result.current.run("explain", "Explain rows"));
+    await act(async () => hook.result.current.run("Explain rows"));
     expect(hook.result.current.state?.result).toBeDefined();
     expect(JSON.stringify(hook.result.current.state)).not.toContain(settings.apiKey);
     hook.rerender({ config: { ...settings, apiKey: "" } });
@@ -65,7 +64,7 @@ describe("explicit fixed-model assistance", () => {
 
   it("sends canonical IDs and a request header, never a token or frontend facts in the body", async () => {
     host.mockResolvedValue(response());
-    await requestAssistance("explain", bundleId, evidence(), settings, "Explain rows", new AbortController().signal);
+    await requestAssistance(bundleId, evidence(), settings, "Explain rows", new AbortController().signal);
     const [path, body, options] = host.mock.calls[0]!;
     expect(path).toBe("/api/ai/explain");
     expect(body).toEqual({
@@ -79,13 +78,12 @@ describe("explicit fixed-model assistance", () => {
     expect(options?.headers?.Authorization).toBe(`Bearer ${settings.apiKey}`);
   });
 
-  it("refuses other models, unconnected providers and redacted proposals before transport", async () => {
+  it("refuses other models and unconnected providers before transport", async () => {
     for (const changed of [
       { ...settings, model: "other" },
       { ...settings, mode: "gemini_compatible" as const },
-      { ...settings, redactValues: true },
     ]) {
-      await expect(requestAssistance("propose", bundleId, evidence(), changed, "Change query", new AbortController().signal)).rejects.toThrow();
+      await expect(requestAssistance(bundleId, evidence(), changed, "Explain rows", new AbortController().signal)).rejects.toThrow();
     }
     expect(host).not.toHaveBeenCalled();
   });
@@ -93,9 +91,9 @@ describe("explicit fixed-model assistance", () => {
   it("rejects stale identity and invented citations", () => {
     const changed = response();
     changed.document.claims[0]!.fact_references = ["/invented"];
-    expect(() => validateAssistance(changed, "explain", bundleId, evidence(), false)).toThrow();
-    expect(() => validateAssistance({ ...response(), model: "fallback" }, "explain", bundleId, evidence(), false)).toThrow();
-    expect(() => validateAssistance({ ...response(), bundle_id: "d".repeat(64) }, "explain", bundleId, evidence(), false)).toThrow();
+    expect(() => validateAssistance(changed, bundleId, evidence(), false)).toThrow();
+    expect(() => validateAssistance({ ...response(), model: "fallback" }, bundleId, evidence(), false)).toThrow();
+    expect(() => validateAssistance({ ...response(), bundle_id: "d".repeat(64) }, bundleId, evidence(), false)).toThrow();
   });
 
   it("requires an explicit click and renders generated HTML as inert plain text", async () => {
@@ -123,15 +121,11 @@ describe("explicit fixed-model assistance", () => {
     expect(screen.queryByText("<img src=x onerror=alert(1)>")).toBeNull();
   });
 
-  it("uses the original bounded result and applies SQL only after explicit draft acceptance", async () => {
-    host.mockResolvedValue(response("propose"));
-    const apply = vi.fn();
-    render(<LiveAssistancePanel bundleId={bundleId} evidence={evidence()} settings={settings} onInspectFact={vi.fn()} onApplyProposal={apply} />);
-    fireEvent.change(screen.getByLabelText("Question or proposed change"), { target: { value: "Add tenant filtering" } });
-    fireEvent.click(screen.getByRole("button", { name: "Propose SQL" }));
-    await screen.findByText("The retained bounded property still has a counterexample.");
-    expect(apply).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole("button", { name: "Use as SQL draft" }));
-    await waitFor(() => expect(apply).toHaveBeenCalledWith("SELECT 1"));
+  it("rejects SQL in an explanation and offers no unconstrained proposal action", () => {
+    const changed = response();
+    expect(() => validateAssistance({ ...changed, document: { ...changed.document, sql: "SELECT 1" } }, bundleId, evidence(), false)).toThrow();
+    render(<LiveAssistancePanel bundleId={bundleId} evidence={evidence()} settings={settings} onInspectFact={vi.fn()} />);
+    expect(screen.queryByRole("button", { name: "Propose SQL" })).toBeNull();
+    expect(host).not.toHaveBeenCalled();
   });
 });

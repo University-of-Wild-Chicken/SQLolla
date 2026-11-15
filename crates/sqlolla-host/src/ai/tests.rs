@@ -83,18 +83,6 @@ fn source_triple_and_view_completeness_are_explicit() {
     assert!(context::build(&evidence, false).is_err());
 }
 
-/// Only SQL may change; the caller's saved request and finite analysis basis remain byte-for-byte equal.
-#[test]
-fn proposal_preserves_retained_context() {
-    let evidence = evidence();
-    let original = evidence.bundle["request"].clone();
-    let mut proposed = context::candidate(&evidence, &Some("SELECT 1".into())).unwrap();
-    assert_eq!(proposed["sql"], "SELECT 1");
-    proposed["sql"] = original["sql"].clone();
-    assert_eq!(proposed, original);
-    assert_eq!(evidence.bundle["request"], original);
-}
-
 /// A syntactically valid structured response cannot invent references, replace bounds or drift identity.
 #[test]
 fn output_rejects_untrusted_authority_and_references() {

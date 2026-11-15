@@ -2,7 +2,7 @@
  * Local workspace orchestration for scenarios, drawers, dialogs, draft state and
  * review intent. Explicit native actions use the injected local host transport.
  */
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { BUILDER_CATALOG, DEFAULT_SCENARIO_ID, DEMO_SCENARIOS, scenarioById } from "../analysis/fixtures";
 import { useAnalysisSession, type AnalysisSession } from "../analysis/session";
 import type { AnalysisTransport, EvidenceView, FixtureScenario } from "../analysis/types";
@@ -10,12 +10,14 @@ import { defaultAiSettings, type AiProviderSettings } from "../ai/summary";
 import { draftReducer, type DraftAction, type DraftState } from "../builder/model";
 import type { DetailsTab } from "../components/DetailsDrawer";
 import type { LeftTab } from "../components/LeftRail";
-import { activeDecisions, activeDecisionFor, detectConflicts, type FeedbackEvent } from "../feedback/journal";
+import { activeDecisions, activeDecisionFor, detectConflicts, type FeedbackEvent, type ReviewDisposition } from "../feedback/journal";
 import { useFeedbackJournal, type FeedbackJournal } from "../feedback/useFeedbackJournal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import type { Dispatch } from "react";
 import { nativeScenario, useNativeAnalysis, type NativeAnalysis } from "./native";
 import { draftRequest } from "../builder/request";
+import { useArchivedReview } from "./archivedReview";
+import { useRefinement } from "./refinement";
 
 /** Navigation and local draft state. */
 export interface WorkspaceNavigation {
@@ -83,22 +85,24 @@ export interface Workspace {
   readonly dialogs: WorkspaceDialogs;
   readonly selectors: ReviewSelectors;
   readonly currentEvidence: EvidenceView | null;
+  readonly archive: ReturnType<typeof useArchivedReview>;
+  readonly refinement: ReturnType<typeof useRefinement>;
   readonly chooseScenario: (id: string) => void;
   readonly confirmDiscard: () => void;
   readonly startDraft: () => void;
   readonly discardDraft: () => void;
-  readonly recordDecision: (disposition: "accepted_use_case" | "unintended_behavior", rationale: string) => void;
+  readonly recordDecision: (disposition: ReviewDisposition, rationale: string) => void;
   readonly undoDecision: () => void;
   readonly openLedger: () => void;
   readonly checkDraft: (draft: DraftState) => Promise<unknown>;
   readonly stageDraft: (draft: DraftState) => void;
-  readonly applyProposal: (sql: string) => void;
 }
 
 /** Derive a stable target identity for journal labels. */
-function targetFor(evidence: EvidenceView | null) {
+function targetFor(evidence: EvidenceView | null, bundleId: string | null) {
   return evidence
     ? {
+        ...(bundleId ? { bundleId } : {}),
         instanceId: evidence.instance.instanceId,
         modelRevisionSha256: evidence.instance.modelRevisionSha256,
         semanticSha256: evidence.instance.semanticSha256,
@@ -220,8 +224,8 @@ function useAutoOpen(session: AnalysisSession, scenario: FixtureScenario): void 
 }
 
 /** Derive current intent labels and contradiction state. */
-function useReviewSelectors(journal: FeedbackJournal, evidence: EvidenceView | null): ReviewSelectors {
-  const target = targetFor(evidence);
+function useReviewSelectors(journal: FeedbackJournal, evidence: EvidenceView | null, bundleId: string | null): ReviewSelectors {
+  const target = targetFor(evidence, bundleId);
   const activeDecision = target ? activeDecisionFor(journal.events, target) : undefined;
   const currentConflict = evidence
     ? detectConflicts(journal.events).some(
@@ -291,7 +295,7 @@ function useDraftActions(
 
 /** Dispatch review decisions into the append-only journal. */
 function useFeedbackActions(journal: FeedbackJournal, selectors: ReviewSelectors) {
-  const recordDecision = (disposition: "accepted_use_case" | "unintended_behavior", rationale: string): void => {
+  const recordDecision = (disposition: ReviewDisposition, rationale: string): void => {
     if (selectors.target) journal.recordDecision(selectors.target, disposition, rationale);
   };
   const undoDecision = (): void => {
@@ -304,7 +308,7 @@ function useFeedbackActions(journal: FeedbackJournal, selectors: ReviewSelectors
 function useOpenLedger(drawers: WorkspaceDrawers): () => void {
   return (): void => {
     if (drawers.rightIsDrawer) drawers.setRightOpen(true);
-    window.setTimeout(() => document.getElementById("review-ledger")?.scrollIntoView({ block: "start" }), 0);
+    window.setTimeout(() => document.getElementById("review-ledger")?.scrollIntoView?.({ block: "start" }), 0);
   };
 }
 
@@ -318,9 +322,13 @@ function useWorkspaceFrame(transport: AnalysisTransport, initialScenarioId?: str
   const navigation = { ...originalNavigation, selectedScenario: nativeScenario(session, originalNavigation.selectedScenario) };
   const journal = useFeedbackJournal();
   useAutoOpen(session, navigation.selectedScenario);
-  const currentEvidence = navigation.draft || (navigation.leftTab === "analysis" && native.dirty) ? null : session.state.evidence;
-  const selectors = useReviewSelectors(journal, currentEvidence);
-  return { transport, session, native, journal, navigation, drawers, dialogs, selectors, currentEvidence };
+  const scope = useMemo(() => ({}), [navigation.selectedId, session.state.generation, !!navigation.draft]);
+  const archive = useArchivedReview(transport, scope);
+  const draftActive = !!navigation.draft || (navigation.leftTab === "analysis" && native.dirty);
+  const saved = archive.visible?.result;
+  const currentEvidence = saved?.evidence ?? (draftActive ? null : session.state.evidence);
+  const selectors = useReviewSelectors(journal, currentEvidence, saved?.bundleId ?? session.state.bundleId);
+  return { transport, session, native, journal, navigation, drawers, dialogs, selectors, currentEvidence, archive };
 }
 
 /** Compose the complete local workspace controller. */
@@ -339,8 +347,30 @@ export function useWorkspace(transport: AnalysisTransport, initialScenarioId?: s
     ...frame,
     chooseScenario,
     confirmDiscard,
+    refinement: useWorkspaceRefinement(frame),
     ...actions,
   };
+}
+
+/** Stage only the checked request, leaving persisted evidence and labels available for reconsideration. */
+function useWorkspaceRefinement(frame: ReturnType<typeof useWorkspaceFrame>) {
+  const { transport, session, navigation, native, archive, dialogs, drawers, journal } = frame;
+  const onAdopt = (request: Record<string, unknown>): void => {
+    archive.close();
+    native.stage(request);
+    navigation.setLeftTab("analysis");
+    drawers.setLeftOpen(drawers.leftIsDrawer);
+    window.setTimeout(() => document.getElementById("review-center")?.scrollIntoView?.({ block: "start" }), 0);
+  };
+  return useRefinement({
+    transport,
+    session: session.state,
+    draftActive: !!navigation.draft || native.dirty,
+    journal,
+    archiveErrors: archive.errors,
+    settings: dialogs.aiSettings,
+    onAdopt,
+  });
 }
 
 /** Cards and AI proposals stage explicit requests; only the local backend can create canonical evidence. */
@@ -357,10 +387,5 @@ function useNativeActions(transport: AnalysisTransport, session: AnalysisSession
     navigation.dispatchDraft({ type: "reset" });
     navigation.setLeftTab("analysis");
   };
-  const applyProposal = (sql: string): void => {
-    native.editSql(sql, session.state.bundle?.request.raw);
-    navigation.dispatchDraft({ type: "reset" });
-    navigation.setLeftTab("analysis");
-  };
-  return { checkDraft, stageDraft, applyProposal };
+  return { checkDraft, stageDraft };
 }

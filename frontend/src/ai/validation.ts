@@ -6,9 +6,6 @@ export interface Assistance {
   readonly title: string;
   readonly claims: readonly DemoClaim[];
   readonly assumptions: readonly string[];
-  readonly sql: string | null;
-  readonly validation: Record<string, unknown> | null;
-  readonly contextHash: string;
 }
 
 /** Reject arrays and primitives where a strict JSON object is expected. */
@@ -44,10 +41,9 @@ function claims(value: unknown, evidence: EvidenceView): readonly DemoClaim[] {
 }
 
 /** Validate identities before handling the model-controlled document. */
-function identity(value: Record<string, unknown>, kind: string, bundleId: string, evidence: EvidenceView, redacted: boolean): void {
-  const schema = kind === "explain" ? "sqlolla.ai.explanation.v1" : "sqlolla.ai.proposal.v1";
+function identity(value: Record<string, unknown>, bundleId: string, evidence: EvidenceView, redacted: boolean): void {
   if (
-    value.schema !== schema ||
+    value.schema !== "sqlolla.ai.explanation.v1" ||
     value.status !== "ok" ||
     value.model !== AI_MODEL ||
     value.provider !== "openai" ||
@@ -64,21 +60,17 @@ function identity(value: Record<string, unknown>, kind: string, bundleId: string
 }
 
 /** No successful provider reply can replace the authoritative status or immutable evidence object. */
-export function validateAssistance(raw: unknown, kind: "explain" | "propose", bundleId: string, evidence: EvidenceView, redacted: boolean): Assistance {
+export function validateAssistance(raw: unknown, bundleId: string, evidence: EvidenceView, redacted: boolean): Assistance {
   const value = object(raw);
-  identity(value, kind, bundleId, evidence, redacted);
+  identity(value, bundleId, evidence, redacted);
   const doc = object(value.document);
   if (doc.instance_id !== value.instance_id || doc.model_revision_sha256 !== value.model_revision_sha256 || doc.context_sha256 !== value.context_sha256) {
     throw new Error("Assistance document identity changed.");
   }
-  const sql = kind === "propose" ? text(doc.sql, 16384) : null;
-  if (kind === "explain" && doc.sql !== null) throw new Error("Explanation unexpectedly contains a SQL proposal.");
+  if (doc.sql !== null) throw new Error("Explanation unexpectedly contains a SQL proposal.");
   return {
     title: text(doc.title, 160),
     claims: claims(doc.claims, evidence),
     assumptions: strings(doc.assumptions, 512),
-    sql,
-    validation: kind === "propose" ? object(value.validation) : null,
-    contextHash: value.context_sha256 as string,
   };
 }

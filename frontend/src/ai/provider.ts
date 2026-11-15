@@ -41,7 +41,6 @@ export async function runMockExplanation(
 
 /** Send only canonical IDs and explicit user intent; the host reloads all model-visible facts. */
 export async function requestAssistance(
-  kind: "explain" | "propose",
   bundleId: string,
   evidence: EvidenceView,
   settings: AiProviderSettings,
@@ -50,14 +49,13 @@ export async function requestAssistance(
 ): Promise<Assistance> {
   if (settings.mode !== "openai_compatible" || !settings.apiKey.trim()) throw new Error("Configure an OpenAI key first.");
   if (settings.model !== AI_MODEL) throw new Error("The model must be gpt-6.1-sol.");
-  if (kind === "propose" && settings.redactValues) throw new Error("SQL proposals require explicit unredacted context.");
   const body = {
     bundle_id: bundleId,
     instance_id: evidence.instance.instanceId,
     model_revision_sha256: evidence.instance.modelRevisionSha256,
     redact_values: settings.redactValues,
-    ...(kind === "explain" ? { question: prompt } : { instruction: prompt }),
+    question: prompt,
   };
-  const response = await hostJson(`/api/ai/${kind}`, body, { signal, headers: { Authorization: `Bearer ${settings.apiKey.trim()}` } });
-  return validateAssistance(response, kind, bundleId, evidence, settings.redactValues);
+  const response = await hostJson("/api/ai/explain", body, { signal, headers: { Authorization: `Bearer ${settings.apiKey.trim()}` } });
+  return validateAssistance(response, bundleId, evidence, settings.redactValues);
 }

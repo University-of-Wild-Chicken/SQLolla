@@ -6,7 +6,7 @@ fn state() -> (HostState, mpsc::Receiver<Message>) {
     let (sender, receiver) = mpsc::channel(4);
     (
         HostState {
-            origin: "http://127.0.0.1:8787".into(),
+            origin: BrowserOrigin::loopback(8787).into(),
             csrf: "test".into(),
             sender,
             admission: Arc::new(Semaphore::new(8)),

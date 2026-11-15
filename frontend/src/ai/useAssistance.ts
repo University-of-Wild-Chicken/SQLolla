@@ -20,14 +20,14 @@ export function useAssistance(bundleId: string | null, evidence: EvidenceView, s
   const settingsIdentity = useMemo(() => ({}), [settings]);
   const [state, setState] = useState<ResultState | null>(null);
   useEffect(() => () => active.current?.abort(), [bundleId, evidence, settings]);
-  const run = async (kind: "explain" | "propose", prompt: string): Promise<void> => {
+  const run = async (prompt: string): Promise<void> => {
     if (!bundleId) return;
     active.current?.abort();
     const controller = new AbortController();
     active.current = controller;
     setState({ bundleId, basis: evidence, settingsIdentity, busy: true });
     try {
-      const result = await requestAssistance(kind, bundleId, evidence, settings, prompt, controller.signal);
+      const result = await requestAssistance(bundleId, evidence, settings, prompt, controller.signal);
       if (!controller.signal.aborted) setState({ bundleId, basis: evidence, settingsIdentity, result, busy: false });
     } catch (error) {
       if (!controller.signal.aborted)

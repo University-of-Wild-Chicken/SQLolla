@@ -4,10 +4,13 @@ use super::*;
 /// Dynamic identities and the exact supplied fact inventory constrain every structured response.
 pub(super) fn response(input: &Input, prompt: &context::Prompt, proposal: bool) -> Value {
     let refs: Vec<_> = prompt.references.iter().collect();
-    let reference = if refs.is_empty() {
-        json!({"type":"string"})
-    } else {
+    // Bound strict enum size. Local citation validation always uses the complete inventory.
+    let enum_fits = (1..=250).contains(&refs.len())
+        && refs.iter().map(|value| value.len()).sum::<usize>() <= 15_000;
+    let reference = if enum_fits {
         json!({"type":"string","enum":refs})
+    } else {
+        json!({"type":"string"})
     };
     let claim = json!({"type":"object","additionalProperties":false,"required":["text","fact_references"],
         "properties":{"text":{"type":"string","maxLength":1200},
@@ -22,3 +25,6 @@ pub(super) fn response(input: &Input, prompt: &context::Prompt, proposal: bool) 
             "assumptions":{"type":"array","items":{"type":"string","maxLength":512},"maxItems":8},
             "sql":if proposal {json!({"type":"string","minLength":1,"maxLength":16384})} else {json!({"type":"null"})}}})
 }
+
+#[cfg(test)]
+mod tests;

@@ -10,7 +10,7 @@ import { preview as vitePreview } from "vite";
 const localServer = process.env.SQLLOLLA_URL ? null : await vitePreview({ logLevel: "error", preview: { host: "127.0.0.1", port: 4173, strictPort: true } });
 const BASE = process.env.SQLLOLLA_URL ?? "http://127.0.0.1:4173";
 const CHROME = process.env.CHROME_PATH ?? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const OUT = path.resolve("e2e/screenshots");
+const OUT = path.resolve(process.env.SQLLOLLA_SCREENSHOTS ?? "e2e/screenshots");
 fs.mkdirSync(OUT, { recursive: true });
 
 let failures = 0;
@@ -57,6 +57,7 @@ check(await inspect.isEnabled(), "inspector is available once evidence is visibl
 await inspect.click();
 await page.getByRole("dialog").waitFor();
 check(await page.getByRole("heading", { name: "Evidence inspector" }).isVisible(), "inspector opens the SQL/IR/Alloy drawer");
+check(await page.getByRole("dialog").getByRole("button", { name: "Copy SQL" }).isEnabled(), "the evidence inspector exposes exact SQL copying");
 await page.getByRole("button", { name: "Close Evidence inspector" }).click();
 await page.getByRole("dialog").waitFor({ state: "detached" });
 
@@ -95,9 +96,47 @@ check((await page.getByTestId("review-card").getAttribute("data-instance-id")) =
 check(await undo.isDisabled(), "graph drag does not create a review decision");
 
 const firstId = beforeDrag;
+const bins = page.getByRole("region", { name: "Review bins" });
+const originalPrompt = page.getByLabel("Original prompt", { exact: true });
+await originalPrompt.fill("Keep the intended behavior.");
+check((await originalPrompt.inputValue()) === "Keep the intended behavior.", "the filled prompt keeps its accessible name");
+const yes = bins.getByRole("region", { name: "Yes", exact: true });
+const no = bins.getByRole("region", { name: "No", exact: true });
+check((await yes.count()) === 1, "Yes bin is accessible");
+check((await no.count()) === 1, "No bin is accessible");
+const swipeSurface = page.locator(".review-header").first();
+await swipeSurface.evaluate((element) => element.scrollIntoView({ block: "center", behavior: "instant" }));
+for (const [distance, destination] of [
+  [114, yes],
+  [-114, no],
+]) {
+  await page.waitForFunction(() => getComputedStyle(document.querySelector(".review-card")).transform === "none");
+  const swipeBox = await swipeSurface.boundingBox();
+  const x = swipeBox.x + swipeBox.width / 2;
+  const y = swipeBox.y + swipeBox.height / 2;
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x + distance, y, { steps: 6 });
+  await page.mouse.up();
+  const opened = await destination.getByRole("button", { name: "Open case" }).isEnabled({ timeout: 5000 });
+  check(opened, `swipe ${distance > 0 ? "right" : "left"} records the case`);
+}
+check((await page.getByTestId("review-card").getAttribute("data-instance-id")) === firstId, "swiping leaves the current case in place");
+const unsure = bins.getByRole("region", { name: "Unsure", exact: true });
+await page.getByRole("button", { name: "Mark unsure" }).click();
+check(await unsure.getByRole("button", { name: "Open case" }).isEnabled(), "Unsure records the exact case without advancing");
+check(await page.getByRole("button", { name: "Regenerate SQL" }).isDisabled(), "Unsure alone cannot regenerate");
 await page.getByRole("button", { name: "Next counterexample" }).click();
 await page.waitForFunction((id) => document.querySelector('[data-testid="review-card"]')?.getAttribute("data-instance-id") !== id, firstId);
 check((await page.getByTestId("review-card").count()) === 1, "explicit Next replaces exactly one card");
+const secondId = await page.getByTestId("review-card").getAttribute("data-instance-id");
+await unsure.getByRole("button", { name: "Open case" }).click();
+await page.getByText("Reviewing a saved case").waitFor();
+check((await page.getByTestId("review-card").getAttribute("data-instance-id")) === firstId, "the bin reopens the exact previous case");
+await unsure.getByRole("button", { name: "Move to No" }).click();
+await no.getByRole("button", { name: "Withdraw" }).click();
+await page.getByRole("button", { name: "Return to current workspace" }).click();
+check((await page.getByTestId("review-card").getAttribute("data-instance-id")) === secondId, "leaving a bin restores the live case");
 
 await page.getByRole("button", { name: "Start a local draft" }).click();
 await page.getByRole("heading", { name: "Draft awaiting deterministic analysis" }).waitFor();
@@ -172,6 +211,7 @@ await mobile.close();
 
 console.log("PAGE_ERRORS", JSON.stringify(pageErrors));
 check(pageErrors.length === 0, "no uncaught page errors");
+check(!requests.some((url) => new URL(url).pathname.startsWith("/api/ai/")), "review, bin changes and fixture navigation make no AI requests");
 await browser.close();
 await localServer?.close();
 if (failures > 0) {

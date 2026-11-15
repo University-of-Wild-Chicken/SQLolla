@@ -51,6 +51,7 @@ try {
     Invoke-Check python -Arguments @('validation/system_columns_river.py')
     Invoke-Check python -Arguments @('validation/unique_indexes.py')
     Invoke-Check python -Arguments @('validation/instances.py')
+    Invoke-Check python -Arguments @('validation/refinement.py')
     Invoke-Check python -Arguments @('validation/locking.py')
     Invoke-Check python -Arguments @('validation/locking_join.py')
     Invoke-Check python -Arguments @('validation/cte_locks.py')

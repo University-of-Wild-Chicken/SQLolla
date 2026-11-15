@@ -1,6 +1,10 @@
 {
   "schema": "sqlolla.host_browser_check.v1",
   "status": "passed",
+  "checked_at_utc": "2026-11-15T05:10:58.592296+00:00",
+  "host_binary_sha256": "18df165cc53a57173bf896e475039b248b69514ea3867e43e94b419815f39f1b",
+  "cli_binary_sha256": "52e20ae7836ead58afe4fbbc2daa6a8e7c6ad57232ad74bd9afa9ac536f5dae5",
+  "frontend_index_sha256": "5d763364b6eb7a48fdf731f33f05d8cb076fc510af64c019a32713734eac8ad9",
   "startOpen": true,
   "graphviz": true,
   "explicitNext": true,
@@ -10,20 +14,48 @@
     "exactInt64": true,
     "typedNull": true
   },
-  "ai": {
-    "model": "gpt-6.1-sol",
-    "explanationClaims": 3,
-    "proposalAnalysis": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS"
+  "refinement": {
+    "threeBins": true,
+    "unsureOnlyBlocked": true,
+    "archiveReopen": true,
+    "noRemoved": true,
+    "realAlloyCheck": true,
+    "promptRetained": true,
+    "clipboard": true
   },
   "browserExternalRequests": 0,
   "uncaughtErrors": 0,
-  "checked_at_utc": "2026-11-15T04:19:54.229Z",
-  "host_binary_sha256": "26b30281fc5dcf077f1d785fd188c7be7ddd83c21ecc42de11ef46cf3ef8519e",
-  "cli_binary_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
-  "frontend_index_sha256": "b7d29fa5feb3a9a784d41ab0721e8eb1b3cec69976e5a6d60044d8c5a954bf7c",
-  "credential_persistence_checks": {
-    "browser_storage_absent": true,
-    "disconnect_cleared": true
+  "ai": {
+    "skipped": "No live provider credential supplied for this build; frontend AI responses tested with a synthetic host"
   },
-  "limits": "Synthetic end-to-end smoke check; cited prose accuracy and complete feedback preservation are not proved."
+  "previous_live_ai_validation": {
+    "schema": "sqlolla.host_browser_check.v1",
+    "status": "passed",
+    "startOpen": true,
+    "graphviz": true,
+    "explicitNext": true,
+    "assurance": "native_ra_alloy_with_rust_replay",
+    "precision": {
+      "schema": "sqlolla.instance.v1",
+      "exactInt64": true,
+      "typedNull": true
+    },
+    "ai": {
+      "model": "gpt-6.1-sol",
+      "explanationClaims": 3,
+      "proposalAnalysis": "NO_COUNTEREXAMPLE_WITHIN_BOUNDS"
+    },
+    "browserExternalRequests": 0,
+    "uncaughtErrors": 0,
+    "checked_at_utc": "2026-11-15T04:19:54.229Z",
+    "host_binary_sha256": "26b30281fc5dcf077f1d785fd188c7be7ddd83c21ecc42de11ef46cf3ef8519e",
+    "cli_binary_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
+    "frontend_index_sha256": "b7d29fa5feb3a9a784d41ab0721e8eb1b3cec69976e5a6d60044d8c5a954bf7c",
+    "credential_persistence_checks": {
+      "browser_storage_absent": true,
+      "disconnect_cleared": true
+    },
+    "limits": "Synthetic end-to-end smoke check; cited prose accuracy and complete feedback preservation are not proved."
+  },
+  "limits": "Loopback packaged-host test on Windows 11. No IIS, Windows 10 target or current live AI refinement request was exercised."
 }

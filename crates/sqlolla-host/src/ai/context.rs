@@ -164,35 +164,6 @@ fn schema_context(catalog: &Value) -> Vec<Value> {
     }).collect()
 }
 
-/// SQL is the only changed semantic input; analysis properties and finite domains remain untouched.
-pub(super) async fn reanalyze(
-    state: &HostState,
-    evidence: &Evidence,
-    sql: &Option<String>,
-) -> Result<Value> {
-    let request = candidate(evidence, sql)?;
-    state
-        .dispatch(serde_json::to_vec(&request).unwrap())
-        .await
-        .map_err(|_| {
-            failure(
-                "ai.analysis_unavailable",
-                "Candidate bounded analysis could not complete",
-            )
-        })
-}
-
-/// Candidate construction cannot mutate a saved context or replace its property and search domain.
-pub(super) fn candidate(evidence: &Evidence, sql: &Option<String>) -> Result<Value> {
-    proposal_basis(evidence)?;
-    let mut request = evidence.bundle["request"].clone();
-    request["sql"] = json!(
-        sql.as_ref()
-            .ok_or_else(|| failure("ai.proposal_sql", "The model omitted proposed SQL"))?
-    );
-    Ok(request)
-}
-
 /// Canonical references must resolve to the exact retained payload before entering any prompt.
 fn validate_facts(facts: &[Value], instance: &Value) -> Result<()> {
     let mut seen = BTreeSet::new();
@@ -209,18 +180,6 @@ fn validate_facts(facts: &[Value], instance: &Value) -> Result<()> {
                 "Canonical fact does not match the retained instance",
             ));
         }
-    }
-    Ok(())
-}
-
-/// Refuse proposals before provider egress when there is no complete retained analysis basis.
-pub(super) fn proposal_basis(evidence: &Evidence) -> Result<()> {
-    let request = &evidence.bundle["request"];
-    if request["mode"] != "analyze" || request["property"].is_null() {
-        return Err(failure(
-            "ai.analysis_basis",
-            "SQL proposals require a retained bounded analysis with a property",
-        ));
     }
     Ok(())
 }

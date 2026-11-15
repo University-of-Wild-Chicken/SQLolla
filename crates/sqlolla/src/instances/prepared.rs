@@ -3,7 +3,7 @@ use super::*;
 use crate::alloy::{self, Encoded, Inputs, Property};
 use crate::bridge;
 use crate::finite::{self, FiniteModel};
-use sqlolla_core::{ExecutionContext, StatementPlan};
+use sqlolla_core::{Column, ExecutionContext, StatementPlan};
 
 /// The two supported encodings retain distinct semantic assurance descriptions.
 pub(super) enum Model {
@@ -21,7 +21,29 @@ pub(super) struct Prepared {
 
 impl Prepared {
     /// Parse and bind exact stored SQL, then reconstruct the deterministic encoding inventory.
-    pub(super) fn new(pipeline: &mut Pipeline, mut request: Request) -> Outcome<Self> {
+    pub(super) fn new(pipeline: &mut Pipeline, request: Request) -> Outcome<Self> {
+        Self::prepare(pipeline, request, None)
+    }
+
+    /// Bind candidate SQL under the archived request and require its exact output positions.
+    pub(super) fn candidate(
+        pipeline: &mut Pipeline,
+        bundle: &Bundle,
+        sql: String,
+    ) -> Outcome<Self> {
+        let request = Request {
+            sql,
+            ..bundle.request.clone()
+        };
+        Self::prepare(pipeline, request, Some(&bundle.output_schema))
+    }
+
+    /// Reject a changed output contract before constructing a bounded model.
+    fn prepare(
+        pipeline: &mut Pipeline,
+        mut request: Request,
+        schema: Option<&[Column]>,
+    ) -> Outcome<Self> {
         request.id = Value::Null;
         request.include_model = false;
         request.validate()?;
@@ -34,6 +56,7 @@ impl Prepared {
             &request.parameters,
         )
         .map_err(|error| (error.code, error.message))?;
+        require_schema(schema, &statement)?;
         let context = crate::extended::catalog_context(&request)?;
         let model = build(&request, &statement, &context)?;
         Ok(Self {
@@ -94,6 +117,17 @@ impl Prepared {
             "outcome":transition.outcome,"transition_index":index}),
         )
     }
+}
+
+/// Reject a changed required column contract without encoding the candidate.
+fn require_schema(expected: Option<&[Column]>, statement: &StatementPlan) -> Outcome<()> {
+    if expected.is_some_and(|expected| expected != crate::extended::schema(statement)) {
+        return Err(failure(
+            "refinement.output_schema",
+            "Candidate changes the archived output schema",
+        ));
+    }
+    Ok(())
 }
 
 /// Reuse exactly the profile routing and complete finite transition builder from normal analysis.

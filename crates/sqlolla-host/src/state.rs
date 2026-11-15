@@ -1,6 +1,7 @@
 //! One bounded worker owns Pipeline; provider network operations never hold its execution lane.
 use crate::{
     MAX_REQUEST_BYTES,
+    config::BrowserOrigin,
     error::HostError,
     worker::{Message, Worker},
 };
@@ -12,7 +13,7 @@ use tokio::sync::{OwnedSemaphorePermit, Semaphore, mpsc, oneshot};
 /// Cloneable browser session state contains no provider credentials.
 #[derive(Clone)]
 pub struct HostState {
-    origin: Arc<str>,
+    origin: Arc<BrowserOrigin>,
     csrf: Arc<str>,
     sender: mpsc::Sender<Message>,
     admission: Arc<Semaphore>,
@@ -20,7 +21,7 @@ pub struct HostState {
 
 impl HostState {
     /// Start the sole canonical pipeline owner and await successful worker initialization.
-    pub async fn start(origin: String) -> Result<(Self, Worker), HostError> {
+    pub async fn start(origin: BrowserOrigin) -> Result<(Self, Worker), HostError> {
         let csrf = crate::security::nonce()?;
         let (sender, worker) = Worker::start().await?;
         Ok((
@@ -34,8 +35,8 @@ impl HostState {
         ))
     }
 
-    /// Return the exact loopback origin accepted by the same-origin boundary.
-    pub fn origin(&self) -> &str {
+    /// Return the configured browser origin, independent of the loopback listener.
+    pub fn origin(&self) -> &BrowserOrigin {
         &self.origin
     }
 

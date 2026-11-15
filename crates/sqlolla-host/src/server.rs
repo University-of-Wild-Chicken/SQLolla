@@ -1,5 +1,10 @@
 //! Same-origin local HTTP wiring; production database execution is not provided.
-use crate::{command, config::Config, security, state::HostState};
+use crate::{
+    command,
+    config::{BrowserOrigin, Config},
+    security,
+    state::HostState,
+};
 use axum::{
     Router, middleware,
     routing::{get, post},
@@ -25,10 +30,16 @@ pub fn router(state: HostState, frontend: &std::path::Path) -> Router {
 pub async fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
     let listener =
         tokio::net::TcpListener::bind(SocketAddr::from((Ipv4Addr::LOCALHOST, config.port))).await?;
-    let origin = format!("http://{}", listener.local_addr()?);
-    let (state, worker) = HostState::start(origin.clone()).await?;
+    let address = listener.local_addr()?;
+    let origin = config
+        .public_origin
+        .unwrap_or_else(|| BrowserOrigin::loopback(address.port()));
+    let (state, worker) = HostState::start(origin).await?;
+    println!(
+        "SQLolla host listening at http://{address}; browser origin {}",
+        state.origin().value()
+    );
     let app = router(state, &config.frontend);
-    println!("SQLolla host ready at {origin}");
     let result = axum::serve(listener, app)
         .with_graceful_shutdown(shutdown_signal())
         .await;

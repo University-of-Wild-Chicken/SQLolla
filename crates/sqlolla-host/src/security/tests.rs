@@ -25,7 +25,8 @@ fn headers() -> HeaderMap {
 /// Foreign origins, rebinding hosts and missing capabilities never enter a handler.
 #[test]
 fn origin_host_and_nonce_are_required() {
-    assert!(validate(&headers(), &Method::POST, ORIGIN, "test").is_ok());
+    let origin = BrowserOrigin::loopback(8787);
+    assert!(validate(&headers(), &Method::POST, &origin, "test").is_ok());
     for (name, value, code) in [
         ("host", "attacker.test:8787", "host.authority"),
         ("origin", "https://attacker.test", "host.origin"),
@@ -35,7 +36,7 @@ fn origin_host_and_nonce_are_required() {
         let mut fields = headers();
         fields.insert(name, HeaderValue::from_static(value));
         assert_eq!(
-            validate(&fields, &Method::POST, ORIGIN, "test")
+            validate(&fields, &Method::POST, &origin, "test")
                 .unwrap_err()
                 .code,
             code
@@ -44,32 +45,82 @@ fn origin_host_and_nonce_are_required() {
     let mut fields = headers();
     fields.remove("origin");
     assert_eq!(
-        validate(&fields, &Method::POST, ORIGIN, "test")
+        validate(&fields, &Method::POST, &origin, "test")
             .unwrap_err()
             .code,
         "host.csrf"
     );
-    assert!(validate(&fields, &Method::GET, ORIGIN, "test").is_ok());
+    assert!(validate(&fields, &Method::GET, &origin, "test").is_ok());
 }
 
 /// Duplicate capabilities or origins cannot exploit first-header interpretation differences.
 #[test]
 fn duplicate_security_headers_are_rejected() {
+    let origin = BrowserOrigin::loopback(8787);
     for name in ["host", "origin", "x-sqlolla-csrf", "content-type"] {
         let mut fields = headers();
         fields.append(name, fields.get(name).unwrap().clone());
-        assert!(validate(&fields, &Method::POST, ORIGIN, "test").is_err());
+        assert!(validate(&fields, &Method::POST, &origin, "test").is_err());
     }
     let mut fields = headers();
     fields.append("origin", HeaderValue::from_static(ORIGIN));
-    assert!(validate(&fields, &Method::GET, ORIGIN, "test").is_err());
+    assert!(validate(&fields, &Method::GET, &origin, "test").is_err());
+}
+
+/// Construct the browser headers IIS must preserve when it forwards a request.
+fn proxy_request() -> (BrowserOrigin, HeaderMap) {
+    let origin = BrowserOrigin::https("https://review.example.test:8443").unwrap();
+    let mut fields = headers();
+    fields.insert("host", HeaderValue::from_static("review.example.test:8443"));
+    fields.insert(
+        "origin",
+        HeaderValue::from_static("https://review.example.test:8443"),
+    );
+    (origin, fields)
+}
+
+/// Both exact browser identities admit an HTTPS request despite unrelated forwarding metadata.
+#[test]
+fn proxied_https_accepts_configured_origin() {
+    let (origin, mut fields) = proxy_request();
+    fields.insert(
+        "forwarded",
+        HeaderValue::from_static("host=other.test;proto=http"),
+    );
+    assert!(validate(&fields, &Method::POST, &origin, "test").is_ok());
+}
+
+/// Forwarded protocol and authority cannot replace the actual browser headers.
+#[test]
+fn forwarded_headers_cannot_set_browser_origin() {
+    let (origin, mut fields) = proxy_request();
+    fields.insert("origin", HeaderValue::from_static(ORIGIN));
+    fields.insert("x-forwarded-proto", HeaderValue::from_static("https"));
+    assert_eq!(
+        validate(&fields, &Method::POST, &origin, "test")
+            .unwrap_err()
+            .code,
+        "host.origin"
+    );
+    fields.insert("host", HeaderValue::from_static("127.0.0.1:8787"));
+    fields.insert(
+        "x-forwarded-host",
+        HeaderValue::from_static("review.example.test:8443"),
+    );
+    assert_eq!(
+        validate(&fields, &Method::POST, &origin, "test")
+            .unwrap_err()
+            .code,
+        "host.authority"
+    );
 }
 
 /// Unsupported methods cannot bypass the POST capability requirement.
 #[test]
 fn methods_and_response_policy_are_explicit() {
+    let origin = BrowserOrigin::loopback(8787);
     assert_eq!(
-        validate(&headers(), &Method::DELETE, ORIGIN, "test")
+        validate(&headers(), &Method::DELETE, &origin, "test")
             .unwrap_err()
             .code,
         "host.method"

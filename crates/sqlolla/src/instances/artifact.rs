@@ -113,7 +113,7 @@ pub(super) fn instance(bundle: &Bundle, semantic: Value, response: &Value) -> Ou
 }
 
 /// Ground row occurrences and retained effects without interpreting or trusting AI prose.
-fn facts(semantic: &Value) -> Outcome<Vec<Value>> {
+pub(super) fn facts(semantic: &Value) -> Outcome<Vec<Value>> {
     let mut facts = Vec::new();
     table_facts(
         &mut facts,

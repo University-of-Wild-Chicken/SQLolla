@@ -11,8 +11,10 @@ The interface is a three-column workspace:
   unvalidated state, separate from canonical IR. Editing a draft sets stored evidence aside.
 - **Evidence card** — Graphviz/table views, exact before/after/output occurrences, typed NULLs,
   duplicates, statement errors/effects, graph node fact inspection and explicit Next.
-- **Explain & refine** — labelled fixture summaries or requested live summaries with fact citations,
-  assumptions, bounded reanalysis of SQL proposals, memory-only BYOT and the review ledger.
+- **Explanation rail** — fixture summaries or requested live explanations with fact citations,
+  memory-only provider settings and the review journal.
+- **Review bins** — Yes, No and Unsure at the bottom of the workspace. Reopen the exact saved case,
+  move it to another bin or withdraw its label. The current analysis cursor is retained.
 
 ## Run
 
@@ -63,17 +65,17 @@ npm run test:host        # requires the running Rust host; performs real local s
 ```
 
 `test:e2e` uses `playwright-core` with installed Chrome. Set `CHROME_PATH` if Chrome is elsewhere.
-It verifies no external requests, Graphviz SVG rendering, keyboard accept/reject/undo, graph-drag
-non-swipe, explicit Next, draft invalidation, the compiler gap, large-graph partial mode, reduced
-motion, WCAG A/AA axe checks, 390×844 layout and screenshots in [`e2e/screenshots/`](e2e/screenshots/).
-Set `SQLLOLLA_URL` to check an already-running deployment instead.
+It covers Graphviz, keyboard review, explicit Next, exact case reopening, bin changes, draft and
+compiler states, reduced motion, WCAG A/AA axe checks and 390×844 layout. Screenshots default to
+[`e2e/screenshots/`](e2e/screenshots/). Set `SQLLOLLA_SCREENSHOTS` to capture a new run separately,
+and `SQLLOLLA_URL` to test an already-running deployment.
 
 `test:host` checks browser start/open/next, Graphviz and lossless Int64/NULL rendering against the
 running loopback host. It creates synthetic stored instances and makes no AI request. The same
 [`e2e/host.mjs`](e2e/host.mjs) exports `verifyHost({url, chromePath, apiKey})` for an explicitly
 authorized live provider check with a credential supplied only in memory. It checks a cited summary,
-SQL proposal reanalysis, explicit draft adoption, browser storage and Disconnect; its returned
-report contains no key or generated prose. Do not embed credentials in commands or test files.
+feedback-driven SQL regeneration, draft adoption when checks pass, browser storage and Disconnect.
+Its returned report omits the key and generated prose.
 
 ## Local host boundary
 
@@ -92,22 +94,28 @@ evidence remains separate from host-replayed evidence: local hashes and pointer 
 authenticate imports. Presentation DOT is derived from typed evidence and is not a second SQL
 interpreter. Signed imports and authenticated multi-user hosting remain separate work.
 
-## Optional AI
+## Refine a query
 
-Save an OpenAI key in the tab's provider settings, then explicitly request an explanation or SQL
-proposal. Saving settings sends nothing. The same-origin Rust host reloads the selected stored
-instance; the browser cannot replace its facts, model revision or analysis basis. The host calls
-only OpenAI Responses with `gpt-6.1-sol`, `store:false`, no tools, redirects or model fallback.
-Anthropic/Gemini adapters remain unconnected under this production model policy.
+In a local bounded analysis, swipe right to label a saved observation Yes, swipe left for No,
+or choose Mark unsure. Yes requires the exact observed behavior to remain possible on its saved
+input. No requires that behavior to be absent on its saved input. Unsure provides context only.
+The review bins retain compatible observations across query revisions. If a legacy label has no
+bundle ID, reopen its original case from the library or analysis and save that label again to bind
+its exact identity. The host checks compatibility and replays every saved case before refinement.
 
-Redacted explanations omit SQL, IR, Alloy, parameters/domain values and fact payloads. Schema
-shape and fact identifiers remain visible. Unredacted context includes the retained triple;
-fact truncation is explicit. SQL proposals require unredacted context and preserve the original
-catalog, parameters, property, bounds and domain during deterministic reanalysis. A candidate
-result is not proof that accepted/rejected business cases have all been preserved.
+Regeneration and local candidate checks require an active Yes or No. Enter the original prompt
+to regenerate with AI, or paste SQL into Candidate SQL to check locally without a key. The local
+checker keeps the catalog, parameters, property, bounds, domain and execution settings and checks
+the exact labeled cases. Use checked SQL as new draft appears enabled only after every decisive
+case and the original bounded property pass. The editor stages the checked request for a fresh
+analysis. The native editor, evidence inspector and candidate result expose Copy SQL and a manual
+selection fallback.
 
-Explanation references and response identity are checked. This proves neither prose accuracy nor
-business intent. Provider failures leave deterministic evidence and feedback usable.
+Save an OpenAI key in the tab to request explanations or use Regenerate SQL. Generation reuses
+the original prompt, requires unredacted context and sends the canonical SQL, cases and notes only
+on that explicit action. The host uses OpenAI Responses with `gpt-6.1-sol` and `store:false`.
+The browser invalidates pending results and adoption when the prompt, source or feedback changes.
+Redacted explanations omit SQL, IR, Alloy, scalar values and fact payloads.
 
 ## Security and truthfulness boundaries
 

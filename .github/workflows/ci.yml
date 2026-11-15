@@ -1,0 +1,139 @@
+name: SQLolla CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sqlolla-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: Windows x64 verification
+    runs-on: windows-2025
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      RUSTUP_TOOLCHAIN: '1.100.0'
+      CARGO_TERM_COLOR: always
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          lfs: true
+          persist-credentials: false
+
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24.22.1'
+          package-manager-cache: false
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+
+      - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+
+      - name: Check frontend and review flow in Chrome
+        working-directory: frontend
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          npx --yes npm@12.2.2 ci
+          npm run check
+          $env:SQLLOLLA_SCREENSHOTS = Join-Path $env:RUNNER_TEMP 'sqlolla-screenshots'
+          node e2e/verify.mjs
+
+      - name: Set up Rust and pinned compiler dependencies
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          rustup toolchain install $env:RUSTUP_TOOLCHAIN --profile minimal --component rustfmt --component clippy
+          "RUSTC=$(rustup which rustc)" >> $env:GITHUB_ENV
+          "RUSTDOC=$(rustup which rustdoc)" >> $env:GITHUB_ENV
+          "SQLolla_JAVA=$(Join-Path $env:JAVA_HOME 'bin/java.exe')" >> $env:GITHUB_ENV
+          "SQLolla_JAVAC=$(Join-Path $env:JAVA_HOME 'bin/javac.exe')" >> $env:GITHUB_ENV
+
+          $dependencies = Join-Path (Split-Path -Parent $PWD.Path) 'dependencies'
+          $parser = Join-Path $dependencies 'SQLeanParser'
+          git init $parser
+          git -C $parser -c core.longpaths=true fetch --depth=1 https://github.com/University-of-Wild-Chicken/SQLeanParser.git ad15c585155ff7fc2c5fc4c9746905e4959ff5eb
+          git -C $parser -c core.longpaths=true -c core.autocrlf=false checkout --detach FETCH_HEAD
+
+          $leanTools = Join-Path $PWD 'm0/parser/.tools'
+          New-Item -ItemType Directory -Path $leanTools -Force | Out-Null
+          $leanArchive = Join-Path $env:RUNNER_TEMP 'lean-4.34.0-windows.tar.zst'
+          curl.exe --fail --location --retry 3 --output $leanArchive 'https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-windows.tar.zst'
+          if ((Get-FileHash -LiteralPath $leanArchive).Hash -ne 'c07e88d1fe4839ec96a79f54637b2a3a983ea6c5b7e82ff35afa22a7700a86b7') {
+            throw 'Lean release checksum mismatch'
+          }
+          tar.exe -xf $leanArchive -C $leanTools
+          Remove-Item -LiteralPath $leanArchive
+          (Join-Path $leanTools 'lean-4.34.0-windows/bin') >> $env:GITHUB_PATH
+
+          $alloy = Join-Path $dependencies 'org.alloytools.alloy.dist.jar'
+          curl.exe --fail --location --retry 3 --output $alloy 'https://github.com/AlloyTools/org.alloytools.alloy/releases/download/v6.2.0/org.alloytools.alloy.dist.jar'
+          "SQLolla_ALLOY_JAR=$alloy" >> $env:GITHUB_ENV
+
+      - name: Build Rust, native parser and Java bridge
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          .\scripts\build.ps1
+
+      - name: Audit Lean and validate all 276 parser exports
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          . .\scripts\env.ps1
+          .\formal\verify.ps1 -LakePath $env:SQLolla_LAKE
+          .\contracts\m2\verify.ps1 -LakePath $env:SQLolla_LAKE
+          python -m pip install -r parser/schema-requirements.txt
+          .\parser\test.ps1 -Corpus
+          python parser/census.py
+
+      - name: Check Rust and style
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          . .\scripts\env.ps1
+          cargo fmt --all -- --check
+          cargo clippy --workspace --all-targets --locked -- -D warnings
+          cargo test --workspace --locked
+          python scripts/check_style.py
+
+      - name: Replay refinement and industrial SQL against PostgreSQL and Alloy
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          . .\scripts\env.ps1
+          python validation/bootstrap_postgres.py
+          python validation/refinement.py
+          python validation/industrial.py
+          python validation/run.py
+          python validation/corpus_semantics.py
+          $ledger = Get-Content -Raw -LiteralPath validation/corpus-manifest.json | ConvertFrom-Json
+          if ($ledger.counts.semantic_fixtures.matched_pg_outcome_and_alloy_table -ne 552) {
+            throw 'Expected 552 industrial fixture comparisons'
+          }
+
+      - name: Build and test the IIS publication ZIP
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          . .\scripts\env.ps1
+          $env:CARGO_TARGET_DIR = Join-Path $PWD 'target/iis-win-x64'
+          $env:RUSTFLAGS = '-C target-feature=+crt-static'
+          cargo fetch --locked
+          cargo build --release --workspace --locked
+          $stage = 'target/publication/sqlolla-iis-win-x64'
+          python scripts/package_iis.py $stage
+          python scripts/package_iis.py --archive $stage
+          $destination = Join-Path $env:RUNNER_TEMP 'sqlolla IIS smoke test'
+          Expand-Archive -LiteralPath "$stage.zip" -DestinationPath $destination
+          $smoke = Join-Path $destination 'sqlolla-iis-win-x64/Test-Package.ps1'
+          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -File $smoke

@@ -6,7 +6,7 @@
     },
     "records": 276
   },
-  "cli_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
+  "cli_sha256": "faed4fb1ce907eebd00abce84d5d5c4a077674eedd91bb01f95e194d6aaca6bb",
   "comparisons": 24,
   "context_claim": "All catalogs, column nullability and input rows below are synthetic M1 test contracts. No authoritative upstream DDL, keys, widths, business constraints or production-data claim is made.",
   "contexts_sha256": "42b6c5fdf956cbf0f2e5f745cda5a73d4ddb715d0609f6b67b22e4d477f672a5",

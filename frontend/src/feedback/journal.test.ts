@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { act, renderHook } from "@testing-library/react";
 import {
   activeDecisionFor,
   activeDecisions,
@@ -7,6 +8,7 @@ import {
   mergeJournal,
   parseJournal,
   proposeDecision,
+  proposeRelabel,
   proposeWithdrawals,
   readStoredJournal,
   staleDecisions,
@@ -16,6 +18,7 @@ import {
   type FeedbackTarget,
   type JournalStorage,
 } from "./journal";
+import { useFeedbackJournal } from "./useFeedbackJournal";
 
 const target: FeedbackTarget = {
   instanceId: "a".repeat(64),
@@ -62,7 +65,7 @@ describe("feedback journal", () => {
     expect(event.model_revision_sha256).toBe(target.modelRevisionSha256);
     expect(event.semantic_sha256).toBe(target.semanticSha256);
     expect(event.supersedes_event_id).toBeUndefined();
-    expect(proposeDecision(change.events, target, "accepted_use_case", "", dependencies).kind).toBe("noop");
+    expect(proposeDecision(change.events, target, "accepted_use_case", "preserve duplicate handling", dependencies).kind).toBe("noop");
     expect(activeDecisionFor(change.events, target)?.disposition).toBe("accepted_use_case");
   });
 
@@ -89,7 +92,7 @@ describe("feedback journal", () => {
   it("detects contradictory active labels and stale revision feedback", () => {
     const firstDeps = deps();
     const accepted = appendDecision([], "accepted_use_case", firstDeps);
-    const rejected = appendDecision([], "unintended_behavior", deps());
+    const rejected = { ...appendDecision([], "unintended_behavior", deps()), event_id: "rejected-event" };
     const events = [accepted, rejected];
     const conflicts = detectConflicts(events);
     expect(conflicts).toHaveLength(1);
@@ -98,6 +101,51 @@ describe("feedback journal", () => {
     expect(activeDecisions(events)).toHaveLength(2);
     expect(staleDecisions(events, "d".repeat(64))).toHaveLength(2);
     expect(staleDecisions(events, target.modelRevisionSha256)).toHaveLength(0);
+  });
+
+  it("binds a legacy label only after reviewing the same exact instance", () => {
+    const dependencies = deps();
+    const legacy = appendDecision([], "accepted_use_case", dependencies);
+    const other = { ...target, bundleId: "a".repeat(64), instanceId: "f".repeat(64) };
+    expect(activeDecisionFor([legacy], other)).toBeUndefined();
+    const bound = proposeDecision([legacy], { ...target, bundleId: other.bundleId }, "accepted_use_case", "", dependencies);
+    expect(bound.kind).toBe("appended");
+    if (bound.kind !== "appended") return;
+    expect(activeDecisions(bound.events)[0]).toMatchObject({ bundle_id: other.bundleId, supersedes_event_id: legacy.event_id });
+    expect(mergeJournal([], bound.events).ok).toBe(true);
+  });
+
+  it("moves an active label through Unsure without losing its identity or rationale", () => {
+    const dependencies = deps();
+    const first = proposeDecision([], { ...target, bundleId: "a".repeat(64) }, "accepted_use_case", "preserve this", dependencies);
+    if (first.kind !== "appended") throw new Error(first.reason);
+    const old = first.events[0]!;
+    const moved = proposeRelabel(first.events, old.event_id, "unsure", dependencies);
+    if (moved.kind !== "appended") throw new Error(moved.reason);
+    expect(activeDecisions(moved.events)).toMatchObject([
+      { disposition: "unsure", bundle_id: old.bundle_id, rationale: old.rationale, supersedes_event_id: old.event_id },
+    ]);
+    expect(mergeJournal([], moved.events).ok).toBe(true);
+  });
+
+  it("rejects cross-identity, self and future supersession without hiding the original case", () => {
+    const dependencies = deps();
+    const original = appendDecision([], "accepted_use_case", dependencies);
+    const other = { ...appendDecision([], "unintended_behavior", dependencies), instance_id: "d".repeat(64) };
+    expect(mergeJournal([original], [{ ...other, supersedes_event_id: original.event_id }]).ok).toBe(false);
+    expect(mergeJournal([], [{ ...other, supersedes_event_id: other.event_id }]).ok).toBe(false);
+    expect(mergeJournal([], [{ ...other, supersedes_event_id: original.event_id }, original]).ok).toBe(false);
+    expect(activeDecisions([original])).toEqual([original]);
+  });
+
+  it("preserves journal events from decisions made in the same render batch", () => {
+    const storage: JournalStorage = { getItem: () => null, setItem: () => undefined };
+    const { result } = renderHook(() => useFeedbackJournal(storage));
+    act(() => {
+      result.current.recordDecision(target, "accepted_use_case", "");
+      result.current.recordDecision({ ...target, instanceId: "d".repeat(64) }, "unsure", "");
+    });
+    expect(activeDecisions(result.current.events).map(({ disposition }) => disposition)).toEqual(["accepted_use_case", "unsure"]);
   });
 
   it("round-trips only journal events through export and import", () => {

@@ -21,10 +21,11 @@ export interface SwipeReview {
     readonly onPointerMove: (event: ReactPointerEvent<HTMLElement>) => void;
     readonly onPointerUp: (event: ReactPointerEvent<HTMLElement>) => void;
     readonly onPointerCancel: () => void;
+    readonly onLostPointerCapture: () => void;
   };
 }
 
-type Start = { readonly x: number; readonly y: number };
+type Start = { readonly x: number; readonly y: number; readonly pointerId: number };
 type SetNumber = (value: number) => void;
 type SetBoolean = (value: boolean) => void;
 
@@ -37,13 +38,15 @@ function excludedTarget(target: EventTarget | null): boolean {
 
 /** Begin tracking a potentially horizontal gesture. */
 function startDrag(event: ReactPointerEvent<HTMLElement>, disabled: boolean, start: { current: Start | null }): void {
-  if (disabled || event.button !== 0 || excludedTarget(event.target)) return;
-  start.current = { x: event.clientX, y: event.clientY };
+  if (disabled || start.current || event.button !== 0 || excludedTarget(event.target)) return;
+  if (event.pointerType === "mouse") event.preventDefault();
+  start.current = { x: event.clientX, y: event.clientY, pointerId: event.pointerId };
+  event.currentTarget.setPointerCapture?.(event.pointerId);
 }
 
 /** Update the visual drag translation only after horizontal intent is clear. */
 function moveDrag(event: ReactPointerEvent<HTMLElement>, start: { current: Start | null }, setDragging: SetBoolean, setDragX: SetNumber): void {
-  if (!start.current) return;
+  if (!start.current || start.current.pointerId !== event.pointerId) return;
   const dx = event.clientX - start.current.x;
   const dy = event.clientY - start.current.y;
   if (Math.abs(dx) < 8 || Math.abs(dx) <= Math.abs(dy)) return;
@@ -54,9 +57,8 @@ function moveDrag(event: ReactPointerEvent<HTMLElement>, start: { current: Start
 /** Finish a gesture and dispatch only a deliberate horizontal swipe. */
 function endDrag(event: ReactPointerEvent<HTMLElement>, start: { current: Start | null }, reset: () => void, options: SwipeReviewOptions): void {
   const origin = start.current;
-  start.current = null;
+  if (!origin || origin.pointerId !== event.pointerId) return;
   reset();
-  if (!origin) return;
   const dx = event.clientX - origin.x;
   const dy = event.clientY - origin.y;
   if (Math.abs(dx) < SWIPE_THRESHOLD || Math.abs(dx) <= Math.abs(dy)) return;
@@ -70,12 +72,12 @@ export function useSwipeReview(options: SwipeReviewOptions): SwipeReview {
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
   const reset = (): void => {
+    start.current = null;
     setDragging(false);
     setDragX(0);
   };
   useEffect(() => {
     if (!options.disabled) return;
-    start.current = null;
     reset();
   }, [options.disabled]);
   return {
@@ -85,10 +87,8 @@ export function useSwipeReview(options: SwipeReviewOptions): SwipeReview {
       onPointerDown: (event) => startDrag(event, options.disabled, start),
       onPointerMove: (event) => moveDrag(event, start, setDragging, setDragX),
       onPointerUp: (event) => endDrag(event, start, reset, options),
-      onPointerCancel: () => {
-        start.current = null;
-        reset();
-      },
+      onPointerCancel: reset,
+      onLostPointerCapture: reset,
     },
   };
 }

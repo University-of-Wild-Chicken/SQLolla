@@ -7,6 +7,7 @@ import { useState, type JSX } from "react";
 import { cellText, shortHash, typedValueText } from "../analysis/format";
 import { describeAssurance } from "../analysis/status";
 import type { EvidenceView, FactModel } from "../analysis/types";
+import { CopySqlButton } from "./CopySqlButton";
 import { Modal } from "./Modal";
 
 /** Tabs available in the evidence inspector. */
@@ -155,6 +156,7 @@ function SqlTab({ evidence }: { readonly evidence: EvidenceView }): JSX.Element 
       <section>
         <span className="mono-label">EXACT SQL</span>
         <pre className="code-block">{evidence.bundle.request.sql}</pre>
+        <CopySqlButton sql={evidence.bundle.request.sql} />
       </section>
       <section>
         <span className="mono-label">TYPED PARAMETERS</span>

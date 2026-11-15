@@ -1,6 +1,7 @@
 /** Accessible native entry point with a small example and advanced explicit request context. */
 import type { JSX } from "react";
 import type { NativeAnalysis } from "../workspace/native";
+import { CopySqlButton } from "./CopySqlButton";
 
 /** Keep SQL readable while advanced catalog, parameters, bounds and property remain explicitly editable. */
 export function NativeAnalysisPanel({ analysis }: { readonly analysis: NativeAnalysis }): JSX.Element {
@@ -15,6 +16,7 @@ export function NativeAnalysisPanel({ analysis }: { readonly analysis: NativeAna
         SQL query
         <textarea aria-label="SQL query" className="code-block" rows={7} value={analysis.sql} onChange={(event) => analysis.editSql(event.target.value)} />
       </label>
+      <CopySqlButton sql={analysis.sql} />
       <NativeControls analysis={analysis} />
       <AdvancedRequest analysis={analysis} />
       {analysis.error ? (

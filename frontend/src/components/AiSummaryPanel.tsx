@@ -15,7 +15,6 @@ interface AiSummaryPanelProps {
   readonly onOpenSettings: () => void;
   readonly onInspectFact: (reference: string) => void;
   readonly bundleId?: string | null;
-  readonly onApplyProposal?: (sql: string) => void;
 }
 
 /** Resolve only exact supplied JSON Pointer facts for clickable citations. */
@@ -208,19 +207,13 @@ function PanelStatus({ evidence, outcome, onOpenSettings, onInspectFact }: Panel
 }
 
 /** Render the demo summary, its citations, assumptions and failure state. */
-export function AiSummaryPanel({ scenario, evidence, settings, onOpenSettings, onInspectFact, bundleId, onApplyProposal }: AiSummaryPanelProps): JSX.Element {
+export function AiSummaryPanel({ scenario, evidence, settings, onOpenSettings, onInspectFact, bundleId }: AiSummaryPanelProps): JSX.Element {
   const outcome = useExplanation(evidence, scenario, settings);
   return (
     <section className="ai-panel" aria-label="Explanation">
       <ExplanationHeader onOpenSettings={onOpenSettings} />
       {settings.mode === "openai_compatible" && evidence ? (
-        <LiveAssistancePanel
-          bundleId={bundleId ?? null}
-          evidence={evidence}
-          settings={settings}
-          onInspectFact={onInspectFact}
-          onApplyProposal={onApplyProposal}
-        />
+        <LiveAssistancePanel bundleId={bundleId ?? null} evidence={evidence} settings={settings} onInspectFact={onInspectFact} />
       ) : (
         <PanelStatus evidence={evidence} outcome={outcome} onOpenSettings={onOpenSettings} onInspectFact={onInspectFact} />
       )}

@@ -1,5 +1,5 @@
 //! Loopback same-origin admission and memory-only anti-CSRF capabilities.
-use crate::{MAX_REQUEST_BYTES, error::HostError, state::HostState};
+use crate::{MAX_REQUEST_BYTES, config::BrowserOrigin, error::HostError, state::HostState};
 use axum::{
     body::{Body, to_bytes},
     extract::{Request, State},
@@ -54,28 +54,27 @@ async fn admitted(state: HostState, request: Request, next: Next) -> Response {
     }
 }
 
-/// Exact Host and Origin checks reject DNS rebinding and cross-site browser requests.
+/// Compare actual Host and Origin headers with the configured identities; ignore forwarded headers.
 fn validate(
     headers: &HeaderMap,
     method: &Method,
-    origin: &str,
+    origin: &BrowserOrigin,
     csrf: &str,
 ) -> Result<(), HostError> {
-    let host = origin.strip_prefix("http://").unwrap_or("");
-    if header(headers, "host") != Some(host) {
+    if header(headers, "host") != Some(origin.authority()) {
         return Err(forbidden(
             "host.authority",
-            "Unexpected loopback host authority",
+            "Unexpected configured host authority",
         ));
     }
-    if headers.contains_key("origin") && header(headers, "origin") != Some(origin) {
+    if headers.contains_key("origin") && header(headers, "origin") != Some(origin.value()) {
         return Err(forbidden(
             "host.origin",
             "Cross-origin requests are not allowed",
         ));
     }
     if *method == Method::POST {
-        validate_post(headers, origin, csrf)?;
+        validate_post(headers, origin.value(), csrf)?;
     } else if *method != Method::GET && *method != Method::HEAD {
         return Err(forbidden(
             "host.method",

@@ -43,6 +43,7 @@ import SQLollaM2.XidScalars
 import SQLollaM2.BackendSignals
 import SQLollaM2.RelationInitialization
 import SQLollaM2.AssistanceBoundary
+import SQLollaM2.HostOrigin
 
 /-!
 Maintained M2 contracts extend the existing M0 specification.

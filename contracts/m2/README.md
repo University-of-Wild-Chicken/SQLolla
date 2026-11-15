@@ -14,8 +14,20 @@ Admission requires the independent oracle, completeness, adversarial and unchang
 
 `AssistanceBoundary` specifies exact `gpt-6.1-sol` identity, revision/context-packet
 binding, authentic fact references, and a proposed → bound → replayed → analyzed
-promotion chain with unchanged context, property and bounds. Its feedback results
-are conditional on complete semantic replay and the supplied analysis obligation.
+promotion chain with unchanged catalog, typed parameters, domain, execution context,
+property, bounds and ordered output schema. The source query and original instruction
+stay pinned in proposal provenance. `InstanceReview` projects the latest Yes, No or
+Unsure label per saved instance from an append-only history. Reviews from different
+queries or saved artifact revisions can carry forward on the same semantic basis
+when each source observation is authentic. Regeneration requires at least one Yes
+or No. Yes requires the exact observed behavior on the archived input to remain
+possible. No requires it to be absent from every outcome on that input. Canonical
+behavior includes duplicate row occurrences, poststate, SQL failure and retained
+effects. Unsure adds no replay obligation. The executable check requires complete
+replay for decisive cases, and opposing decisions for the same input and behavior
+block certification. Publication and use compare the source revision and review
+digest to the live snapshot. These results are conditional on the supplied archive,
+semantic replay and analysis obligations.
 Credential noninterference proves only a fixed-public-request projection excludes
 the authentication field; it does not verify logs, network code or memory erasure.
 Provider prose remains untrusted even when its citations exist.

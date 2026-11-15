@@ -38,6 +38,13 @@ smaller verification reports remain ordinary Git files. Generated runtimes and
 build caches are excluded. Provision the pinned tools for a fresh installation;
 the existing local workspace's extracted toolchains are not part of the repository.
 
+The [Windows CI workflow](.github/workflows/ci.yml) runs on pull requests and pushes
+to `main`. It checks Lean proof dependencies, the parser, Rust, the frontend in
+Chrome, and refinement against PostgreSQL 16 and Alloy. It compares all 552 saved
+industrial observations against the current compiler and builds, extracts and
+smoke tests the IIS ZIP. The package stays on the runner. Testing IIS on the
+target machine remains part of [deployment](deployment/iis/README.md).
+
 The supplied Windows workspace has pinned portable Rust 1.100.0, Lean 4.34.0,
 Java 17, Alloy 6.2 and PostgreSQL 16.16 runtimes. PowerShell 7 is required for the
 parser's schema tests. No global installation or database service is needed.
@@ -83,30 +90,38 @@ The Java bridge confirms the command is an actual assertion check; every SAT
 counterexample is decoded and replayed. `python validation/assertion_examples.py`
 regenerates the inspectable `.als` models and SQL/IR evidence under `examples`.
 
-The required final frontend is specified in
-[the maintained gameplan](contracts/m2/gameplan.json) under `instance_review_frontend`.
-It pairs Graphviz instance cards with AI summaries grounded in the SQL/IR/Alloy
-triple. Right swipe accepts a use case; left swipe labels unwanted behavior for
-the next agentic revision. Stored instance JSON, on-demand enumeration and
-revision-bound feedback keep solver evidence separate from user intent and AI
-text. The [frontend package](frontend/README.md) retains an explicit offline fixture
-demo and connects through the loopback Rust `sqlolla-host` to the same Pipeline.
+The review workspace pairs Graphviz instance cards with optional AI summaries
+grounded in the SQL/IR/Alloy triple. Swipe right for Yes or left for No, or use the
+review controls to mark Unsure. The three bottom review bins let users reopen,
+move or withdraw saved labels while retaining the original solver evidence.
+The workspace includes an offline fixture demo and connects through the loopback
+Rust `sqlolla-host` to the same Pipeline. [Frontend package](frontend/README.md)
+
 Build its assets with `npm ci` and `npm run build` inside `frontend`, then start
 `target/debug/sqlolla-host.exe` from the initialized Windows environment above.
 Open `http://127.0.0.1:8787`; use the Analyze tab for a new stored solver instance.
-Optional summaries and SQL proposals use exact `gpt-6.1-sol`; keys stay in tab
-memory and request-lifetime host state. The host reloads canonical evidence before
-provider egress and deterministically reanalyzes proposed SQL without changing
-the retained property, context or finite domain. Other provider adapters remain
-future work under the current model policy.
-The redacted [browser/AI verification report](validation/results/host-browser.json)
-records the tested host and frontend build, actual instance navigation, numeric
-precision, live cited explanation and deterministically reanalyzed SQL proposal.
-The [frontend-only agent prompt](contracts/frontend-agent.txt) defines its iteration
-scope, fixture transport, evidence handling, Graphviz review and acceptance tests.
-The offline [instance API](crates/sqlolla/src/instances/README.md) stores
-versioned JSON bundles and supports `instances.start`, `instances.next` and
-`instances.open`, with replay before exposing examples or counterexamples.
+
+Regenerate SQL reuses the original prompt and the active review snapshot. At least
+one Yes or No is required. Summaries and regeneration use exact `gpt-6.1-sol`.
+Regeneration sends unredacted canonical evidence and review notes with consent.
+Keys stay in tab memory and request-lifetime host state. The local candidate
+checker also accepts handwritten SQL without a provider call. [Host API](crates/sqlolla-host/README.md)
+
+The checker preserves the original catalog, typed parameters, domain, bounds,
+execution context, property and ordered output schema. A Yes requires the exact
+observed behavior to remain possible on its archived input. A No requires that
+behavior to be absent from every complete candidate outcome on that input. Unsure
+is advisory. Readiness also requires a successful check of the original bounded
+property. The browser stages checked SQL as a new draft for explicit analysis.
+These guarantees cover the submitted observations and declared finite bounds.
+[Review contracts](contracts/m2/README.md)
+
+Browser smoke evidence identifies the tested host and frontend builds. The
+frontend prompt describes the maintained interaction and verification scope.
+The offline instance API replays evidence before yielding saved examples or
+counterexamples. [Browser verification](validation/results/host-browser.json) ·
+[Frontend design prompt](contracts/frontend-agent.txt) ·
+[Instance API](crates/sqlolla/src/instances/README.md)
 
 The extended `sqlolla.explicit_outcomes.v2` profile adds complete finite outcome
 sets, including order ties and pagination alternatives. Its Alloy model selects
@@ -168,15 +183,18 @@ native tools in a private installation. `SQLolla_PG_BIN` selects a PostgreSQL 16
 test installation. Lean expects SQLeanParser at `../dependencies/SQLeanParser`.
 The build wrappers check the pinned parser revision and Alloy artifact hash.
 
-Windows x64 has been executed. Linux, macOS and WSL validation and clean-machine
-packaging remain release gates; copying the Windows tools is not a portable
-installation. On Unix, provision native Rust, Lean 4.34.0 and Java 17, set
+Windows x64 has been executed. The private package targets Windows 10 IoT
+Enterprise LTSC 2021 x64 with IIS and HTTPS in front of the loopback host. Set
+`SQLolla_PUBLIC_ORIGIN` to the canonical browser origin and preserve `Host` and
+`Origin` through IIS. Target-machine deployment and Linux, macOS and WSL
+validation remain release gates. [Private IIS package](deployment/iis/README.md)
+
+On Unix, provision native Rust, Lean 4.34.0 and Java 17, set
 `LEAN_BIN` and `SQLolla_ALLOY_JAR`, and use `sh scripts/build.sh`. This wrapper is
 provided for the platform-validation increment and has not been executed here.
 
-The local graph/table review UI and optional OpenAI assistance are implemented.
-The full feedback-preserving revision agent, additional provider adapters,
-multi-statement transaction schedules and deployment at `sqlolla.us` remain planned.
+Additional provider adapters, multi-statement transaction schedules and public
+deployment remain future work.
 Current extensions observe individual mutations, SQL failures and fixed-snapshot
 row locks; these do not establish correctness under concurrent database changes.
 The CLI emits exact instance data; the browser provides its review interface.

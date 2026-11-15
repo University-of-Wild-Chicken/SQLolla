@@ -15,6 +15,9 @@ import { RightRail } from "./RightRail";
 import { DraftStatePanel, FailureState, OpeningState, TerminalState } from "./WorkspaceStates";
 import type { Workspace } from "../workspace/useWorkspace";
 import { NativeDraftState } from "./NativeAnalysisPanel";
+import { ReviewBins } from "./ReviewBins";
+import { RefinementPanel } from "./RefinementPanel";
+import { archivedScenario } from "../workspace/archivedReview";
 
 /** Render the masthead and workflow reminder. */
 function Masthead({ workspace }: { readonly workspace: Workspace }): JSX.Element {
@@ -48,16 +51,19 @@ interface EvidenceCenterProps {
 /** Render one evidence card bound to the controller. */
 function EvidenceCenter({ workspace, evidence }: EvidenceCenterProps): JSX.Element {
   const { session, selectors, dialogs, recordDecision, undoDecision, openLedger } = workspace;
+  const saved = workspace.archive.visible?.result;
+  const scenario = workspace.navigation.selectedScenario;
   return (
     <ReviewCard
-      key={evidence.instance.instanceId}
-      scenario={workspace.navigation.selectedScenario}
+      key={`${saved?.bundleId ?? session.state.bundleId}|${evidence.instance.instanceId}|${!!saved}`}
+      scenario={saved ? archivedScenario(saved, scenario) : scenario}
       evidence={evidence}
-      status={session.state.status ?? "instance"}
+      reopened={!!saved}
+      status={saved ? "instance" : (session.state.status ?? "instance")}
       cursor={session.state.cursor}
       pendingNext={session.state.pendingNext}
-      nextFailure={session.state.nextFailure}
-      staleNotice={session.state.staleNotice}
+      nextFailure={saved ? null : session.state.nextFailure}
+      staleNotice={saved ? null : session.state.staleNotice}
       activeDecision={selectors.activeDecision}
       conflict={selectors.currentConflict}
       onDecision={recordDecision}
@@ -68,6 +74,21 @@ function EvidenceCenter({ workspace, evidence }: EvidenceCenterProps): JSX.Eleme
       onInspectFact={dialogs.inspectFact}
       onOpenLedger={openLedger}
     />
+  );
+}
+
+/** Let a historical case be reconsidered without consuming or replacing the live cursor. */
+function ReopenedCenter({ workspace, evidence }: EvidenceCenterProps): JSX.Element {
+  return (
+    <>
+      <div className="reopened-review">
+        <p>Reviewing a saved case</p>
+        <button type="button" id="return-to-live-review" className="text-button" onClick={workspace.archive.close}>
+          Return to current workspace
+        </button>
+      </div>
+      <EvidenceCenter workspace={workspace} evidence={evidence} />
+    </>
   );
 }
 
@@ -114,6 +135,8 @@ function TerminalCenter({ workspace, status }: TerminalCenterProps): JSX.Element
 /** Render the mutually exclusive center state. */
 function CenterContent({ workspace }: { readonly workspace: Workspace }): JSX.Element {
   const { navigation, session } = workspace;
+  const archived = workspace.archive.visible?.result;
+  if (archived) return <ReopenedCenter workspace={workspace} evidence={archived.evidence} />;
   const state = session.state;
   if (navigation.draft) return <DraftCenter workspace={workspace} />;
   if (navigation.leftTab === "analysis" && workspace.native.dirty && !workspace.native.pending && state.phase !== "failed") return <NativeDraftState />;
@@ -154,12 +177,12 @@ function WorkspaceLeftRail({ workspace }: { readonly workspace: Workspace }): JS
 /** Render the right rail with responsive drawer/inert state. */
 function WorkspaceRightRail({ workspace }: { readonly workspace: Workspace }): JSX.Element {
   const { navigation, drawers, dialogs, journal, selectors, currentEvidence } = workspace;
+  const saved = workspace.archive.visible?.result;
   return (
     <RightRail
-      scenario={navigation.selectedScenario}
+      scenario={saved ? archivedScenario(saved, navigation.selectedScenario) : navigation.selectedScenario}
       evidence={currentEvidence}
-      bundleId={workspace.session.state.bundleId}
-      onApplyProposal={workspace.applyProposal}
+      bundleId={saved?.bundleId ?? workspace.session.state.bundleId}
       draftActive={!!navigation.draft}
       settings={dialogs.aiSettings}
       journal={journal}
@@ -172,6 +195,15 @@ function WorkspaceRightRail({ workspace }: { readonly workspace: Workspace }): J
       drawerOpen={drawers.rightOpen}
       inert={drawers.rightIsDrawer && !drawers.rightOpen}
     />
+  );
+}
+
+/** Keep the review bins and refinement controls at the bottom of the main page. */
+function WorkspaceReviewBins({ workspace }: { readonly workspace: Workspace }): JSX.Element {
+  return (
+    <ReviewBins journal={workspace.journal} archive={workspace.archive} revision={workspace.session.state.bundle?.modelRevisionSha256 ?? null}>
+      <RefinementPanel refinement={workspace.refinement} onOpenSettings={workspace.dialogs.openSettings} />
+    </ReviewBins>
   );
 }
 
@@ -188,6 +220,9 @@ function WorkspaceBody({ workspace }: { readonly workspace: Workspace }): JSX.El
         <CenterContent workspace={workspace} />
       </section>
       <WorkspaceRightRail workspace={workspace} />
+      <div className="review-bin-container" inert={drawers.leftOpen || drawers.rightOpen ? true : undefined}>
+        <WorkspaceReviewBins workspace={workspace} />
+      </div>
     </main>
   );
 }
@@ -195,6 +230,7 @@ function WorkspaceBody({ workspace }: { readonly workspace: Workspace }): JSX.El
 /** Render the local details and provider settings dialogs. */
 function SettingsDialogs({ workspace }: { readonly workspace: Workspace }): JSX.Element {
   const { dialogs, session, currentEvidence } = workspace;
+  const saved = workspace.archive.visible?.result;
   return (
     <>
       <DetailsDrawer
@@ -203,9 +239,9 @@ function SettingsDialogs({ workspace }: { readonly workspace: Workspace }): JSX.
         evidence={currentEvidence}
         initialTab={dialogs.details.tab}
         focusFact={dialogs.details.fact}
-        openRaw={session.state.openRaw}
-        nextRaw={session.state.nextRaw}
-        native={session.state.native}
+        openRaw={saved?.openRaw ?? session.state.openRaw}
+        nextRaw={saved ? saved.nextRaw : session.state.nextRaw}
+        native={saved ? !saved.fixture : session.state.native}
       />
       <AiSettingsDialog
         open={dialogs.settingsOpen}

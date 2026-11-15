@@ -5,12 +5,21 @@
 import { canonicalJson } from "../analysis/format";
 
 /** Feedback labels; withdrawal exists only to supersede a previous label. */
-export type FeedbackDisposition = "accepted_use_case" | "unintended_behavior" | "withdrawn";
+export type ReviewDisposition = "accepted_use_case" | "unintended_behavior" | "unsure";
+export type FeedbackDisposition = ReviewDisposition | "withdrawn";
+
+/** The three visible review bins and their persisted labels. */
+export const REVIEW_LABELS: Readonly<Record<ReviewDisposition, string>> = {
+  accepted_use_case: "Yes",
+  unintended_behavior: "No",
+  unsure: "Unsure",
+};
 
 /** The exact persisted feedback event shape. */
 export interface FeedbackEvent {
   readonly event_id: string;
   readonly idempotency_key: string;
+  readonly bundle_id?: string;
   readonly instance_id: string;
   readonly model_revision_sha256: string;
   readonly semantic_sha256: string;
@@ -29,6 +38,7 @@ export interface FeedbackJournalEnvelope {
 
 /** Identity of the observation receiving a decision. */
 export interface FeedbackTarget {
+  readonly bundleId?: string;
   readonly instanceId: string;
   readonly modelRevisionSha256: string;
   readonly semanticSha256: string;
@@ -87,6 +97,7 @@ function hasOnlyEventKeys(object: Record<string, unknown>): boolean {
   const allowed = new Set([
     "event_id",
     "idempotency_key",
+    "bundle_id",
     "instance_id",
     "model_revision_sha256",
     "semantic_sha256",
@@ -135,13 +146,26 @@ function eventObject(value: unknown): Record<string, unknown> {
   return object;
 }
 
+/** Validate the optional bundle identity on new events while retaining legacy events. */
+function eventBundle(object: Record<string, unknown>): string | undefined {
+  const bundle = object["bundle_id"];
+  if (bundle === undefined) return undefined;
+  if (typeof bundle !== "string" || !HASH.test(bundle)) throw new Error("Feedback bundle identity is malformed");
+  return bundle;
+}
+
+/** Check the legacy and current journal disposition vocabulary. */
+function eventDisposition(object: Record<string, unknown>): FeedbackDisposition {
+  const disposition = eventString(object, "disposition");
+  if (disposition === "withdrawn" || Object.hasOwn(REVIEW_LABELS, disposition)) return disposition as FeedbackDisposition;
+  throw new Error(`Unsupported feedback disposition "${disposition}"`);
+}
+
 /** Validate and reconstruct one untrusted event without copying extra fields. */
 export function parseFeedbackEvent(value: unknown): FeedbackEvent {
   const object = eventObject(value);
-  const disposition = eventString(object, "disposition");
-  if (!["accepted_use_case", "unintended_behavior", "withdrawn"].includes(disposition)) {
-    throw new Error(`Unsupported feedback disposition "${disposition}"`);
-  }
+  const disposition = eventDisposition(object);
+  const bundle = eventBundle(object);
   const revision = eventString(object, "model_revision_sha256");
   const semantic = eventString(object, "semantic_sha256");
   if (!HASH.test(revision) || !HASH.test(semantic)) {
@@ -156,10 +180,11 @@ export function parseFeedbackEvent(value: unknown): FeedbackEvent {
   return {
     event_id: eventString(object, "event_id"),
     idempotency_key: eventString(object, "idempotency_key"),
+    ...(bundle === undefined ? {} : { bundle_id: bundle }),
     instance_id: eventString(object, "instance_id"),
     model_revision_sha256: revision,
     semantic_sha256: semantic,
-    disposition: disposition as FeedbackDisposition,
+    disposition,
     ...(rationale === undefined ? {} : { rationale }),
     created_at: createdAt,
     ...(supersedes === undefined ? {} : { supersedes_event_id: supersedes }),
@@ -173,8 +198,8 @@ export function activeEvents(events: readonly FeedbackEvent[]): readonly Feedbac
 }
 
 /** Return active decision events, excluding withdrawal records. */
-export function activeDecisions(events: readonly FeedbackEvent[]): readonly FeedbackEvent[] {
-  return activeEvents(events).filter((event) => event.disposition !== "withdrawn");
+export function activeDecisions(events: readonly FeedbackEvent[]): readonly (FeedbackEvent & { readonly disposition: ReviewDisposition })[] {
+  return activeEvents(events).filter((event): event is FeedbackEvent & { readonly disposition: ReviewDisposition } => event.disposition !== "withdrawn");
 }
 
 /** Contextual key groups different atom assignments with the same SQL behavior. */
@@ -182,11 +207,20 @@ export function contextKey(event: Pick<FeedbackEvent, "model_revision_sha256" | 
   return `${event.model_revision_sha256}|${event.semantic_sha256}`;
 }
 
-/** Find the latest active decision for an exact contextual observation. */
+/** Test the exact instance, revision and semantic identity, including its bundle when known. */
+export function matchesTarget(event: FeedbackEvent, target: FeedbackTarget): boolean {
+  return (
+    (!event.bundle_id || event.bundle_id === target.bundleId) &&
+    event.instance_id === target.instanceId &&
+    event.model_revision_sha256 === target.modelRevisionSha256 &&
+    event.semantic_sha256 === target.semanticSha256
+  );
+}
+
+/** Find the latest active decision for the same stored instance. */
 export function activeDecisionFor(events: readonly FeedbackEvent[], target: FeedbackTarget): FeedbackEvent | undefined {
-  const key = `${target.modelRevisionSha256}|${target.semanticSha256}`;
   return activeDecisions(events)
-    .filter((event) => contextKey(event) === key)
+    .filter((event) => matchesTarget(event, target))
     .slice(-1)[0];
 }
 
@@ -222,7 +256,7 @@ export function staleDecisions(events: readonly FeedbackEvent[], currentRevision
 /** Build a decision event with stable target identity and optional supersession. */
 function decisionEvent(
   target: FeedbackTarget,
-  disposition: "accepted_use_case" | "unintended_behavior",
+  disposition: ReviewDisposition,
   rationale: string,
   active: FeedbackEvent | undefined,
   dependencies: EventDependencies,
@@ -231,30 +265,24 @@ function decisionEvent(
   return {
     event_id: newId,
     idempotency_key: `decision:${newId}`,
+    ...(target.bundleId ? { bundle_id: target.bundleId } : {}),
     instance_id: target.instanceId,
     model_revision_sha256: target.modelRevisionSha256,
     semantic_sha256: target.semanticSha256,
     disposition,
-    ...(rationale.trim() ? { rationale: rationale.trim().slice(0, 500) } : {}),
+    ...(rationale ? { rationale } : {}),
     created_at: dependencies.now(),
     ...(active ? { supersedes_event_id: active.event_id } : {}),
   };
 }
 
 /** Check active context for a multi-label conflict or a repeated identical label. */
-function decisionBlock(
-  events: readonly FeedbackEvent[],
-  target: FeedbackTarget,
-  disposition: "accepted_use_case" | "unintended_behavior",
-): FeedbackChange | null {
+function decisionBlock(events: readonly FeedbackEvent[], target: FeedbackTarget, disposition: ReviewDisposition, rationale: string): FeedbackChange | null {
   const active = activeDecisionFor(events, target);
-  if (active?.disposition === disposition) {
+  if (active?.disposition === disposition && (active.rationale ?? "") === rationale && active.bundle_id === target.bundleId) {
     return { kind: "noop", reason: "That use-case label is already active." };
   }
-  const key = `${target.modelRevisionSha256}|${target.semanticSha256}`;
-  const context = activeDecisions(events).filter((event) => contextKey(event) === key);
-  const hasOpposite = context.some((event) => event.disposition !== disposition);
-  if (hasOpposite && context.length > 1) {
+  if (detectConflicts(events).some((group) => group.revision === target.modelRevisionSha256 && group.semantic === target.semanticSha256)) {
     return {
       kind: "conflict",
       reason: "Resolve the conflicting active labels before adding another decision.",
@@ -267,15 +295,34 @@ function decisionBlock(
 export function proposeDecision(
   events: readonly FeedbackEvent[],
   target: FeedbackTarget,
-  disposition: "accepted_use_case" | "unintended_behavior",
+  disposition: ReviewDisposition,
   rationale: string,
   dependencies: EventDependencies = defaultEventDependencies,
 ): FeedbackChange {
-  const blocked = decisionBlock(events, target, disposition);
+  const note = rationale.trim().slice(0, 500);
+  const blocked = decisionBlock(events, target, disposition, note);
   if (blocked) return blocked;
   const active = activeDecisionFor(events, target);
-  const event = decisionEvent(target, disposition, rationale, active, dependencies);
+  const event = decisionEvent(target, disposition, note, active, dependencies);
   return { kind: "appended", events: [...events, event] };
+}
+
+/** Move the selected active label while keeping its exact identity and optional note. */
+export function proposeRelabel(
+  events: readonly FeedbackEvent[],
+  eventId: string,
+  disposition: ReviewDisposition,
+  dependencies: EventDependencies = defaultEventDependencies,
+): FeedbackChange {
+  const active = activeDecisions(events).find((event) => event.event_id === eventId);
+  if (!active || active.disposition === disposition) return { kind: "noop", reason: "There is no label to move." };
+  const target: FeedbackTarget = {
+    ...(active.bundle_id ? { bundleId: active.bundle_id } : {}),
+    instanceId: active.instance_id,
+    modelRevisionSha256: active.model_revision_sha256,
+    semanticSha256: active.semantic_sha256,
+  };
+  return { kind: "appended", events: [...events, decisionEvent(target, disposition, active.rationale ?? "", active, dependencies)] };
 }
 
 /** Build one withdrawal event that preserves the superseded event's binding. */
@@ -284,6 +331,7 @@ function withdrawalFor(target: FeedbackEvent, dependencies: EventDependencies): 
   return {
     event_id: id,
     idempotency_key: `withdraw:${target.event_id}:${id}`,
+    ...(target.bundle_id ? { bundle_id: target.bundle_id } : {}),
     instance_id: target.instance_id,
     model_revision_sha256: target.model_revision_sha256,
     semantic_sha256: target.semantic_sha256,
@@ -335,6 +383,20 @@ export function parseJournal(text: string): readonly FeedbackEvent[] {
   return events;
 }
 
+/** An imported successor must refer to an earlier decision for the same exact saved case. */
+function validSupersession(event: FeedbackEvent, earlier: ReadonlyMap<string, FeedbackEvent>): boolean {
+  if (!event.supersedes_event_id) return event.disposition !== "withdrawn";
+  const prior = earlier.get(event.supersedes_event_id);
+  if (!prior || prior.disposition === "withdrawn") return false;
+  if (prior.bundle_id !== event.bundle_id && (prior.bundle_id || event.disposition === "withdrawn")) return false;
+  return matchesTarget(prior, {
+    bundleId: event.bundle_id,
+    instanceId: event.instance_id,
+    modelRevisionSha256: event.model_revision_sha256,
+    semanticSha256: event.semantic_sha256,
+  });
+}
+
 /** Merge imported events by event and idempotency identity, rejecting conflicting reuse. */
 export function mergeJournal(existing: readonly FeedbackEvent[], incoming: readonly FeedbackEvent[]): ImportResult {
   const byEventId = new Map(existing.map((event) => [event.event_id, event]));
@@ -354,6 +416,7 @@ export function mergeJournal(existing: readonly FeedbackEvent[], incoming: reado
       duplicates += 1;
       continue;
     }
+    if (!validSupersession(event, byEventId)) return { ok: false, message: "A superseding event must reference an earlier label for the same saved case." };
     byEventId.set(event.event_id, event);
     byIdempotency.set(event.idempotency_key, event);
     added += 1;
@@ -369,7 +432,9 @@ export function readStoredJournal(storage: JournalStorage): {
   try {
     const stored = storage.getItem(JOURNAL_STORAGE_KEY);
     if (!stored) return { events: [], error: null };
-    return { events: parseJournal(stored), error: null };
+    const loaded = mergeJournal([], parseJournal(stored));
+    if (!loaded.ok) return { events: [], error: loaded.message };
+    return { events: loaded.events, error: null };
   } catch (error) {
     return {
       events: [],

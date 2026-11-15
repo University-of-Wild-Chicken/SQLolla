@@ -5,9 +5,9 @@
   "compiler_sha256": "a8040e2cab341c12116ab591fed9f761816f5f6b08554f6cc1680e86dfbba0a2",
   "source_shortcut_gate": "PASS",
   "maximum_authored_declaration_lines": 30,
-  "authored_theorem_statements": 442,
-  "compiled_draft_declarations": 3543,
-  "compiled_draft_theorems_including_generated": 1263,
+  "authored_theorem_statements": 453,
+  "compiled_draft_declarations": 3951,
+  "compiled_draft_theorems_including_generated": 1391,
   "compiled_inherited_declarations": 1038,
   "observed_foundations": "[propext, Classical.choice, Quot.sound]",
   "custom_or_unapproved_axioms": 0,
@@ -19,7 +19,7 @@
     },
     {
       "path": "SQLollaM2.lean",
-      "sha256": "30e81991e4c46f772bf6eb196ab7207439e0a5b0ae9b0cf293a5323f342ee4e2"
+      "sha256": "67a81b723ddb2ebd3e0b6ddf0acbf4a064b129bc03daf3c5dedf388119718eee"
     },
     {
       "path": "SQLollaM2\\Aggregates.lean",
@@ -27,7 +27,7 @@
     },
     {
       "path": "SQLollaM2\\AssistanceBoundary.lean",
-      "sha256": "cecfdc43332c8fc528105bd01cdc95bf0618ae4aa015a6ad808653d1380e0f89"
+      "sha256": "60a47319ea55a5d06e85b28ae27f7dcca78751b9135652afc5d72fe0407c1d7f"
     },
     {
       "path": "SQLollaM2\\BackendSignals.lean",
@@ -86,12 +86,16 @@
       "sha256": "bdf3f8cfcced020001e595f89a6b9156bbf5adb771f2a515e572f8a8c5e6f4c3"
     },
     {
+      "path": "SQLollaM2\\HostOrigin.lean",
+      "sha256": "11af775684b09a73aa49f28ed7e604f12f7bcef015dc1504384139912449ae59"
+    },
+    {
       "path": "SQLollaM2\\InsertionEffects.lean",
       "sha256": "39bb85d845c4deaa0917ff2f886a525a7c92cf0dca99cb4468a3805766b378cd"
     },
     {
       "path": "SQLollaM2\\InstanceReview.lean",
-      "sha256": "f1b291f17ac97006575de260f65e9439015de24885ebb7cb7242891d54deba80"
+      "sha256": "b81a5881455f1bf2521d8d912ca392e46155d3807def38ebe36c2a6b73d68bbd"
     },
     {
       "path": "SQLollaM2\\Intervals.lean",

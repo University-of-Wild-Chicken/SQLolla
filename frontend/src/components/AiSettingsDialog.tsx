@@ -77,8 +77,7 @@ function SharingFields({ draft, patch }: FieldsProps): JSX.Element {
         Redact SQL and values before sending explanation context
       </label>
       <p className="field-note">
-        Redacted requests contain schema shape, fact identifiers, counts and analysis scope. SQL proposals require unredacted SQL, parameters, domain values and
-        supplied facts.
+        Redacted explanations contain schema shape, fact identifiers, counts and analysis scope. Regeneration uses unredacted SQL and saved review cases.
       </p>
       <p className="field-note">OpenAI requests use store:false. Provider account policies still apply. Saving settings sends nothing.</p>
     </div>

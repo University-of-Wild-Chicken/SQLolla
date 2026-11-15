@@ -1,7 +1,7 @@
 {
   "cases": 3511,
   "cli_output_sha256": "6f0b35ec231542b576f01c405cd53b885bc19b1d093828ecf08ad2b0f5c80149",
-  "cli_sha256": "58d50629fd65dc11d81a41845f1c48eb34597633f8ded009c425caeaf28d4640",
+  "cli_sha256": "faed4fb1ce907eebd00abce84d5d5c4a077674eedd91bb01f95e194d6aaca6bb",
   "compared": 3511,
   "failures": 0,
   "families": {
@@ -25,7 +25,7 @@
     "output_sha256": "7104b94b4bb61f6174cc13d22dfc024c74489e625af9efe1a3803a1240312e7f",
     "version": "PostgreSQL 16.16, compiled by Visual C++ build 1944, 64-bit"
   },
-  "seconds": 108.179,
+  "seconds": 159.441,
   "skipped": 0,
   "status": "passed"
 }
