@@ -204,7 +204,7 @@ function WorkspaceRightRail({ workspace }: { readonly workspace: Workspace }): J
 function WorkspaceReviewBins({ workspace }: { readonly workspace: Workspace }): JSX.Element {
   return (
     <ReviewBins journal={workspace.journal} archive={workspace.archive} revision={workspace.session.state.bundle?.modelRevisionSha256 ?? null}>
-      <RefinementPanel refinement={workspace.refinement} onOpenSettings={workspace.dialogs.openSettings} />
+      <RefinementPanel refinement={workspace.refinement} settings={workspace.dialogs.aiSettings} onOpenSettings={workspace.dialogs.openSettings} />
     </ReviewBins>
   );
 }

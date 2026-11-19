@@ -4,6 +4,7 @@ import { requestDraft, type DraftMode, type SqlDraft } from "../ai/draft";
 import type { AiProviderSettings } from "../ai/summary";
 import { parseCatalog } from "../analysis/adapter";
 import { stringifyJson } from "../analysis/json";
+import { AiTargetNote } from "./AiAssistant";
 import { CopySqlButton } from "./CopySqlButton";
 
 interface Props {
@@ -48,29 +49,49 @@ function useDraftRequest(props: Props, prompt: string, share: boolean, mode: Dra
   return { current: response?.identity === identity ? response : null, generate };
 }
 
+interface GenerateProps {
+  readonly props: Props;
+  readonly fields: ReturnType<typeof useDraftFields>;
+  readonly request: ReturnType<typeof useDraftRequest>;
+  readonly used: boolean;
+}
+
+/** Offer generation only with a key, a prompt and consent; otherwise point to provider setup. */
+function GenerateAction({ props, fields: { prompt, share, mode }, request: { current, generate }, used }: GenerateProps): JSX.Element {
+  if (!props.settings.apiKey.trim()) {
+    return (
+      <button type="button" className="ghost-button" onClick={props.openSettings}>
+        Connect AI provider…
+      </button>
+    );
+  }
+  return (
+    <button
+      type="button"
+      className="primary-button"
+      disabled={!prompt.trim() || !share || current?.busy || used || (mode === "query" && !props.validCatalog)}
+      onClick={() => void generate()}
+    >
+      {current?.busy ? "Building draft…" : mode === "query" ? "Generate SQL draft" : "Generate database model"}
+    </button>
+  );
+}
+
 /** Require schema-sharing consent and an explicit draft request. */
 export function AiDraftPanel(props: Props): JSX.Element {
   const fields = useDraftFields(props);
   const { prompt, share, mode } = fields;
-  const { current, generate } = useDraftRequest(props, prompt, share, mode);
+  const request = useDraftRequest(props, prompt, share, mode);
+  const { current } = request;
   const used = props.used.has(prompt.trim());
   return (
     <div className="builder-panel ai-draft">
+      <p className="ai-purpose">
+        Describe what you need in plain words. AI drafts it, SQLolla compiles the draft locally, and nothing replaces your query until you choose it.
+      </p>
       <DraftFields fields={fields} validCatalog={props.validCatalog} />
-      {props.settings.apiKey.trim() ? (
-        <button
-          type="button"
-          className="primary-button"
-          disabled={!prompt.trim() || !share || current?.busy || used || (mode === "query" && !props.validCatalog)}
-          onClick={() => void generate()}
-        >
-          {current?.busy ? "Building draft…" : mode === "query" ? "Generate SQL draft" : "Generate database model"}
-        </button>
-      ) : (
-        <button type="button" className="button" onClick={props.openSettings}>
-          Set up an AI provider
-        </button>
-      )}
+      <AiTargetNote settings={props.settings} />
+      <GenerateAction props={props} fields={fields} request={request} used={used} />
       {used && !current?.draft ? <p>Use the review bins to refine this prompt after analysis.</p> : null}
       {current?.error ? <p role="alert">{current.error}</p> : null}
       {current?.draft ? <DraftResult draft={current.draft} stage={() => props.stage(current.draft!, prompt)} /> : null}

@@ -36,7 +36,7 @@ pub(super) async fn generate(
     let result = provider::complete(byot, body(packet, &digest)).await?;
     let draft = checked_output(result, &digest)?;
     let result = compile(&state, input.request, &draft.sql).await?;
-    Ok(Json(envelope(byot.provider, draft, result)))
+    Ok(Json(envelope(byot, draft, result)))
 }
 
 /// Require deliberate schema disclosure and a bounded prompt before provider I/O.
@@ -134,8 +134,8 @@ pub(super) async fn compile(state: &HostState, request: Request, sql: &str) -> R
 }
 
 /// Treat syntax or binding refusals as diagnostics; compilation is not a property result.
-fn envelope(provider: Provider, draft: DraftOutput, compiled: Value) -> Value {
-    let (provider, model) = provider.identity();
+fn envelope(byot: Byot<'_>, draft: DraftOutput, compiled: Value) -> Value {
+    let (provider, model) = byot.identity();
     json!({"schema":"sqlolla.ai.initial_draft.v1","status":"ok","provider":provider,"model":model,
         "authority":"untrusted_assistance","sql":draft.sql,"assumptions":draft.assumptions,
         "context_sha256":draft.context_sha256,"validation":assessment(&compiled)})

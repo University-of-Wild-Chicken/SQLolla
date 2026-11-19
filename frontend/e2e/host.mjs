@@ -53,9 +53,8 @@ async function nextCase(page) {
 /** Configure the default redacted explanation; saving settings must not send the key. */
 async function configureAi(page, apiKey, provider = "OpenAI") {
   await page.getByRole("button", { name: "AI settings" }).click();
-  assert.doesNotMatch(await page.getByRole("dialog").innerText(), /gpt-6\.1-sol/i);
-  assert.equal(await page.getByLabel("Model identifier").count(), 0);
   await page.getByRole("radio", { name: provider, exact: true }).check();
+  assert.equal(await page.getByLabel("Model", { exact: true }).inputValue(), provider === "Gemini" ? "gemini-4-hydrogen" : "gpt-6.1-sol");
   try {
     await page.getByLabel("API key (memory only)", { exact: true }).fill(apiKey);
   } catch {
@@ -333,7 +332,7 @@ export async function verifyHost({ url, chromePath, apiKey, provider = "OpenAI" 
 /** Exercise the full review and adoption flow against a host with a fresh test-only store. */
 async function verifyFlows(page, apiKey, provider) {
   await page.getByRole("heading", { name: "Query workbench" }).waitFor();
-  await page.getByRole("button", { name: "Skip for now", exact: true }).click();
+  await page.getByRole("button", { name: "Continue without AI", exact: true }).click();
   assert.equal(await page.getByTestId("review-card").count(), 0);
   assert.equal(await page.getByLabel("SQL query", { exact: true }).inputValue(), "");
   const gemini = apiKey && provider === "Gemini";

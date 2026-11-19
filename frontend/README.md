@@ -9,8 +9,14 @@ the result, or open **SQL / IR / Alloy** to see the source triple. Yes, No and U
 reviews at the bottom of the page for later reopening, relabeling or withdrawal.
 
 When the host opens a case with its complete SQL/IR/Alloy bundle, **Explain this result**
-offers cited AI assistance. The workbench offers optional AI setup on the first visit.
-Save a key in **AI settings**, then choose **Build with AI** for a first draft or
+offers cited AI assistance. On the first visit, an **AI assistant (optional)** window explains
+the three AI jobs — Draft, Explain and Refine — and the rule that AI proposes while the local
+compiler and solver decide. In **AI settings**, choose OpenAI, Anthropic or Gemini, enter a key
+and pick a **Model**: the recommended model is the one SQLolla is tested with, and **Check models
+for this key** lists the other text models the key can reach (only the key is sent). Every AI
+request carries `X-SQLolla-Provider` and `X-SQLolla-Model`, and a reply from any other model is
+rejected. Each AI action shows the provider and model it will use, and the status bar shows the
+current connection. Choose **Build with AI** for a first draft or
 **Explain this case** for a saved case. Building a database model shares the description.
 Drafting SQL for an existing catalog shares the description, schema declarations, and
 parameter types. Both flows require consent and compile locally before staging. Review
@@ -53,8 +59,14 @@ Open `http://127.0.0.1:8787`. `SQLolla_HOST_PORT` changes the port; `SQLolla_ROO
 installation root. The process binds IPv4 loopback only. Vite preview can render the static
 editor. The solver and AI require the same-origin Rust host.
 
-Dependencies are pinned in `package.json` and `package-lock.json`. Fonts, the pixel logo and the
-Graphviz worker are self-hosted; there is no CDN request.
+Dependencies are pinned in `package.json` and `package-lock.json`. Fonts (Pixelify Sans, VT323 and
+IBM Plex Mono; body text uses the system Tahoma/Verdana stack), the pixel logo, the wordmark cut from
+`sqlolla_logo_assets.jpg` and the Graphviz worker are self-hosted; there is no CDN request.
+
+The interface uses Win9x window chrome on a teal desktop: `styles.css` holds the design tokens
+(`--raised`, `--sunken`, title-bar gradient, CRT colours) and component rules, `workbench.css` holds
+the production shell (title and menu bar, purpose banner, windows, status bar), and
+`components/Window.tsx` renders a titled window region.
 
 ## Verify
 

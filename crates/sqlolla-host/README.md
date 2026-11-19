@@ -35,8 +35,14 @@ regenerates SQL with the retained prompt and canonical reviews after explicit
 unredacted disclosure. The `draft` and `model-draft` routes under the same prefix
 compile first drafts. These routes require `X-SQLolla-Provider` and a request-only
 `Authorization: Bearer` credential. The provider is one of `openai` (`gpt-6.1-sol`),
-`anthropic` (`claude-sonnet-5-5`), or `gemini` (`gemini-4-hydrogen`). Each must
-serve its exact pinned model. AI refinements still go through `refinement.check`.
+`anthropic` (`claude-sonnet-5-5`), or `gemini` (`gemini-4-hydrogen`); the named model
+is the tested default. An optional `X-SQLolla-Model` selects another model from the
+same provider family (`gpt-`/`o<digit>`/`chatgpt-`, `claude-`, `gemini-`; lowercase
+letters, digits, `.` and `-`, at most 64 bytes). There is no fallback: the response
+must come from the selected model or its dated snapshot, and the envelope reports the
+selected model. `POST /api/ai/byot/models` lists the text models the key can reach at
+the selected provider; it sends only the key, never SQL, evidence or prompts. Anthropic
+keys travel in `x-api-key`. AI refinements still go through `refinement.check`.
 Older requests on `/api/ai/*` without a provider header retain the OpenAI default.
 The retired `/api/ai/propose` endpoint returns `ai.feedback_required`.
 

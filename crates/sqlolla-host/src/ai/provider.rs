@@ -2,7 +2,9 @@
 use super::*;
 use std::time::Duration;
 
+mod catalog;
 mod wire;
+pub(super) use catalog::catalog_ids;
 pub use wire::MODEL;
 pub(super) use wire::{Byot, Completion, Provider};
 
@@ -20,35 +22,43 @@ pub(super) async fn request(
     complete(byot, body(input, prompt, proposal)).await
 }
 
-/// Use one bounded HTTPS invocation and verify the exact model before interpreting its output.
+/// Use one bounded HTTPS invocation and verify the selected model before interpreting its output.
 pub(super) async fn complete(byot: Byot<'_>, task: Completion) -> Result<Value> {
-    let response = byot
+    let request = byot
         .request(&client()?)
-        .json(&task.encode(byot.provider))
-        .send()
-        .await
-        .map_err(|_| {
-            failure(
-                "ai.provider_unavailable",
-                "The selected provider did not complete this request",
-            )
-        })?;
+        .json(&task.encode(byot.provider, byot.model));
+    let value = send_json(request).await?;
+    let text = match byot.provider {
+        Provider::OpenAi => openai_text(&value, byot.model)?,
+        Provider::Anthropic => wire::anthropic_text(&value, byot.model)?,
+        Provider::Gemini => wire::gemini_text(&value, byot.model)?,
+    };
+    decode(text)
+}
+
+/// Read the selected provider's model catalog for this key; no evidence or prompt is sent.
+pub(super) async fn catalog(byot: Byot<'_>) -> Result<Value> {
+    send_json(byot.catalog(&client()?)).await
+}
+
+/// Send one request and parse a bounded JSON body without exposing provider error bodies.
+async fn send_json(request: reqwest::RequestBuilder) -> Result<Value> {
+    let response = request.send().await.map_err(|_| {
+        failure(
+            "ai.provider_unavailable",
+            "The selected provider did not complete this request",
+        )
+    })?;
     if !response.status().is_success() {
         return Err(http_failure(response.status()));
     }
     let bytes = bounded(response).await?;
-    let value: Value = serde_json::from_slice(&bytes).map_err(|_| {
+    serde_json::from_slice(&bytes).map_err(|_| {
         failure(
             "ai.provider_json",
             "The provider returned invalid response JSON",
         )
-    })?;
-    let text = match byot.provider {
-        Provider::OpenAi => openai_text(&value)?,
-        Provider::Anthropic => wire::anthropic_text(&value)?,
-        Provider::Gemini => wire::gemini_text(&value)?,
-    };
-    decode(text)
+    })
 }
 
 /// Use a fixed HTTPS destination with no automatic retry or redirect.
@@ -142,9 +152,9 @@ fn http_failure(status: StatusCode) -> AiError {
     }
 }
 
-/// Accept one completed assistant JSON message from the exact requested model, never a tool call.
-pub(super) fn openai_text(response: &Value) -> Result<&str> {
-    if response["model"] != MODEL
+/// Accept one completed assistant JSON message from the selected model, never a tool call.
+pub(super) fn openai_text<'a>(response: &'a Value, model: &str) -> Result<&'a str> {
+    if !catalog::serves(&response["model"], model)
         || response["status"] != "completed"
         || !response["error"].is_null()
     {

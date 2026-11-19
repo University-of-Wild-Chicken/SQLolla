@@ -3,21 +3,25 @@ import type { CheckedRevision } from "../ai/refinement";
 import { shortHash } from "../analysis/format";
 import { REVIEW_LABELS } from "../feedback/journal";
 import type { useRefinement } from "../workspace/refinement";
+import type { AiProviderSettings } from "../ai/summary";
+import { AiTargetNote } from "./AiAssistant";
 import { CopySqlButton } from "./CopySqlButton";
 
 interface PanelProps {
   readonly refinement: ReturnType<typeof useRefinement>;
+  readonly settings: AiProviderSettings;
   readonly onOpenSettings: () => void;
 }
 
 /** Keep the retained prompt visible and require an explicit opt-in generation action. */
-function GenerateField({ refinement, onOpenSettings }: PanelProps): JSX.Element {
+function GenerateField({ refinement, settings, onOpenSettings }: PanelProps): JSX.Element {
   const inputId = useId();
   return (
     <div className="refinement-field">
       <label htmlFor={inputId}>Original prompt</label>
       <textarea id={inputId} rows={3} maxLength={4096} value={refinement.instruction} onChange={(event) => refinement.setInstruction(event.target.value)} />
       <p>Regeneration uses this prompt and sends canonical SQL, review cases and notes to your AI provider.</p>
+      <AiTargetNote settings={settings} />
       <div className="refinement-actions">
         <button
           type="button"
@@ -126,13 +130,32 @@ function RevisionResult({ result, adopt }: { readonly result: CheckedRevision; r
   );
 }
 
+/** Announce in-flight, stale and failed checks separately from the candidate result. */
+function RefinementStatus({ refinement }: Pick<PanelProps, "refinement">): JSX.Element {
+  return (
+    <>
+      {refinement.current?.busy ? (
+        <p role="status">{refinement.current.busy === "generate" ? "Generating and checking SQL…" : "Checking SQL locally…"}</p>
+      ) : null}
+      {refinement.stale ? <p role="status">The prompt, candidate, evidence or feedback changed. Run a new check to use a revision.</p> : null}
+      {refinement.current?.error ? (
+        <p className="inline-alert inline-alert--danger" role="alert">
+          {refinement.current.error}
+        </p>
+      ) : null}
+    </>
+  );
+}
+
 /** Render feedback-gated regeneration, offline checking and current completion status. */
 export function RefinementPanel(props: PanelProps): JSX.Element {
   const { refinement } = props;
   return (
     <section className="review-refinement" aria-labelledby="review-refinement-title">
       <h3 id="review-refinement-title">Refine the query</h3>
-      <p>Checks cover the exact labeled observations and the original bounded property.</p>
+      <p>
+        Fix the query with AI or by hand. Either way, SQLolla checks the candidate against every Yes and No case and your original rule before you can use it.
+      </p>
       {refinement.blocked ? (
         <p className="refinement-notice" role="status">
           {refinement.blocked}
@@ -143,15 +166,7 @@ export function RefinementPanel(props: PanelProps): JSX.Element {
         <GenerateField {...props} />
         <ManualField refinement={refinement} />
       </div>
-      {refinement.current?.busy ? (
-        <p role="status">{refinement.current.busy === "generate" ? "Generating and checking SQL…" : "Checking SQL locally…"}</p>
-      ) : null}
-      {refinement.stale ? <p role="status">The prompt, candidate, evidence or feedback changed. Run a new check to use a revision.</p> : null}
-      {refinement.current?.error ? (
-        <p className="inline-alert inline-alert--danger" role="alert">
-          {refinement.current.error}
-        </p>
-      ) : null}
+      <RefinementStatus refinement={refinement} />
       {refinement.current?.result ? <RevisionResult result={refinement.current.result} adopt={refinement.adopt} /> : null}
     </section>
   );

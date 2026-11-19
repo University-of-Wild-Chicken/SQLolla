@@ -1,7 +1,12 @@
-/** Explicit BYOT consent with tab-memory credentials and a fixed, reviewed provider destination. */
-import { useState, type JSX } from "react";
-import { providers, type LiveProviderMode } from "../ai/config";
+/**
+ * Explicit BYOT setup: provider, memory-only key, model choice and disclosure. Saving sends
+ * nothing; checking models sends only the key; AI actions remain separate deliberate requests.
+ */
+import { useId, useState, type JSX } from "react";
+import { providers, selectedModel, type LiveProviderMode } from "../ai/config";
+import type { ModelCatalog } from "../ai/models";
 import { buildContextPreview, type AiProviderSettings } from "../ai/summary";
+import { useModelCatalog } from "../ai/useModelCatalog";
 import type { EvidenceView } from "../analysis/types";
 import { Modal } from "./Modal";
 
@@ -19,20 +24,21 @@ interface FieldsProps {
   readonly patch: (patch: Partial<AiProviderSettings>) => void;
 }
 
-/** Choosing a different provider clears the previous provider's key. */
+/** Choosing a different provider clears the previous key and returns to its tested model. */
 function ProviderFields({ draft, patch, showDemo }: FieldsProps & Pick<Props, "showDemo">): JSX.Element {
+  const choose = (mode: AiProviderSettings["mode"]) => patch({ mode, apiKey: "", model: "" });
   return (
-    <fieldset className="provider-grid">
-      <legend className="mono-label">PROVIDER</legend>
+    <fieldset className="settings-group provider-grid">
+      <legend>Provider</legend>
       {(Object.keys(providers) as LiveProviderMode[]).map((mode) => (
         <label className="provider-card" key={mode}>
-          <input type="radio" name="provider" checked={draft.mode === mode} onChange={() => patch({ mode, apiKey: "" })} />
+          <input type="radio" name="provider" checked={draft.mode === mode} onChange={() => choose(mode)} />
           <strong>{providers[mode].label}</strong>
         </label>
       ))}
       {showDemo ? (
         <label className="provider-card">
-          <input type="radio" name="provider" checked={draft.mode === "offline_demo"} onChange={() => patch({ mode: "offline_demo", apiKey: "" })} />
+          <input type="radio" name="provider" checked={draft.mode === "offline_demo"} onChange={() => choose("offline_demo")} />
           <strong>Offline demo</strong>
         </label>
       ) : null}
@@ -42,8 +48,10 @@ function ProviderFields({ draft, patch, showDemo }: FieldsProps & Pick<Props, "s
 
 /** Keep the credential in the form until saving or closing it. */
 function CredentialFields({ draft, patch }: FieldsProps): JSX.Element {
+  const label = draft.mode === "offline_demo" ? "your provider" : providers[draft.mode].label;
   return (
-    <div className="credential-fields">
+    <fieldset className="settings-group credential-fields">
+      <legend>API key</legend>
       <label>
         API key (memory only)
         <input
@@ -56,25 +64,96 @@ function CredentialFields({ draft, patch }: FieldsProps): JSX.Element {
         />
       </label>
       <p className="field-note">
-        Your key stays in this tab until you disconnect or refresh. SQLolla sends it to the selected provider when you request assistance.
+        Stays in this tab until you disconnect or refresh. The local SQLolla host forwards it only to {label}, only when you check models or press an AI button.
       </p>
-    </div>
+    </fieldset>
+  );
+}
+
+/** Offer the tested default first, the current choice, then whatever the key's live listing reports. */
+function modelOptions(recommended: string, selected: string, catalog: ModelCatalog | undefined): readonly string[] {
+  return [...new Set([recommended, selected, ...(catalog?.models ?? [])])];
+}
+
+/** Summarize the latest explicit model check without implying the models were tested. */
+function catalogStatus(current: ReturnType<typeof useModelCatalog>["current"], recommended: string): string {
+  if (!current) return "Not checked yet. The recommended model is always available to choose.";
+  if (current.busy) return "Checking models for this key…";
+  if (current.error) return current.error;
+  const { models } = current.catalog!;
+  const missing = models.includes(recommended) ? "" : " The recommended model is not listed for this key.";
+  return `${models.length} text model${models.length === 1 ? "" : "s"} available to this key.${missing}`;
+}
+
+/** Choose a model explicitly; untested choices are allowed but labelled, and never silently replaced. */
+function ModelFields({ draft, patch, mode }: FieldsProps & { readonly mode: LiveProviderMode }): JSX.Element {
+  const { label, model: recommended } = providers[mode];
+  const { current, check } = useModelCatalog(draft);
+  const selected = selectedModel(draft);
+  const selectId = useId();
+  return (
+    <fieldset className="settings-group model-fields">
+      <legend>Model</legend>
+      <label htmlFor={selectId}>Model</label>
+      <select id={selectId} value={selected} onChange={(event) => patch({ model: event.target.value })}>
+        {modelOptions(recommended, selected, current?.catalog).map((model) => (
+          <option key={model} value={model}>
+            {model === recommended ? `${model} — recommended` : model}
+          </option>
+        ))}
+      </select>
+      <div className="settings-row">
+        <button type="button" className="ghost-button" disabled={!draft.apiKey.trim() || !!current?.busy} onClick={() => void check()}>
+          Check models for this key
+        </button>
+        <span role="status">{catalogStatus(current, recommended)}</span>
+      </div>
+      <p className="field-note">
+        SQLolla is tested with the recommended model. Other models must return structured JSON; if {label} rejects one, you see an error and your evidence is
+        unchanged. Checking models sends only your key to {label}.
+      </p>
+    </fieldset>
+  );
+}
+
+/** List what each AI action shares so disclosure is understood before any request. */
+function DisclosureTable({ redacted }: { readonly redacted: boolean }): JSX.Element {
+  const rows = [
+    ["Draft a database model", "Your description"],
+    ["Draft SQL", "Your request, table schema and parameter types"],
+    [
+      "Explain a result",
+      redacted ? "Your question, schema shape, fact IDs, counts and the rule outcome" : "Your question and the case’s SQL, IR, Alloy and values",
+    ],
+    ["Regenerate SQL", "Your prompt, the canonical SQL and your labeled cases with notes (never redacted)"],
+  ];
+  return (
+    <table className="disclosure-table">
+      <caption>What each AI action sends to your provider</caption>
+      <tbody>
+        {rows.map(([action, sent]) => (
+          <tr key={action}>
+            <th scope="row">{action}</th>
+            <td>{sent}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
 /** Redacted explanation mode does not expose raw source or scalar payloads. */
 function SharingFields({ draft, patch }: FieldsProps): JSX.Element {
   return (
-    <div className="settings-checks">
+    <fieldset className="settings-group settings-checks">
+      <legend>Privacy</legend>
       <label>
         <input type="checkbox" checked={draft.redactValues} onChange={(event) => patch({ redactValues: event.target.checked })} />
         Redact SQL and values before sending explanation context
       </label>
-      <p className="field-note">
-        Redacted explanations share schema shape, fact identifiers, counts, scope and verified rule outcomes. Your question is sent as written.
-      </p>
-      <p className="field-note">Saving settings sends nothing. Your provider’s account policies apply when you request assistance.</p>
-    </div>
+      <DisclosureTable redacted={draft.redactValues} />
+      <p className="field-note">Saving settings sends nothing. Your provider’s account policies apply when you use an AI action.</p>
+    </fieldset>
   );
 }
 
@@ -113,10 +192,21 @@ function Body(props: Omit<Props, "open">): JSX.Element {
   const patch = (next: Partial<AiProviderSettings>) => setDraft((current) => ({ ...current, ...next }));
   return (
     <div className="settings-body">
+      <p className="settings-intro">
+        AI drafts queries, explains results and proposes fixes. <strong>AI proposes; SQLolla decides:</strong> the local compiler and solver check every
+        proposal, and AI text stays labelled as untrusted.
+      </p>
       <ProviderFields draft={draft} patch={patch} showDemo={props.showDemo} />
-      {draft.mode !== "offline_demo" ? <CredentialFields draft={draft} patch={patch} /> : null}
+      {draft.mode !== "offline_demo" ? (
+        <>
+          <CredentialFields draft={draft} patch={patch} />
+          <ModelFields draft={draft} patch={patch} mode={draft.mode} />
+        </>
+      ) : (
+        <p className="field-note">Choose a provider above to enter its key and pick a model.</p>
+      )}
       <SharingFields draft={draft} patch={patch} />
-      <details>
+      <details className="settings-preview">
         <summary>Preview explanation context</summary>
         <pre className="code-block preview-block">
           {props.evidence ? buildContextPreview(props.evidence, draft) : "Open a stored case to preview its context."}
@@ -130,7 +220,7 @@ function Body(props: Omit<Props, "open">): JSX.Element {
 /** Render a memory-only BYOT form; live requests remain separate deliberate actions. */
 export function AiSettingsDialog(props: Props): JSX.Element {
   return (
-    <Modal open={props.open} onClose={props.onClose} title="AI provider" eyebrow="BRING YOUR OWN TOKEN" className="settings-dialog">
+    <Modal open={props.open} onClose={props.onClose} title="Connect an AI provider" eyebrow="BRING YOUR OWN KEY" className="settings-dialog">
       {props.open ? <Body {...props} /> : null}
     </Modal>
   );

@@ -43,8 +43,11 @@
             <li>
               <h2 id="set-up-ai">Set up AI</h2>
               <p>
-                Open the workbench and select <strong>AI settings</strong>. Choose OpenAI, Anthropic, or Gemini, enter that provider’s API key, and select
-                <strong>Save in this tab · no send</strong>. You can also <a href="#build-a-model">build and analyze a model by hand</a> without a key.
+                AI is optional: it drafts, explains and proposes fixes, while SQLolla’s local compiler and solver decide what is valid. Open the workbench and
+                select <strong>AI settings</strong>. Choose OpenAI, Anthropic, or Gemini and enter that provider’s API key. Under <strong>Model</strong>, keep
+                the recommended model (the one SQLolla is tested with) or select <strong>Check models for this key</strong> to pick another model your key can
+                use. Then select <strong>Save in this tab · no send</strong>. You can also
+                <a href="#build-a-model">build and analyze a model by hand</a> without a key.
               </p>
             </li>
             <li>
@@ -197,8 +200,9 @@
             <details>
               <summary>What if AI cannot return a usable draft?</summary>
               <p>
-                Open <strong>AI settings</strong> to check your key and provider access. If the local compiler rejects the proposal, read its diagnostic, then
-                revise your description or edit the SQL directly.
+                Open <strong>AI settings</strong> to check your key and provider access. If you chose a model other than the recommended one, switch back: some
+                models cannot return SQLolla’s structured output. If the local compiler rejects the proposal, read its diagnostic, then revise your description
+                or edit the SQL directly.
               </p>
             </details>
           </div>

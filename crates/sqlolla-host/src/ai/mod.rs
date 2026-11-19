@@ -1,4 +1,5 @@
 //! Optional untrusted assistance over reloaded canonical evidence; no application database is contacted.
+mod catalog;
 mod context;
 mod draft;
 mod model_draft;
@@ -75,7 +76,9 @@ pub fn router() -> Router<HostState> {
         )
         .nest(
             "/api/ai/byot",
-            tasks().route_layer(middleware::from_fn(require_selection)),
+            tasks()
+                .route("/models", post(catalog::list))
+                .route_layer(middleware::from_fn(require_selection)),
         )
 }
 
@@ -121,13 +124,7 @@ async fn run(state: HostState, headers: HeaderMap, input: Input) -> Result<Value
     let prompt = context::build(&evidence, input.redact_values)?;
     let document = provider::request(byot, &input, &prompt, false).await?;
     let draft = output::validate(document, &input, &prompt, false)?;
-    Ok(output::envelope(
-        byot.provider,
-        &input,
-        &prompt,
-        &draft,
-        false,
-    ))
+    Ok(output::envelope(byot, &input, &prompt, &draft, false))
 }
 
 /// IDs, prompts and redaction are admission inputs, never instructions to change immutable context.

@@ -196,7 +196,7 @@ fn provider_identity_and_completion_are_required() {
     let base = json!({"model":MODEL,"status":"completed","error":null,"output":[{"type":"message","role":"assistant",
         "status":"completed","content":[{"type":"output_text","text":"{}"}]}]});
     assert_eq!(
-        provider::decode(provider::openai_text(&base).unwrap()).unwrap(),
+        provider::decode(provider::openai_text(&base, MODEL).unwrap()).unwrap(),
         json!({})
     );
     for (field, value) in [
@@ -206,12 +206,12 @@ fn provider_identity_and_completion_are_required() {
     ] {
         let mut response = base.clone();
         response[field] = value;
-        assert!(provider::openai_text(&response).is_err());
+        assert!(provider::openai_text(&response, MODEL).is_err());
     }
     let mut refusal = base;
     refusal["output"][0]["content"] = json!([{"type":"refusal","refusal":"secret-like body"}]);
     assert_eq!(
-        provider::openai_text(&refusal).err().unwrap().code,
+        provider::openai_text(&refusal, MODEL).err().unwrap().code,
         "ai.refused"
     );
 }

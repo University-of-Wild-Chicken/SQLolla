@@ -84,7 +84,7 @@ pub(super) async fn generate(
     let proposed = parse(output, &digest)?;
     let request = request(&proposed)?;
     let compiled = draft::compile(&state, request.clone(), &proposed.sql).await?;
-    let (provider, model) = byot.provider.identity();
+    let (provider, model) = byot.identity();
     Ok(Json(
         json!({"schema":"sqlolla.ai.model_draft.v1","status":"ok","provider":provider,"model":model,
         "authority":"untrusted_assistance","sql":proposed.sql,"assumptions":proposed.assumptions,

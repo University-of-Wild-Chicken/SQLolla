@@ -13,18 +13,20 @@ if (output) fs.mkdirSync(output, { recursive: true });
 
 /** Check the first-visit choices, private key entry and reload without any assistance request. */
 async function checkOnboarding(page, size) {
-  const prompt = page.getByRole("region", { name: "Set up AI assistance", exact: true });
+  const prompt = page.getByRole("region", { name: "AI assistant (optional)", exact: true });
   await prompt.waitFor();
+  await prompt.getByText("AI proposes. SQLolla decides.", { exact: true }).waitFor();
   if (size === "narrow") {
-    await prompt.getByRole("button", { name: "Skip for now", exact: true }).click();
+    await prompt.getByRole("button", { name: "Continue without AI", exact: true }).click();
   } else {
-    await prompt.getByRole("button", { name: "Set up AI", exact: true }).click();
-    assert.equal(await page.getByLabel("Model identifier").count(), 0);
+    await prompt.getByRole("button", { name: "Connect AI provider…", exact: true }).click();
     assert.equal(await page.getByRole("dialog").getByRole("radio").count(), 3);
     await page.getByRole("radio", { name: "OpenAI", exact: true }).check();
+    assert.equal(await page.getByLabel("Model", { exact: true }).inputValue(), "gpt-6.1-sol");
     await page.getByLabel("API key (memory only)").fill("synthetic-browser-input");
     await page.getByRole("radio", { name: "Anthropic", exact: true }).check();
     assert.equal(await page.getByLabel("API key (memory only)").inputValue(), "");
+    assert.equal(await page.getByLabel("Model", { exact: true }).inputValue(), "claude-sonnet-5-5");
     await page.getByRole("radio", { name: "Gemini", exact: true }).check();
     await page.getByLabel("API key (memory only)").fill("synthetic-browser-input");
     await page.getByRole("button", { name: "Save in this tab · no send" }).click();

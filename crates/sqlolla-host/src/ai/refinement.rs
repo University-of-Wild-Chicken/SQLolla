@@ -38,7 +38,7 @@ pub(super) async fn refine(
         .as_deref()
         .ok_or_else(|| failure("ai.proposal_sql", "SQL omitted"))?;
     let checked = canonical(&state, &input, Some((sql, &prepared))).await?;
-    let mut result = output::envelope(byot.provider, &provider_input, &prompt, &draft, true);
+    let mut result = output::envelope(byot, &provider_input, &prompt, &draft, true);
     result["schema"] = json!("sqlolla.ai.refinement.v1");
     result["feedback_sha256"] = prepared["feedback_sha256"].clone();
     result["references"] = prepared["references"].clone();

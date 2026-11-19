@@ -23,7 +23,7 @@ fn shares_schema_and_type_only() {
         "delay"
     );
     assert_eq!(
-        body(packet, &digest).encode(Provider::OpenAi)["model"],
+        body(packet, &digest).encode(Provider::OpenAi, MODEL)["model"],
         MODEL
     );
 }

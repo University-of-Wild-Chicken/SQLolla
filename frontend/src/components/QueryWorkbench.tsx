@@ -9,6 +9,7 @@ import { AiDraftPanel } from "./AiDraftPanel";
 import { BuilderPanel } from "./BuilderPanel";
 import { NativeAnalysisPanel } from "./NativeAnalysisPanel";
 import { SchemaPanel } from "./SchemaPanel";
+import { Window } from "./Window";
 
 type Tab = "analysis" | "builder" | "ai";
 
@@ -53,7 +54,7 @@ export function QueryWorkbench({ workspace }: { readonly workspace: Workspace })
     select("analysis");
   };
   return (
-    <section className="workbench-panel query-workbench" id="query-editor" aria-label="Query editor">
+    <Window title="Query editor" id="query-editor" className="query-workbench">
       <QueryTabs tab={tab} select={select} />
       <SchemaPanel analysis={workspace.native} catalog={catalog} {...edits} />
       {tab === "ai" ? (
@@ -63,7 +64,7 @@ export function QueryWorkbench({ workspace }: { readonly workspace: Workspace })
       ) : (
         <NativeAnalysisPanel analysis={workspace.native} compact />
       )}
-    </section>
+    </Window>
   );
 }
 

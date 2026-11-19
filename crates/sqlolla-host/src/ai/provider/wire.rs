@@ -3,8 +3,9 @@ use super::*;
 
 /// Preserve the original OpenAI model and legacy status field.
 pub const MODEL: &str = "gpt-6.1-sol";
+const ANTHROPIC_VERSION: &str = "2023-06-01";
 
-/// The entire provider allowlist. Callers never supply URLs or model identifiers.
+/// The entire provider allowlist. Callers never supply URLs; model names are admitted per family.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub(in crate::ai) enum Provider {
     OpenAi,
@@ -13,7 +14,7 @@ pub(in crate::ai) enum Provider {
 }
 
 impl Provider {
-    /// Stable wire identity and the model allowed at this provider's endpoint.
+    /// Stable wire identity and the tested default model used when no model is selected.
     pub(in crate::ai) fn identity(self) -> (&'static str, &'static str) {
         match self {
             Self::OpenAi => ("openai", MODEL),
@@ -35,20 +36,28 @@ impl Provider {
     }
 }
 
-/// The key and destination stay paired for the lifetime of a single request.
+/// The key, destination and explicitly selected model stay paired for a single request.
 #[derive(Clone, Copy)]
 pub(in crate::ai) struct Byot<'a> {
     pub provider: Provider,
+    pub model: &'a str,
     key: &'a str,
 }
 
 impl<'a> Byot<'a> {
-    /// Resolve provider routing and authentication before any upstream request.
+    /// Resolve provider routing, model choice and authentication before any upstream request.
     pub(in crate::ai) fn from_headers(headers: &'a HeaderMap) -> Result<Self> {
+        let provider = Provider::from_headers(headers)?;
         Ok(Self {
-            provider: Provider::from_headers(headers)?,
+            provider,
+            model: catalog::selected(headers, provider)?,
             key: credential(headers)?,
         })
+    }
+
+    /// Report the stable provider identity with the exact model this request used.
+    pub(in crate::ai) fn identity(self) -> (&'static str, &'a str) {
+        (self.provider.identity().0, self.model)
     }
 
     /// Attach the key only to the selected provider's fixed HTTPS destination.
@@ -59,10 +68,29 @@ impl<'a> Byot<'a> {
                 .bearer_auth(self.key),
             Provider::Anthropic => client
                 .post("https://api.anthropic.com/v1/messages")
-                .bearer_auth(self.key)
-                .header("anthropic-version", "2023-06-01"),
+                .header("x-api-key", sensitive_key(self.key))
+                .header("anthropic-version", ANTHROPIC_VERSION),
             Provider::Gemini => client
-                .post("https://generativelanguage.googleapis.com/v1beta/models/gemini-4-hydrogen:generateContent")
+                .post(format!(
+                    "https://generativelanguage.googleapis.com/v1beta/models/{}:generateContent",
+                    self.model
+                ))
+                .header("x-goog-api-key", sensitive_key(self.key)),
+        }
+    }
+
+    /// List the models visible to this key with the same credential carrier and no evidence.
+    pub(super) fn catalog(self, client: &reqwest::Client) -> reqwest::RequestBuilder {
+        match self.provider {
+            Provider::OpenAi => client
+                .get("https://api.openai.com/v1/models")
+                .bearer_auth(self.key),
+            Provider::Anthropic => client
+                .get("https://api.anthropic.com/v1/models?limit=1000")
+                .header("x-api-key", sensitive_key(self.key))
+                .header("anthropic-version", ANTHROPIC_VERSION),
+            Provider::Gemini => client
+                .get("https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000")
                 .header("x-goog-api-key", sensitive_key(self.key)),
         }
     }
@@ -84,9 +112,8 @@ pub(in crate::ai) struct Completion {
 }
 
 impl Completion {
-    /// Encode one task with provider-native structured output and no tools.
-    pub(in crate::ai) fn encode(mut self, provider: Provider) -> Value {
-        let (_, model) = provider.identity();
+    /// Encode one task for the selected model with provider-native structured output and no tools.
+    pub(in crate::ai) fn encode(mut self, provider: Provider, model: &str) -> Value {
         let text = self.user.to_string();
         if provider != Provider::OpenAi {
             portable_schema(&mut self.schema);
@@ -134,8 +161,8 @@ fn portable_schema(schema: &mut Value) {
 }
 
 /// Decode one completed Claude assistant message, ignoring only documented thinking metadata.
-pub(super) fn anthropic_text(response: &Value) -> Result<&str> {
-    if response["model"] != Provider::Anthropic.identity().1
+pub(super) fn anthropic_text<'a>(response: &'a Value, model: &str) -> Result<&'a str> {
+    if !catalog::serves(&response["model"], model)
         || response["type"] != "message"
         || response["role"] != "assistant"
         || response["stop_reason"] != "end_turn"
@@ -149,13 +176,13 @@ pub(super) fn anthropic_text(response: &Value) -> Result<&str> {
     })
 }
 
-/// Require one completed Gemini candidate with the exact modelVersion.
-pub(super) fn gemini_text(response: &Value) -> Result<&str> {
+/// Require one completed Gemini candidate from the selected model.
+pub(super) fn gemini_text<'a>(response: &'a Value, model: &str) -> Result<&'a str> {
     let candidates = response["candidates"].as_array().ok_or_else(shape_error)?;
     let [candidate] = candidates.as_slice() else {
         return Err(shape_error());
     };
-    if response["modelVersion"] != Provider::Gemini.identity().1
+    if !catalog::serves(&response["modelVersion"], model)
         || candidate["finishReason"] != "STOP"
         || candidate["content"]["role"] != "model"
     {

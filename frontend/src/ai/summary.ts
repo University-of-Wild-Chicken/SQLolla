@@ -3,7 +3,7 @@
  * an AI provider call, and every generated claim cites an existing supplied fact.
  */
 import { canonicalJson, cellText, propertySentence } from "../analysis/format";
-import { providers, type LiveProviderMode } from "./config";
+import { providers, selectedModel, type LiveProviderMode } from "./config";
 import { stringifyJson } from "../analysis/json";
 import type { DemoClaim, DemoSummary, DemoSummarySeed, EvidenceView, FactModel, OccurrenceView, RelationView } from "../analysis/types";
 
@@ -14,6 +14,8 @@ export type AiProviderMode = "offline_demo" | LiveProviderMode;
 export interface AiProviderSettings {
   readonly mode: AiProviderMode;
   readonly apiKey: string;
+  /** Explicit model choice for the provider; empty selects the provider's tested default. */
+  readonly model: string;
   readonly redactValues: boolean;
   readonly simulateFailure: boolean;
 }
@@ -22,6 +24,7 @@ export interface AiProviderSettings {
 export const defaultAiSettings: AiProviderSettings = {
   mode: "offline_demo",
   apiKey: "",
+  model: "",
   redactValues: true,
   simulateFailure: false,
 };
@@ -162,7 +165,7 @@ export function buildContextPreview(evidence: EvidenceView, settings: AiProvider
     return `- ${fact.reference} (${fact.kind}) => ${value}`;
   });
   return [
-    `Provider: ${providerLabel(settings.mode)}`,
+    `Provider: ${providerLabel(settings.mode)}${settings.mode === "offline_demo" ? "" : ` · model ${selectedModel(settings)}`}`,
     "Network request: NONE — requests require an explicit action after closing settings.",
     `Redaction: ${redact ? "values redacted" : "values included"}`,
     `SQL: ${redact ? "[redacted]" : evidence.bundle.request.sql}`,

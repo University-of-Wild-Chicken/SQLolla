@@ -118,13 +118,13 @@ pub(super) fn bounded_text(value: &str, limit: usize) -> Result<()> {
 
 /// Fixed host-owned labels keep model prose distinct from deterministic evidence and safety claims.
 pub(super) fn envelope(
-    provider: Provider,
+    byot: Byot<'_>,
     input: &Input,
     prompt: &context::Prompt,
     draft: &Draft,
     proposal: bool,
 ) -> Value {
-    let (provider, model) = provider.identity();
+    let (provider, model) = byot.identity();
     json!({"schema":if proposal {"sqlolla.ai.proposal.v1"} else {"sqlolla.ai.explanation.v1"},
         "status":"ok","provider":provider,"model":model,"bundle_id":input.bundle_id,
         "instance_id":input.instance_id,"model_revision_sha256":input.model_revision_sha256,
